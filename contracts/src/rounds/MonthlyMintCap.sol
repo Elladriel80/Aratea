@@ -46,6 +46,15 @@ library MonthlyMintCap {
     /// @dev Howard Hinnant `civil_from_days` — converts days-since-1970-01-01 into the
     ///      Gregorian (year, month) tuple. Day-of-month is intentionally omitted: the cap
     ///      depends only on the bucket (year, month).
+    ///
+    ///      The intermediate divisions and multiplications below form an integer-exact
+    ///      algorithm. Each division on `z`, `doe`, or `yoe` is INTENTIONALLY composed with
+    ///      a subsequent multiplication; the algorithm is mathematically proven to yield the
+    ///      same result as the unrounded computation for any input within the supported
+    ///      range, and the result is verified against known UTC reference dates in the unit
+    ///      tests. Slither's `divide-before-multiply` warning is therefore a false positive
+    ///      on the whole function and the detector is suppressed for the block below.
+    // slither-disable-start divide-before-multiply
     function _civilFromDays(
         uint256 daysSinceEpoch
     ) private pure returns (uint256 year, uint256 month) {
@@ -59,6 +68,8 @@ library MonthlyMintCap {
         month = mp < 10 ? mp + 3 : mp - 9; // shift to January-based [1, 12]
         year = yoe + era * 400 + (mp >= 10 ? 1 : 0);
     }
+
+    // slither-disable-end divide-before-multiply
 
     /*//////////////////////////////////////////////////////////////
                               CAP MATH
