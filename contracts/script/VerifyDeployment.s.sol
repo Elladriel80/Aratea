@@ -7,7 +7,7 @@ import {AugPocToken} from "../src/token/AugPocToken.sol";
 import {RoundRegistry} from "../src/rounds/RoundRegistry.sol";
 
 /// @title  VerifyDeployment — read-only sanity check on a live deployment
-/// @notice Re-asserts every role-wiring property that DeployAugurePhase1 set up. Designed to
+/// @notice Re-asserts every role-wiring property that DeployArateaPhase1 set up. Designed to
 ///         be run independently from the deploy (e.g. from a CI runner or from a different
 ///         machine) to confirm that the on-chain state matches what was intended.
 ///

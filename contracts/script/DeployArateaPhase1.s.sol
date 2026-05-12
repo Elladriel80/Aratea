@@ -7,7 +7,7 @@ import {AugPocToken} from "../src/token/AugPocToken.sol";
 import {RoundRegistry} from "../src/rounds/RoundRegistry.sol";
 import {IAugPocToken} from "../src/interfaces/IAugPocToken.sol";
 
-/// @title  DeployAugurePhase1 — deploys the Aratea Phase 1 settlement layer
+/// @title  DeployArateaPhase1 — deploys the Aratea Phase 1 settlement layer
 /// @notice Deploys AugPocToken and RoundRegistry, then wires the roles correctly. The
 ///         signer is configured EXTERNALLY through Foundry's CLI flags — the script does
 ///         not read a private key from the environment, which makes it usable with a
@@ -27,7 +27,7 @@ import {IAugPocToken} from "../src/interfaces/IAugPocToken.sol";
 ///
 ///         Invocation examples:
 ///           # Ledger (Phase 1 testnet)
-///           forge script script/DeployAugurePhase1.s.sol:DeployAugurePhase1 \
+///           forge script script/DeployArateaPhase1.s.sol:DeployArateaPhase1 \
 ///             --rpc-url $RPC_ARBITRUM_SEPOLIA \
 ///             --ledger \
 ///             --sender $ADMIN_ADDRESS \
@@ -35,7 +35,7 @@ import {IAugPocToken} from "../src/interfaces/IAugPocToken.sol";
 ///             --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vv
 ///
 ///           # Raw private key (CI / one-shot deploy from a hot wallet)
-///           forge script script/DeployAugurePhase1.s.sol:DeployAugurePhase1 \
+///           forge script script/DeployArateaPhase1.s.sol:DeployArateaPhase1 \
 ///             --rpc-url $RPC_ARBITRUM_SEPOLIA \
 ///             --private-key $DEPLOYER_PK \
 ///             --sender $ADMIN_ADDRESS \
@@ -53,7 +53,7 @@ import {IAugPocToken} from "../src/interfaces/IAugPocToken.sol";
 ///             ROUND_PROPOSER_ROLE  → ADMIN_ADDRESS    (granted here)
 ///             ROUND_EXECUTOR_ROLE  → ADMIN_ADDRESS    (granted here)
 ///             ROUND_CANCELLER_ROLE → ADMIN_ADDRESS    (granted here)
-contract DeployAugurePhase1 is Script {
+contract DeployArateaPhase1 is Script {
     struct DeploymentResult {
         AugPocToken token;
         RoundRegistry registry;
@@ -62,9 +62,9 @@ contract DeployAugurePhase1 is Script {
 
     function run() external returns (DeploymentResult memory result) {
         address admin = vm.envAddress("ADMIN_ADDRESS");
-        require(admin != address(0), "DeployAugurePhase1: ADMIN_ADDRESS is the zero address");
+        require(admin != address(0), "DeployArateaPhase1: ADMIN_ADDRESS is the zero address");
 
-        console2.log("== DeployAugurePhase1 ==");
+        console2.log("== DeployArateaPhase1 ==");
         console2.log("Admin (deployer + role recipient):", admin);
 
         // The signer is provided by Foundry's CLI flags (--ledger / --private-key /

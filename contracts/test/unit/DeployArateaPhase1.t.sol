@@ -3,12 +3,12 @@ pragma solidity 0.8.24;
 
 import {Test} from "forge-std/Test.sol";
 
-import {DeployAugurePhase1} from "../../script/DeployAugurePhase1.s.sol";
+import {DeployArateaPhase1} from "../../script/DeployArateaPhase1.s.sol";
 import {AugPocToken} from "../../src/token/AugPocToken.sol";
 import {RoundRegistry} from "../../src/rounds/RoundRegistry.sol";
 
-/// @title  DeployAugurePhase1Test — script-as-test for the deployment flow
-/// @notice Runs the entire DeployAugurePhase1 script against a fresh in-memory chain and
+/// @title  DeployArateaPhase1Test — script-as-test for the deployment flow
+/// @notice Runs the entire DeployArateaPhase1 script against a fresh in-memory chain and
 ///         asserts that every wiring property holds. The same code path is what runs on
 ///         Arbitrum Sepolia at deploy time — only the signer source differs (Ledger /
 ///         hot key / mnemonic) since the script reads `ADMIN_ADDRESS` only and lets
@@ -16,7 +16,7 @@ import {RoundRegistry} from "../../src/rounds/RoundRegistry.sol";
 /// @dev    Revert paths of the script's underlying constructors (zero admin, zero token)
 ///         are already covered by RoundRegistry.t.sol and AugPocToken.t.sol; this file
 ///         restricts itself to the end-to-end happy path.
-contract DeployAugurePhase1Test is Test {
+contract DeployArateaPhase1Test is Test {
     // Anvil default account #0 — purely deterministic, never used in production.
     address internal constant ANVIL_TEST_ADDR = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
 
@@ -27,8 +27,8 @@ contract DeployAugurePhase1Test is Test {
         // exercise the full role-wiring path here.
         vm.setEnv("ADMIN_ADDRESS", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
 
-        DeployAugurePhase1 deploy = new DeployAugurePhase1();
-        DeployAugurePhase1.DeploymentResult memory result = deploy.run();
+        DeployArateaPhase1 deploy = new DeployArateaPhase1();
+        DeployArateaPhase1.DeploymentResult memory result = deploy.run();
 
         AugPocToken token = result.token;
         RoundRegistry registry = result.registry;
