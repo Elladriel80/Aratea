@@ -47,7 +47,7 @@ cd contracts
 source .env
 
 # Avec un Ledger (Phase 1 testnet) :
-forge script script/DeployAugurePhase1.s.sol:DeployAugurePhase1 \
+forge script script/DeployArateaPhase1.s.sol:DeployArateaPhase1 \
   --rpc-url $RPC_ARBITRUM_SEPOLIA \
   --ledger \
   --sender $ADMIN_ADDRESS \
@@ -65,7 +65,7 @@ de broadcaster — essaie le path alternatif ou vérifie l'adresse importée.
 
 ```bash
 # Avec une clé privée (CI / déploiement one-shot depuis un wallet hot) :
-forge script script/DeployAugurePhase1.s.sol:DeployAugurePhase1 \
+forge script script/DeployArateaPhase1.s.sol:DeployArateaPhase1 \
   --rpc-url $RPC_ARBITRUM_SEPOLIA \
   --private-key $DEPLOYER_PK \
   --sender $ADMIN_ADDRESS \
@@ -222,7 +222,7 @@ Le déploiement Phase 1 mainnet est **conditionné** à :
 
 Le flux de déploiement diffère alors du §2 :
 - `ADMIN_ADDRESS` est l'adresse du Safe multisig, PAS l'EOA déployeur.
-- `DeployAugurePhase1.s.sol` refusera de tourner à cause de l'assertion
+- `DeployArateaPhase1.s.sol` refusera de tourner à cause de l'assertion
   `deployer == admin`. Utiliser le flux alternatif `WireRoles.s.sol` (prévu dans une
   PR de suivi) où le deploy et les étapes de role-granting sont séparés : le deploy
   est broadcast depuis l'EOA déployeur sans wiring de rôles, puis les grants de rôles

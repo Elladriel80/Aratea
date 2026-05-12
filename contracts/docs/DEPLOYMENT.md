@@ -47,7 +47,7 @@ cd contracts
 source .env
 
 # With a Ledger hardware wallet (Phase 1 testnet):
-forge script script/DeployAugurePhase1.s.sol:DeployAugurePhase1 \
+forge script script/DeployArateaPhase1.s.sol:DeployArateaPhase1 \
   --rpc-url $RPC_ARBITRUM_SEPOLIA \
   --ledger \
   --sender $ADMIN_ADDRESS \
@@ -65,7 +65,7 @@ broadcast — try the alternative path or check the address you imported.
 
 ```bash
 # With a raw private key (CI / one-shot deploy from a hot wallet):
-forge script script/DeployAugurePhase1.s.sol:DeployAugurePhase1 \
+forge script script/DeployArateaPhase1.s.sol:DeployArateaPhase1 \
   --rpc-url $RPC_ARBITRUM_SEPOLIA \
   --private-key $DEPLOYER_PK \
   --sender $ADMIN_ADDRESS \
@@ -223,7 +223,7 @@ Phase 1 mainnet deployment is **gated** on:
 
 The deploy flow then differs from §2:
 - `ADMIN_ADDRESS` is the Safe multisig address, NOT the deployer EOA.
-- `DeployAugurePhase1.s.sol` will refuse to run because of the
+- `DeployArateaPhase1.s.sol` will refuse to run because of the
   `deployer == admin` assertion. Use the alternate `WireRoles.s.sol` flow
   (planned in a follow-up PR) where the deploy and the role-granting steps
   are split: the deploy is broadcast from the deployer EOA with no role
