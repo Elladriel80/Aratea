@@ -69,13 +69,13 @@ pip-compile --generate-hashes --output-file=predictor/requirements.lock predicto
 python scripts/fetch_markets.py
 
 # 2. Pour chaque marché, prédire P(OUI) avec la baseline climatologique
-python scripts/predict_climatology.py
+python scripts/predict.py
 
 # 3. Comparer aux prix marché et logger les paris simulés
 python scripts/simulate.py
 
 # 4. Une fois les marchés résolus, scorer le ledger
-python scripts/score_resolved.py
+python scripts/score_forward.py
 ```
 
 ## Structure
