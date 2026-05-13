@@ -56,6 +56,26 @@ for the on-chain pieces this dashboard reads.
 - Optional but recommended: a free RPC endpoint URL from Alchemy, Infura, or Ankr
   for Arbitrum Sepolia. The default public endpoint works but is rate-limited.
 
+
+### Environment variables
+
+The `.env.example` file lists the public environment variables used by the dashboard.
+All variables prefixed with `NEXT_PUBLIC_` are exposed in the browser bundle — they are
+not secrets and are safe to commit to version control.
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_RPC_URL` | RPC endpoint for Arbitrum Sepolia (testnet). |
+| `NEXT_PUBLIC_CHAIN_ID` | Chain ID. `421614` for Arbitrum Sepolia, `31337` for a local Anvil fork. |
+| `NEXT_PUBLIC_TOKEN_ADDRESS` | Deployed `AugPocToken` contract address. Zero until M4 deployment. |
+| `NEXT_PUBLIC_REGISTRY_ADDRESS` | Deployed `RoundRegistry` contract address. Zero until M4 deployment. |
+| `NEXT_PUBLIC_DEPLOY_BLOCK` | Block number from which to start scanning `RoundProposed` / `Executed` / `Cancelled` / `Challenged` events. Set to the deployment transaction block number to save RPC quota. |
+| `NEXT_PUBLIC_EXPLORER_URL` | Optional. Override the public block explorer URL. Defaults to `arbiscan.io` for Arbitrum Sepolia. |
+
+For local development, copy `.env.example` to `.env.local` and fill in the values after
+the M4 deployment script has run on Arbitrum Sepolia. See [Local development](#local-development)
+above for details.
+
 ### Run
 
 ```bash
