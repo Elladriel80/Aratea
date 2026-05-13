@@ -14,6 +14,19 @@ Public links live at the top of the inline `<script>` (`const LINKS = {...}`). i
 
 The Notion white paper link is **language-aware**: `LINKS.notion` is an object `{ fr, en }`. The active URL is set inside `applyLang()` so visitors are sent to the page in their detected/selected language.
 
+## Local Preview
+
+No build step is required — `index.html` is a self-contained static file.
+
+To preview locally:
+
+```bash
+cd site/
+python -m http.server 8000
+```
+
+Then open [http://localhost:8000](http://localhost:8000) in your browser.
+
 ## Deploy
 
 Deployed on Vercel as a static site. The project is git-linked to `Elladriel80/aratea` with **Root Directory** = `site/` and no build command — every push to `main` redeploys automatically.
