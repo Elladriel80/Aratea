@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-13T08:32:34Z",
+  "generated_at": "2026-05-13T14:29:25Z",
   "schema_version": 2,
   "features": [
     {
@@ -461,13 +461,72 @@
         "champion_pnl_usd": null,
         "champion_won": null
       }
+    },
+    {
+      "run_id": "004",
+      "schema_version": 2,
+      "ts_utc": "2026-05-13T14:29:25Z",
+      "event_ticker": "KXLOWTNYC-26MAY14",
+      "event_title": "Lowest temperature in New York City on May 14, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26MAY14-B52.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.32,
+      "position": {
+        "side": "NO",
+        "n_contracts": 147,
+        "entry_price": 0.6799999999999999,
+        "size_usd": 100.0,
+        "entry_price_yes_cents": 32.0,
+        "entry_price_no_cents": 68.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.1406617805329034,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.1709720433815333,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.32,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
     }
   ],
   "paper_bets_summary": {
-    "n_open": 1,
+    "n_open": 2,
     "n_resolved": 1,
     "pnl_usd_cumulative": 56.16,
-    "phase_1_counter": "2/50"
+    "phase_1_counter": "3/50"
   },
   "kalshi_mid_reference": 0.07640307692307692
 }
