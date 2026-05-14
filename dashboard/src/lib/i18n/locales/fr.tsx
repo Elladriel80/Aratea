@@ -136,6 +136,127 @@ export const fr: Dictionary = {
         battre le marché, sur son propre terrain.
       </>
     ),
+    layers: {
+      aria: "Choisir le niveau de détail",
+      level_1: { label: "Niveau 1 · Public", hint: "Ce qu’Aratea pense, en clair" },
+      level_2: { label: "Niveau 2 · Averti", hint: "Composantes nommées, stats simples" },
+      level_3: { label: "Niveau 3 · Expert", hint: "Registry complet, Brier, runs bruts" },
+      cta_why: "Pourquoi Aratea pense ça ? →",
+      cta_more: "Voir le registry complet →",
+    },
+    public: {
+      heading: "Ce qu’Aratea pense aujourd’hui",
+      no_run: "Pas encore de prévision live — repasse après le prochain run quotidien.",
+      question_label: "La question du jour",
+      probability_caption: "Probabilité selon Aratea que la réponse soit OUI",
+      market_says: "Le marché paie OUI à",
+      aratea_says: "Aratea estime OUI à",
+      side_yes: "Aratea parie OUI",
+      side_no: "Aratea parie NON",
+      agrees: "Aratea est d’accord avec le marché",
+      disagrees_higher: (gap: string) =>
+        `Aratea pense que OUI est ${gap} plus probable que ce que dit le marché`,
+      disagrees_lower: (gap: string) =>
+        `Aratea pense que OUI est ${gap} moins probable que ce que dit le marché`,
+      confidence_label: "Confiance",
+      confidence_low: "Faible",
+      confidence_medium: "Moyenne",
+      confidence_high: "Forte",
+      confidence_low_hint: "Le modèle est proche du pile ou face sur celui-ci.",
+      confidence_medium_hint: "Le modèle a une opinion claire mais pas extrême.",
+      confidence_high_hint: "Le modèle est très sûr du résultat.",
+      explainer_title: "Comment lire cette carte",
+      explainer_body: (
+        <>
+          Le grand nombre est la probabilité qu’Aratea attribue à la réponse{" "}
+          <em>oui</em>. Le nombre du marché, c’est ce que les gens sur Kalshi
+          paient pour le même pari en ce moment. Quand les deux divergent,
+          Aratea prend le côté qu’elle croit mal coté. Phase 1 = paper money
+          uniquement, aucun vrai pari n’est placé.
+        </>
+      ),
+      window_open: "Pari ouvert — résultat pas encore connu",
+      window_resolved_won: "Pari clos — Aratea a gagné",
+      window_resolved_lost: "Pari clos — Aratea a perdu",
+      champion_caption: (name: string) =>
+        `Pari placé par le modèle « ${name} » (champion actuel).`,
+      champion_explainer_title: "Pourquoi ce modèle et pas un autre ?",
+      champion_explainer:
+        "Aratea fait tourner plusieurs modèles en parallèle. Seul le champion place les paris (paper) ; les challengers tournent en shadow tant qu’ils n’ont pas battu le champion sur la durée. D’autres modèles peuvent estimer une probabilité différente — voir le niveau 2 pour comparer.",
+      question_template: (variable: string, location: string, date: string, threshold: string) =>
+        `La ${variable} à ${location} le ${date} tombera-t-elle dans le bin ${threshold} ?`,
+      threshold_unit_temp_f: (n: string) => `${n}°F`,
+      threshold_unit_in: (n: string) => `${n} in`,
+      threshold_unit_mph: (n: string) => `${n} mph`,
+      threshold_unit_count: (n: string) => `${n} occurrences`,
+      threshold_unit_raw: (n: string) => n,
+      var_lowt: "température minimale",
+      var_hight: "température maximale",
+      var_temp: "température",
+      var_rain: "pluie",
+      var_snow: "chute de neige",
+      var_wind: "vitesse du vent",
+      var_hurr: "nombre d’ouragans",
+    },
+    informed: {
+      heading: "Ce qui entre dans le chiffre d’Aratea",
+      intro: (
+        <>
+          Aratea fait tourner <em>plusieurs</em> modèles de prévision en
+          parallèle. Chaque carte ci-dessous est une estimation indépendante de
+          la même question : « quelle est la probabilité que ça arrive ? ». Les
+          chiffres <strong>ne s’additionnent pas</strong> à 100 % — ce sont
+          plusieurs façons différentes de deviner la même réponse. Un seul —
+          le <strong>champion</strong> — place réellement le pari ; les autres
+          tournent en shadow.
+        </>
+      ),
+      components_subheading: "Les estimations parallèles d’Aratea",
+      market_subheading: "Ce que paie le marché",
+      market_subheading_hint:
+        "Affiché pour comparaison. C’est le benchmark qu’Aratea cherche à battre — ce n’est pas l’une de ses entrées.",
+      component_climatology: "Taux historique",
+      component_climatology_desc:
+        "À quelle fréquence l’événement s’est produit le même jour de l’année sur les 15 dernières années. Le prior bête mais honnête que toute prévision doit battre.",
+      component_forecast_blend: "Modèle météo court terme",
+      component_forecast_blend_desc:
+        "La prévision déterministe Open-Meteo autour de la date cible, mélangée au taux historique selon l’horizon.",
+      component_ensemble: "Ensemble multi-modèles",
+      component_ensemble_desc:
+        "Moyenne de quatre modèles vendeurs (ECMWF, GraphCast, GFS, JMA). Utile comme baseline lissée.",
+      component_learned: "Modèle appris",
+      component_learned_desc:
+        "Une petite régression qui apprend combien de poids donner à chaque composante à partir des résolutions passées. C’est avec celui-là qu’Aratea parie.",
+      market_label: "Marché (Kalshi mid)",
+      market_desc:
+        "Ce que le carnet d’ordres Kalshi implique en ce moment. L’étalon qu’Aratea doit battre.",
+      no_run: "Pas encore de run d’entraînement — les composantes apparaîtront dès le premier fit.",
+      role_champion: "champion",
+      role_challenger: "challenger",
+      role_baseline: "baseline",
+      role_explainer:
+        "Champion = le modèle dont la probabilité sert effectivement à placer le pari. Les challengers tournent en parallèle, en shadow ; l’un d’eux ne devient champion qu’après avoir battu le précédent sur une fenêtre glissante de trades résolus. C’est pour ça que la probabilité du « champion » affichée en vue publique peut différer de celle du « modèle appris » ici.",
+      brier_chart_heading: "Bilan jusqu’ici",
+      brier_intro: (
+        <>
+          Le graphe ci-dessous montre le <strong>score Brier</strong> de deux
+          prévisionnistes sur tous les passages d’entraînement. Le Brier mesure
+          la précision : 0 = parfait, 1 = toujours faux, plus bas = meilleur.
+          <br />
+          <span className="text-[#5fa8d3]">●</span> ligne bleue = le modèle
+          appris d’Aratea.{" "}
+          <span className="text-[#e2b341]">●</span> ligne jaune = le mid de
+          marché Kalshi sur exactement les mêmes événements. Quand la bleue
+          reste sous la jaune, Aratea a du signal que le carnet d’ordres n’a
+          pas.
+        </>
+      ),
+    },
+    expert: {
+      heading: "Vue expert",
+      intro:
+        "Tout ce que porte le manifest : facteurs nommés avec leur delta leave-one-out, ledger des paper trades, runs d’entraînement et trajectoire Brier. C’est la vue météorologiste / actuaire — pas d’arrondi, pas de pédagogie.",
+    },
     counters: {
       features_tracked: "Features suivies",
       active: "Actives",
