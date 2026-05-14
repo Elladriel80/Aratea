@@ -40,6 +40,21 @@ for the on-chain pieces this dashboard reads.
   directly through a public RPC endpoint. Hosting is static-friendly (Vercel,
   Netlify, Cloudflare Pages).
 
+## Environment Variables
+
+The dashboard uses the following environment variables. All `NEXT_PUBLIC_*` variables are **browser-exposed** and contain **no secrets**.
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NEXT_PUBLIC_RPC_URL` | RPC endpoint for Arbitrum Sepolia testnet | `https://sepolia-rollup.arbitrum.io/rpc` |
+| `NEXT_PUBLIC_CHAIN_ID` | Chain ID (Arbitrum Sepolia = 421614) | `421614` |
+| `NEXT_PUBLIC_TOKEN_ADDRESS` | `AugPocToken` contract address | `0x0000...0000` (empty until M4 deployment) |
+| `NEXT_PUBLIC_REGISTRY_ADDRESS` | `RoundRegistry` contract address | `0x0000000000000000000000000000000000000000` (empty until M4) |
+| `NEXT_PUBLIC_DEPLOY_BLOCK` | Block number to start scanning events from | `0` |
+| `NEXT_PUBLIC_EXPLORER_URL` | Block explorer URL (optional) | `https://sepolia.arbiscan.io` |
+
+> **Note:** Since these values are exposed in the browser, never put sensitive credentials or private keys in `NEXT_PUBLIC_*` variables.
+
 ## Stack
 
 - Next.js 15 (App Router) + React 19
@@ -81,7 +96,7 @@ anvil --fork-url https://sepolia-rollup.arbitrum.io/rpc
 # In another — point the dashboard at it
 NEXT_PUBLIC_CHAIN_ID=31337 \
 NEXT_PUBLIC_RPC_URL=http://127.0.0.1:8545 \
-NEXT_PUBLIC_TOKEN_ADDRESS=0x... \
+NEXT_PUBLIC_TOKEN_ADDRESS=*** \
 NEXT_PUBLIC_REGISTRY_ADDRESS=0x... \
   npm run dev
 ```
