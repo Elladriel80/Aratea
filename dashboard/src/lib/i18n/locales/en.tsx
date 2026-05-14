@@ -128,6 +128,125 @@ export const en = {
         Brier — beat the market, on its own ground.
       </>
     ),
+    layers: {
+      aria: "Choose detail level",
+      level_1: { label: "Level 1 · Public", hint: "What Aratea thinks, in plain words" },
+      level_2: { label: "Level 2 · Informed", hint: "Named components, simple stats" },
+      level_3: { label: "Level 3 · Expert", hint: "Full registry, Brier, raw runs" },
+      cta_why: "Why does Aratea think this? →",
+      cta_more: "Show me the full registry →",
+    },
+    public: {
+      heading: "What Aratea thinks today",
+      no_run: "No live forecast captured yet — come back after the next daily run.",
+      question_label: "Today's question",
+      probability_caption: "Aratea's chance the answer is YES",
+      market_says: "Market is pricing YES at",
+      aratea_says: "Aratea estimates YES at",
+      side_yes: "Aratea is betting YES",
+      side_no: "Aratea is betting NO",
+      agrees: "Aratea agrees with the market",
+      disagrees_higher: (gap: string) =>
+        `Aratea thinks YES is ${gap} more likely than the market does`,
+      disagrees_lower: (gap: string) =>
+        `Aratea thinks YES is ${gap} less likely than the market does`,
+      confidence_label: "Confidence",
+      confidence_low: "Low",
+      confidence_medium: "Medium",
+      confidence_high: "High",
+      confidence_low_hint: "The model is close to a coin flip on this one.",
+      confidence_medium_hint: "The model has a clear lean, but not extreme.",
+      confidence_high_hint: "The model is very sure of the outcome.",
+      explainer_title: "How to read this card",
+      explainer_body: (
+        <>
+          The big number is the probability Aratea gives to the answer being{" "}
+          <em>yes</em>. The market number is what people on Kalshi are paying
+          for the same bet right now. When the two disagree, Aratea takes the
+          side it thinks is mispriced. This is paper-money only during Phase 1
+          — no real bet is placed.
+        </>
+      ),
+      window_open: "Bet open — outcome not yet resolved",
+      window_resolved_won: "Bet resolved — Aratea won",
+      window_resolved_lost: "Bet resolved — Aratea lost",
+      champion_caption: (name: string) =>
+        `Bet placed by the “${name}” model (current champion).`,
+      champion_explainer_title: "Why this model and not another?",
+      champion_explainer:
+        "Aratea runs several models in parallel. Only the champion places real (paper) bets — challengers run in shadow until they beat the champion's track record. Other models may estimate a different probability — see Level 2 to compare.",
+      question_template: (variable: string, location: string, date: string, threshold: string) =>
+        `Will the ${variable} in ${location} on ${date} fall in the ${threshold} bin?`,
+      threshold_unit_temp_f: (n: string) => `${n}°F`,
+      threshold_unit_in: (n: string) => `${n} in`,
+      threshold_unit_mph: (n: string) => `${n} mph`,
+      threshold_unit_count: (n: string) => `${n} count`,
+      threshold_unit_raw: (n: string) => n,
+      var_lowt: "lowest temperature",
+      var_hight: "highest temperature",
+      var_temp: "temperature",
+      var_rain: "rainfall",
+      var_snow: "snowfall",
+      var_wind: "wind speed",
+      var_hurr: "hurricane count",
+    },
+    informed: {
+      heading: "What goes into Aratea's number",
+      intro: (
+        <>
+          Aratea runs <em>several</em> forecasting models in parallel. Each card
+          below is an independent estimate of the same question: &quot;what's
+          the probability this happens?&quot;. The numbers do <strong>not</strong>{" "}
+          add up to 100% — they're different ways of guessing the same answer.
+          Only one of them — the <strong>champion</strong> — actually places the
+          bet; the others run in shadow.
+        </>
+      ),
+      components_subheading: "Aratea's parallel estimates",
+      market_subheading: "What the market is paying",
+      market_subheading_hint:
+        "Shown for comparison. This is the benchmark Aratea is trying to beat — not one of its inputs.",
+      component_climatology: "Historical base rate",
+      component_climatology_desc:
+        "How often this happened on the same day-of-year over the past 15 years. The dumb-but-honest prior every forecast must beat.",
+      component_forecast_blend: "Short-term weather model",
+      component_forecast_blend_desc:
+        "Open-Meteo's deterministic forecast around the target date, blended with the historical rate by horizon.",
+      component_ensemble: "Multi-model ensemble",
+      component_ensemble_desc:
+        "The mean of four vendor models (ECMWF, GraphCast, GFS, JMA). Useful as a smoothing baseline.",
+      component_learned: "Learned model",
+      component_learned_desc:
+        "A small regression that learns how much weight to give each component based on past resolutions. This is the one Aratea actually bets with.",
+      market_label: "Market (Kalshi mid)",
+      market_desc:
+        "What the Kalshi order book is implying right now. The yardstick Aratea must beat.",
+      no_run: "No training run yet — the components will appear once the model has fit at least once.",
+      role_champion: "champion",
+      role_challenger: "challenger",
+      role_baseline: "baseline",
+      role_explainer:
+        "Champion = the model whose probability is actually used to place the bet. Challengers run in parallel as shadow forecasts; one only becomes champion after beating the current one on a rolling window of resolved trades. This is why the “champion” probability shown in the public view can differ from the “learned model” probability here.",
+      brier_chart_heading: "Track record so far",
+      brier_intro: (
+        <>
+          The chart below shows the <strong>Brier score</strong> of two
+          forecasters across every training pass. Brier scores accuracy:
+          0 = perfect, 1 = always wrong, lower is better.
+          <br />
+          <span className="text-[#5fa8d3]">●</span> blue line = Aratea's learned
+          model.{" "}
+          <span className="text-[#e2b341]">●</span> yellow line = the Kalshi
+          market mid on the exact same events. When blue stays under yellow,
+          Aratea has signal the order book doesn't.
+        </>
+      ),
+    },
+    expert: {
+      heading: "Expert view",
+      intro:
+        "Everything the manifest carries: named factors with their leave-one-out delta, paper-trade ledger, training runs and Brier trajectory. This is the meteorologist / actuary view — no rounding, no sugar-coating.",
+    },
     counters: {
       features_tracked: "Features tracked",
       active: "Active",

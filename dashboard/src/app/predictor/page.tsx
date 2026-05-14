@@ -2,27 +2,54 @@ import type { Metadata } from "next";
 
 import { BrierChart } from "@/components/BrierChart";
 import { FeatureRegistryTable } from "@/components/FeatureRegistryTable";
+import { InformedFactorsView } from "@/components/InformedFactorsView";
 import { LatestRunCard } from "@/components/LatestRunCard";
+import { LayerToggle, type Level } from "@/components/LayerToggle";
 import { LiveRunsTable } from "@/components/LiveRunsTable";
+import { PublicWeatherCard } from "@/components/PublicWeatherCard";
 import { RunHistoryTable } from "@/components/RunHistoryTable";
 import { getDict } from "@/lib/i18n";
+import type {
+  FeatureRecord,
+  LiveRunRecord,
+  PaperBetsSummary,
+  RunRecord,
+} from "@/lib/manifest";
 import { loadManifest } from "@/lib/manifest.server";
 
 export const metadata: Metadata = {
   title: "Predictor — aratea",
   description:
-    "Predictor learning loop: features under test, per-run Brier vs market, decision history.",
+    "Predictor learning loop, presented in three layers: public, informed, expert.",
   robots: { index: false, follow: false },
 };
 
-// Note: this page used to be `force-static`. Reading the locale cookie via
-// getDict() promotes it to dynamic — that's fine, the manifest is loaded from
-// disk and there are no per-request chain calls here.
+// Reading searchParams + the locale cookie via getDict() promotes this page to
+// dynamic. That's intended — the layer toggle is a query param, not a build
+// constant.
 export const dynamic = "force-dynamic";
 
-export default async function PredictorPage() {
+interface PredictorPageProps {
+  searchParams: Promise<{ level?: string }>;
+}
+
+function parseLevel(raw: string | undefined): Level {
+  if (raw === "2") return 2;
+  if (raw === "3") return 3;
+  return 1; // default: meet the quidam first
+}
+
+function hrefForLevel(level: Level): string {
+  return `/predictor?level=${level}`;
+}
+
+export default async function PredictorPage({
+  searchParams,
+}: PredictorPageProps) {
   const dict = await getDict();
   const manifest = await loadManifest();
+  const params = await searchParams;
+  const level: Level = parseLevel(params.level);
 
   if (!manifest) {
     return (
@@ -35,9 +62,139 @@ export default async function PredictorPage() {
     );
   }
 
-  const { features, runs, paper_bets_summary, kalshi_mid_reference } = manifest;
+  const { features, runs, kalshi_mid_reference } = manifest;
   const liveRuns = manifest.live_runs ?? [];
-  const latestRun = runs.length > 0 ? [...runs].sort((a, b) => b.ts.localeCompare(a.ts))[0] : null;
+  const latestRun =
+    runs.length > 0 ? [...runs].sort((a, b) => b.ts.localeCompare(a.ts))[0] : null;
+  const latestLiveRun =
+    liveRuns.length > 0
+      ? [...liveRuns].sort((a, b) => b.run_id.localeCompare(a.run_id))[0]
+      : null;
+
+  const layers = dict.predictor.layers;
+  const toggle = (
+    <LayerToggle
+      current={level}
+      labels={{
+        aria: layers.aria,
+        levels: [
+          { value: 1, label: layers.level_1.label, hint: layers.level_1.hint },
+          { value: 2, label: layers.level_2.label, hint: layers.level_2.hint },
+          { value: 3, label: layers.level_3.label, hint: layers.level_3.hint },
+        ],
+      }}
+    />
+  );
+
+  return (
+    <div className="space-y-8">
+      {/* PAGE HEADER — common to all three layers */}
+      <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h1 className="text-2xl font-mono font-semibold mb-2">
+            {dict.predictor.title}
+          </h1>
+          <p className="text-sm text-muted max-w-3xl">{dict.predictor.intro}</p>
+        </div>
+        {toggle}
+      </header>
+
+      {level === 1 ? (
+        <Layer1 latestLiveRun={latestLiveRun} whyHref={hrefForLevel(2)} />
+      ) : null}
+
+      {level === 2 ? (
+        <Layer2
+          latestLiveRun={latestLiveRun}
+          runs={runs}
+          kalshiMidReference={kalshi_mid_reference}
+          moreHref={hrefForLevel(3)}
+        />
+      ) : null}
+
+      {level === 3 ? (
+        <Layer3
+          dict={dict}
+          features={features}
+          runs={runs}
+          liveRuns={liveRuns}
+          latestRun={latestRun}
+          kalshiMidReference={kalshi_mid_reference}
+          paperBetsSummary={manifest.paper_bets_summary}
+          generatedAt={manifest.generated_at}
+          schemaVersion={manifest.schema_version}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Layer 1 — Public weather card                                             */
+/* -------------------------------------------------------------------------- */
+
+function Layer1({
+  latestLiveRun,
+  whyHref,
+}: {
+  latestLiveRun: LiveRunRecord | null;
+  whyHref: string;
+}) {
+  return <PublicWeatherCard run={latestLiveRun} whyHref={whyHref} />;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Layer 2 — Informed view                                                   */
+/* -------------------------------------------------------------------------- */
+
+function Layer2({
+  latestLiveRun,
+  runs,
+  kalshiMidReference,
+  moreHref,
+}: {
+  latestLiveRun: LiveRunRecord | null;
+  runs: RunRecord[];
+  kalshiMidReference: number | null;
+  moreHref: string;
+}) {
+  return (
+    <InformedFactorsView
+      liveRun={latestLiveRun}
+      runs={runs}
+      kalshiMidReference={kalshiMidReference}
+      moreHref={moreHref}
+    />
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Layer 3 — Expert view (the original page, intact)                         */
+/* -------------------------------------------------------------------------- */
+
+interface Layer3Props {
+  dict: Awaited<ReturnType<typeof getDict>>;
+  features: FeatureRecord[];
+  runs: RunRecord[];
+  liveRuns: LiveRunRecord[];
+  latestRun: RunRecord | null;
+  kalshiMidReference: number | null;
+  paperBetsSummary: PaperBetsSummary;
+  generatedAt: string;
+  schemaVersion: number;
+}
+
+function Layer3({
+  dict,
+  features,
+  runs,
+  liveRuns,
+  latestRun,
+  kalshiMidReference,
+  paperBetsSummary,
+  generatedAt,
+  schemaVersion,
+}: Layer3Props) {
   const activeCount = features.filter((f) => f.current_status === "active").length;
   const experimentalCount = features.filter(
     (f) => f.current_status === "experimental",
@@ -47,10 +204,7 @@ export default async function PredictorPage() {
   return (
     <div className="space-y-10">
       <section>
-        <h1 className="text-2xl font-mono font-semibold mb-2">
-          {dict.predictor.title}
-        </h1>
-        <p className="text-sm text-muted max-w-3xl">{dict.predictor.intro}</p>
+        <p className="text-sm text-muted max-w-3xl">{dict.predictor.expert.intro}</p>
         <div className="mt-4 grid grid-cols-2 md:grid-cols-5 gap-3 text-sm font-mono">
           <Counter
             label={dict.predictor.counters.features_tracked}
@@ -73,17 +227,14 @@ export default async function PredictorPage() {
           />
           <Counter
             label={dict.predictor.counters.paper_bets}
-            value={`${paper_bets_summary.n_open} / ${paper_bets_summary.n_resolved}`}
+            value={`${paperBetsSummary.n_open} / ${paperBetsSummary.n_resolved}`}
             hint={dict.predictor.counters.phase_1_hint(
-              paper_bets_summary.phase_1_counter,
+              paperBetsSummary.phase_1_counter,
             )}
           />
         </div>
         <p className="mt-3 text-[11px] text-muted/80 font-mono">
-          {dict.predictor.manifest_generated(
-            manifest.generated_at,
-            manifest.schema_version,
-          )}
+          {dict.predictor.manifest_generated(generatedAt, schemaVersion)}
         </p>
       </section>
 
@@ -151,7 +302,7 @@ export default async function PredictorPage() {
         <p className="text-sm text-muted mb-3 max-w-3xl">
           {dict.predictor.sections.brier_desc}
         </p>
-        <BrierChart runs={runs} kalshiReference={kalshi_mid_reference} />
+        <BrierChart runs={runs} kalshiReference={kalshiMidReference} />
       </section>
     </div>
   );
