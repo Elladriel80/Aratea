@@ -116,6 +116,18 @@ contract ReclaimWeatherSource is IWeatherSource, ReentrancyGuard {
     /// @dev `encodedSubmission` is the ABI-encoded tuple
     ///      `(IReclaim.Proof proof, int256 declaredValueMc, uint64 declaredTimestamp)`.
     ///      The keeper builds this off-chain after a successful zkFetch call.
+    /// @custom:slither-suppress reentrancy-no-eth — Slither flags state writes after the
+    ///      VERIFIER.verifyProof external call as reentrancy. This is safe because:
+    ///      (a) the function is `nonReentrant` (OZ v5 ReentrancyGuard) so any re-entry
+    ///          attempt — including from a hypothetical compromised UUPS upgrade of the
+    ///          verifier — reverts with ReentrancyGuardReentrantCall; covered by
+    ///          test_submit_reentrancy_isBlocked;
+    ///      (b) the proof-hash anti-replay check runs BEFORE the external call, so even
+    ///          if the guard somehow yielded, the same proof could not be replayed within
+    ///          the same call tree;
+    ///      (c) VERIFIER is immutable, set at construction to the address audited at
+    ///          deploy time (Reclaim official proxy on Arbitrum Sepolia).
+    // slither-disable-next-line reentrancy-no-eth
     function submitMeasurement(
         bytes calldata encodedSubmission
     ) external nonReentrant {
