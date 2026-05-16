@@ -33,6 +33,15 @@ export default async function RootLayout({
               <span className="text-accent">dashboard</span>
             </Link>
             <nav className="flex items-center gap-6 text-sm font-mono">
+              <a
+                href="https://aratea.vercel.app"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="hover:text-accent text-muted"
+                aria-label="Back to aratea.vercel.app"
+              >
+                ← site
+              </a>
               <Link href="/predictor" className="hover:text-accent">
                 {dict.layout.nav.predictor}
               </Link>
