@@ -393,6 +393,50 @@
       line-height: 1.55;
     }
 
+    /* navigation grid (same look as landing) */
+    .links-label {
+      font-size: 12px;
+      color: var(--fg-dim);
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      margin-top: 28px;
+    }
+    .links-label::before { content: '$ '; color: var(--fg-dim); }
+    .links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .link-card {
+      display: block;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      background: var(--bg-2);
+      text-decoration: none;
+      color: var(--fg);
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .link-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(74,222,128,0.08);
+    }
+    .link-card .label {
+      font-size: 11px;
+      color: var(--fg-dim);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .link-card .url {
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .link-card .url::after { content: ' →'; transition: margin-left 0.15s; display: inline-block; }
+    .link-card:hover .url::after { margin-left: 4px; }
+
     /* footer */
     footer {
       margin-top: 56px;
@@ -476,6 +520,31 @@
       <h2 data-i18n="notes_h">notes méthodologiques</h2>
       <div class="notes-grid" id="notes-grid"></div>
     </section>
+
+    <!-- navigation -->
+    <div class="links-label" data-i18n="nav_label">navigate</div>
+    <div class="links">
+      <a class="link-card" href="/">
+        <div class="label">// home</div>
+        <div class="url">aratea</div>
+      </a>
+      <a class="link-card" href="https://discord.gg/YZ2wnDM9dQ" target="_blank" rel="noopener noreferrer">
+        <div class="label">// community</div>
+        <div class="url">discord</div>
+      </a>
+      <a class="link-card" href="https://github.com/Elladriel80/Aratea" target="_blank" rel="noopener noreferrer">
+        <div class="label">// code</div>
+        <div class="url">github</div>
+      </a>
+      <a class="link-card" href="https://aratea-app.vercel.app" target="_blank" rel="noopener noreferrer">
+        <div class="label">// state</div>
+        <div class="url">dashboard</div>
+      </a>
+      <a class="link-card" id="link-notion" href="#" target="_blank" rel="noopener noreferrer">
+        <div class="label">// whitepaper</div>
+        <div class="url">notion</div>
+      </a>
+    </div>
 
     <footer>
       <span>© 2026 Aratea — <span data-i18n="footer_status">roadmap maintenue sur Notion</span></span>
@@ -596,6 +665,7 @@
           { t: 'Pas d\'incorporation prématurée', b: "L'entité légale ne sera créée qu'au déclenchement d'un trigger explicite. Candidat préféré : association à but lucratif de droit local Alsace-Moselle." },
           { t: 'Transparence radicale', b: "Tout ce qui mérite valuation passe par un PR mergé. Pas de travail invisible. Métriques de l'edge publiées à chaque round mensuel." }
         ],
+        nav_label: 'navigation',
         footer_status: 'roadmap maintenue sur Notion'
       },
       en: {
@@ -706,8 +776,15 @@
           { t: 'No premature incorporation', b: 'The legal entity is created only on triggering of an explicit event. Preferred candidate: for-profit association under Alsace-Moselle local law.' },
           { t: 'Radical transparency', b: 'Anything that warrants valuation passes through a merged PR. No invisible work. Edge metrics published at each monthly round.' }
         ],
+        nav_label: 'navigate',
         footer_status: 'roadmap maintained on Notion'
       }
+    };
+
+    /* Language-aware Notion link (FR/EN whitepaper pages) */
+    const NOTION_LINKS = {
+      fr: 'https://www.notion.so/35a472ba28fa80f6829ff8b921083d9a',
+      en: 'https://www.notion.so/35a472ba28fa810fa1f5e1447235be41'
     };
 
     /* ============================================================
@@ -776,6 +853,10 @@
         <div class="nt-title">${n.t}</div>
         <div class="nt-body">${n.b}</div>
       </div>`).join('');
+
+      // language-aware notion link
+      const notionEl = document.getElementById('link-notion');
+      if (notionEl) notionEl.href = NOTION_LINKS[lang] || NOTION_LINKS.en;
 
       // toggle buttons
       document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
