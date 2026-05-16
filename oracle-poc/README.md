@@ -52,7 +52,7 @@ Variables d'environnement (créer un `.env` à la racine de `oracle-poc/contract
 
 ```bash
 RPC_ARBITRUM_SEPOLIA=https://sepolia-rollup.arbitrum.io/rpc
-PRIVATE_KEY=0x...                                    # clé du déployeur (testnet uniquement)
+DEPLOYER_ADDRESS=0x...                               # EOA déployeur (le signer est passé en CLI, jamais en clair)
 ARBISCAN_API_KEY=...                                 # optionnel, pour --verify
 # Optionnel : override des valeurs par défaut
 # RECLAIM_VERIFIER_ADDRESS=0x4D1ee04EB5CeE02d4C123d4b67a86bDc7cA2E62A   # déjà défaut
@@ -60,12 +60,26 @@ ARBISCAN_API_KEY=...                                 # optionnel, pour --verify
 # WEATHER_TYPE_KEY=TEMP_C
 ```
 
-Charger et déployer :
+Charger et déployer. La convention Aratea (cf. `Aratea/contracts/docs/DEPLOYMENT.fr.md`) sépare l'adresse déployeuse (en `.env`) du signer (fourni au CLI), pour qu'aucune clé privée plaintext ne traîne dans les `.env`.
+
+**Via Ledger (recommandé)** :
 
 ```bash
 source .env
-forge script script/DeployPOC.s.sol \
+forge script script/DeployPOC.s.sol:DeployPOC \
     --rpc-url $RPC_ARBITRUM_SEPOLIA \
+    --ledger --sender $DEPLOYER_ADDRESS --hd-paths "m/44'/60'/0'/0/0" \
+    --broadcast \
+    --verify
+```
+
+**Via clé privée en variable shell** (pour testnet only, jamais mainnet) :
+
+```bash
+source .env
+forge script script/DeployPOC.s.sol:DeployPOC \
+    --rpc-url $RPC_ARBITRUM_SEPOLIA \
+    --private-key $DEPLOYER_PK \
     --broadcast \
     --verify
 ```
