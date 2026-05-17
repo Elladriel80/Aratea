@@ -66,13 +66,20 @@ Ordered:
 
 ## Phase 1 success criterion
 
-Validated *only* if, on N > 50 resolved runs, the meta-ensemble's
-Brier score is strictly lower than **both** the best single model
-**and** climatology, on the same N events. Failing either condition
-is a no-go: the project pivots or stops.
+Validated *only* if, on N > 50 resolved **live** runs, the
+meta-ensemble's Brier score is strictly lower than **both** the best
+single model **and** climatology, on the same N events. Failing either
+condition is a no-go: the project pivots or stops.
 
 The criterion is encoded in the union of `report.json` files — no
 separate scoreboard needed.
+
+Backtest replay volume under [`../runs_backtest/`](../runs_backtest/)
+is **never** substituted for live runs in this gate. For secondary
+decisions (challenger promotion checks, feature-set selection,
+reliability plots) backtest volume contributes to an effective sample
+`N_effective = N_live + 0.3 · N_backtest` — full rationale and
+permitted uses in [`CONVENTION.md`](./CONVENTION.md) §6.bis.
 
 ## See also
 
