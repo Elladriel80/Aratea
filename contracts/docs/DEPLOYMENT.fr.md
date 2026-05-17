@@ -208,9 +208,8 @@ forge script script/ExecuteRound.s.sol:ExecuteRound \
 Cela mint les 34 039 500 AUG-POC tokens vers l'EOA founder. Après exécution :
 - Le statut du round devient `Executed` (terminal).
 - `token.totalSupply()` devient `34_039_500 * 10^18`.
-- Le snapshot du premier mois est capturé à `0` (exception genesis), donc
-  `MonthlyMintCap` ne contraint pas pour ce mois. Dès le mois UTC suivant, le cap
-  10 % s'applique normalement.
+- Aucun cap d'émission n'est imposé on-chain après le mint genesis ; le
+  registry minte simplement ce que les rounds ratifiés off-chain prescrivent.
 
 ## 6. Flux mainnet (plus tard)
 

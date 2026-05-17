@@ -6,27 +6,17 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 
 import {IAugPocToken} from "../interfaces/IAugPocToken.sol";
 import {IRoundRegistry} from "../interfaces/IRoundRegistry.sol";
-import {MonthlyMintCap} from "./MonthlyMintCap.sol";
 
 /// @title  RoundRegistry — on-chain lifecycle for the Aratea monthly mint rounds
 /// @notice Implements the propose / challenge / execute / cancel state machine described
 ///         in `contracts/docs/ROUND-LIFECYCLE.md` and white paper §7.3. The registry holds
 ///         no funds; on `executeRound` it instructs `AugPocToken` to mint to ratified
-///         beneficiaries, gated by `MonthlyMintCap`'s 10% monthly cap.
-///
-/// @dev    Storage of the `supplyAtMonthStart` snapshot is lazy: the very first executeRound
-///         in a given UTC calendar month captures `token.totalSupply()` BEFORE minting and
-///         freezes that value as the cap reference for the rest of the month. Subsequent
-///         rounds in the same month all measure their cumulative impact against that single
-///         snapshot, regardless of how much supply has actually grown by the time they run.
-///
-///         Genesis behaviour: when `supplyAtMonthStart == 0` (snapshot taken on a month with
-///         empty supply), `MonthlyMintCap.isMintAdmissible` returns true for every amount,
-///         so the entire genesis month is unconstrained. The next month picks up a non-zero
-///         snapshot and the 10% cap applies normally from then on.
+///         beneficiaries. No emission cap is enforced on-chain — the Aratea token is not
+///         designed to be traded on secondary markets and no per-supply cap is needed to
+///         protect a price. Quality is guaranteed off-chain by the valuation rubric, the
+///         token-weighted vote on valuations above 0.01 BTC, the new-entrant cooldown, the
+///         slashing mechanism, and the annual audit (white paper §7.7).
 contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
-    using MonthlyMintCap for uint256;
-
     /*//////////////////////////////////////////////////////////////
                                  ROLES
     //////////////////////////////////////////////////////////////*/
@@ -59,9 +49,6 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
     }
 
     mapping(bytes32 => Round) private _rounds;
-    mapping(uint256 => uint256) private _supplyAtMonthStart;
-    mapping(uint256 => uint256) private _mintedInMonth;
-    mapping(uint256 => bool) private _supplySnapshotted;
 
     /*//////////////////////////////////////////////////////////////
                               CONSTRUCTOR
@@ -139,35 +126,16 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
         }
         if (block.timestamp < _windowEnd(r)) revert ChallengeWindowNotExpired();
 
-        uint256 monthId = MonthlyMintCap.monthIdOf(block.timestamp);
-
-        if (!_supplySnapshotted[monthId]) {
-            _supplyAtMonthStart[monthId] = token.totalSupply();
-            _supplySnapshotted[monthId] = true;
-        }
-
         uint256 totalMint;
         for (uint256 i = 0; i < r.amounts.length; i++) {
             totalMint += r.amounts[i];
         }
 
-        uint256 supplyRef = _supplyAtMonthStart[monthId];
-        uint256 alreadyMinted = _mintedInMonth[monthId];
-        if (!MonthlyMintCap.isMintAdmissible(supplyRef, alreadyMinted, totalMint)) {
-            revert MonthlyCapExceeded({
-                monthId: monthId,
-                cap: MonthlyMintCap.capFor(supplyRef),
-                alreadyMinted: alreadyMinted,
-                requested: totalMint
-            });
-        }
-
-        _mintedInMonth[monthId] = alreadyMinted + totalMint;
         r.status = RoundStatus.Executed;
 
-        // Effects → Interactions: every state change (status, mintedInMonth) is committed
-        // BEFORE any mint call. Token.mint() in OpenZeppelin v5 does not call back into the
-        // recipient, so reentrancy is structurally impossible; nonReentrant is defense-in-depth.
+        // Effects → Interactions: the status change is committed BEFORE any mint call.
+        // Token.mint() in OpenZeppelin v5 does not call back into the recipient, so
+        // reentrancy is structurally impossible; nonReentrant is defense-in-depth.
         for (uint256 i = 0; i < r.beneficiaries.length; i++) {
             token.mint(r.beneficiaries[i], r.amounts[i]);
         }
@@ -197,20 +165,6 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
         bytes32 roundHash
     ) external view returns (RoundStatus) {
         return _rounds[roundHash].status;
-    }
-
-    /// @inheritdoc IRoundRegistry
-    function supplyAtMonthStart(
-        uint256 monthId
-    ) external view returns (uint256) {
-        return _supplyAtMonthStart[monthId];
-    }
-
-    /// @inheritdoc IRoundRegistry
-    function mintedInMonth(
-        uint256 monthId
-    ) external view returns (uint256) {
-        return _mintedInMonth[monthId];
     }
 
     /// @notice Returns the round's static fields (ipfsUri, proposedAt, challengeWindowDays,

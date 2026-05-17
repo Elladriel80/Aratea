@@ -209,9 +209,8 @@ forge script script/ExecuteRound.s.sol:ExecuteRound \
 This mints the 34 039 500 AUG-POC tokens to the founder EOA. After execution:
 - The round status becomes `Executed` (terminal).
 - `token.totalSupply()` becomes `34_039_500 * 10^18`.
-- The first month's snapshot is captured at `0` (genesis exception), so
-  `MonthlyMintCap` does not bind for this month. From the next UTC month
-  onward, the 10% cap kicks in normally.
+- No on-chain emission cap is enforced after the genesis mint; the registry
+  simply mints what the off-chain ratified rounds prescribe.
 
 ## 6. Mainnet flow (later)
 

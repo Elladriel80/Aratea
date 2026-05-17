@@ -9,7 +9,10 @@ import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 /// @title  AugPocToken — Aratea Phase 1 labor-value token (AUG-POC)
 /// @notice ERC-20 token representing the labor-value pool of the Aratea protocol during Phase 1.
 ///         Issuance is regulated externally by RoundRegistry (M3), which holds MINTER_ROLE and
-///         enforces the 10% monthly cap derived from circulating supply.
+///         mints only amounts ratified by the off-chain monthly round process. No on-chain
+///         emission cap is enforced; quality is guaranteed off-chain by the valuation rubric,
+///         the token-weighted vote on individual valuations above 0.01 BTC, the new-entrant
+///         cooldown, the slashing mechanism, and the annual audit (white paper §7.7).
 /// @dev    18 decimals (Ethereum standard). The "1 sat = 1 token" convention is imposed at mint
 ///         time by the agent that values contributions in sats: RoundRegistry calls mint() with
 ///         `amount = sats * 10^18`. The decimal count is independent of the convention.
@@ -44,8 +47,9 @@ contract AugPocToken is ERC20, ERC20Permit, AccessControl, Pausable {
     }
 
     /// @notice Mint `amount` tokens to `to`. Restricted to MINTER_ROLE.
-    /// @dev    No cap is enforced here — the caller (RoundRegistry on mainnet) is responsible for
-    ///         enforcing the 10% monthly cap. Mint is intentionally NOT blocked by pause.
+    /// @dev    No cap is enforced here, and no cap is enforced by the caller either. The
+    ///         off-chain monthly round process is the sole quality gate on issuance volume.
+    ///         Mint is intentionally NOT blocked by pause.
     function mint(
         address to,
         uint256 amount

@@ -6,7 +6,7 @@
 
 ## 1. Scope
 
-This document covers the on-chain attack surface of the Phase 1 contracts (`AugPocToken`, `RoundRegistry`, `MonthlyMintCap`) deployed on Arbitrum Sepolia.
+This document covers the on-chain attack surface of the Phase 1 contracts (`AugPocToken`, `RoundRegistry`) deployed on Arbitrum Sepolia.
 
 It does **not** cover: off-chain agent integrity, IPFS pinning durability, Safe signer key management practices, or the social-layer challenge process. Those have their own threat models and live outside the contract code.
 
@@ -14,9 +14,9 @@ It does **not** cover: off-chain agent integrity, IPFS pinning durability, Safe 
 
 | Asset | Why it matters |
 |---|---|
-| `AugPocToken.totalSupply` integrity | Inflation beyond the 10 % monthly cap dilutes every existing holder. |
+| `AugPocToken.totalSupply` integrity | Mints must originate from a ratified round and only that round. No on-chain emission cap is enforced — quality is controlled by the off-chain process. |
 | `RoundRegistry` round records | Falsified history breaks accountability and the audit trail. |
-| `MINTER_ROLE` (and other privileged roles) | Direct mint authority. Compromise = unbounded inflation. |
+| `MINTER_ROLE` (and other privileged roles) | Direct mint authority. Compromise = unbounded inflation outside the round process. |
 | Beneficiary mint allocations | A round is supposed to mint to the wallets ratified off-chain — not to attacker-controlled addresses. |
 
 ## 3. Trust assumptions (in scope)
@@ -43,13 +43,13 @@ It does **not** cover: off-chain agent integrity, IPFS pinning durability, Safe 
 | `DEFAULT_ADMIN_ROLE` retained by deployer EOA after handoff | Deploy script transfers admin to the Safe, then deployer EOA renounces. Post-deploy script + script asserts no role granted to deployer. |
 | Safe threshold too low | Safe is created with M-of-N where M ≥ 2. Verified out-of-band before any role is granted. |
 
-### 5.2 Inflation beyond the 10 % monthly cap
+### 5.2 Mint outside the round process
 
 | Threat | Mitigation |
 |---|---|
-| `executeRound` mints more than allowed for the month | `MonthlyMintCap` is a pure library, exhaustively fuzzed (M2). `RoundRegistry` reverts on cap excess. Invariant test enforces sum of executed mints ≤ cap each month. |
-| Month boundary manipulation | Cap is computed from `block.timestamp` aligned to UTC month start. Drift of a few minutes does not enable a meaningful additional mint window. |
-| Cap snapshot taken at execute time instead of round-start | Spec: cap snapshot is `totalSupply` at start-of-month UTC. Documented in `MonthlyMintCap` natspec; tested in invariant suite. |
+| `MINTER_ROLE` granted to anything other than `RoundRegistry` | Deploy script + post-deploy invariant test verify role holder set is exactly `{RoundRegistry}`. |
+| `proposeRound` accepted with arbitrary beneficiaries / amounts that bypass off-chain ratification | Hash-bound commitment: `roundHash == keccak256(abi.encode(beneficiaries, amounts, ipfsUri))`. The off-chain ratified hash is the only one that can ever be executed. Tampering with arrays or URI yields a different hash, which the proposer must publicly commit. |
+| Inflation beyond what the rubric warrants | Out of scope on-chain by design — Aratea token is not designed to be traded on secondary markets, so a per-supply cap to protect a price is not relevant. Quality controls are off-chain: token-weighted vote on individual valuations above 0.01 BTC, new-entrant cooldown, slashing, annual audit (white paper §7.7; statuts art. 32 and art. 31). |
 
 ### 5.3 Round lifecycle abuse
 
@@ -82,9 +82,9 @@ It does **not** cover: off-chain agent integrity, IPFS pinning durability, Safe 
 
 | Category | Target | Tooling |
 |---|---|---|
-| Unit | ≥ 95 % line coverage on `AugPocToken`, `RoundRegistry`, `MonthlyMintCap` | `forge test`, `forge coverage` |
+| Unit | ≥ 95 % line coverage on `AugPocToken`, `RoundRegistry` | `forge test`, `forge coverage` |
 | Fuzz | 10 000 runs default per fuzz test | `forge test --fuzz-runs 10000` |
-| Invariants | Sum of executed mints in month M ≤ cap(M); no `Executed` round without prior `Proposed` + window expiration; `MINTER_ROLE` set held = {`RoundRegistry`} | `forge test` invariant tests |
+| Invariants | `token.totalSupply()` equals the sum of executed round amounts; no `Executed` round without prior `Proposed` + window expiration; `MINTER_ROLE` set held = {`RoundRegistry`} | `forge test` invariant tests |
 | Static analysis | No medium-or-higher Slither warning | `slither contracts/`, CI `fail-on: medium` |
 | Format check | `forge fmt --check` clean | CI |
 

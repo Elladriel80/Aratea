@@ -80,10 +80,13 @@ Le travail livré n'entre PAS dans la NAV (anti-circularité).
 **Conséquence — dilution des cash investors :** quand du travail est minté à la NAV courante, le supply augmente sans que le numérateur (cash + positions) ne bouge immédiatement. Le pari : le code livré crée du P&L Kalshi futur qui ramènera la NAV au-dessus.
 
 **Garde-fous :**
-- Cap mensuel global : ≤ 10 % du supply circulant minté par fenêtre.
-- Cap par apporteur : ≤ 30 % du mint mensuel.
-- Valuations individuelles > 0,01 BTC : passent automatiquement en vote panel (même sans contestation).
-- Slashing : tokens claw-back-ables sur 6 mois en cas de fraude établie par vote 67 %.
+
+Le token AUG-POC n'a pas vocation à être tradé sur marché secondaire — il représente une quote-part de la NAV et un droit de gouvernance. Les caps d'émission visent traditionnellement à protéger un prix de marché ; cette logique ne s'applique pas ici. Les garde-fous ci-dessous portent sur la **qualité du processus** (validation, fraude, audit) et non sur la vélocité d'émission. Aucun plafond mensuel global ni plafond par apporteur n'est imposé : la part minteable est intégralement déterminée par la valuation pondérée des contributions effectives.
+
+- **Vote token-weighted automatique** : toute valuation individuelle > 0,01 BTC est soumise au vote pondéré des holders avant mint, même sans contestation (modalités au §6 et §9).
+- **Cooldown nouveaux entrants** : première contribution mergée > 30 jours avant éligibilité au mint.
+- **Slashing** : tokens claw-back-ables sur 6 mois en cas de fraude établie par vote 67 %.
+- **Audit annuel** du rubric et des rounds passés, en assemblée holder.
 
 ## 8. Subscription / Redemption
 
@@ -116,3 +119,10 @@ Au lancement, deux choses simultanées dans la même fenêtre :
 2. **Premiers investisseurs cash** (s'il y en a). Apport BTC ou USDC, mint à NAV initiale 1 sat = 1 token.
 
 Voir le dry-run dans `rounds/archives/2026-05-genesis/` pour la première itération du moteur sur l'historique pré-open-source.
+
+## 12. Voir aussi
+
+- Architecture générale du projet → [`architecture.md`](architecture.md)
+- Moteur de valuation → [`value_engine.md`](value_engine.md)
+- **Projet de statuts FR** (art. 4 bis « Limite des engagements de couverture et principe de transparence radicale » + art. 32 « Moteur de valuation et émission de tokens » + art. 31 *Slashing*) → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
+- **Draft Articles of Association EN** → [`../../statuts-aratea-v0-projet-2026-05-16-EN.md`](../../statuts-aratea-v0-projet-2026-05-16-EN.md)

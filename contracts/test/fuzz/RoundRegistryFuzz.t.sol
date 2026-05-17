@@ -7,7 +7,6 @@ import {AugPocToken} from "../../src/token/AugPocToken.sol";
 import {RoundRegistry} from "../../src/rounds/RoundRegistry.sol";
 import {IAugPocToken} from "../../src/interfaces/IAugPocToken.sol";
 import {IRoundRegistry} from "../../src/interfaces/IRoundRegistry.sol";
-import {MonthlyMintCap} from "../../src/rounds/MonthlyMintCap.sol";
 
 /// @notice Property-based fuzzing of RoundRegistry. 10 000 runs per test.
 contract RoundRegistryFuzzTest is Test {
@@ -153,16 +152,15 @@ contract RoundRegistryFuzzTest is Test {
         registry.executeRound(h);
     }
 
-    /// @dev `executeRound` never produces total mintedInMonth above the snapshot-derived cap
-    ///      when the snapshot is non-zero.
-    function testFuzz_Execute_NeverExceedsCap(
+    /// @dev With the on-chain cap removed, executing a second round of arbitrary size in a
+    ///      subsequent month always succeeds — the only gates are status and window.
+    function testFuzz_Execute_AnyAmountAdmissibleAcrossMonths(
         uint128 firstMonthMint,
         uint128 secondMonthAttempt
     ) public {
         firstMonthMint = uint128(bound(firstMonthMint, 1e18, 1_000_000e18));
         secondMonthAttempt = uint128(bound(secondMonthAttempt, 1, type(uint96).max));
 
-        // First-month round (genesis): supply == 0, anything goes.
         address[] memory bens = new address[](1);
         bens[0] = makeAddr("genesis-ben");
         uint256[] memory amts = new uint256[](1);
@@ -175,10 +173,9 @@ contract RoundRegistryFuzzTest is Test {
         vm.prank(executor);
         registry.executeRound(h1);
 
-        // Move 45 days forward to enter a new UTC month.
+        // Move 45 days forward to cross a UTC month boundary — used to trigger the cap.
         vm.warp(block.timestamp + 45 days);
 
-        // Try to execute a second-month round.
         bens[0] = makeAddr("month2-ben");
         amts[0] = secondMonthAttempt;
         bytes32 h2 = keccak256(abi.encode(bens, amts, "ipfs://month2"));
@@ -187,22 +184,8 @@ contract RoundRegistryFuzzTest is Test {
         vm.warp(block.timestamp + 7 days);
 
         uint256 supplyBefore = token.totalSupply();
-        uint256 cap = (supplyBefore * 1000) / 10_000; // 10%
-
-        if (secondMonthAttempt <= cap) {
-            vm.prank(executor);
-            registry.executeRound(h2);
-            assertEq(token.totalSupply(), supplyBefore + secondMonthAttempt);
-        } else {
-            uint256 monthId = MonthlyMintCap.monthIdOf(block.timestamp);
-            vm.expectRevert(
-                abi.encodeWithSelector(
-                    IRoundRegistry.MonthlyCapExceeded.selector, monthId, cap, 0, uint256(secondMonthAttempt)
-                )
-            );
-            vm.prank(executor);
-            registry.executeRound(h2);
-            assertEq(token.totalSupply(), supplyBefore);
-        }
+        vm.prank(executor);
+        registry.executeRound(h2);
+        assertEq(token.totalSupply(), supplyBefore + secondMonthAttempt);
     }
 }
