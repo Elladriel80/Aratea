@@ -36,12 +36,28 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RUNS_DIR = REPO_ROOT / "predictor" / "runs_learning"
 LIVE_RUNS_DIR = REPO_ROOT / "predictor" / "runs"
+BACKTEST_RUNS_DIR = REPO_ROOT / "predictor" / "runs_backtest"
 FEATURES_MD = REPO_ROOT / "predictor" / "src" / "learning" / "FEATURES.md"
 PAPER_BETS_CSV = REPO_ROOT / "predictor" / "data" / "ledger" / "paper_bets.csv"
+PAPER_BETS_BACKTEST_CSV = (
+    REPO_ROOT / "predictor" / "data" / "ledger" / "paper_bets_backtest.csv"
+)
 OUTPUT_PATH = REPO_ROOT / "dashboard" / "public" / "predictor_manifest.json"
 
 # Phase 1 paper-bet target encoded in the discovery plan (50 resolved bets).
 PHASE_1_TARGET = 50
+
+# Hybrid effective-sample weight, ratified in
+# predictor/runs/CONVENTION.md sec.6.bis (alpha = 0.3, NAIVE-mode records
+# excluded from N_backtest).
+ALPHA_BACKTEST = 0.3
+
+# Cap on the number of runs embedded in the manifest. With PR widen-daily-capture
+# the live ledger reaches 10-25/day, and backtest replay can hit thousands.
+# The dashboard only renders a recent window in detail; older runs stay in the
+# ledger as the source of truth. The `*_total` fields next to each list give
+# the dashboard a count for "N more" pagination hints.
+MAX_RUNS_IN_MANIFEST = 100
 
 
 def _load_runs() -> list[dict[str, Any]]:
@@ -424,6 +440,146 @@ def _load_live_runs() -> list[dict[str, Any]]:
     return out
 
 
+def _normalize_backtest_run(report: dict[str, Any]) -> dict[str, Any] | None:
+    """Convert a schema "2-backtest" report.json into uniform dashboard shape.
+
+    Returns None if the report is not a backtest (schema mismatch) or
+    malformed. Output mirrors the keys the dashboard already expects from
+    live runs where possible, but adds backtest-specific fields:
+    `as_of_date`, `target_date`, `horizon_days`, `mode`, and the NAIVE
+    flag so the renderer can label NAIVE rows clearly.
+    """
+    if not isinstance(report, dict):
+        return None
+    if report.get("schema_version") != "2-backtest":
+        return None
+    markets = report.get("markets") or []
+    if not markets:
+        return None
+    market = markets[0]
+    models = report.get("models") or []
+    if not models:
+        return None
+    primary_model = models[0]
+
+    event = report.get("event") or {}
+    scoring_by_model = (report.get("scoring") or {}).get("by_model") or {}
+    primary_score = scoring_by_model.get(primary_model.get("name"), {})
+    resolution = market.get("resolution") or {}
+
+    naive = bool(
+        (primary_model.get("inputs_summary") or {}).get(
+            "naive_uses_current_forecast"
+        )
+    )
+
+    return {
+        "run_id": report.get("run_id"),
+        "schema_version": "2-backtest",
+        "type": "backtest",
+        "mode": report.get("mode"),
+        "ts_replay_utc": report.get("ts_replay_utc"),
+        "as_of_date": report.get("as_of_date"),
+        "target_date": report.get("target_date"),
+        "horizon_days": report.get("horizon_days"),
+        "event_ticker": event.get("ticker"),
+        "event_title": event.get("title"),
+        "series": event.get("series"),
+        "target_market_ticker": event.get("target_market_ticker"),
+        "models": [
+            {
+                "name": primary_model.get("name"),
+                "role": primary_model.get("role", "backtest"),
+                "method": primary_model.get("method"),
+                "p_yes": primary_model.get("p_yes"),
+                "brier": primary_score.get("brier"),
+                "log_loss": primary_score.get("log_loss"),
+                "won": primary_score.get("won"),
+                "point_in_time": bool(
+                    (primary_model.get("inputs_summary") or {}).get(
+                        "point_in_time"
+                    )
+                ),
+                "naive_uses_current_forecast": naive,
+            }
+        ],
+        "resolution": {
+            "status": "resolved",  # backtests are always on settled markets
+            "outcome": resolution.get("outcome"),
+            "winning_bin_ticker": resolution.get("winning_bin_ticker"),
+        },
+    }
+
+
+def _load_backtest_runs() -> list[dict[str, Any]]:
+    """Walk runs_backtest/<as_of_date>/<seq>/report.json, normalized."""
+    if not BACKTEST_RUNS_DIR.exists():
+        return []
+    out: list[dict[str, Any]] = []
+    for day_dir in sorted(BACKTEST_RUNS_DIR.iterdir()):
+        if not day_dir.is_dir():
+            continue
+        # Skip non-date entries (README.md sits at the root, not in a day dir,
+        # but we filter defensively anyway).
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", day_dir.name):
+            continue
+        for seq_dir in sorted(day_dir.iterdir()):
+            if not seq_dir.is_dir():
+                continue
+            report_file = seq_dir / "report.json"
+            if not report_file.exists():
+                continue
+            try:
+                data = json.loads(report_file.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as exc:
+                raise SystemExit(
+                    f"malformed backtest report.json at {report_file}: {exc}"
+                )
+            norm = _normalize_backtest_run(data)
+            if norm is not None:
+                out.append(norm)
+    # Chronological order by as_of_date then run_id sequence.
+    out.sort(key=lambda r: (r.get("as_of_date") or "", r.get("run_id") or ""))
+    return out
+
+
+def _backtest_ledger_summary() -> dict[str, Any]:
+    """Aggregate paper_bets_backtest.csv counters.
+
+    NAIVE-mode rows (`mode` starts with `replay_naive_`) are tallied
+    separately and explicitly EXCLUDED from `n_strict_point_in_time`,
+    per CONVENTION.md sec.6.bis: only strict point-in-time records
+    contribute to N_backtest in the hybrid effective sample.
+    """
+    if not PAPER_BETS_BACKTEST_CSV.exists():
+        return {
+            "n_total": 0,
+            "n_strict_point_in_time": 0,
+            "n_naive_excluded": 0,
+            "by_mode": {},
+        }
+    n_total = 0
+    n_strict = 0
+    n_naive = 0
+    by_mode: dict[str, int] = {}
+    with PAPER_BETS_BACKTEST_CSV.open("r", encoding="utf-8", newline="") as fh:
+        reader = csv.DictReader(fh)
+        for row in reader:
+            mode = (row.get("mode") or "").strip()
+            n_total += 1
+            by_mode[mode] = by_mode.get(mode, 0) + 1
+            if mode.startswith("replay_naive_"):
+                n_naive += 1
+            else:
+                n_strict += 1
+    return {
+        "n_total": n_total,
+        "n_strict_point_in_time": n_strict,
+        "n_naive_excluded": n_naive,
+        "by_mode": by_mode,
+    }
+
+
 def _paper_bets_summary() -> dict[str, Any]:
     """Aggregate counters from the paper-bet ledger. No row-level leakage."""
     if not PAPER_BETS_CSV.exists():
@@ -474,15 +630,61 @@ def main() -> int:
             break
 
     live_runs = _load_live_runs()
+    backtest_runs = _load_backtest_runs()
+    backtest_summary = _backtest_ledger_summary()
+
+    # Hybrid effective-sample size, per CONVENTION.md sec.6.bis.
+    # `n_live` here = resolved live runs (the same N counted toward §6 gate).
+    # `n_backtest_strict` excludes NAIVE-mode records (ensemble/forecast_blend).
+    n_live_resolved = paper_bets.get("n_resolved", 0)
+    n_backtest_strict = backtest_summary["n_strict_point_in_time"]
+    n_effective = n_live_resolved + ALPHA_BACKTEST * n_backtest_strict
+    hybrid_sample = {
+        "alpha_backtest": ALPHA_BACKTEST,
+        "n_live": n_live_resolved,
+        "n_backtest_strict": n_backtest_strict,
+        "n_backtest_naive_excluded": backtest_summary["n_naive_excluded"],
+        "n_effective": round(n_effective, 2),
+        "phase_1_target": PHASE_1_TARGET,
+        "phase_1_progress_live_only": f"{n_live_resolved}/{PHASE_1_TARGET}",
+        "convention_ref": "predictor/runs/CONVENTION.md sec.6.bis",
+        "note": (
+            "N_effective is for SECONDARY decisions only (feature-set "
+            "selection, reliability plots, complementary promotion check). "
+            "The Phase 1 go/no-go gate (CONVENTION.md sec.6) uses n_live "
+            "exclusively and ignores n_backtest_strict."
+        ),
+    }
+
+    # Cap the embedded list size so the static manifest stays small even when
+    # the live/backtest ledgers grow into the thousands. Keep the most recent
+    # MAX_RUNS_IN_MANIFEST entries; the dashboard renders these in detail and
+    # uses the `*_total` field for a "N more" pagination affordance.
+    live_runs_embedded = (
+        live_runs[-MAX_RUNS_IN_MANIFEST:]
+        if len(live_runs) > MAX_RUNS_IN_MANIFEST
+        else live_runs
+    )
+    backtest_runs_embedded = (
+        backtest_runs[-MAX_RUNS_IN_MANIFEST:]
+        if len(backtest_runs) > MAX_RUNS_IN_MANIFEST
+        else backtest_runs
+    )
 
     manifest = {
         "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "schema_version": 2,
+        "schema_version": 3,
         "features": features,
-        "runs": shaped_runs,             # learned-predictor training runs
-        "live_runs": live_runs,           # Kalshi paper trades (Run 001, 002, 003, ...)
+        "runs": shaped_runs,                       # learned-predictor training runs
+        "live_runs": live_runs_embedded,           # Kalshi paper trades (capped)
+        "live_runs_total": len(live_runs),
+        "backtest_runs": backtest_runs_embedded,   # backtest replay runs (capped)
+        "backtest_runs_total": len(backtest_runs),
         "paper_bets_summary": paper_bets,
+        "backtest_summary": backtest_summary,
+        "hybrid_sample": hybrid_sample,
         "kalshi_mid_reference": latest_kalshi_bench,
+        "max_runs_in_manifest": MAX_RUNS_IN_MANIFEST,
     }
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -491,8 +693,11 @@ def main() -> int:
     )
     print(
         f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT)} "
-        f"({len(shaped_runs)} training run(s), {len(live_runs)} live run(s), "
-        f"{len(features)} feature(s))"
+        f"({len(shaped_runs)} training run(s), "
+        f"{len(live_runs_embedded)}/{len(live_runs)} live run(s), "
+        f"{len(backtest_runs_embedded)}/{len(backtest_runs)} backtest run(s), "
+        f"{len(features)} feature(s), "
+        f"N_eff={hybrid_sample['n_effective']})"
     )
     return 0
 
