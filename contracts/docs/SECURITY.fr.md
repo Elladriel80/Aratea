@@ -6,7 +6,7 @@
 
 ## 1. Périmètre
 
-Ce document couvre la surface d'attaque on-chain des contracts Phase 1 (`AugPocToken`, `RoundRegistry`, `MonthlyMintCap`) déployés sur Arbitrum Sepolia.
+Ce document couvre la surface d'attaque on-chain des contracts Phase 1 (`AugPocToken`, `RoundRegistry`) déployés sur Arbitrum Sepolia.
 
 Il **ne couvre pas** : l'intégrité de l'agent off-chain, la durabilité du pinning IPFS, les pratiques de gestion des clés des signataires Safe, ou le processus de challenge au niveau social. Chacun a son propre threat model et vit en dehors du code des contracts.
 
@@ -14,9 +14,9 @@ Il **ne couvre pas** : l'intégrité de l'agent off-chain, la durabilité du pin
 
 | Actif | Pourquoi c'est critique |
 |---|---|
-| Intégrité de `AugPocToken.totalSupply` | Une inflation au-delà du cap mensuel de 10 % dilue chaque holder existant. |
+| Intégrité de `AugPocToken.totalSupply` | Les mints doivent venir d'un round ratifié et seulement de là. Aucun cap d'émission n'est imposé on-chain — la qualité est contrôlée par le processus off-chain. |
 | Enregistrements de rounds dans `RoundRegistry` | Un historique falsifié casse la responsabilité et l'audit trail. |
-| `MINTER_ROLE` (et autres rôles privilégiés) | Autorité directe de mint. Compromis = inflation illimitée. |
+| `MINTER_ROLE` (et autres rôles privilégiés) | Autorité directe de mint. Compromis = inflation illimitée hors du processus de round. |
 | Allocations de mint aux bénéficiaires | Un round est censé minter vers les wallets ratifiés off-chain — pas vers des adresses contrôlées par un attaquant. |
 
 ## 3. Hypothèses de confiance (dans le périmètre)
@@ -43,13 +43,13 @@ Il **ne couvre pas** : l'intégrité de l'agent off-chain, la durabilité du pin
 | `DEFAULT_ADMIN_ROLE` conservé par l'EOA déployeur après handoff | Le script de déploiement transfère l'admin au Safe, puis l'EOA déployeur renounce. Le script post-deploy assert qu'aucun rôle n'est accordé au déployeur. |
 | Seuil du Safe trop bas | Le Safe est créé avec M-sur-N où M ≥ 2. Vérifié hors-bande avant tout octroi de rôle. |
 
-### 5.2 Inflation au-delà du cap mensuel de 10 %
+### 5.2 Mint hors du processus de round
 
 | Menace | Mitigation |
 |---|---|
-| `executeRound` minte plus qu'autorisé pour le mois | `MonthlyMintCap` est une bibliothèque pure, fuzzée exhaustivement (M2). `RoundRegistry` revert sur excès de cap. Le test d'invariant impose la somme des mints exécutés ≤ cap chaque mois. |
-| Manipulation de la frontière de mois | Le cap est calculé depuis `block.timestamp` aligné sur le début de mois UTC. Un drift de quelques minutes ne permet pas une fenêtre de mint additionnelle significative. |
-| Snapshot du cap pris à l'execute au lieu du début du round | Spec : le snapshot du cap est `totalSupply` au début du mois UTC. Documenté dans le natspec de `MonthlyMintCap` ; testé dans la suite d'invariants. |
+| `MINTER_ROLE` accordé à autre chose que `RoundRegistry` | Le script de déploiement + le test d'invariant post-deploy vérifient que l'ensemble des détenteurs du rôle est exactement `{RoundRegistry}`. |
+| `proposeRound` accepté avec bénéficiaires / montants arbitraires contournant la ratification off-chain | Engagement par hash : `roundHash == keccak256(abi.encode(beneficiaries, amounts, ipfsUri))`. Le hash ratifié off-chain est le seul qui puisse être exécuté. Toute manipulation des arrays ou de l'URI produit un hash différent, que le proposeur doit avoir publiquement engagé. |
+| Inflation au-delà de ce que le rubric justifie | Hors-périmètre on-chain par design — le token Aratea n'a pas vocation à être tradé sur marché secondaire, donc un cap référencé au supply pour protéger un prix est sans objet. Les contrôles qualité sont off-chain : vote pondéré des holders sur toute valuation > 0,01 BTC, cooldown nouveaux entrants, slashing, audit annuel (white paper §7.7 ; statuts art. 32 et art. 31). |
 
 ### 5.3 Abus du cycle de vie d'un round
 
@@ -82,9 +82,9 @@ Il **ne couvre pas** : l'intégrité de l'agent off-chain, la durabilité du pin
 
 | Catégorie | Cible | Outillage |
 |---|---|---|
-| Unit | ≥ 95 % de couverture de lignes sur `AugPocToken`, `RoundRegistry`, `MonthlyMintCap` | `forge test`, `forge coverage` |
+| Unit | ≥ 95 % de couverture de lignes sur `AugPocToken`, `RoundRegistry` | `forge test`, `forge coverage` |
 | Fuzz | 10 000 runs par défaut par test fuzz | `forge test --fuzz-runs 10000` |
-| Invariants | Somme des mints exécutés dans le mois M ≤ cap(M) ; pas de round `Executed` sans `Proposed` + expiration de la fenêtre ; ensemble `MINTER_ROLE` détenu = {`RoundRegistry`} | tests d'invariant `forge test` |
+| Invariants | `token.totalSupply()` égal à la somme des montants exécutés ; pas de round `Executed` sans `Proposed` + expiration de la fenêtre ; ensemble `MINTER_ROLE` détenu = {`RoundRegistry`} | tests d'invariant `forge test` |
 | Analyse statique | Aucun warning Slither de niveau medium ou supérieur | `slither contracts/`, CI `fail-on: medium` |
 | Format check | `forge fmt --check` clean | CI |
 

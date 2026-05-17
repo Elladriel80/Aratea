@@ -10,7 +10,7 @@ Construire la plus petite couche on-chain possible qui ratifie et exécute les r
 
 ## 2. Ce qui vit on-chain en Phase 1
 
-Trois primitives :
+Deux primitives :
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -20,17 +20,12 @@ Trois primitives :
 │        │ MINTER_ROLE                                            │
 │        │                                                        │
 │   RoundRegistry        (propose / challenge / execute / cancel) │
-│        │                                                        │
-│        │ utilise                                                │
-│        ▼                                                        │
-│   MonthlyMintCap       (bibliothèque pure — math du cap 10%)    │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 - **`AugPocToken`** est un ERC-20 OpenZeppelin standard avec `AccessControl`, `Pausable` et `ERC20Permit`. 18 décimales. Pas de `cap` fixe. Le seul `MINTER_ROLE` est attribué au `RoundRegistry` (pour qu'`executeRound()` puisse appeler `token.mint(...)`).
-- **`RoundRegistry`** stocke des structs `Round`, expose les quatre fonctions de cycle de vie, et applique le cap mensuel de 10 % à chaque `executeRound()`. Il ne détient aucun fonds.
-- **`MonthlyMintCap`** est une bibliothèque pure. À partir de `(supplyEnDébutDeMois, déjàMintéCeMois, mintDemandé)`, elle retourne si la demande passe et combien de marge il reste.
+- **`RoundRegistry`** stocke des structs `Round` et expose les quatre fonctions de cycle de vie. Il ne détient aucun fonds et n'applique aucun plafond d'émission on-chain. Le token Aratea n'a pas vocation à être tradé sur marché secondaire, donc un cap référencé au supply pour protéger un prix est sans objet. La qualité de l'émission est garantie off-chain par le rubric de valuation, le vote pondéré des holders sur toute valuation individuelle > 0,01 BTC, le cooldown nouveaux entrants, le slashing et l'audit annuel (white paper §7.7 ; statuts art. 32 et art. 31).
 
 ## 3. Ce qui reste off-chain en Phase 1
 
@@ -71,8 +66,9 @@ Trois primitives :
 
 ## 8. Ce que le code des contracts ne fait *pas*
 
-- **Ne calcule pas la NAV.** La NAV est off-chain ; le contract applique seulement le cap sur `totalSupply`.
+- **Ne calcule pas la NAV.** La NAV est off-chain.
 - **Ne valorise pas les contributions.** C'est le job de l'agent. Le contract fait confiance aux paires `(beneficiary, amount)` fournies à `proposeRound`.
+- **N'applique aucun cap d'émission.** Pas de constante `MAX_MONTHLY_MINT` ni `MAX_CONTRIBUTOR_SHARE`. La qualité de l'émission est un garde-fou de processus off-chain.
 - **Ne gate pas les transferts.** `AugPocToken` est un ERC-20 librement transférable. Pas de KYC, pas d'allowlist, pas de fee de transfert.
 - **Ne juge pas les challenges.** Il enregistre l'existence d'un challenge (event) et laisse le Safe résoudre via `cancelRound` ou en laissant la fenêtre expirer.
 

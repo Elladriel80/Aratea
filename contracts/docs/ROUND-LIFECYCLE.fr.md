@@ -31,8 +31,7 @@
         │            │ block.timestamp ≥ proposedAt + challengeWindowDays
         │            │ ET status == Proposed
         │            │ executeRound() — ROUND_EXECUTOR_ROLE
-        │            │ → mint vers les bénéficiaires
-        │            │ → applique le cap mensuel 10 %
+        │            │ → mint vers les bénéficiaires (pas de cap on-chain)
         │            ▼
         │       ┌──────────┐
         └──cancelRound()──│ Executed │ (terminal)
@@ -45,7 +44,7 @@
 |---|---|---|---|---|
 | `None` | `proposeRound` | `ROUND_PROPOSER_ROLE` | `roundHash` unique ; `beneficiaries.length == amounts.length` ; chaque `amount > 0` ; `challengeWindowDays > 0` | `Proposed` |
 | `Proposed` | `challengeRound` | n'importe qui | `block.timestamp < proposedAt + challengeWindowDays * 1 days` | `Challenged` |
-| `Proposed` | `executeRound` | `ROUND_EXECUTOR_ROLE` | `block.timestamp ≥ proposedAt + challengeWindowDays * 1 days` ; cap 10 % non dépassé | `Executed` |
+| `Proposed` | `executeRound` | `ROUND_EXECUTOR_ROLE` | `block.timestamp ≥ proposedAt + challengeWindowDays * 1 days` | `Executed` |
 | `Proposed` | `cancelRound` | `ROUND_CANCELLER_ROLE` | toujours | `Cancelled` |
 | `Challenged` | `cancelRound` | `ROUND_CANCELLER_ROLE` | toujours | `Cancelled` |
 | `Challenged` | (aucune — le Safe doit `cancelRound` si le challenge est validé, sinon laisser la fenêtre expirer et `executeRound`) | — | — | — |
@@ -98,19 +97,15 @@ event RoundCancelled(
 );
 ```
 
-## 5. Timing de l'application du cap
+## 5. Pas de cap d'émission on-chain
 
-Le cap mensuel de 10 % est vérifié **au moment de `executeRound`**, pas au moment de `proposeRound`. Raison :
+`RoundRegistry` n'applique aucun cap mensuel ni cap par apporteur. Le token Aratea n'a pas vocation à être tradé sur marché secondaire, donc un cap référencé au supply pour protéger un prix est sans objet. La qualité est garantie off-chain par le rubric de valuation, le vote pondéré des holders sur toute valuation individuelle > 0,01 BTC, le cooldown nouveaux entrants, le slashing et l'audit annuel (white paper §7.7 ; statuts art. 32 et art. 31).
 
-- Un round peut être proposé en mois M-1 avec une fenêtre de challenge de 7 jours qui se ferme en mois M ; le supply pertinent pour le cap est celui du début **du mois pendant lequel le mint a lieu**.
-- Plusieurs rounds proposés dans le même mois consomment dans le même bucket mensuel, dans l'ordre d'exécution.
-- Un round dont l'exécution pousserait le mois au-delà du cap revert ; le Safe peut soit le cancel, soit attendre la frontière du mois suivant.
+L'ancienne bibliothèque on-chain `MonthlyMintCap` et l'état associé (snapshot au début du mois, accumulateur des mints par mois, custom error `MonthlyCapExceeded`) ont été retirés.
 
-## 6. Cas spécial du round genesis
+## 6. Round genesis
 
-`2026-05-genesis` (34 039 500 tokens à `@Elladriel80`) part avec `challengeWindowDays = 30` au lieu du 7 par défaut. Le cap mensuel de 10 % n'est **pas applicable** au round genesis car `totalSupply` est 0 avant son exécution (tout mint est "100 % de zéro", ce que la math du cap traite comme une branche spéciale "premier round").
-
-Pour la spec : `MonthlyMintCap` retourne "pas de cap qui contraint" quand `totalSupplyAtMonthStart == 0`. Le tout premier mint du protocole n'est pas contraint par cette règle. C'est intentionnel et c'est la seule exception.
+`2026-05-genesis` (34 039 500 tokens à `@Elladriel80`) part avec `challengeWindowDays = 30` au lieu du 7 par défaut. La fenêtre étendue s'applique à ce seul round pour laisser le temps aux premiers prospects investisseurs d'examiner la valuation historique du travail pré-open-source de JS ; c'est la seule raison qu'elle diffère des rounds suivants.
 
 ## 7. Pont off-chain ↔ on-chain
 

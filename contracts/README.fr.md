@@ -12,9 +12,8 @@ Phase 1 — *active*. Jalons M0 à M5. Voir [`/docs/architecture.md`](../docs/ar
 
 Les primitives on-chain qui ratifient et exécutent les rounds mensuels déjà produits off-chain (voir [`/rounds/`](../rounds/)) :
 
-1. **`AugPocToken`** — ERC-20 avec `ERC20Permit`, `AccessControl` et `Pausable`. 18 décimales (standard Ethereum). Pas de cap fixe — l'émission est régulée par `RoundRegistry` qui applique le cap mensuel de 10 %. Quatre rôles : `DEFAULT_ADMIN_ROLE`, `MINTER_ROLE` (RoundRegistry), `PAUSER_ROLE` (Safe), `BURNER_ROLE` (réservé au futur `AraConverter` qui exécutera la conversion `AUG-POC → ARA` au lancement DAO en Phase 2 — cf. white paper §7.2). La pause bloque uniquement les transferts d'utilisateur à utilisateur ; mint et burn restent opérationnels.
-2. **`RoundRegistry`** — cycle de vie propose / challenge / execute / cancel des rounds mensuels de mint. Chaque round est ancré à son hash IPFS (le snapshot du `valuation_report.md` dans `/rounds/archives/<round-id>/`).
-3. **`MonthlyMintCap`** — bibliothèque pure qui calcule le cap mensuel de 10 % à partir du supply circulant en début de mois calendaire (UTC).
+1. **`AugPocToken`** — ERC-20 avec `ERC20Permit`, `AccessControl` et `Pausable`. 18 décimales (standard Ethereum). Pas de cap de supply fixe. Quatre rôles : `DEFAULT_ADMIN_ROLE`, `MINTER_ROLE` (RoundRegistry), `PAUSER_ROLE` (Safe), `BURNER_ROLE` (réservé au futur `AraConverter` qui exécutera la conversion `AUG-POC → ARA` au lancement DAO en Phase 2 — cf. white paper §7.2). La pause bloque uniquement les transferts d'utilisateur à utilisateur ; mint et burn restent opérationnels.
+2. **`RoundRegistry`** — cycle de vie propose / challenge / execute / cancel des rounds mensuels de mint. Chaque round est ancré à son hash IPFS (le snapshot du `valuation_report.md` dans `/rounds/archives/<round-id>/`). Pas de cap d'émission on-chain — le token Aratea n'a pas vocation à être tradé, donc un cap référencé au supply pour protéger un prix est sans objet. La qualité est garantie off-chain par le rubric de valuation, le vote pondéré des holders sur toute valuation individuelle > 0,01 BTC, le cooldown nouveaux entrants, le slashing et l'audit annuel (white paper §7.7).
 
 Hors périmètre Phase 1 (scaffoldé, pas implémenté) : token de gouvernance `ARA` + `Governor`, oracle NAV automatisé, contrats paramétriques de mutuelle, vote on-chain des Top-X holders.
 
@@ -24,7 +23,7 @@ Hors périmètre Phase 1 (scaffoldé, pas implémenté) : token de gouvernance `
 contracts/
 ├── src/
 │   ├── token/                      # M1 — AugPocToken
-│   ├── rounds/                     # M2 (MonthlyMintCap) + M3 (RoundRegistry)
+│   ├── rounds/                     # M3 — RoundRegistry
 │   └── interfaces/                 # IAugPocToken, IRoundRegistry
 ├── test/
 │   ├── unit/                       # ≥ 95 % de couverture sur la logique métier
@@ -71,7 +70,7 @@ La CI exécute les mêmes commandes sur chaque PR — l'install local n'est néc
 - Tous les rôles privilégiés (`MINTER_ROLE`, `PAUSER_ROLE`, `ROUND_PROPOSER_ROLE`, `ROUND_EXECUTOR_ROLE`) sont détenus par un multisig Safe sur Arbitrum Sepolia. **Jamais une EOA.**
 - Pas d'upgradeabilité au démarrage. Les bug fixes sont déployés en tant que nouveaux contracts + migration.
 - Pattern Checks-Effects-Interactions strict, `ReentrancyGuard` sur toutes les surfaces de transfert externe, `SafeERC20` pour toutes les interactions ERC20.
-- Tests obligatoires à trois niveaux : unit (≥ 95 % de couverture), fuzz (10 000 runs), invariants sur les propriétés critiques (supply ≤ cap mensuel ; pas de mint sans fenêtre de challenge expirée ; `MINTER_ROLE` détenu uniquement par le Safe).
+- Tests obligatoires à trois niveaux : unit (≥ 95 % de couverture), fuzz (10 000 runs), invariants sur les propriétés critiques (`token.totalSupply()` égal à la somme des montants exécutés ; pas de mint sans fenêtre de challenge expirée ; `MINTER_ROLE` détenu uniquement par le Safe).
 
 Threat model complet dans [`docs/SECURITY.fr.md`](docs/SECURITY.fr.md).
 
@@ -99,7 +98,7 @@ Threat model complet dans [`docs/SECURITY.fr.md`](docs/SECURITY.fr.md).
    ┌────────────────────┐                    ▼
    │ Safe.executeRound  │              ┌─────────────────────┐
    │  → mint aux bens   │              │ Safe.cancelRound() │
-   │  → check cap 10 %  │              └─────────────────────┘
+   │  (pas de cap on-chain)│            └─────────────────────┘
    └────────────────────┘
 ```
 
@@ -111,7 +110,7 @@ Détail dans [`docs/ROUND-LIFECYCLE.fr.md`](docs/ROUND-LIFECYCLE.fr.md).
 |---|---|---|
 | **M0** | Scaffold Foundry, CI, threat model, doc bilingue | ✅ fait |
 | **M1** | `AugPocToken` (ERC20 + Permit + AccessControl + Pausable + 4 rôles) | ✅ fait |
-| **M2** | Bibliothèque `MonthlyMintCap` + fuzzing exhaustif | ✅ fait |
+| **M2** | ~~Bibliothèque `MonthlyMintCap`~~ — retirée 2026-05-17 (pas de cap on-chain, cf. §7.7) | — |
 | **M3** | `RoundRegistry` (propose / challenge / execute / cancel) | ✅ fait |
 | **M4** | Scripts de déploiement Arbitrum Sepolia + helpers opérationnels | ✅ fait |
 | **M5** | Dashboard read-only (Next.js + viem) | en attente |

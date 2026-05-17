@@ -8,13 +8,10 @@ import {AugPocToken} from "../../src/token/AugPocToken.sol";
 import {RoundRegistry} from "../../src/rounds/RoundRegistry.sol";
 import {IAugPocToken} from "../../src/interfaces/IAugPocToken.sol";
 import {IRoundRegistry} from "../../src/interfaces/IRoundRegistry.sol";
-import {MonthlyMintCap} from "../../src/rounds/MonthlyMintCap.sol";
 
 /// @title  RoundRegistry unit tests
-/// @notice Covers the full propose / challenge / execute / cancel state machine, the lazy
-///         supply snapshot, the 10% monthly cap enforcement (including the genesis
-///         exception), role gates, hash integrity, and view functions. Targets ≥ 95%
-///         coverage on RoundRegistry.sol.
+/// @notice Covers the full propose / challenge / execute / cancel state machine, role gates,
+///         hash integrity, and view functions. Targets ≥ 95% coverage on RoundRegistry.sol.
 contract RoundRegistryTest is Test {
     AugPocToken internal token;
     RoundRegistry internal registry;
@@ -298,12 +295,6 @@ contract RoundRegistryTest is Test {
         assertEq(token.balanceOf(alice), 1000e18);
         assertEq(token.balanceOf(bob), 2000e18);
         assertEq(token.totalSupply(), 3000e18);
-
-        // Snapshot was taken at supply == 0, so the cap remained "no constraint" for the
-        // entire month — no MonthlyCapExceeded would have fired.
-        uint256 monthId = MonthlyMintCap.monthIdOf(block.timestamp);
-        assertEq(registry.supplyAtMonthStart(monthId), 0);
-        assertEq(registry.mintedInMonth(monthId), 3000e18);
     }
 
     function test_Execute_RevertsBeforeWindowExpiry() public {
@@ -367,17 +358,16 @@ contract RoundRegistryTest is Test {
         registry.executeRound(h);
     }
 
-    function test_Execute_SubsequentRoundUsesSnapshot_NotLatestSupply() public {
-        // First round: small mint when supply was zero. Snapshot stored as 0.
+    function test_Execute_MultipleRoundsAccumulateSupply() public {
+        // First round: 3000e18 minted.
         bytes32 h1 = _proposeBasicRound();
         vm.warp(block.timestamp + 7 days);
         vm.prank(executor);
         registry.executeRound(h1);
         assertEq(token.totalSupply(), 3000e18);
 
-        // Second round, same UTC month, would be capped at 10% of supply at month start (=0)
-        // EXCEPT for the genesis exception: when snapshot == 0, every amount is admissible.
-        // We verify the state machine still works.
+        // Second round in the same window, arbitrarily large amount — no cap means it goes
+        // through. State machine integrity is the only thing verified here.
         address[] memory bens = new address[](1);
         bens[0] = carol;
         uint256[] memory amts = new uint256[](1);
@@ -391,58 +381,24 @@ contract RoundRegistryTest is Test {
         vm.prank(executor);
         registry.executeRound(h2);
         assertEq(token.balanceOf(carol), 100_000e18);
+        assertEq(token.totalSupply(), 103_000e18);
     }
 
-    function test_Execute_SecondMonthCapBindsAfterGenesis() public {
-        // Genesis month: snapshot is 0, anything goes.
+    function test_Execute_LargeMintAcrossMonths() public {
         bytes32 h1 = _proposeBasicRound();
         vm.warp(block.timestamp + 7 days);
         vm.prank(executor);
         registry.executeRound(h1);
-        assertEq(token.totalSupply(), 3000e18);
 
-        // Move clock to the next UTC month (45 days from initial proposal). New snapshot
-        // will be taken, capturing the current totalSupply (3000e18). Cap = 300e18.
+        // Crossing the UTC month boundary used to bind a 10% cap. With caps removed, the
+        // next round of any size must still succeed.
         vm.warp(block.timestamp + 45 days);
 
-        // Try to mint 400e18 — should exceed the cap.
         address[] memory bens = new address[](1);
         bens[0] = carol;
         uint256[] memory amts = new uint256[](1);
         amts[0] = 400e18;
-        string memory uri = "ipfs://month2-too-big";
-        bytes32 h2 = _hashOf(bens, amts, uri);
-        vm.prank(proposer);
-        registry.proposeRound(h2, bens, amts, uri, 7);
-        vm.warp(block.timestamp + 7 days);
-
-        uint256 expectedMonthId = MonthlyMintCap.monthIdOf(block.timestamp);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                IRoundRegistry.MonthlyCapExceeded.selector,
-                expectedMonthId,
-                300e18, // cap = 10% of 3000e18
-                0,
-                400e18
-            )
-        );
-        vm.prank(executor);
-        registry.executeRound(h2);
-    }
-
-    function test_Execute_SecondMonthCapAllows10PercentExactly() public {
-        bytes32 h1 = _proposeBasicRound();
-        vm.warp(block.timestamp + 7 days);
-        vm.prank(executor);
-        registry.executeRound(h1);
-
-        vm.warp(block.timestamp + 45 days);
-
-        address[] memory bens = new address[](1);
-        bens[0] = carol;
-        uint256[] memory amts = new uint256[](1);
-        amts[0] = 300e18; // exactly 10% of 3000e18
-        string memory uri = "ipfs://month2-exact-cap";
+        string memory uri = "ipfs://month2";
         bytes32 h2 = _hashOf(bens, amts, uri);
         vm.prank(proposer);
         registry.proposeRound(h2, bens, amts, uri, 7);
@@ -450,7 +406,7 @@ contract RoundRegistryTest is Test {
 
         vm.prank(executor);
         registry.executeRound(h2);
-        assertEq(token.balanceOf(carol), 300e18);
+        assertEq(token.balanceOf(carol), 400e18);
     }
 
     /*//////////////////////////////////////////////////////////////

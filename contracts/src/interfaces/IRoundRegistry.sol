@@ -5,7 +5,10 @@ pragma solidity 0.8.24;
 /// @notice The on-chain anchor point for the monthly mint rounds described in white paper §7.3.
 ///         Each round is committed under a `roundHash` derived off-chain, traverses a
 ///         lifecycle (Proposed → Challenged? → Executed | Cancelled), and on execution
-///         mints AUG-POC tokens to ratified beneficiaries within the 10% monthly cap.
+///         mints AUG-POC tokens to ratified beneficiaries. No emission cap is enforced
+///         on-chain — quality is guaranteed by the off-chain valuation rubric, the
+///         token-weighted vote on individual valuations above 0.01 BTC, the new-entrant
+///         cooldown, the slashing mechanism, and the annual audit (white paper §7.7).
 interface IRoundRegistry {
     /*//////////////////////////////////////////////////////////////
                                   TYPES
@@ -61,7 +64,6 @@ interface IRoundRegistry {
     error RoundNotCancellable();
     error ChallengeWindowNotExpired();
     error ChallengeWindowExpired();
-    error MonthlyCapExceeded(uint256 monthId, uint256 cap, uint256 alreadyMinted, uint256 requested);
 
     /*//////////////////////////////////////////////////////////////
                               FUNCTIONS
@@ -90,7 +92,7 @@ interface IRoundRegistry {
     ) external;
 
     /// @notice Execute a round whose challenge window has expired. Mints tokens to every
-    ///         beneficiary, enforces the 10% monthly cap, marks the round Executed.
+    ///         beneficiary and marks the round Executed.
     /// @dev    Caller must hold ROUND_EXECUTOR_ROLE (the Safe multisig).
     function executeRound(
         bytes32 roundHash
@@ -112,15 +114,4 @@ interface IRoundRegistry {
     function statusOf(
         bytes32 roundHash
     ) external view returns (RoundStatus);
-
-    /// @notice Returns the snapshot of total supply at the start of `monthId`, or 0 if
-    ///         no round has ever executed in that month.
-    function supplyAtMonthStart(
-        uint256 monthId
-    ) external view returns (uint256);
-
-    /// @notice Returns the cumulative amount minted in `monthId` across all executed rounds.
-    function mintedInMonth(
-        uint256 monthId
-    ) external view returns (uint256);
 }

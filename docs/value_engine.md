@@ -104,9 +104,9 @@ Voir le dry-run dans `rounds/archives/2026-05-genesis/` pour la première itéra
 
 ## 7. Garde-fous opérationnels
 
-- **Cap mensuel global** : ≤ 10 % supply circulant.
-- **Cap par apporteur** : ≤ 30 % du mint mensuel.
-- **Vote auto pour grosses valuations** : tout apporteur valorisé > 0,01 BTC dans un round passe en vote panel même sans contestation.
+Le token Aratea n'a pas vocation à être tradé sur marché secondaire — il représente une quote-part de la NAV et un droit de gouvernance. Les caps d'émission visent traditionnellement à protéger un prix de marché ; cette logique ne s'applique pas ici. Les garde-fous ci-dessous portent sur la qualité du processus (validation, fraude, audit) et non sur la vélocité d'émission. Aucun plafond mensuel global ni plafond par apporteur n'est imposé.
+
+- **Vote token-weighted automatique** pour grosses valuations : tout apporteur valorisé > 0,01 BTC dans un round passe en vote pondéré des holders, même sans contestation.
 - **Cooldown nouveaux entrants** : première contribution mergée > 30 jours avant éligibilité au mint.
 - **Slashing** : claw-back sur 6 mois en cas de fraude établie par vote 67 %.
 - **Audit annuel** : rubric, grille, valuations passées revus en assemblée holder.
@@ -128,3 +128,10 @@ Voir le dry-run dans `rounds/archives/2026-05-genesis/` pour la première itéra
 ## 10. Implémentation actuelle
 
 Phase 1 MVP en GitHub Actions + multisig Safe. Pas de smart contract custom encore. Voir `rounds/scripts/` pour le squelette de la GitHub Action de collecte, `rounds/agent/PROMPT.md` pour le prompt système, et `contracts/README.md` pour la roadmap des contracts à venir.
+
+## 11. Voir aussi
+
+- Architecture générale du projet → [`architecture.md`](architecture.md)
+- Modèle de tokens (§7.7 Garde-fous) → [`token_model.md`](token_model.md)
+- **Projet de statuts FR** (art. 4 bis transparence + art. 32 moteur de valuation + art. 31 slashing) → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
+- **Draft Articles of Association EN** → [`../../statuts-aratea-v0-projet-2026-05-16-EN.md`](../../statuts-aratea-v0-projet-2026-05-16-EN.md)
