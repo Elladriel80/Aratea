@@ -52,6 +52,75 @@ export interface PaperBetsSummary {
   phase_1_counter: string;
 }
 
+/**
+ * Hybrid effective sample size (CONVENTION §6.bis). Reports N_live, the strict
+ * point-in-time backtest count, the NAIVE-excluded count, and the resulting
+ * `N_effective = N_live + α · N_backtest_strict`. Used for *secondary*
+ * decisions only — the Phase 1 go/no-go gate stays strictly on N_live.
+ */
+export interface HybridSample {
+  alpha_backtest: number;
+  n_live: number;
+  n_backtest_strict: number;
+  n_backtest_naive_excluded: number;
+  n_effective: number;
+  phase_1_target: number;
+  phase_1_progress_live_only: string;
+  convention_ref: string;
+  note: string;
+}
+
+/** Aggregate counters on the backtest ledger (no per-record detail). */
+export interface BacktestSummary {
+  n_total: number;
+  n_strict_point_in_time: number;
+  n_naive_excluded: number;
+  by_mode: Record<string, number>;
+}
+
+export interface BacktestModel {
+  name: string;
+  role: string | null;
+  method: string | null;
+  p_yes: number | null;
+  brier: number | null;
+  log_loss: number | null;
+  won: boolean | null;
+  point_in_time: boolean | null;
+  /** When true, this model was scored with the *current* forecast as a stand-in
+   *  for the as-of forecast (NAIVE replay). Excluded from N_backtest_strict. */
+  naive_uses_current_forecast: boolean | null;
+}
+
+export interface BacktestResolution {
+  status: "open" | "resolved" | string;
+  outcome: "yes" | "no" | null;
+  winning_bin_ticker: string | null;
+}
+
+/**
+ * One backtest replay record (`schema_version: "2-backtest"`). Structurally
+ * closer to `LiveRunRecord` than to the sklearn training `RunRecord`: it has
+ * one `models[]` slot per replayed component on a given Kalshi event, plus
+ * an `as_of_date` / `target_date` pair captured by the replay harness.
+ */
+export interface BacktestRunRecord {
+  run_id: string;
+  schema_version: string;
+  type: string;
+  mode: string;
+  ts_replay_utc: string | null;
+  as_of_date: string;
+  target_date: string;
+  horizon_days: number | null;
+  event_ticker: string;
+  event_title: string;
+  series: string;
+  target_market_ticker: string;
+  models: BacktestModel[];
+  resolution: BacktestResolution;
+}
+
 export type LiveRunRole = "champion" | "challenger" | "baseline";
 
 export interface LiveRunModel {
@@ -104,8 +173,14 @@ export interface PredictorManifest {
   features: FeatureRecord[];
   runs: RunRecord[];
   live_runs?: LiveRunRecord[];
+  live_runs_total?: number;
+  backtest_runs?: BacktestRunRecord[];
+  backtest_runs_total?: number;
+  backtest_summary?: BacktestSummary;
+  hybrid_sample?: HybridSample;
   paper_bets_summary: PaperBetsSummary;
   kalshi_mid_reference: number | null;
+  max_runs_in_manifest?: number;
 }
 
 /** Format a `YYYYMMDDTHHMMSSZ` stamp as `2026-05-11 13:08 UTC`. */
@@ -128,4 +203,17 @@ export function formatDelta(d: number | null | undefined, digits = 4): string {
   if (d === null || d === undefined || Number.isNaN(d)) return "—";
   const sign = d > 0 ? "+" : d < 0 ? "−" : "±";
   return `${sign}${Math.abs(d).toFixed(digits)}`;
+}
+
+/** Extract the Kalshi series prefix from a ticker like `KXLOWTNYC-26MAY11` → `KXLOWTNYC`. */
+export function seriesFromEventTicker(ticker: string): string {
+  const idx = ticker.indexOf("-");
+  return idx === -1 ? ticker : ticker.slice(0, idx);
+}
+
+/** True iff any model in this backtest run was scored in NAIVE mode (current
+ *  forecast substituted for as-of forecast). NAIVE records are excluded from
+ *  N_backtest_strict in CONVENTION §6.bis. */
+export function isBacktestRunNaive(run: BacktestRunRecord): boolean {
+  return run.models.some((m) => m.naive_uses_current_forecast === true);
 }
