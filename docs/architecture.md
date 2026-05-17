@@ -40,6 +40,10 @@ Démarre une fois la DAO opérationnelle et le predictor démontré en live. Obj
 - Résolution : Chainlink Custom au-dessus des feeds NOAA/NWS (et DePIN propre quand disponible).
 - Catégories initiales : température extrême, précipitations cumulées, événements vent.
 
+**Promesse de couverture bornée et transparence radicale.** La mutuelle s'engage à indemniser chaque sinistre paramétrique éligible *dans la limite des capitaux disponibles* du pool, tels qu'établis on-chain à la liquidation. Si plusieurs engagements actifs se déclenchent simultanément au-delà du *Free Capital* disponible, l'indemnisation est exécutée au prorata. Le ratio engagements actifs / capital total mobilisable est lisible on-chain en continu, et opposable au souscripteur de plein droit (cf. article 4 bis des statuts).
+
+Cette mécanique est l'inverse exact du modèle classique d'assurance, dont l'opacité a été identifiée comme un facteur central de l'effondrement d'AIG en 2008 (≈ 440 milliards USD de CDS notionnels souscrits via AIG Financial Products sans capitalisation correspondante, sauvetage fédéral américain ≈ 182 milliards USD). En rendant le ratio engagements/capital visible en temps réel, l'architecture rend toute opacité de cette nature structurellement impossible.
+
 Code : `contracts/mutual/`, `predictor/oracle/` (signature des prix), pipeline de résolution dans `predictor/scripts/`.
 
 ### Phase 4 — DePIN data layer
@@ -84,3 +88,10 @@ Le module `predictor/src/kalshi/resolution.py` actuel sert de prototype : règle
 - **Custody Kalshi POC** : compte personnel JS, structure intermédiaire LLC US, foundation. Détermine la structure juridique amont.
 - **Toolchain smart contracts** : Foundry retenu, à graver dans `contracts/README.md`.
 - **Wallet registry** : fichier signé en Phase 1 (`rounds/WALLETS.md`), registry on-chain à partir de Phase 2.
+
+## Voir aussi
+
+- Modèle de tokens (§7.7 Garde-fous) → [`token_model.md`](token_model.md)
+- Moteur de valuation (§7 Garde-fous opérationnels) → [`value_engine.md`](value_engine.md)
+- **Projet de statuts FR** (art. 4 bis « Limite des engagements de couverture et principe de transparence radicale » + art. 32 « Moteur de valuation et émission de tokens ») → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
+- **Draft Articles of Association EN** → [`../../statuts-aratea-v0-projet-2026-05-16-EN.md`](../../statuts-aratea-v0-projet-2026-05-16-EN.md)

@@ -8,7 +8,6 @@ import {AugPocToken} from "../../src/token/AugPocToken.sol";
 import {RoundRegistry} from "../../src/rounds/RoundRegistry.sol";
 import {IAugPocToken} from "../../src/interfaces/IAugPocToken.sol";
 import {IRoundRegistry} from "../../src/interfaces/IRoundRegistry.sol";
-import {MonthlyMintCap} from "../../src/rounds/MonthlyMintCap.sol";
 
 /// @title  RoundRegistryHandler — bounded harness for the invariant runner
 /// @notice Drives a sequence of (propose, challenge, execute, cancel, advance-time) calls and
@@ -27,7 +26,6 @@ contract RoundRegistryHandler is Test {
     address[] internal beneficiaries;
 
     uint256 public ghost_totalExecutedAmount;
-    mapping(uint256 => uint256) public ghost_executedAmountInMonth;
 
     uint256 internal nonce;
 
@@ -103,26 +101,11 @@ contract RoundRegistryHandler is Test {
             total += amts[i];
         }
 
-        // Pre-compute admissibility under the same rules the contract enforces, so we know
-        // whether to expect success or revert. Mirror the lazy snapshot logic.
-        uint256 monthId = MonthlyMintCap.monthIdOf(block.timestamp);
-        uint256 supplyRef = registry.supplyAtMonthStart(monthId);
-        uint256 alreadyMinted = registry.mintedInMonth(monthId);
-
-        // If snapshot not taken yet, the snapshot will be the current totalSupply.
-        bool snapshotTaken = (supplyRef != 0 || alreadyMinted != 0);
-        if (!snapshotTaken) supplyRef = token.totalSupply();
-
-        bool admissible = MonthlyMintCap.isMintAdmissible(supplyRef, alreadyMinted, total);
-
+        // No cap to check — with the on-chain cap removed, the only remaining gates
+        // (status, window) have already been satisfied above, so executeRound must succeed.
         vm.prank(executor);
-        if (admissible) {
-            registry.executeRound(h);
-            ghost_totalExecutedAmount += total;
-            ghost_executedAmountInMonth[monthId] += total;
-        } else {
-            try registry.executeRound(h) { /* unexpected */ } catch { /* expected revert */ }
-        }
+        registry.executeRound(h);
+        ghost_totalExecutedAmount += total;
     }
 
     function cancel(
@@ -201,30 +184,5 @@ contract RoundRegistryInvariantTest is StdInvariant, Test {
         assertFalse(token.hasRole(token.MINTER_ROLE(), executor));
         assertFalse(token.hasRole(token.MINTER_ROLE(), canceller));
         assertFalse(token.hasRole(token.MINTER_ROLE(), admin));
-    }
-
-    /// @dev For every month with a snapshot taken, mintedInMonth ≤ cap unless the snapshot
-    ///      was zero (genesis exception) — in which case any total is allowed.
-    function invariant_PerMonthCapHolds() public view {
-        // Probe a window of months around the current block.timestamp.
-        uint256 nowMonthId = MonthlyMintCap.monthIdOf(block.timestamp);
-        for (uint256 i = 0; i <= 24; i++) {
-            uint256 monthId = nowMonthId - 12 + i;
-            uint256 supplyRef = registry.supplyAtMonthStart(monthId);
-            uint256 minted = registry.mintedInMonth(monthId);
-            if (supplyRef == 0) continue; // genesis or untouched month
-            uint256 cap = (supplyRef * 1000) / 10_000;
-            assertLe(minted, cap);
-        }
-    }
-
-    /// @dev Per-handler ghost: the total recorded by the handler equals registry's notion of
-    ///      mintedInMonth across all visited months.
-    function invariant_HandlerGhostMatchesContract() public view {
-        uint256 nowMonthId = MonthlyMintCap.monthIdOf(block.timestamp);
-        for (uint256 i = 0; i <= 24; i++) {
-            uint256 monthId = nowMonthId - 12 + i;
-            assertEq(handler.ghost_executedAmountInMonth(monthId), registry.mintedInMonth(monthId));
-        }
     }
 }
