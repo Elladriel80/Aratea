@@ -25,7 +25,9 @@ only the same bin is suppressed if already open.
 
 All thresholds and the event list are env-overridable for rollback:
   ARATEA_EDGE_THRESHOLD, ARATEA_SPREAD_THRESHOLD,
-  ARATEA_MAX_BINS_PER_EVENT, ARATEA_EVENT_SERIES (comma-separated).
+  ARATEA_MAX_BINS_PER_EVENT, ARATEA_EVENT_SERIES (comma-separated),
+  ARATEA_MAX_FRACTION_PER_BET, ARATEA_MAX_PORTFOLIO_HEAT,
+  ARATEA_MAX_CLUSTER_EXPOSURE (caps portefeuille Phase 1 vs Phase 2).
 
 Skip conditions (auto-capture exits clean):
   - event not yet published on Kalshi (per series, others still scanned)
@@ -107,6 +109,39 @@ SPREAD_THRESHOLD = float(os.environ.get("ARATEA_SPREAD_THRESHOLD", "0.08"))
 # Cap on captures per event per day (post-dedupe). Multiplied by len(EVENT_SERIES_LIST)
 # gives the theoretical upper bound on daily captures.
 MAX_BINS_PER_EVENT = int(os.environ.get("ARATEA_MAX_BINS_PER_EVENT", "3"))
+
+# ---- portfolio caps : override Phase 1 (paper-only) ----------------------
+# Les constantes ``MAX_*`` du module ``src.simulation.sizing`` sont calibrées
+# pour de l'argent réel (5 % per-trade, 10 % heat totale, 6 % par cluster
+# spatial × ±3 j). Mathématiquement saines, elles saturent le throughput
+# paper dès J+0 : avec settlement J+2 sur Kalshi, 2-3 paris à 5 % bouchent
+# les 10 % de heat pour 48-72 h. Observation 2026-05-18 → 0 captures
+# 19 et 20 mai malgré 16 séries × 3 bins scannées.
+#
+# En Phase 1, l'objectif n'est pas la préservation du capital virtuel mais
+# le ramassage de N pour valider / invalider l'edge prédictif (gate
+# N ≥ 200 avant promotion Phase 2). On élargit donc les caps en passant
+# par ``PortfolioHeat.from_ledger(..., max_*=...)`` ; les constantes du
+# module sizing restent intactes (les tests unitaires les vérifient et le
+# passage Phase 2 reviendra à ces valeurs strictes en unset des env).
+#
+# Throughput attendu sous ces valeurs :
+#   - 2 % per-trade × 30 % heat → ~15 paris simultanés
+#   - 15 % cluster → ~7 paris simultanés par région NOAA × ±3 j
+#   - settlement ~J+2 → ~5-8 captures/jour si les bins qualifient
+#
+# Réversion Phase 2 = unset(ARATEA_MAX_FRACTION_PER_BET,
+# ARATEA_MAX_PORTFOLIO_HEAT, ARATEA_MAX_CLUSTER_EXPOSURE) → fallback aux
+# valeurs strictes du module sizing.
+PHASE1_MAX_FRACTION_PER_BET = float(
+    os.environ.get("ARATEA_MAX_FRACTION_PER_BET", "0.02")
+)
+PHASE1_MAX_PORTFOLIO_HEAT = float(
+    os.environ.get("ARATEA_MAX_PORTFOLIO_HEAT", "0.30")
+)
+PHASE1_MAX_CLUSTER_EXPOSURE = float(
+    os.environ.get("ARATEA_MAX_CLUSTER_EXPOSURE", "0.15")
+)
 
 # Bankroll minimum viable. En dessous, on raise plutôt que continuer à
 # trader sur capital dégradé : c'est un signal de corruption du ledger ou
@@ -614,9 +649,18 @@ def step_capture(dry_run: bool) -> dict:
     # step_finalize() a déjà tourné en step 1, donc le ledger reflète l'état
     # post-settlement le plus récent : reconstruct ici voit la heat actuelle.
     current_bankroll = _compute_current_bankroll()
-    portfolio = PortfolioHeat.from_ledger(LEDGER_PATH, current_bankroll)
+    portfolio = PortfolioHeat.from_ledger(
+        LEDGER_PATH,
+        current_bankroll,
+        max_portfolio_heat=PHASE1_MAX_PORTFOLIO_HEAT,
+        max_cluster_exposure=PHASE1_MAX_CLUSTER_EXPOSURE,
+        max_fraction_per_bet=PHASE1_MAX_FRACTION_PER_BET,
+    )
     print(f"   bankroll    : ${current_bankroll:.2f} (starting "
           f"${SIMULATION['starting_bankroll']:.2f} + P&L réalisé)")
+    print(f"   caps Phase 1: per_trade={PHASE1_MAX_FRACTION_PER_BET*100:.1f}%, "
+          f"heat={PHASE1_MAX_PORTFOLIO_HEAT*100:.0f}%, "
+          f"cluster={PHASE1_MAX_CLUSTER_EXPOSURE*100:.0f}%")
     print(f"   portfolio   : {len(portfolio.open_bets)} pari(s) non-settled, "
           f"heat={portfolio.total_open_fraction()*100:.1f}% / "
           f"{portfolio.max_portfolio_heat*100:.0f}% cap")
