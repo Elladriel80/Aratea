@@ -23,7 +23,12 @@ from unittest.mock import MagicMock
 import pytest
 
 from src.simulation.clusters import BetContext
-from src.simulation.sizing import PortfolioHeat
+from src.simulation.sizing import (
+    MAX_CLUSTER_EXPOSURE,
+    MAX_FRACTION_PER_BET,
+    MAX_PORTFOLIO_HEAT,
+    PortfolioHeat,
+)
 
 # daily_auto est dans predictor/scripts/, conftest.py ajoute ce path.
 import daily_auto
@@ -155,6 +160,88 @@ def test_size_with_caps_uses_event_ticker_not_market_ticker() -> None:
 
 
 # --- _capture_one_bin : cap_atteint path (test plus large) ----------------
+# --- Phase 1 portfolio caps -----------------------------------------------
+def test_phase1_caps_are_strictly_more_permissive_than_strict_defaults() -> None:
+    """Contrat Phase 1 : on prend MOINS de risque par pari (per-trade plus
+    petit) pour pouvoir en ouvrir BEAUCOUP PLUS simultanément (heat et
+    cluster plus larges). Si quelqu'un inverse ces inégalités, le throughput
+    s'effondre — ce test garde-fou empêche un revert silencieux."""
+    assert daily_auto.PHASE1_MAX_FRACTION_PER_BET < MAX_FRACTION_PER_BET, (
+        "Phase 1 doit shrinker la taille par pari pour mécaniquement en "
+        "permettre davantage en simultané sous une heat élargie."
+    )
+    assert daily_auto.PHASE1_MAX_PORTFOLIO_HEAT > MAX_PORTFOLIO_HEAT, (
+        "Phase 1 doit élargir la heat globale pour ramasser du N."
+    )
+    assert daily_auto.PHASE1_MAX_CLUSTER_EXPOSURE > MAX_CLUSTER_EXPOSURE, (
+        "Phase 1 doit élargir le cap par cluster pour ne pas étrangler "
+        "une région trop tôt."
+    )
+    # Sanity : les nouveaux paramètres restent dans [0, 1] et la heat
+    # globale couvre au moins ~10 paris simultanés au per-trade nouveau.
+    assert 0 < daily_auto.PHASE1_MAX_FRACTION_PER_BET <= 1
+    assert 0 < daily_auto.PHASE1_MAX_PORTFOLIO_HEAT <= 1
+    assert 0 < daily_auto.PHASE1_MAX_CLUSTER_EXPOSURE <= 1
+    assert (
+        daily_auto.PHASE1_MAX_PORTFOLIO_HEAT
+        / daily_auto.PHASE1_MAX_FRACTION_PER_BET
+        >= 10
+    ), "Phase 1 vise au moins 10 paris simultanés ; sinon réajuster."
+
+
+def test_phase1_caps_unblock_a_ledger_saturated_under_strict_defaults(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Régression du symptôme observé sur le ledger 2026-05-18 → 0 captures
+    19 et 20 mai. Stratégie : on construit deux paris non-settled de 5 %
+    chacun (= 10 % heat = MAX_PORTFOLIO_HEAT). En Phase 2 strict, le
+    portefeuille reconstruit a remaining_capacity = 0. En Phase 1 large
+    (heat 30 %), il reste de la place pour de nouvelles captures."""
+    path = tmp_path / "paper_bets.csv"
+    # 2 paris OUVERTS (resolved_at_utc vide) à 5 % du bankroll de 1000.
+    unresolved_a = (
+        "a,2026-05-18T19:44:41Z,KXLOWTNYC-26MAY19-B71.5,"
+        "KXLOWTNYC-26MAY19,2026-05-19,NO,50.0,0.4,0.06,0.4,-0.34,"
+        "ensemble,test,,,\n"
+    )
+    unresolved_b = (
+        "b,2026-05-18T19:44:49Z,KXLOWTLAX-26MAY19-B57.5,"
+        "KXLOWTLAX-26MAY19,2026-05-19,NO,50.0,0.45,0.25,0.45,-0.20,"
+        "ensemble,test,,,\n"
+    )
+    _write_ledger(path, [unresolved_a, unresolved_b])
+
+    bankroll = 1000.0
+
+    # Reconstruction Phase 2 stricte (les defaults du module sizing) :
+    # heat 10 % saturée → 0 capacité résiduelle sur les nouveaux paris.
+    strict_portfolio = PortfolioHeat.from_ledger(path, bankroll)
+    assert strict_portfolio.total_open_fraction() == pytest.approx(0.10)
+    # Cluster MW vierge ; le cap heat doit binder à 0.
+    assert strict_portfolio.remaining_capacity(
+        "MW", date(2026, 5, 20)
+    ) == pytest.approx(0.0)
+
+    # Reconstruction Phase 1 (les valeurs de daily_auto) : heat 30 %,
+    # cluster 15 %, per-trade 2 % → on devrait avoir au moins
+    # per_trade=2 % de room sur un cluster vierge.
+    phase1_portfolio = PortfolioHeat.from_ledger(
+        path,
+        bankroll,
+        max_portfolio_heat=daily_auto.PHASE1_MAX_PORTFOLIO_HEAT,
+        max_cluster_exposure=daily_auto.PHASE1_MAX_CLUSTER_EXPOSURE,
+        max_fraction_per_bet=daily_auto.PHASE1_MAX_FRACTION_PER_BET,
+    )
+    assert phase1_portfolio.total_open_fraction() == pytest.approx(0.10)
+    room = phase1_portfolio.remaining_capacity("MW", date(2026, 5, 20))
+    assert room == pytest.approx(
+        daily_auto.PHASE1_MAX_FRACTION_PER_BET
+    ), (
+        "Sur cluster vierge et heat à 10 %, c'est le per-trade Phase 1 "
+        "qui doit binder ; sinon les nouvelles captures restent bloquées."
+    )
+
+
 def test_capture_one_bin_skips_and_logs_on_cap_atteint(
     monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
