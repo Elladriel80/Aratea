@@ -109,13 +109,71 @@
         }
       ],
       "resolution": {
-        "outcome": null,
+        "outcome": "no",
         "observed_value_f": null,
-        "ts_utc": null,
-        "pnl_usd": null
+        "observed_range_f": [
+          55.0,
+          56.0
+        ],
+        "winning_bin_ticker": "KXLOWTNYC-26MAY22-B55.5",
+        "ts_utc": "2026-05-23T19:10:08Z",
+        "champion_pnl_usd": 8.55,
+        "champion_payout_usd": 29.0,
+        "champion_cost_usd": 20.45,
+        "champion_won": true
       }
     }
   ],
-  "scoring": null,
+  "scoring": {
+    "outcome": "no",
+    "by_model": {
+      "vendor_ensemble": {
+        "role": "champion",
+        "method": "ensemble",
+        "p_yes": 0.1667,
+        "brier": 0.0278,
+        "won": true,
+        "pnl_usd": 8.55,
+        "pnl_type": "actual"
+      },
+      "learned_v2": {
+        "role": "challenger",
+        "method": "learned_v2",
+        "p_yes": 0.1799,
+        "brier": 0.0324,
+        "won": true,
+        "pnl_usd": 8.55,
+        "pnl_type": "theoretical"
+      },
+      "kalshi_mid_baseline": {
+        "role": "baseline",
+        "method": "kalshi_mid",
+        "p_yes": 0.295,
+        "brier": 0.087,
+        "won": true,
+        "pnl_usd": 8.55,
+        "pnl_type": "theoretical"
+      }
+    },
+    "ranking_by_brier": [
+      {
+        "model": "vendor_ensemble",
+        "brier": 0.0278
+      },
+      {
+        "model": "learned_v2",
+        "brier": 0.0324
+      },
+      {
+        "model": "kalshi_mid_baseline",
+        "brier": 0.087
+      }
+    ],
+    "best_brier_model": "vendor_ensemble",
+    "champion_at_time_of_run": "vendor_ensemble",
+    "champion_is_best": true,
+    "n_datapoints": 1,
+    "note": "Run 011 multi-model trade. Single point \u2014 directional only, not statistically significant. The champion promotion rule requires N>=10 with sign test p<0.10."
+  },
   "notes": "Auto-captured by daily_auto.py on 2026-05-21T19:53:36Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.128, side=NO, Kelly capped size=$20.48 (bankroll=$1024.13, portfolio_heat_after_register=2.0%)."
 }
