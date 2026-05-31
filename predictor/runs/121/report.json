@@ -1,0 +1,121 @@
+{
+  "schema_version": 2,
+  "run_id": "121",
+  "type": "live",
+  "ts_utc": "2026-05-31T19:17:36Z",
+  "event": {
+    "ticker": "KXLOWTLAX-26JUN01",
+    "title": "Lowest temperature in Los Angeles on Jun 1, 2026?",
+    "target_market_ticker": "KXLOWTLAX-26JUN01-B59.5",
+    "resolution_source": "NWS official daily climate report (per Kalshi rules)"
+  },
+  "champion_at_time_of_run": "vendor_ensemble",
+  "models": [
+    {
+      "name": "vendor_ensemble",
+      "role": "champion",
+      "method": "ensemble",
+      "p_yes": 0.2606623556332645,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "ensemble"
+      }
+    },
+    {
+      "name": "learned_v2",
+      "role": "challenger",
+      "method": "learned_v2",
+      "p_yes": 0.11397377114899797,
+      "feature_set": "v2",
+      "trained_at": "20260512T134515Z",
+      "inputs_summary": {
+        "method": "learned_v2",
+        "trained_at": "20260514T191934Z",
+        "feature_set": "v2",
+        "run_json_path": "/home/runner/work/Aratea/Aratea/predictor/runs_learning/20260514T191934Z/run.json"
+      }
+    },
+    {
+      "name": "kalshi_mid_baseline",
+      "role": "baseline",
+      "method": "kalshi_mid",
+      "p_yes": 0.435,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "kalshi_mid",
+        "yes_mid_at_snapshot": 0.435
+      }
+    }
+  ],
+  "markets": [
+    {
+      "platform": "kalshi",
+      "ticker": "KXLOWTLAX-26JUN01-B59.5",
+      "url": "https://kalshi.com/markets/KXLOWTLAX",
+      "snapshot_pre": {
+        "yes_bid": 0.43,
+        "yes_ask": 0.44,
+        "yes_mid": 0.435,
+        "spread_cents": 1.0,
+        "ts_utc": "2026-05-31T19:17:36Z"
+      },
+      "edge_bps_by_model": {
+        "vendor_ensemble": -1743,
+        "learned_v2": -3210,
+        "kalshi_mid_baseline": 0
+      },
+      "champion_position": {
+        "model": "vendor_ensemble",
+        "method": "ensemble",
+        "side": "NO",
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 43.5,
+        "entry_price_no_cents": 56.5,
+        "entry_price": 0.565,
+        "n_contracts": 36,
+        "cost_usd": 20.34,
+        "opened_at_utc": "2026-05-31T19:17:36Z",
+        "paper": true,
+        "ledger_bet_id": "20260531T191729Z138741"
+      },
+      "challenger_shadow_positions": [
+        {
+          "model": "learned_v2",
+          "method": "learned_v2",
+          "side": "NO",
+          "size_usd": 20.89,
+          "entry_price_yes_cents": 43.5,
+          "entry_price_no_cents": 56.5,
+          "entry_price": 0.565,
+          "n_contracts": 36,
+          "cost_usd": 20.34,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        },
+        {
+          "model": "kalshi_mid_baseline",
+          "method": "kalshi_mid",
+          "side": "NO",
+          "size_usd": 20.89,
+          "entry_price_yes_cents": 43.5,
+          "entry_price_no_cents": 56.5,
+          "entry_price": 0.565,
+          "n_contracts": 36,
+          "cost_usd": 20.34,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        }
+      ],
+      "resolution": {
+        "outcome": null,
+        "observed_value_f": null,
+        "ts_utc": null,
+        "pnl_usd": null
+      }
+    }
+  ],
+  "scoring": null,
+  "notes": "Auto-captured by daily_auto.py on 2026-05-31T19:17:36Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.174, side=NO, Kelly capped size=$20.89 (bankroll=$1044.55, portfolio_heat_after_register=6.1%)."
+}
