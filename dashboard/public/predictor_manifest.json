@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-30T19:17:11Z",
+  "generated_at": "2026-05-31T19:22:03Z",
   "schema_version": 3,
   "features": [
     {
@@ -467,1544 +467,6 @@
     }
   ],
   "live_runs": [
-    {
-      "run_id": "018",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:54:10Z",
-      "event_ticker": "KXLOWTCHI-26MAY22",
-      "event_title": "Lowest temperature in Chicago on May 22, 2026?",
-      "target_market_ticker": "KXLOWTCHI-26MAY22-B50.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.275,
-      "position": {
-        "side": "NO",
-        "n_contracts": 28,
-        "entry_price": 0.725,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 27.5,
-        "entry_price_no_cents": 72.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.16403301805306766,
-          "brier": 0.0269,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.07251845671356687,
-          "brier": 0.0053,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.275,
-          "brier": 0.0756,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          51.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTCHI-26MAY22-T51",
-        "ts_utc": "2026-05-23T19:10:09Z",
-        "champion_pnl_usd": 7.7,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "019",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:54:17Z",
-      "event_ticker": "KXLOWTCHI-26MAY22",
-      "event_title": "Lowest temperature in Chicago on May 22, 2026?",
-      "target_market_ticker": "KXLOWTCHI-26MAY22-B46.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.03,
-      "position": {
-        "side": "YES",
-        "n_contracts": 15,
-        "entry_price": 0.03,
-        "size_usd": 0.47,
-        "entry_price_yes_cents": 3.0,
-        "entry_price_no_cents": 97.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.08938794499447587,
-          "brier": 0.008,
-          "won": false,
-          "pnl_usd": -0.45,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.041643765347546324,
-          "brier": 0.0017,
-          "won": false,
-          "pnl_usd": -0.45,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.03,
-          "brier": 0.0009,
-          "won": false,
-          "pnl_usd": -0.45,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          51.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTCHI-26MAY22-T51",
-        "ts_utc": "2026-05-23T19:10:09Z",
-        "champion_pnl_usd": -0.45,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "020",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:55:04Z",
-      "event_ticker": "KXLOWTMIA-26MAY22",
-      "event_title": "Lowest temperature in Miami on May 22, 2026?",
-      "target_market_ticker": "KXLOWTMIA-26MAY22-B76.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.395,
-      "position": {
-        "side": "NO",
-        "n_contracts": 33,
-        "entry_price": 0.605,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 39.5,
-        "entry_price_no_cents": 60.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.17293018879195593,
-          "brier": 0.0299,
-          "won": true,
-          "pnl_usd": 13.04,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.09109045087883921,
-          "brier": 0.0083,
-          "won": true,
-          "pnl_usd": 13.04,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.395,
-          "brier": 0.156,
-          "won": true,
-          "pnl_usd": 13.04,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          78.0,
-          79.0
-        ],
-        "winning_bin_ticker": "KXLOWTMIA-26MAY22-B78.5",
-        "ts_utc": "2026-05-23T19:10:09Z",
-        "champion_pnl_usd": 13.04,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "021",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:55:04Z",
-      "event_ticker": "KXLOWTMIA-26MAY22",
-      "event_title": "Lowest temperature in Miami on May 22, 2026?",
-      "target_market_ticker": "KXLOWTMIA-26MAY22-B80.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.09,
-      "position": {
-        "side": "YES",
-        "n_contracts": 52,
-        "entry_price": 0.09,
-        "size_usd": 4.77,
-        "entry_price_yes_cents": 9.0,
-        "entry_price_no_cents": 91.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.2782870545018297,
-          "brier": 0.0774,
-          "won": false,
-          "pnl_usd": -4.68,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.6072145358522205,
-          "brier": 0.3687,
-          "won": false,
-          "pnl_usd": -4.68,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.09,
-          "brier": 0.0081,
-          "won": false,
-          "pnl_usd": -4.68,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          78.0,
-          79.0
-        ],
-        "winning_bin_ticker": "KXLOWTMIA-26MAY22-B78.5",
-        "ts_utc": "2026-05-23T19:10:09Z",
-        "champion_pnl_usd": -4.68,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "022",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:55:04Z",
-      "event_ticker": "KXLOWTMIA-26MAY22",
-      "event_title": "Lowest temperature in Miami on May 22, 2026?",
-      "target_market_ticker": "KXLOWTMIA-26MAY22-B78.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.43,
-      "position": {
-        "side": "NO",
-        "n_contracts": 35,
-        "entry_price": 0.5700000000000001,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 43.0,
-        "entry_price_no_cents": 57.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.36219651713648654,
-          "brier": 0.4068,
-          "won": false,
-          "pnl_usd": -19.95,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.6273541924714032,
-          "brier": 0.1389,
-          "won": false,
-          "pnl_usd": -19.95,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.43,
-          "brier": 0.3249,
-          "won": false,
-          "pnl_usd": -19.95,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "yes",
-        "observed_range_f": [
-          78.0,
-          79.0
-        ],
-        "winning_bin_ticker": "KXLOWTMIA-26MAY22-B78.5",
-        "ts_utc": "2026-05-23T19:10:09Z",
-        "champion_pnl_usd": -19.95,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "023",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:56:03Z",
-      "event_ticker": "KXLOWTPHX-26MAY22",
-      "event_title": "Lowest temperature in Phoenix on May 22, 2026?",
-      "target_market_ticker": "KXLOWTPHX-26MAY22-B65.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.05,
-      "position": {
-        "side": "YES",
-        "n_contracts": 17,
-        "entry_price": 0.05,
-        "size_usd": 0.88,
-        "entry_price_yes_cents": 5.0,
-        "entry_price_no_cents": 95.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.11503842046706102,
-          "brier": 0.0132,
-          "won": false,
-          "pnl_usd": -0.85,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.5,
-          "brier": 0.25,
-          "won": false,
-          "pnl_usd": -0.85,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.05,
-          "brier": 0.0025,
-          "won": false,
-          "pnl_usd": -0.85,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          70.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTPHX-26MAY22-T70",
-        "ts_utc": "2026-05-23T19:10:09Z",
-        "champion_pnl_usd": -0.85,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "024",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:56:05Z",
-      "event_ticker": "KXLOWTDEN-26MAY22",
-      "event_title": "Lowest temperature in Denver on May 22, 2026?",
-      "target_market_ticker": "KXLOWTDEN-26MAY22-B39.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.265,
-      "position": {
-        "side": "NO",
-        "n_contracts": 27,
-        "entry_price": 0.735,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 26.5,
-        "entry_price_no_cents": 73.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.14053904972842418,
-          "brier": 0.0198,
-          "won": true,
-          "pnl_usd": 7.16,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.23649885463494275,
-          "brier": 0.0559,
-          "won": true,
-          "pnl_usd": 7.16,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.265,
-          "brier": 0.0702,
-          "won": true,
-          "pnl_usd": 7.16,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": null,
-        "winning_bin_ticker": "KXLOWTDEN-26MAY22-T39",
-        "ts_utc": "2026-05-23T19:10:09Z",
-        "champion_pnl_usd": 7.16,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "025",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:56:05Z",
-      "event_ticker": "KXLOWTDEN-26MAY22",
-      "event_title": "Lowest temperature in Denver on May 22, 2026?",
-      "target_market_ticker": "KXLOWTDEN-26MAY22-B45.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.045,
-      "position": {
-        "side": "YES",
-        "n_contracts": 18,
-        "entry_price": 0.045,
-        "size_usd": 0.84,
-        "entry_price_yes_cents": 4.5,
-        "entry_price_no_cents": 95.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.11434511721821433,
-          "brier": 0.0131,
-          "won": false,
-          "pnl_usd": -0.81,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.16835097556171102,
-          "brier": 0.0283,
-          "won": false,
-          "pnl_usd": -0.81,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.045,
-          "brier": 0.002,
-          "won": false,
-          "pnl_usd": -0.81,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": null,
-        "winning_bin_ticker": "KXLOWTDEN-26MAY22-T39",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": -0.81,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "026",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:56:05Z",
-      "event_ticker": "KXLOWTDEN-26MAY22",
-      "event_title": "Lowest temperature in Denver on May 22, 2026?",
-      "target_market_ticker": "KXLOWTDEN-26MAY22-B43.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.07,
-      "position": {
-        "side": "YES",
-        "n_contracts": 18,
-        "entry_price": 0.07,
-        "size_usd": 1.27,
-        "entry_price_yes_cents": 7.0,
-        "entry_price_no_cents": 93.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.13612378900399943,
-          "brier": 0.0185,
-          "won": false,
-          "pnl_usd": -1.26,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.22334566880098494,
-          "brier": 0.0499,
-          "won": false,
-          "pnl_usd": -1.26,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.07,
-          "brier": 0.0049,
-          "won": false,
-          "pnl_usd": -1.26,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": null,
-        "winning_bin_ticker": "KXLOWTDEN-26MAY22-T39",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": -1.26,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "027",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:57:04Z",
-      "event_ticker": "KXLOWTSEA-26MAY22",
-      "event_title": "Lowest temperature in Seattle on May 22, 2026?",
-      "target_market_ticker": "KXLOWTSEA-26MAY22-B48.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.065,
-      "position": {
-        "side": "YES",
-        "n_contracts": 55,
-        "entry_price": 0.065,
-        "size_usd": 3.61,
-        "entry_price_yes_cents": 6.5,
-        "entry_price_no_cents": 93.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.26800500990572745,
-          "brier": 0.0718,
-          "won": false,
-          "pnl_usd": -3.58,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.5,
-          "brier": 0.25,
-          "won": false,
-          "pnl_usd": -3.58,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.065,
-          "brier": 0.0042,
-          "won": false,
-          "pnl_usd": -3.58,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          50.0,
-          51.0
-        ],
-        "winning_bin_ticker": "KXLOWTSEA-26MAY22-B50.5",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": -3.58,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "028",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:57:04Z",
-      "event_ticker": "KXHIGHTSFO-26MAY22",
-      "event_title": "Highest temperature in San Francisco on May 22, 2026?",
-      "target_market_ticker": "KXHIGHTSFO-26MAY22-B68.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.305,
-      "position": {
-        "side": "NO",
-        "n_contracts": 29,
-        "entry_price": 0.6950000000000001,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 30.5,
-        "entry_price_no_cents": 69.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.10108632511162109,
-          "brier": 0.808,
-          "won": false,
-          "pnl_usd": -20.16,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.1730552700850439,
-          "brier": 0.6838,
-          "won": false,
-          "pnl_usd": -20.16,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.305,
-          "brier": 0.483,
-          "won": false,
-          "pnl_usd": -20.16,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "yes",
-        "observed_range_f": [
-          68.0,
-          69.0
-        ],
-        "winning_bin_ticker": "KXHIGHTSFO-26MAY22-B68.5",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": -20.16,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "029",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:57:05Z",
-      "event_ticker": "KXHIGHTSFO-26MAY22",
-      "event_title": "Highest temperature in San Francisco on May 22, 2026?",
-      "target_market_ticker": "KXHIGHTSFO-26MAY22-B70.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.275,
-      "position": {
-        "side": "NO",
-        "n_contracts": 28,
-        "entry_price": 0.725,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 27.5,
-        "entry_price_no_cents": 72.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.0956945831522221,
-          "brier": 0.0092,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.16835251929382908,
-          "brier": 0.0283,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.275,
-          "brier": 0.0756,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          68.0,
-          69.0
-        ],
-        "winning_bin_ticker": "KXHIGHTSFO-26MAY22-B68.5",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": 7.7,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "030",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:57:05Z",
-      "event_ticker": "KXHIGHTSFO-26MAY22",
-      "event_title": "Highest temperature in San Francisco on May 22, 2026?",
-      "target_market_ticker": "KXHIGHTSFO-26MAY22-B72.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.14500000000000002,
-      "position": {
-        "side": "NO",
-        "n_contracts": 23,
-        "entry_price": 0.855,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 14.5,
-        "entry_price_no_cents": 85.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.0896933233498841,
-          "brier": 0.008,
-          "won": true,
-          "pnl_usd": 3.34,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.15115005839535975,
-          "brier": 0.0228,
-          "won": true,
-          "pnl_usd": 3.34,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.14500000000000002,
-          "brier": 0.021,
-          "won": true,
-          "pnl_usd": 3.34,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          68.0,
-          69.0
-        ],
-        "winning_bin_ticker": "KXHIGHTSFO-26MAY22-B68.5",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": 3.34,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "031",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:57:07Z",
-      "event_ticker": "KXHIGHTBOS-26MAY22",
-      "event_title": "Highest temperature in Boston on May 22, 2026?",
-      "target_market_ticker": "KXHIGHTBOS-26MAY22-B62.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.225,
-      "position": {
-        "side": "NO",
-        "n_contracts": 26,
-        "entry_price": 0.775,
-        "size_usd": 20.48,
-        "entry_price_yes_cents": 22.5,
-        "entry_price_no_cents": 77.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.11938215348876202,
-          "brier": 0.0143,
-          "won": true,
-          "pnl_usd": 5.85,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.19989434101423154,
-          "brier": 0.04,
-          "won": true,
-          "pnl_usd": 5.85,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.225,
-          "brier": 0.0506,
-          "won": true,
-          "pnl_usd": 5.85,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": null,
-        "winning_bin_ticker": "KXHIGHTBOS-26MAY22-T62",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": 5.85,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "032",
-      "schema_version": 2,
-      "ts_utc": "2026-05-21T19:57:14Z",
-      "event_ticker": "KXHIGHTPHX-26MAY22",
-      "event_title": "Highest temperature in Phoenix on May 22, 2026?",
-      "target_market_ticker": "KXHIGHTPHX-26MAY22-B96.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.59,
-      "position": {
-        "side": "NO",
-        "n_contracts": 34,
-        "entry_price": 0.41000000000000003,
-        "size_usd": 14.14,
-        "entry_price_yes_cents": 59.0,
-        "entry_price_no_cents": 41.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.1566035236692006,
-          "brier": 0.0245,
-          "won": true,
-          "pnl_usd": 20.06,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.5,
-          "brier": 0.25,
-          "won": true,
-          "pnl_usd": 20.06,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.59,
-          "brier": 0.3481,
-          "won": true,
-          "pnl_usd": 20.06,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          98.0,
-          99.0
-        ],
-        "winning_bin_ticker": "KXHIGHTPHX-26MAY22-B98.5",
-        "ts_utc": "2026-05-23T19:10:10Z",
-        "champion_pnl_usd": 20.06,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "033",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:10:18Z",
-      "event_ticker": "KXLOWTNYC-26MAY24",
-      "event_title": "Lowest temperature in New York City on May 24, 2026?",
-      "target_market_ticker": "KXLOWTNYC-26MAY24-B50.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.375,
-      "position": {
-        "side": "NO",
-        "n_contracts": 32,
-        "entry_price": 0.625,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 37.5,
-        "entry_price_no_cents": 62.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.16168294782474998,
-          "brier": 0.7028,
-          "won": false,
-          "pnl_usd": -20.0,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.19106287830513724,
-          "brier": 0.6544,
-          "won": false,
-          "pnl_usd": -20.0,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.375,
-          "brier": 0.3906,
-          "won": false,
-          "pnl_usd": -20.0,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "yes",
-        "observed_range_f": [
-          50.0,
-          51.0
-        ],
-        "winning_bin_ticker": "KXLOWTNYC-26MAY24-B50.5",
-        "ts_utc": "2026-05-25T19:39:11Z",
-        "champion_pnl_usd": -20.0,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "034",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:10:18Z",
-      "event_ticker": "KXLOWTNYC-26MAY24",
-      "event_title": "Lowest temperature in New York City on May 24, 2026?",
-      "target_market_ticker": "KXLOWTNYC-26MAY24-B52.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.345,
-      "position": {
-        "side": "NO",
-        "n_contracts": 31,
-        "entry_price": 0.655,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 34.5,
-        "entry_price_no_cents": 65.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.1980471597714209,
-          "brier": 0.0392,
-          "won": true,
-          "pnl_usd": 10.7,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.24087737245496052,
-          "brier": 0.058,
-          "won": true,
-          "pnl_usd": 10.7,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.345,
-          "brier": 0.119,
-          "won": true,
-          "pnl_usd": 10.7,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          50.0,
-          51.0
-        ],
-        "winning_bin_ticker": "KXLOWTNYC-26MAY24-B50.5",
-        "ts_utc": "2026-05-25T19:39:12Z",
-        "champion_pnl_usd": 10.7,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "035",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:10:18Z",
-      "event_ticker": "KXLOWTNYC-26MAY24",
-      "event_title": "Lowest temperature in New York City on May 24, 2026?",
-      "target_market_ticker": "KXLOWTNYC-26MAY24-B54.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.10500000000000001,
-      "position": {
-        "side": "YES",
-        "n_contracts": 26,
-        "entry_price": 0.10500000000000001,
-        "size_usd": 2.75,
-        "entry_price_yes_cents": 10.5,
-        "entry_price_no_cents": 89.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.19614243220700242,
-          "brier": 0.0385,
-          "won": false,
-          "pnl_usd": -2.73,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.24371342111134178,
-          "brier": 0.0594,
-          "won": false,
-          "pnl_usd": -2.73,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.10500000000000001,
-          "brier": 0.011,
-          "won": false,
-          "pnl_usd": -2.73,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          50.0,
-          51.0
-        ],
-        "winning_bin_ticker": "KXLOWTNYC-26MAY24-B50.5",
-        "ts_utc": "2026-05-25T19:39:12Z",
-        "champion_pnl_usd": -2.73,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "036",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:11:06Z",
-      "event_ticker": "KXLOWTCHI-26MAY24",
-      "event_title": "Lowest temperature in Chicago on May 24, 2026?",
-      "target_market_ticker": "KXLOWTCHI-26MAY24-B56.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.275,
-      "position": {
-        "side": "NO",
-        "n_contracts": 28,
-        "entry_price": 0.725,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 27.5,
-        "entry_price_no_cents": 72.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.12516381825620382,
-          "brier": 0.0157,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.2016332020457106,
-          "brier": 0.0407,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.275,
-          "brier": 0.0756,
-          "won": true,
-          "pnl_usd": 7.7,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          57.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTCHI-26MAY24-T57",
-        "ts_utc": "2026-05-25T19:39:12Z",
-        "champion_pnl_usd": 7.7,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "037",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:11:06Z",
-      "event_ticker": "KXLOWTCHI-26MAY24",
-      "event_title": "Lowest temperature in Chicago on May 24, 2026?",
-      "target_market_ticker": "KXLOWTCHI-26MAY24-B54.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.175,
-      "position": {
-        "side": "NO",
-        "n_contracts": 24,
-        "entry_price": 0.825,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 17.5,
-        "entry_price_no_cents": 82.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.09560843399383619,
-          "brier": 0.0091,
-          "won": true,
-          "pnl_usd": 4.2,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.15464566163737747,
-          "brier": 0.0239,
-          "won": true,
-          "pnl_usd": 4.2,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.175,
-          "brier": 0.0306,
-          "won": true,
-          "pnl_usd": 4.2,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          57.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTCHI-26MAY24-T57",
-        "ts_utc": "2026-05-25T19:39:12Z",
-        "champion_pnl_usd": 4.2,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "038",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:12:03Z",
-      "event_ticker": "KXLOWTDC-26MAY24",
-      "event_title": "Lowest temperature in Washington DC on May 24, 2026?",
-      "target_market_ticker": "KXLOWTDC-26MAY24-B58.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.055,
-      "position": {
-        "side": "YES",
-        "n_contracts": 36,
-        "entry_price": 0.055,
-        "size_usd": 2.01,
-        "entry_price_yes_cents": 5.5,
-        "entry_price_no_cents": 94.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.18961551247522726,
-          "brier": 0.036,
-          "won": false,
-          "pnl_usd": -1.98,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.07345971563981042,
-          "brier": 0.0054,
-          "won": false,
-          "pnl_usd": -1.98,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.055,
-          "brier": 0.003,
-          "won": false,
-          "pnl_usd": -1.98,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          54.0,
-          55.0
-        ],
-        "winning_bin_ticker": "KXLOWTDC-26MAY24-B54.5",
-        "ts_utc": "2026-05-25T19:39:12Z",
-        "champion_pnl_usd": -1.98,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "039",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:12:03Z",
-      "event_ticker": "KXLOWTDC-26MAY24",
-      "event_title": "Lowest temperature in Washington DC on May 24, 2026?",
-      "target_market_ticker": "KXLOWTDC-26MAY24-B54.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.42000000000000004,
-      "position": {
-        "side": "NO",
-        "n_contracts": 35,
-        "entry_price": 0.58,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 42.0,
-        "entry_price_no_cents": 58.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.20042309369254,
-          "brier": 0.6393,
-          "won": false,
-          "pnl_usd": -20.3,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.12559241706161137,
-          "brier": 0.7646,
-          "won": false,
-          "pnl_usd": -20.3,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.42000000000000004,
-          "brier": 0.3364,
-          "won": false,
-          "pnl_usd": -20.3,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "yes",
-        "observed_range_f": [
-          54.0,
-          55.0
-        ],
-        "winning_bin_ticker": "KXLOWTDC-26MAY24-B54.5",
-        "ts_utc": "2026-05-25T19:39:12Z",
-        "champion_pnl_usd": -20.3,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "040",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:12:04Z",
-      "event_ticker": "KXLOWTDC-26MAY24",
-      "event_title": "Lowest temperature in Washington DC on May 24, 2026?",
-      "target_market_ticker": "KXLOWTDC-26MAY24-B52.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.325,
-      "position": {
-        "side": "NO",
-        "n_contracts": 30,
-        "entry_price": 0.675,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 32.5,
-        "entry_price_no_cents": 67.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.1508423378780393,
-          "brier": 0.0228,
-          "won": true,
-          "pnl_usd": 9.75,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.06398104265402843,
-          "brier": 0.0041,
-          "won": true,
-          "pnl_usd": 9.75,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.325,
-          "brier": 0.1056,
-          "won": true,
-          "pnl_usd": 9.75,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          54.0,
-          55.0
-        ],
-        "winning_bin_ticker": "KXLOWTDC-26MAY24-B54.5",
-        "ts_utc": "2026-05-25T19:39:12Z",
-        "champion_pnl_usd": 9.75,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "041",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:12:12Z",
-      "event_ticker": "KXLOWTBOS-26MAY24",
-      "event_title": "Lowest temperature in Boston on May 24, 2026?",
-      "target_market_ticker": "KXLOWTBOS-26MAY24-B49.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.37,
-      "position": {
-        "side": "NO",
-        "n_contracts": 32,
-        "entry_price": 0.63,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 37.0,
-        "entry_price_no_cents": 63.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.1747736359110954,
-          "brier": 0.0305,
-          "won": true,
-          "pnl_usd": 11.84,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.06879795252274734,
-          "brier": 0.0047,
-          "won": true,
-          "pnl_usd": 11.84,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.37,
-          "brier": 0.1369,
-          "won": true,
-          "pnl_usd": 11.84,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          50.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTBOS-26MAY24-T50",
-        "ts_utc": "2026-05-25T19:39:13Z",
-        "champion_pnl_usd": 11.84,
-        "champion_won": true
-      }
-    },
-    {
-      "run_id": "042",
-      "schema_version": 2,
-      "ts_utc": "2026-05-23T19:12:20Z",
-      "event_ticker": "KXLOWTBOS-26MAY24",
-      "event_title": "Lowest temperature in Boston on May 24, 2026?",
-      "target_market_ticker": "KXLOWTBOS-26MAY24-B47.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.225,
-      "position": {
-        "side": "NO",
-        "n_contracts": 26,
-        "entry_price": 0.775,
-        "size_usd": 20.55,
-        "entry_price_yes_cents": 22.5,
-        "entry_price_no_cents": 77.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.12467387341986451,
-          "brier": 0.0155,
-          "won": true,
-          "pnl_usd": 5.85,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.045795736465219276,
-          "brier": 0.0021,
-          "won": true,
-          "pnl_usd": 5.85,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.225,
-          "brier": 0.0506,
-          "won": true,
-          "pnl_usd": 5.85,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          50.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTBOS-26MAY24-T50",
-        "ts_utc": "2026-05-25T19:39:13Z",
-        "champion_pnl_usd": 5.85,
-        "champion_won": true
-      }
-    },
     {
       "run_id": "043",
       "schema_version": 2,
@@ -5438,40 +3900,40 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.171873543673583,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0295,
+          "won": true,
+          "pnl_usd": 9.13,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.2133573309127971,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0455,
+          "won": true,
+          "pnl_usd": 9.13,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.315,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0992,
+          "won": true,
+          "pnl_usd": 9.13,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
+        "status": "resolved",
+        "outcome": "no",
         "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "winning_bin_ticker": "KXLOWTNYC-26MAY30-T52",
+        "ts_utc": "2026-05-31T19:17:19Z",
+        "champion_pnl_usd": 9.13,
+        "champion_won": true
       }
     },
     {
@@ -5497,40 +3959,40 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.19818045735877346,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0393,
+          "won": true,
+          "pnl_usd": 9.13,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.22061649391664698,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0487,
+          "won": true,
+          "pnl_usd": 9.13,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.315,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0992,
+          "won": true,
+          "pnl_usd": 9.13,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
+        "status": "resolved",
+        "outcome": "no",
         "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "winning_bin_ticker": "KXLOWTNYC-26MAY30-T52",
+        "ts_utc": "2026-05-31T19:17:19Z",
+        "champion_pnl_usd": 9.13,
+        "champion_won": true
       }
     },
     {
@@ -5556,40 +4018,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.3370469314539112,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.1136,
+          "won": true,
+          "pnl_usd": 20.91,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.19257672135598952,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0371,
+          "won": true,
+          "pnl_usd": 20.91,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.51,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.2601,
+          "won": true,
+          "pnl_usd": 20.91,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          59.0,
+          null
+        ],
+        "winning_bin_ticker": "KXLOWTLAX-26MAY30-T59",
+        "ts_utc": "2026-05-31T19:17:19Z",
+        "champion_pnl_usd": 20.91,
+        "champion_won": true
       }
     },
     {
@@ -5615,40 +4080,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.21982294486141232,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0483,
+          "won": false,
+          "pnl_usd": -3.05,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.05528531015123298,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0031,
+          "won": false,
+          "pnl_usd": -3.05,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.14500000000000002,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.021,
+          "won": false,
+          "pnl_usd": -3.05,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          59.0,
+          null
+        ],
+        "winning_bin_ticker": "KXLOWTLAX-26MAY30-T59",
+        "ts_utc": "2026-05-31T19:17:19Z",
+        "champion_pnl_usd": -3.05,
+        "champion_won": false
       }
     },
     {
@@ -5674,40 +4142,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.14348157457753316,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.7336,
+          "won": false,
+          "pnl_usd": -19.76,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.2393479135316488,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.5786,
+          "won": false,
+          "pnl_usd": -19.76,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.24,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.5776,
+          "won": false,
+          "pnl_usd": -19.76,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          57.0,
+          58.0
+        ],
+        "winning_bin_ticker": "KXLOWTCHI-26MAY30-B57.5",
+        "ts_utc": "2026-05-31T19:17:19Z",
+        "champion_pnl_usd": -19.76,
+        "champion_won": false
       }
     },
     {
@@ -5733,40 +4204,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.30308443952753683,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.4857,
+          "won": true,
+          "pnl_usd": 51.59,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.07819905213270142,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.8497,
+          "won": true,
+          "pnl_usd": 51.59,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.095,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.819,
+          "won": true,
+          "pnl_usd": 51.59,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          61.0,
+          62.0
+        ],
+        "winning_bin_ticker": "KXLOWTDC-26MAY30-B61.5",
+        "ts_utc": "2026-05-31T19:17:19Z",
+        "champion_pnl_usd": 51.59,
+        "champion_won": true
       }
     },
     {
@@ -5792,40 +4266,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.13527452320127575,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0183,
+          "won": true,
+          "pnl_usd": 9.28,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.07819905213270142,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0061,
+          "won": true,
+          "pnl_usd": 9.28,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.32,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.1024,
+          "won": true,
+          "pnl_usd": 9.28,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          61.0,
+          62.0
+        ],
+        "winning_bin_ticker": "KXLOWTDC-26MAY30-B61.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": 9.28,
+        "champion_won": true
       }
     },
     {
@@ -5851,40 +4328,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.18310936366176866,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0335,
+          "won": true,
+          "pnl_usd": 9.9,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.08293838862559241,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0069,
+          "won": true,
+          "pnl_usd": 9.9,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.33,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.1089,
+          "won": true,
+          "pnl_usd": 9.9,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          61.0,
+          62.0
+        ],
+        "winning_bin_ticker": "KXLOWTDC-26MAY30-B61.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": 9.9,
+        "champion_won": true
       }
     },
     {
@@ -5910,40 +4390,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.14291208335706743,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0204,
+          "won": true,
+          "pnl_usd": 10.35,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.05635411624011376,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0032,
+          "won": true,
+          "pnl_usd": 10.35,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.345,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.119,
+          "won": true,
+          "pnl_usd": 10.35,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          45.0,
+          46.0
+        ],
+        "winning_bin_ticker": "KXLOWTBOS-26MAY30-B45.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": 10.35,
+        "champion_won": true
       }
     },
     {
@@ -5969,40 +4452,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.15911418785407996,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.7071,
+          "won": false,
+          "pnl_usd": -19.88,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.06422010501708172,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.8757,
+          "won": false,
+          "pnl_usd": -19.88,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.29000000000000004,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.5041,
+          "won": false,
+          "pnl_usd": -19.88,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          45.0,
+          46.0
+        ],
+        "winning_bin_ticker": "KXLOWTBOS-26MAY30-B45.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -19.88,
+        "champion_won": false
       }
     },
     {
@@ -6028,40 +4514,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.1095537447302643,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.012,
+          "won": true,
+          "pnl_usd": 5.38,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.04340371024128588,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0019,
+          "won": true,
+          "pnl_usd": 5.38,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.215,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0462,
+          "won": true,
+          "pnl_usd": 5.38,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          45.0,
+          46.0
+        ],
+        "winning_bin_ticker": "KXLOWTBOS-26MAY30-B45.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": 5.38,
+        "champion_won": true
       }
     },
     {
@@ -6087,40 +4576,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.14206288129425867,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0202,
+          "won": true,
+          "pnl_usd": 11.47,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.026313332886207377,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0007,
+          "won": true,
+          "pnl_usd": 11.47,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.37,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.1369,
+          "won": true,
+          "pnl_usd": 11.47,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          76.0,
+          77.0
+        ],
+        "winning_bin_ticker": "KXLOWTMIA-26MAY30-B76.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": 11.47,
+        "champion_won": true
       }
     },
     {
@@ -6146,40 +4638,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.2713888467773336,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.5309,
+          "won": false,
+          "pnl_usd": -19.8,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.2358838413690783,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.5839,
+          "won": false,
+          "pnl_usd": -19.8,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.44999999999999996,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.3025,
+          "won": false,
+          "pnl_usd": -19.8,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          76.0,
+          77.0
+        ],
+        "winning_bin_ticker": "KXLOWTMIA-26MAY30-B76.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -19.8,
+        "champion_won": false
       }
     },
     {
@@ -6205,40 +4700,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.3042976372782954,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0926,
+          "won": false,
+          "pnl_usd": -6.24,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.5913243010146011,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.3497,
+          "won": false,
+          "pnl_usd": -6.24,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.12000000000000001,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0144,
+          "won": false,
+          "pnl_usd": -6.24,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          76.0,
+          77.0
+        ],
+        "winning_bin_ticker": "KXLOWTMIA-26MAY30-B76.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -6.24,
+        "champion_won": false
       }
     },
     {
@@ -6264,6 +4762,378 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.13686749288617958,
+          "brier": 0.0187,
+          "won": true,
+          "pnl_usd": 15.23,
+          "pnl_type": "actual"
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.5,
+          "brier": 0.25,
+          "won": true,
+          "pnl_usd": 15.23,
+          "pnl_type": "theoretical"
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.435,
+          "brier": 0.1892,
+          "won": true,
+          "pnl_usd": 15.23,
+          "pnl_type": "theoretical"
+        }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          68.0,
+          null
+        ],
+        "winning_bin_ticker": "KXLOWTPHX-26MAY30-T68",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": 15.23,
+        "champion_won": true
+      }
+    },
+    {
+      "run_id": "113",
+      "schema_version": 2,
+      "ts_utc": "2026-05-29T20:28:23Z",
+      "event_ticker": "KXLOWTPHX-26MAY30",
+      "event_title": "Lowest temperature in Phoenix on May 30, 2026?",
+      "target_market_ticker": "KXLOWTPHX-26MAY30-B63.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.035,
+      "position": {
+        "side": "YES",
+        "n_contracts": 13,
+        "entry_price": 0.035,
+        "size_usd": 0.47,
+        "entry_price_yes_cents": 3.5,
+        "entry_price_no_cents": 96.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.08626462141427962,
+          "brier": 0.0074,
+          "won": false,
+          "pnl_usd": -0.46,
+          "pnl_type": "actual"
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.5,
+          "brier": 0.25,
+          "won": false,
+          "pnl_usd": -0.46,
+          "pnl_type": "theoretical"
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.035,
+          "brier": 0.0012,
+          "won": false,
+          "pnl_usd": -0.46,
+          "pnl_type": "theoretical"
+        }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          68.0,
+          null
+        ],
+        "winning_bin_ticker": "KXLOWTPHX-26MAY30-T68",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -0.46,
+        "champion_won": false
+      }
+    },
+    {
+      "run_id": "114",
+      "schema_version": 2,
+      "ts_utc": "2026-05-29T20:29:02Z",
+      "event_ticker": "KXLOWTDEN-26MAY30",
+      "event_title": "Lowest temperature in Denver on May 30, 2026?",
+      "target_market_ticker": "KXLOWTDEN-26MAY30-B54.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.075,
+      "position": {
+        "side": "YES",
+        "n_contracts": 48,
+        "entry_price": 0.075,
+        "size_usd": 3.65,
+        "entry_price_yes_cents": 7.5,
+        "entry_price_no_cents": 92.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.18339631009160062,
+          "brier": 0.0336,
+          "won": false,
+          "pnl_usd": -3.6,
+          "pnl_type": "actual"
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.2804793255597967,
+          "brier": 0.0787,
+          "won": false,
+          "pnl_usd": -3.6,
+          "pnl_type": "theoretical"
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.075,
+          "brier": 0.0056,
+          "won": false,
+          "pnl_usd": -3.6,
+          "pnl_type": "theoretical"
+        }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          48.0,
+          49.0
+        ],
+        "winning_bin_ticker": "KXLOWTDEN-26MAY30-B48.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -3.6,
+        "champion_won": false
+      }
+    },
+    {
+      "run_id": "115",
+      "schema_version": 2,
+      "ts_utc": "2026-05-29T20:29:02Z",
+      "event_ticker": "KXLOWTDEN-26MAY30",
+      "event_title": "Lowest temperature in Denver on May 30, 2026?",
+      "target_market_ticker": "KXLOWTDEN-26MAY30-B48.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.25,
+      "position": {
+        "side": "NO",
+        "n_contracts": 26,
+        "entry_price": 0.75,
+        "size_usd": 20.1,
+        "entry_price_yes_cents": 25.0,
+        "entry_price_no_cents": 75.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.1172701429155257,
+          "brier": 0.7792,
+          "won": false,
+          "pnl_usd": -19.5,
+          "pnl_type": "actual"
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.15703701512856846,
+          "brier": 0.7106,
+          "won": false,
+          "pnl_usd": -19.5,
+          "pnl_type": "theoretical"
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.25,
+          "brier": 0.5625,
+          "won": false,
+          "pnl_usd": -19.5,
+          "pnl_type": "theoretical"
+        }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          48.0,
+          49.0
+        ],
+        "winning_bin_ticker": "KXLOWTDEN-26MAY30-B48.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -19.5,
+        "champion_won": false
+      }
+    },
+    {
+      "run_id": "116",
+      "schema_version": 2,
+      "ts_utc": "2026-05-29T20:29:02Z",
+      "event_ticker": "KXLOWTDEN-26MAY30",
+      "event_title": "Lowest temperature in Denver on May 30, 2026?",
+      "target_market_ticker": "KXLOWTDEN-26MAY30-B52.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.21000000000000002,
+      "position": {
+        "side": "YES",
+        "n_contracts": 28,
+        "entry_price": 0.21000000000000002,
+        "size_usd": 6.05,
+        "entry_price_yes_cents": 21.0,
+        "entry_price_no_cents": 79.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.21207919287439145,
+          "brier": 0.045,
+          "won": false,
+          "pnl_usd": -5.88,
+          "pnl_type": "actual"
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.27053454712838726,
+          "brier": 0.0732,
+          "won": false,
+          "pnl_usd": -5.88,
+          "pnl_type": "theoretical"
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.21000000000000002,
+          "brier": 0.0441,
+          "won": false,
+          "pnl_usd": -5.88,
+          "pnl_type": "theoretical"
+        }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          48.0,
+          49.0
+        ],
+        "winning_bin_ticker": "KXLOWTDEN-26MAY30-B48.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -5.88,
+        "champion_won": false
+      }
+    },
+    {
+      "run_id": "117",
+      "schema_version": 2,
+      "ts_utc": "2026-05-29T20:29:12Z",
+      "event_ticker": "KXLOWTSEA-26MAY30",
+      "event_title": "Lowest temperature in Seattle on May 30, 2026?",
+      "target_market_ticker": "KXLOWTSEA-26MAY30-B45.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.38,
+      "position": {
+        "side": "NO",
+        "n_contracts": 24,
+        "entry_price": 0.62,
+        "size_usd": 15.1,
+        "entry_price_yes_cents": 38.0,
+        "entry_price_no_cents": 62.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.27195853933420605,
+          "brier": 0.53,
+          "won": false,
+          "pnl_usd": -14.88,
+          "pnl_type": "actual"
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.5,
+          "brier": 0.25,
+          "won": false,
+          "pnl_usd": -14.88,
+          "pnl_type": "theoretical"
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.38,
+          "brier": 0.3844,
+          "won": false,
+          "pnl_usd": -14.88,
+          "pnl_type": "theoretical"
+        }
+      ],
+      "resolution": {
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          45.0,
+          46.0
+        ],
+        "winning_bin_ticker": "KXLOWTSEA-26MAY30-B45.5",
+        "ts_utc": "2026-05-31T19:17:20Z",
+        "champion_pnl_usd": -14.88,
+        "champion_won": false
+      }
+    },
+    {
+      "run_id": "118",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:17:28Z",
+      "event_ticker": "KXLOWTNYC-26JUN01",
+      "event_title": "Lowest temperature in New York City on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26JUN01-B56.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.335,
+      "position": {
+        "side": "NO",
+        "n_contracts": 31,
+        "entry_price": 0.665,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 33.5,
+        "entry_price_no_cents": 66.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.22704196678203495,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6273,7 +5143,184 @@
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
-          "p_yes": 0.5,
+          "p_yes": 0.3234025926596662,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.335,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "119",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:17:28Z",
+      "event_ticker": "KXLOWTNYC-26JUN01",
+      "event_title": "Lowest temperature in New York City on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26JUN01-B54.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.295,
+      "position": {
+        "side": "NO",
+        "n_contracts": 29,
+        "entry_price": 0.7050000000000001,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 29.5,
+        "entry_price_no_cents": 70.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.18774915920028723,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.21128430784635674,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.295,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "120",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:17:28Z",
+      "event_ticker": "KXLOWTNYC-26JUN01",
+      "event_title": "Lowest temperature in New York City on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26JUN01-B60.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.060000000000000005,
+      "position": {
+        "side": "YES",
+        "n_contracts": 18,
+        "entry_price": 0.060000000000000005,
+        "size_usd": 1.12,
+        "entry_price_yes_cents": 6.0,
+        "entry_price_no_cents": 94.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.1270149098389151,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.176450582335539,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.060000000000000005,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "121",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:17:36Z",
+      "event_ticker": "KXLOWTLAX-26JUN01",
+      "event_title": "Lowest temperature in Los Angeles on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTLAX-26JUN01-B59.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.435,
+      "position": {
+        "side": "NO",
+        "n_contracts": 36,
+        "entry_price": 0.565,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 43.5,
+        "entry_price_no_cents": 56.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.2606623556332645,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.11397377114899797,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6301,28 +5348,28 @@
       }
     },
     {
-      "run_id": "113",
+      "run_id": "122",
       "schema_version": 2,
-      "ts_utc": "2026-05-29T20:28:23Z",
-      "event_ticker": "KXLOWTPHX-26MAY30",
-      "event_title": "Lowest temperature in Phoenix on May 30, 2026?",
-      "target_market_ticker": "KXLOWTPHX-26MAY30-B63.5",
+      "ts_utc": "2026-05-31T19:17:44Z",
+      "event_ticker": "KXLOWTLAX-26JUN01",
+      "event_title": "Lowest temperature in Los Angeles on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTLAX-26JUN01-B61.5",
       "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.035,
+      "kalshi_mid_at_entry": 0.33999999999999997,
       "position": {
-        "side": "YES",
-        "n_contracts": 13,
-        "entry_price": 0.035,
-        "size_usd": 0.47,
-        "entry_price_yes_cents": 3.5,
-        "entry_price_no_cents": 96.5
+        "side": "NO",
+        "n_contracts": 31,
+        "entry_price": 0.66,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 34.0,
+        "entry_price_no_cents": 66.0
       },
       "models": [
         {
           "name": "vendor_ensemble",
           "role": "champion",
           "method": "ensemble",
-          "p_yes": 0.08626462141427962,
+          "p_yes": 0.28763806571313766,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6332,7 +5379,7 @@
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
-          "p_yes": 0.5,
+          "p_yes": 0.22094332283271303,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6342,7 +5389,7 @@
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
-          "p_yes": 0.035,
+          "p_yes": 0.33999999999999997,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6360,28 +5407,28 @@
       }
     },
     {
-      "run_id": "114",
+      "run_id": "123",
       "schema_version": 2,
-      "ts_utc": "2026-05-29T20:29:02Z",
-      "event_ticker": "KXLOWTDEN-26MAY30",
-      "event_title": "Lowest temperature in Denver on May 30, 2026?",
-      "target_market_ticker": "KXLOWTDEN-26MAY30-B54.5",
+      "ts_utc": "2026-05-31T19:18:08Z",
+      "event_ticker": "KXLOWTSFO-26JUN01",
+      "event_title": "Lowest temperature in San Francisco on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTSFO-26JUN01-B50.5",
       "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.075,
+      "kalshi_mid_at_entry": 0.44499999999999995,
       "position": {
-        "side": "YES",
-        "n_contracts": 48,
-        "entry_price": 0.075,
-        "size_usd": 3.65,
-        "entry_price_yes_cents": 7.5,
-        "entry_price_no_cents": 92.5
+        "side": "NO",
+        "n_contracts": 37,
+        "entry_price": 0.555,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 44.5,
+        "entry_price_no_cents": 55.5
       },
       "models": [
         {
           "name": "vendor_ensemble",
           "role": "champion",
           "method": "ensemble",
-          "p_yes": 0.18339631009160062,
+          "p_yes": 0.3027345459133628,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6391,7 +5438,66 @@
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
-          "p_yes": 0.2804793255597967,
+          "p_yes": 0.20704439838026456,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.44499999999999995,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "124",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:18:08Z",
+      "event_ticker": "KXLOWTSFO-26JUN01",
+      "event_title": "Lowest temperature in San Francisco on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTSFO-26JUN01-B48.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.075,
+      "position": {
+        "side": "YES",
+        "n_contracts": 26,
+        "entry_price": 0.075,
+        "size_usd": 1.98,
+        "entry_price_yes_cents": 7.5,
+        "entry_price_no_cents": 92.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.16834168186530105,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.09009187478107288,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6419,28 +5525,28 @@
       }
     },
     {
-      "run_id": "115",
+      "run_id": "125",
       "schema_version": 2,
-      "ts_utc": "2026-05-29T20:29:02Z",
-      "event_ticker": "KXLOWTDEN-26MAY30",
-      "event_title": "Lowest temperature in Denver on May 30, 2026?",
-      "target_market_ticker": "KXLOWTDEN-26MAY30-B48.5",
+      "ts_utc": "2026-05-31T19:18:08Z",
+      "event_ticker": "KXLOWTSFO-26JUN01",
+      "event_title": "Lowest temperature in San Francisco on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTSFO-26JUN01-B52.5",
       "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.25,
+      "kalshi_mid_at_entry": 0.385,
       "position": {
         "side": "NO",
-        "n_contracts": 26,
-        "entry_price": 0.75,
-        "size_usd": 20.1,
-        "entry_price_yes_cents": 25.0,
-        "entry_price_no_cents": 75.0
+        "n_contracts": 33,
+        "entry_price": 0.615,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 38.5,
+        "entry_price_no_cents": 61.5
       },
       "models": [
         {
           "name": "vendor_ensemble",
           "role": "champion",
           "method": "ensemble",
-          "p_yes": 0.1172701429155257,
+          "p_yes": 0.2937080409797428,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6450,7 +5556,125 @@
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
-          "p_yes": 0.15703701512856846,
+          "p_yes": 0.18663132559444673,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.385,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "126",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:18:20Z",
+      "event_ticker": "KXLOWTCHI-26JUN01",
+      "event_title": "Lowest temperature in Chicago on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTCHI-26JUN01-B57.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.38,
+      "position": {
+        "side": "NO",
+        "n_contracts": 33,
+        "entry_price": 0.62,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 38.0,
+        "entry_price_no_cents": 62.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.14882078734185025,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.07065691401488174,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.38,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "127",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:18:27Z",
+      "event_ticker": "KXLOWTCHI-26JUN01",
+      "event_title": "Lowest temperature in Chicago on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTCHI-26JUN01-B59.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.25,
+      "position": {
+        "side": "NO",
+        "n_contracts": 27,
+        "entry_price": 0.75,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 25.0,
+        "entry_price_no_cents": 75.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.13201540164303707,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.06264993645982593,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6478,28 +5702,28 @@
       }
     },
     {
-      "run_id": "116",
+      "run_id": "128",
       "schema_version": 2,
-      "ts_utc": "2026-05-29T20:29:02Z",
-      "event_ticker": "KXLOWTDEN-26MAY30",
-      "event_title": "Lowest temperature in Denver on May 30, 2026?",
-      "target_market_ticker": "KXLOWTDEN-26MAY30-B52.5",
+      "ts_utc": "2026-05-31T19:18:35Z",
+      "event_ticker": "KXLOWTCHI-26JUN01",
+      "event_title": "Lowest temperature in Chicago on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTCHI-26JUN01-B55.5",
       "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.21000000000000002,
+      "kalshi_mid_at_entry": 0.245,
       "position": {
-        "side": "YES",
-        "n_contracts": 28,
-        "entry_price": 0.21000000000000002,
-        "size_usd": 6.05,
-        "entry_price_yes_cents": 21.0,
-        "entry_price_no_cents": 79.0
+        "side": "NO",
+        "n_contracts": 27,
+        "entry_price": 0.755,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 24.5,
+        "entry_price_no_cents": 75.5
       },
       "models": [
         {
           "name": "vendor_ensemble",
           "role": "champion",
           "method": "ensemble",
-          "p_yes": 0.21207919287439145,
+          "p_yes": 0.14867582516765196,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6509,7 +5733,7 @@
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
-          "p_yes": 0.27053454712838726,
+          "p_yes": 0.06839055498157284,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6519,7 +5743,7 @@
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
-          "p_yes": 0.21000000000000002,
+          "p_yes": 0.245,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6537,28 +5761,323 @@
       }
     },
     {
-      "run_id": "117",
+      "run_id": "129",
       "schema_version": 2,
-      "ts_utc": "2026-05-29T20:29:12Z",
-      "event_ticker": "KXLOWTSEA-26MAY30",
-      "event_title": "Lowest temperature in Seattle on May 30, 2026?",
-      "target_market_ticker": "KXLOWTSEA-26MAY30-B45.5",
+      "ts_utc": "2026-05-31T19:19:06Z",
+      "event_ticker": "KXLOWTDC-26JUN01",
+      "event_title": "Lowest temperature in Washington DC on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTDC-26JUN01-B59.5",
       "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.38,
+      "kalshi_mid_at_entry": 0.485,
       "position": {
         "side": "NO",
-        "n_contracts": 24,
-        "entry_price": 0.62,
-        "size_usd": 15.1,
-        "entry_price_yes_cents": 38.0,
-        "entry_price_no_cents": 62.0
+        "n_contracts": 40,
+        "entry_price": 0.515,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 48.5,
+        "entry_price_no_cents": 51.5
       },
       "models": [
         {
           "name": "vendor_ensemble",
           "role": "champion",
           "method": "ensemble",
-          "p_yes": 0.27195853933420605,
+          "p_yes": 0.18420917642528334,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.0924170616113744,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.485,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "130",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:19:06Z",
+      "event_ticker": "KXLOWTDC-26JUN01",
+      "event_title": "Lowest temperature in Washington DC on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTDC-26JUN01-B55.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.045000000000000005,
+      "position": {
+        "side": "YES",
+        "n_contracts": 19,
+        "entry_price": 0.045000000000000005,
+        "size_usd": 0.88,
+        "entry_price_yes_cents": 4.5,
+        "entry_price_no_cents": 95.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.08563370710572404,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.07819905213270142,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.045000000000000005,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "131",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:19:17Z",
+      "event_ticker": "KXLOWTBOS-26JUN01",
+      "event_title": "Lowest temperature in Boston on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTBOS-26JUN01-B45.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.045000000000000005,
+      "position": {
+        "side": "YES",
+        "n_contracts": 24,
+        "entry_price": 0.045000000000000005,
+        "size_usd": 1.11,
+        "entry_price_yes_cents": 4.5,
+        "entry_price_no_cents": 95.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.13497812046800814,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.05263726269186723,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.045000000000000005,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "132",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:20:04Z",
+      "event_ticker": "KXLOWTMIA-26JUN01",
+      "event_title": "Lowest temperature in Miami on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTMIA-26JUN01-B76.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.48,
+      "position": {
+        "side": "NO",
+        "n_contracts": 40,
+        "entry_price": 0.52,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 48.0,
+        "entry_price_no_cents": 52.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.3037761324636811,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.18385236551316148,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.48,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "133",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:20:05Z",
+      "event_ticker": "KXLOWTMIA-26JUN01",
+      "event_title": "Lowest temperature in Miami on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTMIA-26JUN01-B72.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.035,
+      "position": {
+        "side": "YES",
+        "n_contracts": 15,
+        "entry_price": 0.035,
+        "size_usd": 0.53,
+        "entry_price_yes_cents": 3.5,
+        "entry_price_no_cents": 96.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.0221942021675633,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.056017882988163646,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.035,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "134",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:20:19Z",
+      "event_ticker": "KXLOWTPHX-26JUN01",
+      "event_title": "Lowest temperature in Phoenix on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTPHX-26JUN01-B72.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.065,
+      "position": {
+        "side": "YES",
+        "n_contracts": 14,
+        "entry_price": 0.065,
+        "size_usd": 0.96,
+        "entry_price_yes_cents": 6.5,
+        "entry_price_no_cents": 93.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.11808392050010899,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6578,7 +6097,479 @@
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
-          "p_yes": 0.38,
+          "p_yes": 0.065,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "135",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:06Z",
+      "event_ticker": "KXLOWTDEN-26JUN01",
+      "event_title": "Lowest temperature in Denver on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTDEN-26JUN01-B57.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.03,
+      "position": {
+        "side": "YES",
+        "n_contracts": 47,
+        "entry_price": 0.03,
+        "size_usd": 1.43,
+        "entry_price_yes_cents": 3.0,
+        "entry_price_no_cents": 97.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.14883381102645818,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.2090128384458381,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.03,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "136",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:06Z",
+      "event_ticker": "KXLOWTDEN-26JUN01",
+      "event_title": "Lowest temperature in Denver on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTDEN-26JUN01-B55.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.1,
+      "position": {
+        "side": "YES",
+        "n_contracts": 46,
+        "entry_price": 0.1,
+        "size_usd": 4.63,
+        "entry_price_yes_cents": 10.0,
+        "entry_price_no_cents": 90.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.17773941948109154,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.25381816656855466,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.1,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "137",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:06Z",
+      "event_ticker": "KXLOWTDEN-26JUN01",
+      "event_title": "Lowest temperature in Denver on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTDEN-26JUN01-B53.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.185,
+      "position": {
+        "side": "YES",
+        "n_contracts": 21,
+        "entry_price": 0.185,
+        "size_usd": 3.96,
+        "entry_price_yes_cents": 18.5,
+        "entry_price_no_cents": 81.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.17567109387522883,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.23347311245786403,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.185,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "138",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:16Z",
+      "event_ticker": "KXLOWTSEA-26JUN01",
+      "event_title": "Lowest temperature in Seattle on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTSEA-26JUN01-B44.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.05,
+      "position": {
+        "side": "YES",
+        "n_contracts": 32,
+        "entry_price": 0.05,
+        "size_usd": 1.63,
+        "entry_price_yes_cents": 5.0,
+        "entry_price_no_cents": 95.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.16829374154231833,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.5,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.05,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "139",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:23Z",
+      "event_ticker": "KXLOWTSEA-26JUN01",
+      "event_title": "Lowest temperature in Seattle on Jun 1, 2026?",
+      "target_market_ticker": "KXLOWTSEA-26JUN01-B46.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.355,
+      "position": {
+        "side": "NO",
+        "n_contracts": 32,
+        "entry_price": 0.645,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 35.5,
+        "entry_price_no_cents": 64.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.24994965018261092,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.5,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.355,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "140",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:24Z",
+      "event_ticker": "KXHIGHTSFO-26JUN01",
+      "event_title": "Highest temperature in San Francisco on Jun 1, 2026?",
+      "target_market_ticker": "KXHIGHTSFO-26JUN01-B73.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.415,
+      "position": {
+        "side": "NO",
+        "n_contracts": 35,
+        "entry_price": 0.585,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 41.5,
+        "entry_price_no_cents": 58.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.07809284793322743,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.13579464146066703,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.415,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "141",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:24Z",
+      "event_ticker": "KXHIGHTSFO-26JUN01",
+      "event_title": "Highest temperature in San Francisco on Jun 1, 2026?",
+      "target_market_ticker": "KXHIGHTSFO-26JUN01-B75.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.255,
+      "position": {
+        "side": "NO",
+        "n_contracts": 28,
+        "entry_price": 0.745,
+        "size_usd": 20.89,
+        "entry_price_yes_cents": 25.5,
+        "entry_price_no_cents": 74.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.07632557067105378,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.13673439931870338,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.255,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "142",
+      "schema_version": 2,
+      "ts_utc": "2026-05-31T19:21:24Z",
+      "event_ticker": "KXHIGHTSFO-26JUN01",
+      "event_title": "Highest temperature in San Francisco on Jun 1, 2026?",
+      "target_market_ticker": "KXHIGHTSFO-26JUN01-B71.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.175,
+      "position": {
+        "side": "NO",
+        "n_contracts": 3,
+        "entry_price": 0.825,
+        "size_usd": 2.67,
+        "entry_price_yes_cents": 17.5,
+        "entry_price_no_cents": 82.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.08173736960205047,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.13104987714065905,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.175,
           "brier": null,
           "won": null,
           "pnl_usd": null,
@@ -6596,14 +6587,14 @@
       }
     }
   ],
-  "live_runs_total": 116,
+  "live_runs_total": 141,
   "backtest_runs": [],
   "backtest_runs_total": 0,
   "paper_bets_summary": {
-    "n_open": 20,
-    "n_resolved": 96,
-    "pnl_usd_cumulative": 5.23,
-    "phase_1_counter": "116/50"
+    "n_open": 25,
+    "n_resolved": 116,
+    "pnl_usd_cumulative": 44.55,
+    "phase_1_counter": "141/50"
   },
   "backtest_summary": {
     "n_total": 268,
@@ -6615,12 +6606,12 @@
   },
   "hybrid_sample": {
     "alpha_backtest": 0.3,
-    "n_live": 96,
+    "n_live": 116,
     "n_backtest_strict": 268,
     "n_backtest_naive_excluded": 0,
-    "n_effective": 176.4,
+    "n_effective": 196.4,
     "phase_1_target": 50,
-    "phase_1_progress_live_only": "96/50",
+    "phase_1_progress_live_only": "116/50",
     "convention_ref": "predictor/runs/CONVENTION.md sec.6.bis",
     "note": "N_effective is for SECONDARY decisions only (feature-set selection, reliability plots, complementary promotion check). The Phase 1 go/no-go gate (CONVENTION.md sec.6) uses n_live exclusively and ignores n_backtest_strict."
   },
