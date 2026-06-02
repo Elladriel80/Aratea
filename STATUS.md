@@ -1,6 +1,6 @@
 # Status
 
-*Last updated: 2026-05-15*
+*Last updated: 2026-06-02*
 
 Snapshot of where Aratea actually stands across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
@@ -38,29 +38,39 @@ must yield p < 0.10.
 
 ### Resolved paper runs
 
-| Run | Event | Outcome | Champion Brier | Champion paper P&L |
-|---|---|---|---|---|
-| [`002`](predictor/runs/002/) | NYC LOWT 2026-05-11, bin 50–51°F | NO | 0.0213 | +$56.16 |
-| [`003`](predictor/runs/003/) | NYC LOWT 2026-05-13, bin 51–52°F | NO | 0.0196 | +$52.44 |
+The daily auto-capture (see *CI* below) has grown the dataset well past the
+go / no-go threshold. Counts below come from the union of
+[`predictor/runs/*/report.json`](predictor/runs/) (`scoring.outcome`) and the
+ledger [`predictor/data/ledger/paper_bets.csv`](predictor/data/ledger/paper_bets.csv).
 
-Run 003 was the first multi-model capture (champion + challenger + baseline
-all evaluated on the same event); the champion finished best on Brier.
-A single resolved point is directional only — not statistically
-significant. See [`predictor/runs/003/report.json`](predictor/runs/003/report.json) §scoring.
+| Metric | Value | Source |
+|---|---|---|
+| Captured runs | **142** (`runs/001`–`142`) | `predictor/runs/` |
+| Resolved runs | **115** | `report.json` with `scoring.outcome ∈ {yes,no}` |
+| Open (awaiting settlement) | **27** | `142 − 115` |
+| Champion (`vendor_ensemble`) mean Brier | **0.1994** over 115 resolved | `report.json` §scoring |
+| Champion win rate | **56 / 115** (≈ 49 %) | `report.json` §scoring |
+| Champion best-of-3 models on the event | **35 / 115** (≈ 30 %) | `report.json` `champion_is_best` |
+| Champion net actual P&L | **−$11.61** | `paper_bets.csv` (`pnl_type = actual`) |
 
-Total resolved: **2 / 50** required for the Phase 1 go / no-go.
+Total resolved: **115 / 50** required for the Phase 1 go / no-go — the
+**N > 50 threshold is now crossed** (criterion: [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §6).
+The formal written go / no-go is therefore the **active pending Phase 1
+deliverable**. Preliminary aggregates do **not** yet show a clear edge: the
+champion ranks best of the three live models on only ~30 % of events and its
+mean Brier (0.199) sits near the base-rate Brier band, so the honest reading
+is "no edge demonstrated yet" pending the formal write-up — not an automatic go.
 
 ### Open paper runs
 
-| Run | Event | Captured | Resolution expected |
-|---|---|---|---|
-| [`004`](predictor/runs/004/) | NYC LOWT 2026-05-14, bin 52–53°F | 2026-05-13 14:29 UTC | NWS daily climate report (~J+1) |
-| [`005`](predictor/runs/005/) | NYC LOWT 2026-05-15, bin 49–50°F | 2026-05-14 19:45 UTC | NWS daily climate report (~J+1) |
-
-Both opened automatically by the CI workflow (see *CI* below). Each run
-records a champion position with a real `paper_bets.csv` ledger row plus
-two shadow positions for the challenger and the baseline (same side, same
-size, theoretical P&L only) so Brier scores remain directly comparable.
+**27 runs** are currently open (captured, awaiting NWS settlement) — the tail
+of the `runs/001`–`142` sequence. Each is opened automatically by the CI
+workflow (see *CI* below) and records a champion position with a real
+`paper_bets.csv` ledger row plus shadow positions for the challenger and the
+baseline (same side, same size, theoretical P&L only) so Brier scores remain
+directly comparable. Most settle on the NWS daily climate report (~J+1), but
+Kalshi settlement can lag a few days, which is why the open count stays around
+two to three days of capture volume.
 
 ### Latest training run (decision-gate)
 
@@ -127,7 +137,7 @@ Detail and threat model in [`contracts/README.md`](contracts/README.md) and
 | **M2** | ~~`MonthlyMintCap` library~~ — removed 2026-05-17 (no on-chain emission cap; quality gated off-chain — see `contracts/docs/ROUND-LIFECYCLE.md` §5 and white paper §7.7) | — |
 | **M3** | `RoundRegistry` — propose / challenge / execute / cancel lifecycle | ✅ done |
 | **M4** | Deployment scripts on Arbitrum Sepolia + Safe calldata helpers | ✅ done |
-| **M5** | Read-only dashboard (Next.js + viem) | 🟡 in progress |
+| **M5** | Read-only dashboard (Next.js + viem) | 🟡 in progress — UI built and deployed ([aratea-app.vercel.app](https://aratea-app.vercel.app/)); acceptance still pending the first on-chain round to render real registry data (see *Deployment state* below). |
 
 ### Test coverage discipline
 
@@ -152,7 +162,9 @@ enforced — quality is guaranteed off-chain (white paper §7.7). Toolchain: Fou
 ## Dashboard
 
 Live: **[aratea-app.vercel.app](https://aratea-app.vercel.app/)**.
-Source: [`dashboard/`](dashboard/).
+Source: [`dashboard/`](dashboard/). (Distinct from the companion landing site
+[aratea.vercel.app](https://aratea.vercel.app/), whose source is [`site/`](site/) —
+the two are separate Vercel projects, both live.)
 
 Read-only by design — the dashboard never asks for a signature, never
 broadcasts a transaction, never holds a key. Operations on the contracts
@@ -185,7 +197,7 @@ Workflows live in [`.github/workflows/`](.github/workflows/).
 
 | Workflow | Trigger | Purpose |
 |---|---|---|
-| `daily-trading.yml` | cron `0 18 * * *` UTC + manual dispatch | Run `daily_auto.py`: auto-finalize settled runs, auto-capture J+1 if `|edge| ≥ 0.10` and `spread ≤ 0.05`, rebuild manifest, commit + push so Vercel redeploys. |
+| `daily-trading.yml` | cron `0 18 * * *` UTC + manual dispatch | Run `daily_auto.py`: auto-finalize settled runs, then scan **16 event series** and auto-capture up to **3 bins/event** where `|edge vs kalshi_mid| ≥ 0.05` and `spread ≤ 0.08` (live defaults in [`predictor/scripts/daily_auto.py`](predictor/scripts/daily_auto.py); the `0.10 / 0.05`, NYC-only values are the env-overridable rollback path), rebuild manifest, commit + push so Vercel redeploys. |
 | `contracts-ci.yml` | push / PR on `contracts/**` | Forge build + test + coverage + Slither. |
 | `dashboard-ci.yml` | push / PR on `dashboard/**` | Typecheck + Next.js build + manifest shim test. |
 | `announce-release.yml` | `run-*` annotated tags | Auto-announce paper-run open / close to Discord. |

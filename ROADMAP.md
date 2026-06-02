@@ -1,6 +1,6 @@
 # Roadmap
 
-*Last updated: 2026-05-15*
+*Last updated: 2026-06-02*
 
 The phased plan for Aratea. This file frames the journey; [`STATUS.md`](STATUS.md)
 records where we actually are at this moment. Every claim here points
@@ -87,9 +87,11 @@ Module-level checkpoints, observable in the repo:
 
 ### In flight
 
-- **Grow the resolved-events dataset N.** Current state: 2 resolved
-  paper runs (002, 003), 2 in flight (004, 005). The Phase 1 criterion
-  is N > 50. Bottleneck is calendar time × Kalshi event density.
+- **~~Grow the resolved-events dataset N.~~ Threshold reached (2026-06-02).**
+  Current state: **115 resolved** paper runs, **27 open**, out of 142 captured
+  (`predictor/runs/001`–`142`). The Phase 1 criterion N > 50 is now crossed.
+  The bottleneck has shifted from data volume to **writing the formal go / no-go**
+  (see *Pending* below).
 - **Lift the `promotable: false` ceiling.** Test set currently spans a
   single `target_date`; the gate needs ≥ 3 distinct days. This will
   resolve on its own once the daily auto-capture has accumulated more
@@ -121,8 +123,10 @@ Module-level checkpoints, observable in the repo:
 
 ### Pending
 
-- **Reach N > 50 resolved runs.**
-- **Evaluate the Phase 1 go / no-go criterion in writing.** Two
+- ~~**Reach N > 50 resolved runs.**~~ **Done 2026-06-02** — 115 resolved
+  (see *In flight* above).
+- **Evaluate the Phase 1 go / no-go criterion in writing.** *(now the active
+  bottleneck — N is no longer the blocker.)* Two
   conditions on the same N: meta-ensemble Brier < best-single-model
   Brier *and* meta-ensemble Brier < climatology Brier. Both must hold.
 - **If the criterion holds**: transition plan to small real-money
@@ -149,7 +153,7 @@ Roadmap mirrored from [`contracts/README.md`](contracts/README.md):
 | **M2** | ~~`MonthlyMintCap` library~~ — removed 2026-05-17 (no on-chain emission cap; quality gated off-chain — white paper §7.7) | — |
 | **M3** | `RoundRegistry` (propose / challenge / execute / cancel) | ✅ done |
 | **M4** | Deployment scripts on Arbitrum Sepolia + Safe calldata helpers | ✅ done |
-| **M5** | Read-only dashboard (Next.js + viem) | 🟡 in progress |
+| **M5** | Read-only dashboard (Next.js + viem) | 🟡 in progress — UI built and deployed; acceptance pending the first on-chain round |
 
 After M5, the on-track-but-out-of-Phase-1 work:
 
@@ -249,6 +253,8 @@ Each one points to its source artifact when possible.
 | 2026-05-14 | Polymarket dropped from Phase 1 venues: no recurring daily weather markets, structural pricing bias, UMA-settlement friction with no methodological gain | [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §2 |
 | 2026-05-14 | Chronological-split fix — `train_learned.py` is now group-aware on `target_date`, schema v3, `promotable` gate at `n_distinct_test_split_values ≥ 3` | [`predictor/docs/rapport-split-temporel-2026-05-14.md`](predictor/docs/rapport-split-temporel-2026-05-14.md) |
 | 2026-05-14 | Dependabot major-version PRs (#35, #36, #38 — `next`, `typescript`, `@types/node`) closed. Majors are handled as dedicated migration sessions, not weekly batches | repo PR history |
+| 2026-06-02 | Phase 1 dataset crossed the gate: **115 resolved live runs** (> 50). N is no longer the blocker; the written go / no-go is now the active deliverable | [`predictor/runs/`](predictor/runs/), [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §6 |
+| 2026-06-02 | Pure-climatology track closed (`PIVOT_REJETÉ`): short-window (5–8 yr) climatology never beats the base-rate baseline (0/16 series BSS > 0; KXHIGHTSFO BSS −0.094 at N=536) | [`predictor/docs/decision-climato-windowed-2026-06-02.md`](predictor/docs/decision-climato-windowed-2026-06-02.md) |
 
 ---
 
