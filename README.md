@@ -53,8 +53,6 @@ A single token (AUG-POC, then ARA post-DAO). One unified mechanism: every contri
 
 ## How to participate
 
-## How to participate
-
 Start here:
 
 1. **Pick a starter issue** → [`docs/contributor-starter-issues.md`](docs/contributor-starter-issues.md) (5 open, each scoped to one module, no credentials needed)
