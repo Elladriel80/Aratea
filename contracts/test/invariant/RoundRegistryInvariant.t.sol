@@ -184,15 +184,7 @@ contract RoundRegistryInvariantTest is StdInvariant, Test {
     ///      passed silently if the admin EOA granted MINTER_ROLE to a 6th
     ///      attacker address not in the list).
     function invariant_RegistryIsSoleMinter() public view {
-        assertEq(
-            token.getRoleMemberCount(token.MINTER_ROLE()),
-            1,
-            "MINTER_ROLE held by exactly 1 address"
-        );
-        assertEq(
-            token.getRoleMember(token.MINTER_ROLE(), 0),
-            address(registry),
-            "Holder must be registry"
-        );
+        assertEq(token.getRoleMemberCount(token.MINTER_ROLE()), 1, "MINTER_ROLE held by exactly 1 address");
+        assertEq(token.getRoleMember(token.MINTER_ROLE(), 0), address(registry), "Holder must be registry");
     }
 }
