@@ -54,12 +54,19 @@ ledger [`predictor/data/ledger/paper_bets.csv`](predictor/data/ledger/paper_bets
 | Champion net actual P&L | **−$11.61** | `paper_bets.csv` (`pnl_type = actual`) |
 
 Total resolved: **115 / 50** required for the Phase 1 go / no-go — the
-**N > 50 threshold is now crossed** (criterion: [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §6).
-The formal written go / no-go is therefore the **active pending Phase 1
-deliverable**. Preliminary aggregates do **not** yet show a clear edge: the
-champion ranks best of the three live models on only ~30 % of events and its
-mean Brier (0.199) sits near the base-rate Brier band, so the honest reading
-is "no edge demonstrated yet" pending the formal write-up — not an automatic go.
+**N > 50 threshold is crossed** (criterion: [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §6).
+
+**Mechanical verdict (2026-06-03): ⛔ NO-GO.** Full write-up:
+[`predictor/docs/go-no-go-phase1-2026-06-03.md`](predictor/docs/go-no-go-phase1-2026-06-03.md)
+(bilingual, draft pending human validation). Over the 115 resolved live runs the
+champion `vendor_ensemble` does **not** beat the market baseline `kalshi_mid`
+(mean Brier 0.1994 vs 0.1853; head-to-head 57–58; sign-test p = 0.57) and does
+**not** significantly beat climatology (its lower *mean* of 0.1994 vs 0.2269 is
+an outlier artifact — it loses head-to-head 47–68, p = 0.98, and climatology
+wins on the median). The only significant win is over `learned_v2` (p = 0.046),
+which satisfies neither §6 condition. Regenerate:
+`python predictor/scripts/go_no_go_phase1.py`. The **business decision**
+(real-money / pivot Phase B / wind-down) is a human call — see the doc §7.
 
 ### Open paper runs
 
