@@ -1,0 +1,322 @@
+import { cookies } from "next/headers";
+
+export type Locale = "en" | "fr";
+export const LOCALE_COOKIE = "aratea-locale";
+
+export const fr = {
+  nav: { mission: "la mission", status: "état", approach: "approche", contribute: "contribuer", connect: "Connecter" },
+  hero: {
+    eyebrow: "Recherche ouverte · construit en public",
+    titleA: "Prédire le climat,",
+    titleB: "mutualiser le risque.",
+    lede: "Aratea construit une infrastructure on-chain : un predictor météo open-source, une couche de règlement par contrats, et à terme une mutuelle paramétrique décentralisée. Recherche en cours, en public.",
+    ctaCode: "Explorer le code",
+    ctaDashboard: "Voir le dashboard",
+    chartTitle: "// predictor — score Brier (plus bas = mieux)",
+    chartModel: "modèle",
+    chartMarket: "marché",
+    chartNote: "paper-only · aucun capital réel engagé · données illustratives",
+  },
+  mission: {
+    label: "la mission",
+    title: "Rendre la couverture du risque climatique transparente, mesurable et collective.",
+    lead: "Le risque climatique augmente, mais s'en couvrir reste opaque : des primes calculées en boîte noire, des indemnisations lentes, des marges captées par des intermédiaires. Aratea explore une autre voie — une mutuelle paramétrique décentralisée où la couverture se déclenche sur des données vérifiables, où le capital est mis en commun par ses membres, et où chaque paramètre est public.",
+    p1: "Tout repose sur une condition non négociable : prouver, chiffres à l'appui, qu'on prédit les événements climatiques mieux qu'un marché efficient. Sans cet edge, une mutuelle price mal ses contrats et se met en danger. C'est pourquoi la Phase 1 ne risque aucun capital réel — on mesure d'abord, on déploie ensuite.",
+    p2: "On avance par jalons, pas par calendrier, et on documente les échecs autant que les réussites. Aucune promesse de rendement, aucune spéculation : juste un protocole ouvert que chacun peut auditer, critiquer et faire avancer.",
+    principles: [
+      { h: "Transparence radicale", d: "Code, méthode et décisions en public. Tout est vérifiable, rien n'est caché." },
+      { h: "La preuve avant le capital", d: "Aucun argent réel tant que l'edge prédictif n'est pas démontré." },
+      { h: "Gouvernée par ses membres", d: "Une mutuelle détenue et pilotée par celles et ceux qui la construisent." },
+    ],
+  },
+  context: {
+    label: "le contexte",
+    title: "Le risque grimpe, la couverture ne suit pas.",
+    intro: "Le déficit de protection — l'écart entre les pertes subies et les pertes assurées — se creuse, surtout là où les moyens manquent.",
+    figures: [
+      { value: "318 Md$", label: "de pertes liées aux catastrophes en 2024" },
+      { value: "57 %", label: "de ces pertes non assurées (~181 Md$ de déficit)" },
+      { value: "80–90 %", label: "non couvert dans les économies émergentes" },
+    ],
+    source: "Source : Swiss Re Institute, sigma 1/2025.",
+  },
+  why: {
+    label: "pourquoi décentralisé",
+    title: "Une mutuelle, pas une compagnie.",
+    points: [
+      { h: "Vérifiable, pas déclaratif", d: "Paramètres, capital et déclenchements sont publics et auditables on-chain — pas une boîte noire." },
+      { h: "Alignée sur ses membres", d: "Le capital est mutualisé par celles et ceux qui se couvrent ; pas d'actionnaires à rémunérer en priorité." },
+      { h: "Programmable et ouverte", d: "L'indemnisation se déclenche sur données, sans intermédiaire à convaincre, et le protocole reste ouvert à tous." },
+    ],
+  },
+  faq: {
+    label: "questions",
+    title: "Les questions qu'on nous pose.",
+    items: [
+      { q: "Est-ce une assurance ?", a: "Non. Aratea n'est pas une assurance régulée au sens du Code des assurances ou de Solvabilité II — c'est un projet de recherche visant une mutuelle paramétrique décentralisée." },
+      { q: "Puis-je investir ou espérer un rendement ?", a: "Non. Aucune promesse de rendement, aucune levée ouverte. La Phase 1 est en paper-only : aucun capital réel n'est engagé." },
+      { q: "Où en est le predictor ?", a: "En validation méthodologique itérative. À ce stade aucun edge n'est revendiqué ; les résultats sont publiés au fur et à mesure." },
+      { q: "Comment contribuer ?", a: "Tout est ouvert. Le plus simple : le Discord ou une issue GitHub. Dev, météo, économie, design, gouvernance — voir la section Contribuer." },
+    ],
+  },
+  roadmapPage: {
+    back: "Retour à l'accueil",
+    title: "Roadmap",
+    intro: "Enchaînée par jalons techniques, pas par calendrier : une phase ne s'ouvre qu'à la complétion de la précédente. Pas de date promise.",
+    phases: [
+      { when: "Phase 1", tag: "en cours", h: "Predictor + contrats", items: [
+        "Predictor météo confronté au marché, scoré au Brier — en paper-only.",
+        "Token AUG-POC + registre de rounds (Foundry), tests et analyse statique en CI.",
+        "Dashboard read-only en ligne ; déploiement testnet Arbitrum Sepolia en cours.",
+        "Sortie attendue : un go/no-go écrit sur l'edge avant tout capital réel.",
+      ] },
+      { when: "Phase 2", tag: "à venir", h: "DAO MVP testnet", items: [
+        "Gouvernance par token (vote par token complet, cap anti-cartel).",
+        "Premiers contrats paramétriques déployés sur testnet.",
+        "Oracle aggregator v1, pool de mutualisation en collatéralisation pleine.",
+      ] },
+      { when: "Phase 3", tag: "à venir", h: "Mutuelle paramétrique", items: [
+        "Pool de mutualisation, pricing on-chain signé par le predictor.",
+        "Règlement par oracle sur observations NOAA / NWS.",
+        "Premières catégories : température extrême, précipitations, vent.",
+      ] },
+      { when: "Phase 4", tag: "long terme", h: "Couche data DePIN", items: [
+        "Stations météo rétribuées sur la qualité et la couverture des données.",
+        "Oracle Aratea natif sur certaines zones, consommable par d'autres protocoles.",
+      ] },
+    ],
+    note: "Pas de levée pré-edge, pas d'incorporation prématurée. Le détail vivant est dans le repo et le white paper.",
+  },
+  project: {
+    label: "le projet",
+    title: "Quand le climat devient un marché, la couverture devient programmable.",
+    intro: "Aratea relie trois briques : prédire des événements climatiques mieux qu'un marché efficient, régler des contrats paramétriques on-chain, et mutualiser le risque dans une structure gouvernée par ses membres. Tout est ouvert — le code, la méthode, les décisions.",
+  },
+  stats: { resolved: "paper bets résolus", atRisk: "capital réel engagé", models: "modèles en tournoi", openSource: "open-source" },
+  status: {
+    label: "où en est le projet",
+    title: "Trois chantiers, en public.",
+    predictorTag: "en cours", predictorH: "Predictor",
+    predictorP: "POC sur marchés Kalshi, en paper-only. Validation méthodologique itérative : aucun edge revendiqué à ce stade, aucune position en argent réel.",
+    contractsTag: "testnet", contractsH: "Contrats",
+    contractsP: "Token AUG-POC et registre de rounds développés sous Foundry, couverts par tests et analyse statique en CI. Déploiement Arbitrum Sepolia en cours.",
+    dashboardTag: "en ligne", dashboardH: "Dashboard",
+    dashboardP: "Interface read-only de l'état on-chain et du predictor. Aucune signature, aucune clé, aucune transaction diffusée.",
+  },
+  approach: {
+    label: "approche", title: "Prédire, régler, mutualiser.",
+    intro: "La logique est séquentielle : aucune brique aval ne démarre tant que la précédente n'est pas prouvée.",
+    p1H: "Prédire", p1P: "Un ensemble de modèles météo confronté au prix de marché, scoré au Brier. L'edge doit être prouvé avant tout engagement de capital.",
+    p2H: "Régler", p2P: "Des contrats Solidity ratifient et exécutent les rounds. Pas de cap d'émission on-chain : la qualité est garantie hors-chaîne.",
+    p3H: "Mutualiser", p3P: "À terme, un pool de capital gouverné par token, exécution paramétrique, indemnisation pilotée par oracle.",
+    soon: "à venir",
+  },
+  roadmap: {
+    label: "trajectoire", title: "Enchaînée par jalons, pas par calendrier.",
+    p1H: "Predictor + contrats", p1P: "Prouver l'edge prédictif et livrer la couche de règlement.",
+    p2H: "DAO MVP testnet", p2P: "Gouvernance par token, premiers contrats paramétriques sur testnet.",
+    p3H: "Mutuelle paramétrique", p3P: "Pool de mutualisation, pricing on-chain, règlement par oracle.",
+    p4H: "Couche data DePIN", p4P: "Stations météo rétribuées, oracle natif sur certaines zones.",
+    current: "en cours", cta: "Lire la roadmap complète",
+  },
+  live: {
+    label: "données en direct", title: "L'état réel, pas une capture d'écran.",
+    predictorCard: "Predictor · paper trading", resolved: "résolus", open: "ouverts", pnl: "P&L papier", phase: "Phase 1",
+    onchainCard: "Token on-chain", supply: "supply", state: "état", active: "actif", paused: "en pause",
+    notDeployed: "Pas encore déployé sur testnet — les chiffres token s'afficheront dès l'exécution du déploiement.",
+    unavailable: "Données indisponibles pour le moment.",
+    source: "source", updated: "mis à jour",
+  },
+  contribute: {
+    title: "Aratea se construit avec vous.",
+    intro: "Ce n'est pas un produit fini qu'on vous vend, c'est un chantier ouvert que vous pouvez façonner. Que vous codiez des contrats, modélisiez la météo, raisonniez sur l'économie du risque, dessiniez des interfaces ou pensiez la gouvernance — il y a une place et un vrai problème à votre mesure.",
+    rolesTitle: "Où contribuer",
+    roles: [
+      { h: "Dev & contrats", d: "Foundry, Solidity, tests, audits." },
+      { h: "Modélisation météo", d: "predictors, calibration, backtests saisonniers." },
+      { h: "Économie & actuariat", d: "pricing, mutualisation, gestion du capital." },
+      { h: "Design & produit", d: "UX, data-viz, vulgarisation." },
+      { h: "Gouvernance & juridique", d: "statuts, vote par token, conformité." },
+      { h: "Curieux", d: "lire, relayer, challenger les hypothèses." },
+    ],
+    closing: "On construit, on documente et on décide en public. Le plus simple pour commencer : un mot sur le Discord, une issue sur GitHub, ou le formulaire ci-dessous.",
+    name: "Nom ou pseudo", email: "Email (optionnel)", skill: "Ta compétence (dev, météo, design…)", message: "Un mot sur ce que tu veux faire",
+    submit: "Envoyer", sending: "Envoi…",
+    ok: "Merci ! Message bien reçu — on revient vers toi.",
+    err: "Oups, l'envoi a échoué. Réessaie ou passe par le Discord.",
+    needName: "Indique au moins un nom et une compétence.",
+    discord: "Rejoindre le Discord", github: "Voir le GitHub",
+  },
+  links: { community: "discord", code: "github", state: "dashboard", trajectory: "roadmap", whitepaper: "whitepaper" },
+  footer: {
+    note: "Aratea n'est pas une assurance au sens du Code des assurances ni de Solvabilité II. C'est un projet de recherche, pré-DAO. Pas de promesse de rendement, pas de spéculation.",
+    meta: "build solo · pré-DAO · contributions ouvertes", updated: "mis à jour",
+  },
+  wallet: { connect: "Connecter le wallet", connecting: "Connexion…", wrongNet: "Mauvais réseau", switch: "Passer sur Arbitrum Sepolia", disconnect: "Déconnecter", noWallet: "Aucun wallet détecté" },
+};
+
+export type Dictionary = typeof fr;
+
+export const en: Dictionary = {
+  nav: { mission: "the mission", status: "status", approach: "approach", contribute: "contribute", connect: "Connect" },
+  hero: {
+    eyebrow: "Open research · built in public",
+    titleA: "Predict the weather,",
+    titleB: "pool the risk.",
+    lede: "Aratea is building on-chain infrastructure: an open-source weather predictor, a contract-based settlement layer, and eventually a decentralized parametric mutual. Research in progress, in the open.",
+    ctaCode: "Explore the code",
+    ctaDashboard: "Open the dashboard",
+    chartTitle: "// predictor — Brier score (lower = better)",
+    chartModel: "model",
+    chartMarket: "market",
+    chartNote: "paper-only · no real capital at risk · illustrative data",
+  },
+  mission: {
+    label: "the mission",
+    title: "Make climate-risk coverage transparent, measurable, and collective.",
+    lead: "Climate risk is rising, but covering it stays opaque: premiums computed in a black box, slow payouts, margins captured by middlemen. Aratea explores another path — a decentralized parametric mutual where coverage triggers on verifiable data, where capital is pooled by its members, and where every parameter is public.",
+    p1: "Everything rests on one non-negotiable condition: proving, with numbers, that we predict climate events better than an efficient market. Without that edge, a mutual misprices its contracts and puts itself at risk. That's why Phase 1 risks no real capital — we measure first, deploy later.",
+    p2: "We move by milestones, not by calendar, and we document failures as much as wins. No yield promise, no speculation: just an open protocol anyone can audit, challenge, and push forward.",
+    principles: [
+      { h: "Radical transparency", d: "Code, method and decisions in the open. Everything is verifiable, nothing hidden." },
+      { h: "Proof before capital", d: "No real money until the predictive edge is demonstrated." },
+      { h: "Member-governed", d: "A mutual owned and steered by the people who build it." },
+    ],
+  },
+  context: {
+    label: "the context",
+    title: "Risk is climbing; coverage isn't keeping up.",
+    intro: "The protection gap — the distance between losses suffered and losses insured — keeps widening, most of all where means are scarce.",
+    figures: [
+      { value: "$318B", label: "in catastrophe-related losses in 2024" },
+      { value: "57%", label: "of those losses uninsured (~$181B gap)" },
+      { value: "80–90%", label: "uncovered in emerging economies" },
+    ],
+    source: "Source: Swiss Re Institute, sigma 1/2025.",
+  },
+  why: {
+    label: "why decentralized",
+    title: "A mutual, not a company.",
+    points: [
+      { h: "Verifiable, not declarative", d: "Parameters, capital and triggers are public and auditable on-chain — not a black box." },
+      { h: "Aligned with its members", d: "Capital is pooled by the very people it covers; no shareholders to pay first." },
+      { h: "Programmable and open", d: "Payout triggers on data, with no middleman to convince, and the protocol stays open to all." },
+    ],
+  },
+  faq: {
+    label: "questions",
+    title: "What people ask us.",
+    items: [
+      { q: "Is this insurance?", a: "No. Aratea is not regulated insurance under the French Insurance Code or Solvency II — it is a research project toward a decentralized parametric mutual." },
+      { q: "Can I invest or expect a yield?", a: "No. No yield promise, no open raise. Phase 1 is paper-only: no real capital is committed." },
+      { q: "Where is the predictor?", a: "In iterative methodological validation. No edge is claimed at this stage; results are published as they come." },
+      { q: "How do I contribute?", a: "Everything is open. Easiest path: Discord or a GitHub issue. Dev, weather, economics, design, governance — see the Contribute section." },
+    ],
+  },
+  roadmapPage: {
+    back: "Back to home",
+    title: "Roadmap",
+    intro: "Chained by technical milestones, not by calendar: a phase opens only once the previous one completes. No promised dates.",
+    phases: [
+      { when: "Phase 1", tag: "current", h: "Predictor + contracts", items: [
+        "Weather predictor tested against the market, scored with Brier — paper-only.",
+        "AUG-POC token + round registry (Foundry), tests and static analysis in CI.",
+        "Read-only dashboard live; Arbitrum Sepolia testnet deployment in progress.",
+        "Expected output: a written go/no-go on the edge before any real capital.",
+      ] },
+      { when: "Phase 2", tag: "upcoming", h: "DAO MVP testnet", items: [
+        "Token governance (one vote per whole token, anti-cartel cap).",
+        "First parametric contracts deployed on testnet.",
+        "Oracle aggregator v1, mutualization pool in full collateralization.",
+      ] },
+      { when: "Phase 3", tag: "upcoming", h: "Parametric mutual", items: [
+        "Mutualization pool, on-chain pricing signed by the predictor.",
+        "Oracle settlement on NOAA / NWS observations.",
+        "First categories: extreme temperature, precipitation, wind.",
+      ] },
+      { when: "Phase 4", tag: "long term", h: "DePIN data layer", items: [
+        "Weather stations rewarded on data quality and coverage.",
+        "Native Aratea oracle on selected areas, consumable by other protocols.",
+      ] },
+    ],
+    note: "No pre-edge raise, no premature incorporation. The living detail lives in the repo and the white paper.",
+  },
+  project: {
+    label: "the project",
+    title: "When climate becomes a market, coverage becomes programmable.",
+    intro: "Aratea ties three pieces together: predicting climate events better than an efficient market, settling parametric contracts on-chain, and pooling risk in a member-governed structure. Everything is open — the code, the method, the decisions.",
+  },
+  stats: { resolved: "resolved paper bets", atRisk: "real capital at risk", models: "models in tournament", openSource: "open-source" },
+  status: {
+    label: "where the project stands",
+    title: "Three tracks, in the open.",
+    predictorTag: "in progress", predictorH: "Predictor",
+    predictorP: "Kalshi-market POC, paper-only. Iterative methodological validation: no edge claimed yet, no real-money position.",
+    contractsTag: "testnet", contractsH: "Contracts",
+    contractsP: "AUG-POC token and round registry built with Foundry, covered by tests and static analysis in CI. Arbitrum Sepolia deployment in progress.",
+    dashboardTag: "live", dashboardH: "Dashboard",
+    dashboardP: "Read-only view of on-chain state and the predictor. No signature, no key, no broadcast transaction.",
+  },
+  approach: {
+    label: "approach", title: "Predict, settle, mutualize.",
+    intro: "The logic is sequential: no downstream piece starts until the previous one is proven.",
+    p1H: "Predict", p1P: "An ensemble of weather models tested against the market price, scored with Brier. The edge must be proven before any capital is committed.",
+    p2H: "Settle", p2P: "Solidity contracts ratify and execute rounds. No on-chain emission cap: quality is gated off-chain.",
+    p3H: "Mutualize", p3P: "Eventually, a token-governed capital pool, parametric execution, oracle-driven indemnification.",
+    soon: "upcoming",
+  },
+  roadmap: {
+    label: "trajectory", title: "Chained by milestones, not by calendar.",
+    p1H: "Predictor + contracts", p1P: "Prove the predictive edge and ship the settlement layer.",
+    p2H: "DAO MVP testnet", p2P: "Token governance, first parametric contracts on testnet.",
+    p3H: "Parametric mutual", p3P: "Mutualization pool, on-chain pricing, oracle settlement.",
+    p4H: "DePIN data layer", p4P: "Rewarded weather stations, native oracle on selected areas.",
+    current: "current", cta: "Read the full roadmap",
+  },
+  live: {
+    label: "live data", title: "The real state, not a screenshot.",
+    predictorCard: "Predictor · paper trading", resolved: "resolved", open: "open", pnl: "paper P&L", phase: "Phase 1",
+    onchainCard: "On-chain token", supply: "supply", state: "state", active: "active", paused: "paused",
+    notDeployed: "Not yet deployed on testnet — token figures will appear once the deployment is executed.",
+    unavailable: "Data unavailable right now.",
+    source: "source", updated: "updated",
+  },
+  contribute: {
+    title: "Aratea is built with you.",
+    intro: "This isn't a finished product we sell you — it's an open build you can shape. Whether you write contracts, model weather, reason about risk economics, design interfaces or think about governance, there's a place and a real problem your size.",
+    rolesTitle: "Where to contribute",
+    roles: [
+      { h: "Dev & contracts", d: "Foundry, Solidity, tests, audits." },
+      { h: "Weather modeling", d: "predictors, calibration, seasonal backtests." },
+      { h: "Economics & actuarial", d: "pricing, mutualization, capital management." },
+      { h: "Design & product", d: "UX, data-viz, plain-language explainers." },
+      { h: "Governance & legal", d: "bylaws, token voting, compliance." },
+      { h: "Curious", d: "read, share, challenge the assumptions." },
+    ],
+    closing: "We build, document and decide in public. The easiest way in: a note on Discord, an issue on GitHub, or the form below.",
+    name: "Name or handle", email: "Email (optional)", skill: "Your skill (dev, weather, design…)", message: "A word on what you'd like to do",
+    submit: "Send", sending: "Sending…",
+    ok: "Thanks! Message received — we'll get back to you.",
+    err: "Oops, sending failed. Try again or hop on Discord.",
+    needName: "Please add at least a name and a skill.",
+    discord: "Join the Discord", github: "Open the GitHub",
+  },
+  links: { community: "discord", code: "github", state: "dashboard", trajectory: "roadmap", whitepaper: "whitepaper" },
+  footer: {
+    note: "Aratea is not insurance under the French Insurance Code or Solvency II. It is a research project, pre-DAO. No yield promise, no speculation.",
+    meta: "solo build · pre-DAO · open contributions", updated: "updated",
+  },
+  wallet: { connect: "Connect wallet", connecting: "Connecting…", wrongNet: "Wrong network", switch: "Switch to Arbitrum Sepolia", disconnect: "Disconnect", noWallet: "No wallet detected" },
+};
+
+const DICTIONARIES: Record<Locale, Dictionary> = { en, fr };
+
+export async function getLocale(): Promise<Locale> {
+  const store = await cookies();
+  return store.get(LOCALE_COOKIE)?.value === "fr" ? "fr" : "en";
+}
+
+export async function getDictAndLocale(): Promise<{ dict: Dictionary; locale: Locale }> {
+  const locale = await getLocale();
+  return { dict: DICTIONARIES[locale], locale };
+}

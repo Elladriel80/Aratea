@@ -1,0 +1,30 @@
+{
+  "name": "aratea-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Aratea public landing — Next.js App Router, live predictor + on-chain data, wallet connect, contributor form.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.5.18",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "viem": "2.50.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.1",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "autoprefixer": "10.5.0",
+    "eslint": "9.16.0",
+    "eslint-config-next": "15.0.3",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.16",
+    "typescript": "5.7.2"
+  }
+}
