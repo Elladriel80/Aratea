@@ -82,6 +82,33 @@ def _load_champion_registry() -> dict:
     return json.loads(CHAMPION_PATH.read_text(encoding="utf-8"))
 
 
+def _ensemble_components(p_yes, ens_inputs: dict | None) -> dict:
+    """Serialize the ensemble's internal component probabilities for offline
+    feature reconstruction (logging hardening, 2026-06-05).
+
+    The EnsemblePredictor already computes p_climato, the forecast-only prob,
+    the per-model values and the horizon blend weight in `Prediction.inputs`;
+    `_predict_all_models` used to drop all of it and keep only
+    {"method": "ensemble"}. Persisting these scalars in report.json means the
+    learned feature vector (p_consensus / forecast_spread / days_ahead) can be
+    rebuilt from the resolved runs even if data/predictions/forward_*.json is
+    missing — see Research Journal v0.6. Additive: no existing field changes.
+    """
+    ens_inputs = ens_inputs or {}
+    out = {"method": "ensemble", "p_ensemble": p_yes}
+    for k in (
+        "p_climato", "p_forecast", "blend_weight_forecast", "days_ahead",
+        "mu", "sigma_inter_models", "sigma_total", "n_models_active",
+    ):
+        v = ens_inputs.get(k)
+        if v is not None:
+            out[k] = v
+    per_model = ens_inputs.get("per_model_value")
+    if isinstance(per_model, dict) and per_model:
+        out["per_model_value"] = per_model
+    return out
+
+
 def _predict_all_models(
     registry: dict,
     weather: OpenMeteoClient,
@@ -112,7 +139,7 @@ def _predict_all_models(
             if method == "ensemble":
                 pred = ensemble.predict(spec)
                 p_yes = pred.prob_yes
-                inputs_summary = {"method": pred.method}
+                inputs_summary = _ensemble_components(p_yes, pred.inputs)
             elif method == "learned_v2":
                 learned = LearnedPredictor(
                     weather_client=weather,
