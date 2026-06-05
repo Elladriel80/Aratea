@@ -1,0 +1,1348 @@
+{
+  "generated_at": "20260605T140914Z",
+  "source": "predictor/runs/*/report.json (resolved, de-duplicated by market)",
+  "keep_policy": "first",
+  "summary": {
+    "n": 140,
+    "n_distinct_target_dates": 12,
+    "target_date_range": [
+      "2026-05-13",
+      "2026-06-01"
+    ],
+    "base_rate_yes": 0.2786,
+    "brier_champion": 0.199,
+    "brier_kalshi_mid": 0.1853,
+    "brier_base_rate_baseline": 0.201,
+    "champion_minus_market": 0.0137,
+    "bss_champion_vs_base_rate": 0.0098,
+    "champion_beats_market_events": 69,
+    "ties": 0,
+    "decided_comparisons": 140,
+    "sign_test_p_one_sided": 0.6,
+    "verdict": "champion does NOT beat market",
+    "by_date": {
+      "2026-05-13": {
+        "n": 1,
+        "brier_champion": 0.0196,
+        "brier_kalshi_mid": 0.119
+      },
+      "2026-05-14": {
+        "n": 1,
+        "brier_champion": 0.7384,
+        "brier_kalshi_mid": 0.4624
+      },
+      "2026-05-15": {
+        "n": 1,
+        "brier_champion": 0.724,
+        "brier_kalshi_mid": 0.429
+      },
+      "2026-05-16": {
+        "n": 1,
+        "brier_champion": 0.0284,
+        "brier_kalshi_mid": 0.156
+      },
+      "2026-05-17": {
+        "n": 1,
+        "brier_champion": 0.007,
+        "brier_kalshi_mid": 0.126
+      },
+      "2026-05-19": {
+        "n": 3,
+        "brier_champion": 0.1878,
+        "brier_kalshi_mid": 0.1593
+      },
+      "2026-05-22": {
+        "n": 22,
+        "brier_champion": 0.1031,
+        "brier_kalshi_mid": 0.101
+      },
+      "2026-05-24": {
+        "n": 21,
+        "brier_champion": 0.1051,
+        "brier_kalshi_mid": 0.0961
+      },
+      "2026-05-26": {
+        "n": 21,
+        "brier_champion": 0.3441,
+        "brier_kalshi_mid": 0.3278
+      },
+      "2026-05-28": {
+        "n": 23,
+        "brier_champion": 0.211,
+        "brier_kalshi_mid": 0.1748
+      },
+      "2026-05-30": {
+        "n": 20,
+        "brier_champion": 0.2149,
+        "brier_kalshi_mid": 0.2199
+      },
+      "2026-06-01": {
+        "n": 25,
+        "brier_champion": 0.1971,
+        "brier_kalshi_mid": 0.1849
+      }
+    }
+  },
+  "rows": [
+    {
+      "run_id": "003",
+      "ticker": "KXLOWTNYC-26MAY13-B51.5",
+      "target_date": "2026-05-13",
+      "ts_utc": "2026-05-12T14:27:01Z",
+      "y": 0,
+      "p_champion": 0.14,
+      "p_kalshi_mid": 0.345
+    },
+    {
+      "run_id": "004",
+      "ticker": "KXLOWTNYC-26MAY14-B52.5",
+      "target_date": "2026-05-14",
+      "ts_utc": "2026-05-13T14:29:25Z",
+      "y": 1,
+      "p_champion": 0.1407,
+      "p_kalshi_mid": 0.32
+    },
+    {
+      "run_id": "005",
+      "ticker": "KXLOWTNYC-26MAY15-B49.5",
+      "target_date": "2026-05-15",
+      "ts_utc": "2026-05-14T19:45:40Z",
+      "y": 1,
+      "p_champion": 0.1491,
+      "p_kalshi_mid": 0.345
+    },
+    {
+      "run_id": "006",
+      "ticker": "KXLOWTNYC-26MAY16-B53.5",
+      "target_date": "2026-05-16",
+      "ts_utc": "2026-05-15T19:38:26Z",
+      "y": 0,
+      "p_champion": 0.1684,
+      "p_kalshi_mid": 0.395
+    },
+    {
+      "run_id": "007",
+      "ticker": "KXLOWTNYC-26MAY17-B64.5",
+      "target_date": "2026-05-17",
+      "ts_utc": "2026-05-16T19:04:19Z",
+      "y": 0,
+      "p_champion": 0.0837,
+      "p_kalshi_mid": 0.355
+    },
+    {
+      "run_id": "008",
+      "ticker": "KXLOWTNYC-26MAY19-B71.5",
+      "target_date": "2026-05-19",
+      "ts_utc": "2026-05-18T19:44:41Z",
+      "y": 0,
+      "p_champion": 0.0622,
+      "p_kalshi_mid": 0.4
+    },
+    {
+      "run_id": "009",
+      "ticker": "KXLOWTNYC-26MAY19-B69.5",
+      "target_date": "2026-05-19",
+      "ts_utc": "2026-05-18T19:44:41Z",
+      "y": 0,
+      "p_champion": 0.0764,
+      "p_kalshi_mid": 0.145
+    },
+    {
+      "run_id": "010",
+      "ticker": "KXLOWTLAX-26MAY19-B57.5",
+      "target_date": "2026-05-19",
+      "ts_utc": "2026-05-18T19:44:49Z",
+      "y": 1,
+      "p_champion": 0.2559,
+      "p_kalshi_mid": 0.455
+    },
+    {
+      "run_id": "011",
+      "ticker": "KXLOWTNYC-26MAY22-B53.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:53:36Z",
+      "y": 0,
+      "p_champion": 0.1667,
+      "p_kalshi_mid": 0.295
+    },
+    {
+      "run_id": "012",
+      "ticker": "KXLOWTNYC-26MAY22-B51.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:53:37Z",
+      "y": 0,
+      "p_champion": 0.0993,
+      "p_kalshi_mid": 0.215
+    },
+    {
+      "run_id": "013",
+      "ticker": "KXLOWTLAX-26MAY22-B61.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:53:45Z",
+      "y": 0,
+      "p_champion": 0.269,
+      "p_kalshi_mid": 0.105
+    },
+    {
+      "run_id": "014",
+      "ticker": "KXLOWTLAX-26MAY22-B57.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:53:52Z",
+      "y": 0,
+      "p_champion": 0.1941,
+      "p_kalshi_mid": 0.33
+    },
+    {
+      "run_id": "015",
+      "ticker": "KXLOWTLAX-26MAY22-B59.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:54:00Z",
+      "y": 1,
+      "p_champion": 0.3865,
+      "p_kalshi_mid": 0.44
+    },
+    {
+      "run_id": "016",
+      "ticker": "KXLOWTSFO-26MAY22-B53.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:54:01Z",
+      "y": 0,
+      "p_champion": 0.4405,
+      "p_kalshi_mid": 0.15
+    },
+    {
+      "run_id": "017",
+      "ticker": "KXLOWTSFO-26MAY22-B47.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:54:01Z",
+      "y": 0,
+      "p_champion": 0.0116,
+      "p_kalshi_mid": 0.075
+    },
+    {
+      "run_id": "018",
+      "ticker": "KXLOWTCHI-26MAY22-B50.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:54:10Z",
+      "y": 0,
+      "p_champion": 0.164,
+      "p_kalshi_mid": 0.275
+    },
+    {
+      "run_id": "019",
+      "ticker": "KXLOWTCHI-26MAY22-B46.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:54:17Z",
+      "y": 0,
+      "p_champion": 0.0894,
+      "p_kalshi_mid": 0.03
+    },
+    {
+      "run_id": "020",
+      "ticker": "KXLOWTMIA-26MAY22-B76.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:55:04Z",
+      "y": 0,
+      "p_champion": 0.1729,
+      "p_kalshi_mid": 0.395
+    },
+    {
+      "run_id": "021",
+      "ticker": "KXLOWTMIA-26MAY22-B80.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:55:04Z",
+      "y": 0,
+      "p_champion": 0.2783,
+      "p_kalshi_mid": 0.09
+    },
+    {
+      "run_id": "022",
+      "ticker": "KXLOWTMIA-26MAY22-B78.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:55:04Z",
+      "y": 1,
+      "p_champion": 0.3622,
+      "p_kalshi_mid": 0.43
+    },
+    {
+      "run_id": "023",
+      "ticker": "KXLOWTPHX-26MAY22-B65.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:56:03Z",
+      "y": 0,
+      "p_champion": 0.115,
+      "p_kalshi_mid": 0.05
+    },
+    {
+      "run_id": "024",
+      "ticker": "KXLOWTDEN-26MAY22-B39.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:56:05Z",
+      "y": 0,
+      "p_champion": 0.1405,
+      "p_kalshi_mid": 0.265
+    },
+    {
+      "run_id": "025",
+      "ticker": "KXLOWTDEN-26MAY22-B45.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:56:05Z",
+      "y": 0,
+      "p_champion": 0.1143,
+      "p_kalshi_mid": 0.045
+    },
+    {
+      "run_id": "026",
+      "ticker": "KXLOWTDEN-26MAY22-B43.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:56:05Z",
+      "y": 0,
+      "p_champion": 0.1361,
+      "p_kalshi_mid": 0.07
+    },
+    {
+      "run_id": "027",
+      "ticker": "KXLOWTSEA-26MAY22-B48.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:57:04Z",
+      "y": 0,
+      "p_champion": 0.268,
+      "p_kalshi_mid": 0.065
+    },
+    {
+      "run_id": "028",
+      "ticker": "KXHIGHTSFO-26MAY22-B68.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:57:04Z",
+      "y": 1,
+      "p_champion": 0.1011,
+      "p_kalshi_mid": 0.305
+    },
+    {
+      "run_id": "029",
+      "ticker": "KXHIGHTSFO-26MAY22-B70.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:57:05Z",
+      "y": 0,
+      "p_champion": 0.0957,
+      "p_kalshi_mid": 0.275
+    },
+    {
+      "run_id": "030",
+      "ticker": "KXHIGHTSFO-26MAY22-B72.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:57:05Z",
+      "y": 0,
+      "p_champion": 0.0897,
+      "p_kalshi_mid": 0.145
+    },
+    {
+      "run_id": "031",
+      "ticker": "KXHIGHTBOS-26MAY22-B62.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:57:07Z",
+      "y": 0,
+      "p_champion": 0.1194,
+      "p_kalshi_mid": 0.225
+    },
+    {
+      "run_id": "032",
+      "ticker": "KXHIGHTPHX-26MAY22-B96.5",
+      "target_date": "2026-05-22",
+      "ts_utc": "2026-05-21T19:57:14Z",
+      "y": 0,
+      "p_champion": 0.1566,
+      "p_kalshi_mid": 0.59
+    },
+    {
+      "run_id": "033",
+      "ticker": "KXLOWTNYC-26MAY24-B50.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:10:18Z",
+      "y": 1,
+      "p_champion": 0.1617,
+      "p_kalshi_mid": 0.375
+    },
+    {
+      "run_id": "034",
+      "ticker": "KXLOWTNYC-26MAY24-B52.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:10:18Z",
+      "y": 0,
+      "p_champion": 0.198,
+      "p_kalshi_mid": 0.345
+    },
+    {
+      "run_id": "035",
+      "ticker": "KXLOWTNYC-26MAY24-B54.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:10:18Z",
+      "y": 0,
+      "p_champion": 0.1961,
+      "p_kalshi_mid": 0.105
+    },
+    {
+      "run_id": "036",
+      "ticker": "KXLOWTCHI-26MAY24-B56.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:11:06Z",
+      "y": 0,
+      "p_champion": 0.1252,
+      "p_kalshi_mid": 0.275
+    },
+    {
+      "run_id": "037",
+      "ticker": "KXLOWTCHI-26MAY24-B54.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:11:06Z",
+      "y": 0,
+      "p_champion": 0.0956,
+      "p_kalshi_mid": 0.175
+    },
+    {
+      "run_id": "038",
+      "ticker": "KXLOWTDC-26MAY24-B58.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:12:03Z",
+      "y": 0,
+      "p_champion": 0.1896,
+      "p_kalshi_mid": 0.055
+    },
+    {
+      "run_id": "039",
+      "ticker": "KXLOWTDC-26MAY24-B54.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:12:03Z",
+      "y": 1,
+      "p_champion": 0.2004,
+      "p_kalshi_mid": 0.42
+    },
+    {
+      "run_id": "040",
+      "ticker": "KXLOWTDC-26MAY24-B52.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:12:04Z",
+      "y": 0,
+      "p_champion": 0.1508,
+      "p_kalshi_mid": 0.325
+    },
+    {
+      "run_id": "041",
+      "ticker": "KXLOWTBOS-26MAY24-B49.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:12:12Z",
+      "y": 0,
+      "p_champion": 0.1748,
+      "p_kalshi_mid": 0.37
+    },
+    {
+      "run_id": "042",
+      "ticker": "KXLOWTBOS-26MAY24-B47.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:12:20Z",
+      "y": 0,
+      "p_champion": 0.1247,
+      "p_kalshi_mid": 0.225
+    },
+    {
+      "run_id": "043",
+      "ticker": "KXLOWTMIA-26MAY24-B78.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:13:02Z",
+      "y": 1,
+      "p_champion": 0.2999,
+      "p_kalshi_mid": 0.525
+    },
+    {
+      "run_id": "044",
+      "ticker": "KXLOWTMIA-26MAY24-B76.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:13:03Z",
+      "y": 0,
+      "p_champion": 0.1911,
+      "p_kalshi_mid": 0.12
+    },
+    {
+      "run_id": "045",
+      "ticker": "KXLOWTMIA-26MAY24-B74.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:13:03Z",
+      "y": 0,
+      "p_champion": 0.0906,
+      "p_kalshi_mid": 0.06
+    },
+    {
+      "run_id": "046",
+      "ticker": "KXLOWTPHX-26MAY24-B73.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:13:11Z",
+      "y": 0,
+      "p_champion": 0.1695,
+      "p_kalshi_mid": 0.37
+    },
+    {
+      "run_id": "047",
+      "ticker": "KXLOWTPHX-26MAY24-B71.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:13:19Z",
+      "y": 0,
+      "p_champion": 0.1356,
+      "p_kalshi_mid": 0.06
+    },
+    {
+      "run_id": "048",
+      "ticker": "KXLOWTPHX-26MAY24-B69.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:13:27Z",
+      "y": 0,
+      "p_champion": 0.0855,
+      "p_kalshi_mid": 0.025
+    },
+    {
+      "run_id": "049",
+      "ticker": "KXLOWTDEN-26MAY24-B48.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:14:01Z",
+      "y": 0,
+      "p_champion": 0.1066,
+      "p_kalshi_mid": 0.255
+    },
+    {
+      "run_id": "050",
+      "ticker": "KXLOWTDEN-26MAY24-B50.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:14:01Z",
+      "y": 0,
+      "p_champion": 0.1429,
+      "p_kalshi_mid": 0.215
+    },
+    {
+      "run_id": "051",
+      "ticker": "KXLOWTDEN-26MAY24-B46.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:14:02Z",
+      "y": 0,
+      "p_champion": 0.073,
+      "p_kalshi_mid": 0.15
+    },
+    {
+      "run_id": "052",
+      "ticker": "KXHIGHTSFO-26MAY24-B64.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:14:11Z",
+      "y": 0,
+      "p_champion": 0.1294,
+      "p_kalshi_mid": 0.39
+    },
+    {
+      "run_id": "053",
+      "ticker": "KXHIGHTSFO-26MAY24-B66.5",
+      "target_date": "2026-05-24",
+      "ts_utc": "2026-05-23T19:14:18Z",
+      "y": 0,
+      "p_champion": 0.1167,
+      "p_kalshi_mid": 0.295
+    },
+    {
+      "run_id": "054",
+      "ticker": "KXLOWTNYC-26MAY26-B58.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:39:17Z",
+      "y": 1,
+      "p_champion": 0.1339,
+      "p_kalshi_mid": 0.29
+    },
+    {
+      "run_id": "055",
+      "ticker": "KXLOWTNYC-26MAY26-B60.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:39:17Z",
+      "y": 0,
+      "p_champion": 0.1852,
+      "p_kalshi_mid": 0.335
+    },
+    {
+      "run_id": "056",
+      "ticker": "KXLOWTLAX-26MAY26-B57.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:39:26Z",
+      "y": 1,
+      "p_champion": 0.3728,
+      "p_kalshi_mid": 0.47
+    },
+    {
+      "run_id": "057",
+      "ticker": "KXLOWTSFO-26MAY26-B51.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:40:06Z",
+      "y": 0,
+      "p_champion": 0.3391,
+      "p_kalshi_mid": 0.475
+    },
+    {
+      "run_id": "058",
+      "ticker": "KXLOWTSFO-26MAY26-B49.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:40:06Z",
+      "y": 0,
+      "p_champion": 0.0725,
+      "p_kalshi_mid": 0.1
+    },
+    {
+      "run_id": "059",
+      "ticker": "KXLOWTCHI-26MAY26-B61.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:40:22Z",
+      "y": 1,
+      "p_champion": 0.1264,
+      "p_kalshi_mid": 0.34
+    },
+    {
+      "run_id": "060",
+      "ticker": "KXLOWTCHI-26MAY26-B59.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:40:29Z",
+      "y": 0,
+      "p_champion": 0.099,
+      "p_kalshi_mid": 0.225
+    },
+    {
+      "run_id": "061",
+      "ticker": "KXLOWTDC-26MAY26-B63.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:41:03Z",
+      "y": 1,
+      "p_champion": 0.1243,
+      "p_kalshi_mid": 0.09
+    },
+    {
+      "run_id": "062",
+      "ticker": "KXLOWTBOS-26MAY26-B53.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:41:11Z",
+      "y": 1,
+      "p_champion": 0.101,
+      "p_kalshi_mid": 0.05
+    },
+    {
+      "run_id": "063",
+      "ticker": "KXLOWTMIA-26MAY26-B80.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:42:04Z",
+      "y": 1,
+      "p_champion": 0.3221,
+      "p_kalshi_mid": 0.085
+    },
+    {
+      "run_id": "064",
+      "ticker": "KXLOWTMIA-26MAY26-B78.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:42:04Z",
+      "y": 0,
+      "p_champion": 0.2857,
+      "p_kalshi_mid": 0.45
+    },
+    {
+      "run_id": "065",
+      "ticker": "KXLOWTMIA-26MAY26-B76.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:42:04Z",
+      "y": 0,
+      "p_champion": 0.068,
+      "p_kalshi_mid": 0.325
+    },
+    {
+      "run_id": "066",
+      "ticker": "KXLOWTPHX-26MAY26-B72.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:42:12Z",
+      "y": 1,
+      "p_champion": 0.1522,
+      "p_kalshi_mid": 0.315
+    },
+    {
+      "run_id": "067",
+      "ticker": "KXLOWTPHX-26MAY26-B70.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:42:20Z",
+      "y": 0,
+      "p_champion": 0.1277,
+      "p_kalshi_mid": 0.07
+    },
+    {
+      "run_id": "068",
+      "ticker": "KXLOWTDEN-26MAY26-B53.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:43:05Z",
+      "y": 1,
+      "p_champion": 0.1011,
+      "p_kalshi_mid": 0.215
+    },
+    {
+      "run_id": "069",
+      "ticker": "KXLOWTDEN-26MAY26-B55.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:43:05Z",
+      "y": 0,
+      "p_champion": 0.1373,
+      "p_kalshi_mid": 0.28
+    },
+    {
+      "run_id": "070",
+      "ticker": "KXLOWTSEA-26MAY26-B46.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:43:13Z",
+      "y": 0,
+      "p_champion": 0.2601,
+      "p_kalshi_mid": 0.43
+    },
+    {
+      "run_id": "071",
+      "ticker": "KXLOWTSEA-26MAY26-B48.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:43:20Z",
+      "y": 1,
+      "p_champion": 0.2325,
+      "p_kalshi_mid": 0.315
+    },
+    {
+      "run_id": "072",
+      "ticker": "KXLOWTSEA-26MAY26-B44.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:43:28Z",
+      "y": 0,
+      "p_champion": 0.1832,
+      "p_kalshi_mid": 0.125
+    },
+    {
+      "run_id": "073",
+      "ticker": "KXHIGHTSFO-26MAY26-B64.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:43:28Z",
+      "y": 1,
+      "p_champion": 0.1304,
+      "p_kalshi_mid": 0.375
+    },
+    {
+      "run_id": "074",
+      "ticker": "KXHIGHTSFO-26MAY26-B62.5",
+      "target_date": "2026-05-26",
+      "ts_utc": "2026-05-25T19:43:28Z",
+      "y": 0,
+      "p_champion": 0.1621,
+      "p_kalshi_mid": 0.4
+    },
+    {
+      "run_id": "075",
+      "ticker": "KXLOWTNYC-26MAY28-B61.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:17:08Z",
+      "y": 1,
+      "p_champion": 0.1956,
+      "p_kalshi_mid": 0.335
+    },
+    {
+      "run_id": "076",
+      "ticker": "KXLOWTNYC-26MAY28-B63.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:17:09Z",
+      "y": 0,
+      "p_champion": 0.2095,
+      "p_kalshi_mid": 0.315
+    },
+    {
+      "run_id": "077",
+      "ticker": "KXLOWTNYC-26MAY28-B65.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:17:09Z",
+      "y": 0,
+      "p_champion": 0.1689,
+      "p_kalshi_mid": 0.095
+    },
+    {
+      "run_id": "078",
+      "ticker": "KXLOWTLAX-26MAY28-B55.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:17:18Z",
+      "y": 1,
+      "p_champion": 0.2913,
+      "p_kalshi_mid": 0.44
+    },
+    {
+      "run_id": "079",
+      "ticker": "KXLOWTLAX-26MAY28-B59.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:17:25Z",
+      "y": 0,
+      "p_champion": 0.1805,
+      "p_kalshi_mid": 0.055
+    },
+    {
+      "run_id": "080",
+      "ticker": "KXLOWTSFO-26MAY28-B54.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:18:04Z",
+      "y": 1,
+      "p_champion": 0.4888,
+      "p_kalshi_mid": 0.555
+    },
+    {
+      "run_id": "081",
+      "ticker": "KXLOWTCHI-26MAY28-B55.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:18:12Z",
+      "y": 1,
+      "p_champion": 0.1486,
+      "p_kalshi_mid": 0.335
+    },
+    {
+      "run_id": "082",
+      "ticker": "KXLOWTCHI-26MAY28-B57.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:18:20Z",
+      "y": 0,
+      "p_champion": 0.1525,
+      "p_kalshi_mid": 0.285
+    },
+    {
+      "run_id": "083",
+      "ticker": "KXLOWTDC-26MAY28-B65.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:19:05Z",
+      "y": 0,
+      "p_champion": 0.1689,
+      "p_kalshi_mid": 0.11
+    },
+    {
+      "run_id": "084",
+      "ticker": "KXLOWTDC-26MAY28-B63.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:19:05Z",
+      "y": 1,
+      "p_champion": 0.1692,
+      "p_kalshi_mid": 0.315
+    },
+    {
+      "run_id": "085",
+      "ticker": "KXLOWTBOS-26MAY28-B52.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:19:14Z",
+      "y": 0,
+      "p_champion": 0.11,
+      "p_kalshi_mid": 0.04
+    },
+    {
+      "run_id": "086",
+      "ticker": "KXLOWTMIA-26MAY28-B77.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:20:06Z",
+      "y": 0,
+      "p_champion": 0.3126,
+      "p_kalshi_mid": 0.47
+    },
+    {
+      "run_id": "087",
+      "ticker": "KXLOWTMIA-26MAY28-B79.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:20:06Z",
+      "y": 0,
+      "p_champion": 0.3176,
+      "p_kalshi_mid": 0.205
+    },
+    {
+      "run_id": "088",
+      "ticker": "KXLOWTMIA-26MAY28-B75.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:20:06Z",
+      "y": 1,
+      "p_champion": 0.1541,
+      "p_kalshi_mid": 0.255
+    },
+    {
+      "run_id": "089",
+      "ticker": "KXLOWTPHX-26MAY28-B68.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:20:21Z",
+      "y": 0,
+      "p_champion": 0.1645,
+      "p_kalshi_mid": 0.435
+    },
+    {
+      "run_id": "090",
+      "ticker": "KXLOWTPHX-26MAY28-B66.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:20:29Z",
+      "y": 0,
+      "p_champion": 0.1223,
+      "p_kalshi_mid": 0.065
+    },
+    {
+      "run_id": "091",
+      "ticker": "KXLOWTDEN-26MAY28-B54.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:21:03Z",
+      "y": 0,
+      "p_champion": 0.1871,
+      "p_kalshi_mid": 0.085
+    },
+    {
+      "run_id": "092",
+      "ticker": "KXLOWTDEN-26MAY28-B50.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:21:03Z",
+      "y": 1,
+      "p_champion": 0.1532,
+      "p_kalshi_mid": 0.31
+    },
+    {
+      "run_id": "093",
+      "ticker": "KXLOWTDEN-26MAY28-B56.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:21:03Z",
+      "y": 0,
+      "p_champion": 0.144,
+      "p_kalshi_mid": 0.045
+    },
+    {
+      "run_id": "094",
+      "ticker": "KXLOWTSEA-26MAY28-B54.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:21:12Z",
+      "y": 0,
+      "p_champion": 0.2731,
+      "p_kalshi_mid": 0.49
+    },
+    {
+      "run_id": "095",
+      "ticker": "KXLOWTSEA-26MAY28-B50.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:21:19Z",
+      "y": 0,
+      "p_champion": 0.1769,
+      "p_kalshi_mid": 0.055
+    },
+    {
+      "run_id": "096",
+      "ticker": "KXHIGHTSFO-26MAY28-B68.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:21:20Z",
+      "y": 0,
+      "p_champion": 0.119,
+      "p_kalshi_mid": 0.395
+    },
+    {
+      "run_id": "097",
+      "ticker": "KXHIGHTSFO-26MAY28-B70.5",
+      "target_date": "2026-05-28",
+      "ts_utc": "2026-05-27T20:21:20Z",
+      "y": 0,
+      "p_champion": 0.1003,
+      "p_kalshi_mid": 0.23
+    },
+    {
+      "run_id": "098",
+      "ticker": "KXLOWTNYC-26MAY30-B52.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:25:27Z",
+      "y": 0,
+      "p_champion": 0.1719,
+      "p_kalshi_mid": 0.315
+    },
+    {
+      "run_id": "099",
+      "ticker": "KXLOWTNYC-26MAY30-B54.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:25:27Z",
+      "y": 0,
+      "p_champion": 0.1982,
+      "p_kalshi_mid": 0.315
+    },
+    {
+      "run_id": "100",
+      "ticker": "KXLOWTLAX-26MAY30-B58.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:25:38Z",
+      "y": 0,
+      "p_champion": 0.337,
+      "p_kalshi_mid": 0.51
+    },
+    {
+      "run_id": "101",
+      "ticker": "KXLOWTLAX-26MAY30-B56.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:25:45Z",
+      "y": 0,
+      "p_champion": 0.2198,
+      "p_kalshi_mid": 0.145
+    },
+    {
+      "run_id": "102",
+      "ticker": "KXLOWTCHI-26MAY30-B57.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:26:06Z",
+      "y": 1,
+      "p_champion": 0.1435,
+      "p_kalshi_mid": 0.24
+    },
+    {
+      "run_id": "103",
+      "ticker": "KXLOWTDC-26MAY30-B61.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:27:05Z",
+      "y": 1,
+      "p_champion": 0.3031,
+      "p_kalshi_mid": 0.095
+    },
+    {
+      "run_id": "104",
+      "ticker": "KXLOWTDC-26MAY30-B57.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:27:05Z",
+      "y": 0,
+      "p_champion": 0.1353,
+      "p_kalshi_mid": 0.32
+    },
+    {
+      "run_id": "105",
+      "ticker": "KXLOWTDC-26MAY30-B59.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:27:05Z",
+      "y": 0,
+      "p_champion": 0.1831,
+      "p_kalshi_mid": 0.33
+    },
+    {
+      "run_id": "106",
+      "ticker": "KXLOWTBOS-26MAY30-B43.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:27:14Z",
+      "y": 0,
+      "p_champion": 0.1429,
+      "p_kalshi_mid": 0.345
+    },
+    {
+      "run_id": "107",
+      "ticker": "KXLOWTBOS-26MAY30-B45.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:27:22Z",
+      "y": 1,
+      "p_champion": 0.1591,
+      "p_kalshi_mid": 0.29
+    },
+    {
+      "run_id": "108",
+      "ticker": "KXLOWTBOS-26MAY30-B41.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:27:29Z",
+      "y": 0,
+      "p_champion": 0.1096,
+      "p_kalshi_mid": 0.215
+    },
+    {
+      "run_id": "109",
+      "ticker": "KXLOWTMIA-26MAY30-B74.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:28:05Z",
+      "y": 0,
+      "p_champion": 0.1421,
+      "p_kalshi_mid": 0.37
+    },
+    {
+      "run_id": "110",
+      "ticker": "KXLOWTMIA-26MAY30-B76.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:28:05Z",
+      "y": 1,
+      "p_champion": 0.2714,
+      "p_kalshi_mid": 0.45
+    },
+    {
+      "run_id": "111",
+      "ticker": "KXLOWTMIA-26MAY30-B78.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:28:05Z",
+      "y": 0,
+      "p_champion": 0.3043,
+      "p_kalshi_mid": 0.12
+    },
+    {
+      "run_id": "112",
+      "ticker": "KXLOWTPHX-26MAY30-B67.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:28:15Z",
+      "y": 0,
+      "p_champion": 0.1369,
+      "p_kalshi_mid": 0.435
+    },
+    {
+      "run_id": "113",
+      "ticker": "KXLOWTPHX-26MAY30-B63.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:28:23Z",
+      "y": 0,
+      "p_champion": 0.0863,
+      "p_kalshi_mid": 0.035
+    },
+    {
+      "run_id": "114",
+      "ticker": "KXLOWTDEN-26MAY30-B54.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:29:02Z",
+      "y": 0,
+      "p_champion": 0.1834,
+      "p_kalshi_mid": 0.075
+    },
+    {
+      "run_id": "115",
+      "ticker": "KXLOWTDEN-26MAY30-B48.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:29:02Z",
+      "y": 1,
+      "p_champion": 0.1173,
+      "p_kalshi_mid": 0.25
+    },
+    {
+      "run_id": "116",
+      "ticker": "KXLOWTDEN-26MAY30-B52.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:29:02Z",
+      "y": 0,
+      "p_champion": 0.2121,
+      "p_kalshi_mid": 0.21
+    },
+    {
+      "run_id": "117",
+      "ticker": "KXLOWTSEA-26MAY30-B45.5",
+      "target_date": "2026-05-30",
+      "ts_utc": "2026-05-29T20:29:12Z",
+      "y": 1,
+      "p_champion": 0.272,
+      "p_kalshi_mid": 0.38
+    },
+    {
+      "run_id": "118",
+      "ticker": "KXLOWTNYC-26JUN01-B56.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:17:28Z",
+      "y": 0,
+      "p_champion": 0.227,
+      "p_kalshi_mid": 0.335
+    },
+    {
+      "run_id": "119",
+      "ticker": "KXLOWTNYC-26JUN01-B54.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:17:28Z",
+      "y": 0,
+      "p_champion": 0.1877,
+      "p_kalshi_mid": 0.295
+    },
+    {
+      "run_id": "120",
+      "ticker": "KXLOWTNYC-26JUN01-B60.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:17:28Z",
+      "y": 0,
+      "p_champion": 0.127,
+      "p_kalshi_mid": 0.06
+    },
+    {
+      "run_id": "121",
+      "ticker": "KXLOWTLAX-26JUN01-B59.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:17:36Z",
+      "y": 0,
+      "p_champion": 0.2607,
+      "p_kalshi_mid": 0.435
+    },
+    {
+      "run_id": "122",
+      "ticker": "KXLOWTLAX-26JUN01-B61.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:17:44Z",
+      "y": 1,
+      "p_champion": 0.2876,
+      "p_kalshi_mid": 0.34
+    },
+    {
+      "run_id": "123",
+      "ticker": "KXLOWTSFO-26JUN01-B50.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:18:08Z",
+      "y": 0,
+      "p_champion": 0.3027,
+      "p_kalshi_mid": 0.445
+    },
+    {
+      "run_id": "124",
+      "ticker": "KXLOWTSFO-26JUN01-B48.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:18:08Z",
+      "y": 0,
+      "p_champion": 0.1683,
+      "p_kalshi_mid": 0.075
+    },
+    {
+      "run_id": "125",
+      "ticker": "KXLOWTSFO-26JUN01-B52.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:18:08Z",
+      "y": 1,
+      "p_champion": 0.2937,
+      "p_kalshi_mid": 0.385
+    },
+    {
+      "run_id": "126",
+      "ticker": "KXLOWTCHI-26JUN01-B57.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:18:20Z",
+      "y": 0,
+      "p_champion": 0.1488,
+      "p_kalshi_mid": 0.38
+    },
+    {
+      "run_id": "127",
+      "ticker": "KXLOWTCHI-26JUN01-B59.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:18:27Z",
+      "y": 0,
+      "p_champion": 0.132,
+      "p_kalshi_mid": 0.25
+    },
+    {
+      "run_id": "128",
+      "ticker": "KXLOWTCHI-26JUN01-B55.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:18:35Z",
+      "y": 1,
+      "p_champion": 0.1487,
+      "p_kalshi_mid": 0.245
+    },
+    {
+      "run_id": "129",
+      "ticker": "KXLOWTDC-26JUN01-B59.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:19:06Z",
+      "y": 1,
+      "p_champion": 0.1842,
+      "p_kalshi_mid": 0.485
+    },
+    {
+      "run_id": "130",
+      "ticker": "KXLOWTDC-26JUN01-B55.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:19:06Z",
+      "y": 0,
+      "p_champion": 0.0856,
+      "p_kalshi_mid": 0.045
+    },
+    {
+      "run_id": "131",
+      "ticker": "KXLOWTBOS-26JUN01-B45.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:19:17Z",
+      "y": 0,
+      "p_champion": 0.135,
+      "p_kalshi_mid": 0.045
+    },
+    {
+      "run_id": "132",
+      "ticker": "KXLOWTMIA-26JUN01-B76.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:20:04Z",
+      "y": 1,
+      "p_champion": 0.3038,
+      "p_kalshi_mid": 0.48
+    },
+    {
+      "run_id": "133",
+      "ticker": "KXLOWTMIA-26JUN01-B72.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:20:05Z",
+      "y": 0,
+      "p_champion": 0.0222,
+      "p_kalshi_mid": 0.035
+    },
+    {
+      "run_id": "134",
+      "ticker": "KXLOWTPHX-26JUN01-B72.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:20:19Z",
+      "y": 0,
+      "p_champion": 0.1181,
+      "p_kalshi_mid": 0.065
+    },
+    {
+      "run_id": "135",
+      "ticker": "KXLOWTDEN-26JUN01-B57.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:06Z",
+      "y": 0,
+      "p_champion": 0.1488,
+      "p_kalshi_mid": 0.03
+    },
+    {
+      "run_id": "136",
+      "ticker": "KXLOWTDEN-26JUN01-B55.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:06Z",
+      "y": 1,
+      "p_champion": 0.1777,
+      "p_kalshi_mid": 0.1
+    },
+    {
+      "run_id": "137",
+      "ticker": "KXLOWTDEN-26JUN01-B53.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:06Z",
+      "y": 0,
+      "p_champion": 0.1757,
+      "p_kalshi_mid": 0.185
+    },
+    {
+      "run_id": "138",
+      "ticker": "KXLOWTSEA-26JUN01-B44.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:16Z",
+      "y": 0,
+      "p_champion": 0.1683,
+      "p_kalshi_mid": 0.05
+    },
+    {
+      "run_id": "139",
+      "ticker": "KXLOWTSEA-26JUN01-B46.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:23Z",
+      "y": 0,
+      "p_champion": 0.2499,
+      "p_kalshi_mid": 0.355
+    },
+    {
+      "run_id": "140",
+      "ticker": "KXHIGHTSFO-26JUN01-B73.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:24Z",
+      "y": 0,
+      "p_champion": 0.0781,
+      "p_kalshi_mid": 0.415
+    },
+    {
+      "run_id": "141",
+      "ticker": "KXHIGHTSFO-26JUN01-B75.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:24Z",
+      "y": 0,
+      "p_champion": 0.0763,
+      "p_kalshi_mid": 0.255
+    },
+    {
+      "run_id": "142",
+      "ticker": "KXHIGHTSFO-26JUN01-B71.5",
+      "target_date": "2026-06-01",
+      "ts_utc": "2026-05-31T19:21:24Z",
+      "y": 1,
+      "p_champion": 0.0817,
+      "p_kalshi_mid": 0.175
+    }
+  ]
+}
