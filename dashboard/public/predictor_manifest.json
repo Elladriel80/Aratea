@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-04T20:10:13Z",
+  "generated_at": "2026-06-05T20:15:13Z",
   "schema_version": 3,
   "features": [
     {
@@ -90,12 +90,29 @@
       ]
     },
     {
+      "name": "p_consensus",
+      "hypothesis": "Mean of the three correlated probability views (`p_climatology` + `p_forecast_blend` + `p_ensemble`). Hypothesis: those three estimate the same P(YES) by different routes and are near-collinear; under L2 the learner splits one signal across three compensating coefficients (the +1.07 / -0.87 / -0.40 pattern measured on the v2 run). Collapsing them into their mean keeps the shared signal on one stable coefficient, with the orthogonal disagreement axis carried by `forecast_spread`. Standard mean+spread reparametrisation of a collinear block.",
+      "source": "derived from `predictors/{climatology,forecast_blend,ensemble}.py`",
+      "date_added": "2026-06-05",
+      "current_status": "experimental",
+      "current_brier_delta": -0.0011117401320362152,
+      "current_brier_delta_raw": "TBD (v3 run)",
+      "history": [
+        {
+          "run_ts": "20260605T123421Z",
+          "feature_set": "v3",
+          "brier_delta": -0.0011117401320362152,
+          "status": "active"
+        }
+      ]
+    },
+    {
       "name": "forecast_spread",
       "hypothesis": "Max \u2212 min of the per-vendor probabilities (proxy of model disagreement). Hypothesis: when vendors disagree, the prediction is less trustworthy and the market mid carries more weight than the model.",
       "source": "derived from `predictions.ensemble.inputs.individual_probs`",
       "date_added": "2026-05-09",
       "current_status": "active",
-      "current_brier_delta": 0.0007755454536564343,
+      "current_brier_delta": 0.0032658520165873284,
       "current_brier_delta_raw": "+0.0012",
       "history": [
         {
@@ -115,6 +132,12 @@
           "feature_set": "v2",
           "brier_delta": 0.0007755454536564343,
           "status": "active"
+        },
+        {
+          "run_ts": "20260605T123421Z",
+          "feature_set": "v3",
+          "brier_delta": 0.0032658520165873284,
+          "status": "active"
         }
       ]
     },
@@ -124,7 +147,7 @@
       "source": "derived from `predictions.forecast_blend.inputs.days_ahead`",
       "date_added": "2026-05-09",
       "current_status": "experimental",
-      "current_brier_delta": -2.2200763120705513e-05,
+      "current_brier_delta": 0.0,
       "current_brier_delta_raw": "+0.0001",
       "history": [
         {
@@ -144,6 +167,12 @@
           "feature_set": "v2",
           "brier_delta": -2.2200763120705513e-05,
           "status": "active"
+        },
+        {
+          "run_ts": "20260605T123421Z",
+          "feature_set": "v3",
+          "brier_delta": 0.0,
+          "status": "active"
         }
       ]
     },
@@ -162,7 +191,7 @@
       "hypothesis": "OSM `way[\"building\"]` count within 5 km of the station. Hypothesis: urban heat island raises overnight lows above what a non-urban climatology predicts \u2192 biases low-temp markets in cities. Units: building count (not %-area; see README for why).",
       "source": "OSM Overpass API",
       "date_added": "2026-05-11",
-      "current_status": "experimental",
+      "current_status": "dropped (v3, 2026-06-05 \u2014 noise as additive linear term)",
       "current_brier_delta": 2.615579531722867e-05,
       "current_brier_delta_raw": "+0.0000",
       "history": [
@@ -191,7 +220,7 @@
       "hypothesis": "OSM `natural=water` + `waterway=*` feature count within 10 km. Hypothesis: large water bodies dampen diurnal swings via thermal inertia \u2192 tightens the [lower, upper] hit probability for both highs and lows. Units: feature count (kept the `_pct_` name from the spec for continuity).",
       "source": "OSM Overpass API",
       "date_added": "2026-05-11",
-      "current_status": "experimental",
+      "current_status": "dropped (v3, 2026-06-05 \u2014 noise as additive linear term)",
       "current_brier_delta": -1.4111033205560508e-05,
       "current_brier_delta_raw": "-0.0002",
       "history": [
@@ -220,7 +249,7 @@
       "hypothesis": "OSM `natural=wood` + `landuse=forest` feature count within 5 km. Hypothesis: canopy cover lowers daytime highs (shade + evapotranspiration) and limits radiative night cooling (canopy traps). Units: feature count.",
       "source": "OSM Overpass API",
       "date_added": "2026-05-11",
-      "current_status": "experimental",
+      "current_status": "dropped (v3, 2026-06-05 \u2014 noise as additive linear term)",
       "current_brier_delta": 5.53383133919394e-06,
       "current_brier_delta_raw": "-0.0002",
       "history": [
@@ -249,7 +278,7 @@
       "hypothesis": "USGS EPQS elevation at the station point. Hypothesis: thinner air at altitude amplifies the diurnal swing (Denver KDEN ~1638 m vs. Miami KMIA ~2 m at the extremes of our station set).",
       "source": "USGS EPQS `https://epqs.nationalmap.gov/v1/json`",
       "date_added": "2026-05-11",
-      "current_status": "experimental",
+      "current_status": "dropped (v3, 2026-06-05 \u2014 noise as additive linear term)",
       "current_brier_delta": 1.7644623099527523e-05,
       "current_brier_delta_raw": "+0.0000",
       "history": [
@@ -278,7 +307,7 @@
       "hypothesis": "Haversine distance to the nearest Natural Earth 1:50m coastline vertex. Hypothesis: maritime regime (Boston, Miami, SFO) damps extremes; continental regime (Denver, Oklahoma City) amplifies them.",
       "source": "Natural Earth `ne_50m_coastline.geojson`",
       "date_added": "2026-05-11",
-      "current_status": "experimental",
+      "current_status": "dropped (v3, 2026-06-05 \u2014 noise as additive linear term)",
       "current_brier_delta": -2.169627887083081e-05,
       "current_brier_delta_raw": "-0.0003",
       "history": [
@@ -307,7 +336,7 @@
       "hypothesis": "Station latitude (degrees, signed). Hypothesis: insolation, daylight length, and seasonal amplitude scale with `cos(latitude)` \u2014 explicit feature lets the learner discover the interaction with the date-of-year encoded in climatology.",
       "source": "NWS_STATIONS table",
       "date_added": "2026-05-11",
-      "current_status": "experimental",
+      "current_status": "dropped (v3, 2026-06-05 \u2014 noise as additive linear term)",
       "current_brier_delta": 7.98309527541563e-06,
       "current_brier_delta_raw": "+0.0000",
       "history": [
@@ -464,195 +493,49 @@
       "gap_vs_kalshi_mid": 0.0018382905181838771,
       "verdict": "MARKET",
       "notes": "Phase A.2 rerun under clean target_date split; supersedes invalidated 20260514T141925Z. Decision-gate run for the temporal-split fix."
+    },
+    {
+      "ts": "20260605T123421Z",
+      "feature_set": "v3",
+      "feature_names": [
+        "p_consensus",
+        "forecast_spread",
+        "days_ahead"
+      ],
+      "n_train": 144,
+      "n_test": 84,
+      "train_date_range": [
+        "20260508T102045Z",
+        "20260510T171217Z"
+      ],
+      "test_date_range": [
+        "20260510T171217Z",
+        "20260510T171217Z"
+      ],
+      "split_key": "target_date",
+      "train_split_range": [
+        "2026-05-08",
+        "2026-05-10"
+      ],
+      "test_split_range": [
+        "2026-05-11",
+        "2026-05-11"
+      ],
+      "n_distinct_test_split_values": 1,
+      "promotable": false,
+      "promotable_min_cardinality": 3,
+      "brier_train": 0.13677672740946606,
+      "brier_test": 0.1359057474883753,
+      "brier_kalshi_mid_test": 0.10978809523809525,
+      "log_loss_train": 0.44186457904635723,
+      "log_loss_test": 0.43683874055342453,
+      "log_loss_kalshi_mid_test": 0.36105512546668944,
+      "gap_vs_kalshi_mid": 0.026117652250280052,
+      "verdict": "MARKET",
+      "notes": ""
     }
   ],
   "live_runs": [
-    {
-      "run_id": "084",
-      "schema_version": 2,
-      "ts_utc": "2026-05-27T20:19:05Z",
-      "event_ticker": "KXLOWTDC-26MAY28",
-      "event_title": "Lowest temperature in Washington DC on May 28, 2026?",
-      "target_market_ticker": "KXLOWTDC-26MAY28-B63.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.315,
-      "position": {
-        "side": "NO",
-        "n_contracts": 31,
-        "entry_price": 0.685,
-        "size_usd": 21.7,
-        "entry_price_yes_cents": 31.5,
-        "entry_price_no_cents": 68.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.1692286342707062,
-          "brier": 0.6902,
-          "won": false,
-          "pnl_usd": -21.24,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.0924170616113744,
-          "brier": 0.8237,
-          "won": false,
-          "pnl_usd": -21.24,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.315,
-          "brier": 0.4692,
-          "won": false,
-          "pnl_usd": -21.24,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "yes",
-        "observed_range_f": [
-          63.0,
-          64.0
-        ],
-        "winning_bin_ticker": "KXLOWTDC-26MAY28-B63.5",
-        "ts_utc": "2026-05-29T20:25:21Z",
-        "champion_pnl_usd": -21.24,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "085",
-      "schema_version": 2,
-      "ts_utc": "2026-05-27T20:19:14Z",
-      "event_ticker": "KXLOWTBOS-26MAY28",
-      "event_title": "Lowest temperature in Boston on May 28, 2026?",
-      "target_market_ticker": "KXLOWTBOS-26MAY28-B52.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.04,
-      "position": {
-        "side": "YES",
-        "n_contracts": 19,
-        "entry_price": 0.04,
-        "size_usd": 0.79,
-        "entry_price_yes_cents": 4.0,
-        "entry_price_no_cents": 96.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.11004002839172844,
-          "brier": 0.0121,
-          "won": false,
-          "pnl_usd": -0.76,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.04072703755298482,
-          "brier": 0.0017,
-          "won": false,
-          "pnl_usd": -0.76,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.04,
-          "brier": 0.0016,
-          "won": false,
-          "pnl_usd": -0.76,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          57.0,
-          null
-        ],
-        "winning_bin_ticker": "KXLOWTBOS-26MAY28-T57",
-        "ts_utc": "2026-05-29T20:25:21Z",
-        "champion_pnl_usd": -0.76,
-        "champion_won": false
-      }
-    },
-    {
-      "run_id": "086",
-      "schema_version": 2,
-      "ts_utc": "2026-05-27T20:20:06Z",
-      "event_ticker": "KXLOWTMIA-26MAY28",
-      "event_title": "Lowest temperature in Miami on May 28, 2026?",
-      "target_market_ticker": "KXLOWTMIA-26MAY28-B77.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.47,
-      "position": {
-        "side": "NO",
-        "n_contracts": 40,
-        "entry_price": 0.53,
-        "size_usd": 21.7,
-        "entry_price_yes_cents": 47.0,
-        "entry_price_no_cents": 53.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.31261877865867455,
-          "brier": 0.0977,
-          "won": true,
-          "pnl_usd": 18.8,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.2674480904771506,
-          "brier": 0.0715,
-          "won": true,
-          "pnl_usd": 18.8,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.47,
-          "brier": 0.2209,
-          "won": true,
-          "pnl_usd": 18.8,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          75.0,
-          76.0
-        ],
-        "winning_bin_ticker": "KXLOWTMIA-26MAY28-B75.5",
-        "ts_utc": "2026-05-29T20:25:21Z",
-        "champion_pnl_usd": 18.8,
-        "champion_won": true
-      }
-    },
     {
       "run_id": "087",
       "schema_version": 2,
@@ -5435,40 +5318,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.2021533746764841,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.6366,
+          "won": false,
+          "pnl_usd": -21.27,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.3360216285703847,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.4409,
+          "won": false,
+          "pnl_usd": -21.27,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.425,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.3306,
+          "won": false,
+          "pnl_usd": -21.27,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          63.0,
+          64.0
+        ],
+        "winning_bin_ticker": "KXLOWTNYC-26JUN04-B63.5",
+        "ts_utc": "2026-06-05T20:12:47Z",
+        "champion_pnl_usd": -21.27,
+        "champion_won": false
       }
     },
     {
@@ -5494,40 +5380,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.18971244178193203,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.036,
+          "won": true,
+          "pnl_usd": 9.66,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.2571354042688831,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0661,
+          "won": true,
+          "pnl_usd": 9.66,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.345,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.119,
+          "won": true,
+          "pnl_usd": 9.66,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          63.0,
+          64.0
+        ],
+        "winning_bin_ticker": "KXLOWTNYC-26JUN04-B63.5",
+        "ts_utc": "2026-06-05T20:12:47Z",
+        "champion_pnl_usd": 9.66,
+        "champion_won": true
       }
     },
     {
@@ -6591,16 +6480,193 @@
         "champion_pnl_usd": null,
         "champion_won": null
       }
+    },
+    {
+      "run_id": "184",
+      "schema_version": 2,
+      "ts_utc": "2026-06-05T20:14:25Z",
+      "event_ticker": "KXLOWTNYC-26JUN06",
+      "event_title": "Lowest temperature in New York City on Jun 6, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26JUN06-B71.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.54,
+      "position": {
+        "side": "NO",
+        "n_contracts": 48,
+        "entry_price": 0.45999999999999996,
+        "size_usd": 22.14,
+        "entry_price_yes_cents": 54.0,
+        "entry_price_no_cents": 46.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.2564745541993043,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.1730926723841199,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.54,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "185",
+      "schema_version": 2,
+      "ts_utc": "2026-06-05T20:14:47Z",
+      "event_ticker": "KXLOWTNYC-26JUN06",
+      "event_title": "Lowest temperature in New York City on Jun 6, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26JUN06-B73.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.105,
+      "position": {
+        "side": "YES",
+        "n_contracts": 32,
+        "entry_price": 0.105,
+        "size_usd": 3.38,
+        "entry_price_yes_cents": 10.5,
+        "entry_price_no_cents": 89.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.20906646236318582,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.18725376531943777,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.105,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
+    },
+    {
+      "run_id": "186",
+      "schema_version": 2,
+      "ts_utc": "2026-06-05T20:15:09Z",
+      "event_ticker": "KXLOWTNYC-26JUN06",
+      "event_title": "Lowest temperature in New York City on Jun 6, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26JUN06-B69.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.315,
+      "position": {
+        "side": "NO",
+        "n_contracts": 16,
+        "entry_price": 0.685,
+        "size_usd": 11.34,
+        "entry_price_yes_cents": 31.5,
+        "entry_price_no_cents": 68.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.24623276977079214,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.17213223756519067,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.315,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
     }
   ],
-  "live_runs_total": 182,
+  "live_runs_total": 185,
   "backtest_runs": [],
   "backtest_runs_total": 0,
   "paper_bets_summary": {
-    "n_open": 20,
-    "n_resolved": 162,
-    "pnl_usd_cumulative": 118.58,
-    "phase_1_counter": "182/50"
+    "n_open": 21,
+    "n_resolved": 164,
+    "pnl_usd_cumulative": 106.97,
+    "phase_1_counter": "185/50"
   },
   "backtest_summary": {
     "n_total": 268,
@@ -6612,15 +6678,15 @@
   },
   "hybrid_sample": {
     "alpha_backtest": 0.3,
-    "n_live": 162,
+    "n_live": 164,
     "n_backtest_strict": 268,
     "n_backtest_naive_excluded": 0,
-    "n_effective": 242.4,
+    "n_effective": 244.4,
     "phase_1_target": 50,
-    "phase_1_progress_live_only": "162/50",
+    "phase_1_progress_live_only": "164/50",
     "convention_ref": "predictor/runs/CONVENTION.md sec.6.bis",
     "note": "N_effective is for SECONDARY decisions only (feature-set selection, reliability plots, complementary promotion check). The Phase 1 go/no-go gate (CONVENTION.md sec.6) uses n_live exclusively and ignores n_backtest_strict."
   },
-  "kalshi_mid_reference": 0.13049404761904762,
+  "kalshi_mid_reference": 0.10978809523809525,
   "max_runs_in_manifest": 100
 }
