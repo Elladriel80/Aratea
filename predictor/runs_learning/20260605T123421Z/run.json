@@ -1,0 +1,77 @@
+{
+  "schema_version": 3,
+  "timestamp_utc": "20260605T123421Z",
+  "feature_set_used": "v3",
+  "feature_names": [
+    "p_consensus",
+    "forecast_spread",
+    "days_ahead"
+  ],
+  "model_class": "sklearn.linear_model.LogisticRegression",
+  "model_hyperparams": {
+    "penalty": "l2",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 2000,
+    "random_state": 42
+  },
+  "n_train": 144,
+  "n_test": 84,
+  "split_key": "target_date",
+  "train_frac": 0.7,
+  "train_split_range": [
+    "2026-05-08",
+    "2026-05-10"
+  ],
+  "test_split_range": [
+    "2026-05-11",
+    "2026-05-11"
+  ],
+  "n_distinct_test_split_values": 1,
+  "promotable": false,
+  "promotable_min_cardinality": 3,
+  "train_date_range": [
+    "20260508T102045Z",
+    "20260510T171217Z"
+  ],
+  "test_date_range": [
+    "20260510T171217Z",
+    "20260510T171217Z"
+  ],
+  "brier_train": 0.13677672740946606,
+  "brier_test": 0.1359057474883753,
+  "brier_kalshi_mid_test": 0.10978809523809525,
+  "log_loss_train": 0.44186457904635723,
+  "log_loss_test": 0.43683874055342453,
+  "log_loss_kalshi_mid_test": 0.36105512546668944,
+  "intercept": -1.6584599604041017,
+  "feature_means": {
+    "p_consensus": 0.16686324602621494,
+    "forecast_spread": 0.09204444439098036,
+    "days_ahead": 0.0
+  },
+  "feature_stds": {
+    "p_consensus": 0.10430311936451227,
+    "forecast_spread": 0.11676072411359147,
+    "days_ahead": 1.0
+  },
+  "feature_importances": {
+    "forecast_spread": -0.35122462626194717,
+    "p_consensus": -0.08888921644885203,
+    "days_ahead": 0.0
+  },
+  "feature_brier_deltas": {
+    "p_consensus": -0.0011117401320362152,
+    "forecast_spread": 0.0032658520165873284,
+    "days_ahead": 0.0
+  },
+  "kept_features": [
+    "p_consensus",
+    "forecast_spread",
+    "days_ahead"
+  ],
+  "dropped_features": [],
+  "methodology": "Leave-one-out Brier delta: for each feature, refit the model without it on the same train/test split and record (brier_test_without - brier_test_full). Positive = removing the feature hurt accuracy = feature carried signal.",
+  "inference_formula": "p_yes = sigmoid(intercept + sum_i coef_i * (x_i - mean_i) / std_i) where coef_i = feature_importances[i], mean_i = feature_means[i], std_i = feature_stds[i]. sigmoid(z) = 1 / (1 + exp(-z)).",
+  "notes": ""
+}
