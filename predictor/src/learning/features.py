@@ -64,6 +64,33 @@ def f_forecast_spread(rec: dict[str, Any]) -> float | None:
     return abs(blend - clim)
 
 
+def f_p_consensus(rec: dict[str, Any]) -> float | None:
+    """Mean of the three correlated probability views (climatology +
+    forecast_blend + ensemble) — the single "location" parameter of the
+    prediction.
+
+    Hypothesis: the three probability features are near-collinear (they all
+    estimate the same P(YES) by different routes). Under L2 the learner
+    splits one signal across three coefficients with compensating signs
+    (the +1.07 / -0.87 / -0.40 pattern observed on the v2 run), which is
+    noise, not structure. Collapsing them into their mean keeps the shared
+    signal on one stable coefficient; the orthogonal disagreement axis is
+    carried separately by `forecast_spread`. This is the standard
+    mean + spread reparametrisation of a collinear block.
+
+    Returns None (row dropped, never imputed) if any of the three
+    underlying probabilities is missing, mirroring the v0/v2 contract.
+    """
+    parts = [
+        f_p_climatology(rec),
+        f_p_forecast_blend(rec),
+        f_p_ensemble(rec),
+    ]
+    if any(p is None for p in parts):
+        return None
+    return sum(parts) / len(parts)
+
+
 def f_days_ahead(rec: dict[str, Any]) -> float | None:
     """How far ahead (in days) the forecast is — 0 = same day, 7 = a week out.
 
@@ -325,11 +352,44 @@ FEATURES_V2: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = (
 )
 
 
+# ---------- V3 features: collinearity fix, geographic noise removed ----------
+
+# V3 is the corrected Phase 1 feature set decided on 2026-06-04 (NO-GO
+# verdict on v2). Two changes vs v0/v2, both motivated by the v2 run's
+# measured feature signal:
+#
+#   1. Collapse the three near-collinear probability features
+#      (p_climatology, p_forecast_blend, p_ensemble) into a single
+#      `p_consensus` (their mean). The v2 run showed the classic L2
+#      multicollinearity pattern — large compensating coefficients
+#      (+1.07 / -0.87 / -0.40) on what is essentially one signal. The
+#      orthogonal "how much do the vendors disagree" axis stays as
+#      `forecast_spread`.
+#   2. Drop the six static geographic features (urban_density_5km,
+#      water_pct_10km, forest_pct_5km, elevation_m, distance_to_coast_km,
+#      latitude). Measured as pure noise as additive linear terms on v2
+#      (|coef| < 0.04, Brier deltas in the 1e-5 band). Kept in FEATURES.md
+#      as `dropped` for institutional memory; candidates for re-test as
+#      interactions, not additive features.
+#
+# `days_ahead` is retained: it is neither collinear with the probability
+# block nor geographic, and the forecast-horizon axis is a legitimate
+# (if weak) signal that is orthogonal to both v3 changes. A 2-feature
+# variant {p_consensus, forecast_spread} can be A/B-tested later if
+# days_ahead proves to be noise on v3 as well.
+FEATURES_V3: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
+    ("p_consensus",     f_p_consensus),
+    ("forecast_spread", f_forecast_spread),
+    ("days_ahead",      f_days_ahead),
+]
+
+
 # Convenience map for --feature-set CLI flag.
 FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]]]] = {
     "v0": FEATURES_V0,
     "v1": FEATURES_V1,
     "v2": FEATURES_V2,
+    "v3": FEATURES_V3,
 }
 
 
