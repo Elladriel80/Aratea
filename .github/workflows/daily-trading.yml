@@ -1,15 +1,25 @@
 name: Daily Trading (auto)
 
 # Autonomous daily Kalshi paper-trading routine for the Aratea predictor.
-# Runs daily_auto.py which:
-#   1. Auto-finalizes any open runs that Kalshi has settled
-#   2. Auto-captures a new run for tomorrow's KXLOWTNYC event (if a bin
-#      clears the |edge| >= 0.10 and spread <= 0.05 thresholds)
-#   3. Rebuilds the dashboard manifest
+#
+# Two halves run every day:
+#   A. Learning capture (daily_run.py): fetch_markets --all-weather →
+#      forward_predict → score_forward. This is what WRITES the learned
+#      model's training fuel (predictor/data/predictions/forward_*.json)
+#      and closes the resolution loop (predictor/data/scores/). Without it
+#      the learning dataset stops growing distinct target_dates — the bug
+#      fixed on 2026-06-05 (daily_auto.py had silently replaced this half).
+#   B. Paper-trading (daily_auto.py):
+#      1. Auto-finalizes any open runs that Kalshi has settled
+#      2. Auto-captures new paper runs across the configured event series
+#         (per-event |edge| / spread thresholds)
+#      3. Rebuilds the dashboard manifest
 # Then commits + pushes the result so Vercel auto-deploys the dashboard.
 #
 # Idempotent. Failing to capture (event not yet published, no qualifying
-# bin) exits 0 — the workflow retries the next day.
+# bin) exits 0 — the workflow retries the next day. The learning-capture
+# step is continue-on-error so a transient forecast/Kalshi hiccup never
+# blocks the paper-trading half or the commit.
 #
 # Security note: this workflow grants `contents: write` to GITHUB_TOKEN
 # only because it needs to push the captured report + updated ledger +
@@ -51,7 +61,7 @@ concurrency:
 jobs:
   daily-auto:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
       - name: Checkout
@@ -83,6 +93,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.lock --require-hashes
+
+      - name: Run learning capture (forward_predict + score_forward)
+        # daily_run.py = fetch_markets --all-weather → forward_predict →
+        # score_forward. Writes data/predictions/forward_*.json (training
+        # fuel) and data/scores/. continue-on-error so a transient API
+        # failure here never blocks the paper-trading half or the commit.
+        # daily_run.py exits 1 if any of its 3 steps fail (but still runs
+        # the others), so we tolerate a non-zero exit at the job level.
+        id: learn
+        continue-on-error: true
+        working-directory: ${{ github.workspace }}
+        run: |
+          python predictor/scripts/daily_run.py
 
       - name: Run daily_auto
         id: auto
@@ -116,9 +139,13 @@ jobs:
         if: ${{ inputs.dry_run != true && steps.diff.outputs.has_changes == 'true' }}
         run: |
           DATE_ISO=$(date -u +%Y-%m-%d)
-          git add predictor/runs predictor/data/ledger/paper_bets.csv dashboard/public/predictor_manifest.json
+          git add predictor/runs \
+                  predictor/data/predictions \
+                  predictor/data/scores \
+                  predictor/data/ledger/paper_bets.csv \
+                  dashboard/public/predictor_manifest.json
           git status --short
-          git commit -m "chore(auto): daily run ${DATE_ISO} (finalize + capture + manifest)" || {
+          git commit -m "chore(auto): daily run ${DATE_ISO} (learning capture + finalize + capture + manifest)" || {
             echo "Nothing staged after add; that's OK."
             exit 0
           }
