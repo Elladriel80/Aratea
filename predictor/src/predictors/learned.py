@@ -35,15 +35,70 @@ from .ensemble import EnsemblePredictor
 REQUIRED_SCHEMA_VERSION = 2
 
 
-def _find_latest_run_json(runs_root: Path) -> Path:
-    """Return the most recent runs_learning/<ts>/run.json by timestamp folder name."""
-    candidates = sorted(runs_root.glob("*/run.json"))
-    if not candidates:
-        raise FileNotFoundError(
-            f"No run.json under {runs_root}. Train a learned model first via "
-            f"`python predictor/scripts/train_learned.py --feature-set v2`."
+def _learned_trained_at_from_registry(registry: dict) -> Optional[str]:
+    """Pick the learned model's `trained_at` pin from a CHAMPION.json dict.
+
+    Prefers a model entry whose `method`/`name` marks it as learned and that
+    carries a `trained_at`; falls back to any entry with a feature_set +
+    trained_at. Returns None if no learned entry is pinned.
+    """
+    for m in registry.get("models") or []:
+        method = (m.get("method") or "")
+        name = (m.get("name") or "")
+        if (method.startswith("learned") or name.startswith("learned")) \
+                and m.get("trained_at"):
+            return m.get("trained_at")
+    for m in registry.get("models") or []:
+        if m.get("feature_set") and m.get("trained_at"):
+            return m.get("trained_at")
+    return None
+
+
+def _resolve_run_json_from_registry(
+    runs_root: Path,
+    trained_at: Optional[str] = None,
+    registry: Optional[dict] = None,
+) -> Path:
+    """Resolve the PINNED runs_learning/<trained_at>/run.json.
+
+    The run is pinned by CHAMPION.json: each model entry carries a `trained_at`
+    timestamp that names its runs_learning/<trained_at>/ folder. We deliberately
+    do NOT fall back to "the latest run.json": a freshly trained, non-promotable
+    run would silently shadow the pinned model and invalidate every Brier
+    comparison labelled with that model's name (revue 2026-06-10 A2 / E1).
+
+    Resolution order:
+      1. `trained_at` passed by the caller (live_run reads it from the registry).
+      2. else read CHAMPION.json next to `runs_root` and pick the learned entry.
+    Raises if nothing can be pinned, rather than guessing another run.
+    """
+    runs_root = Path(runs_root)
+    if trained_at is None:
+        if registry is None:
+            champion_path = runs_root / "CHAMPION.json"
+            if not champion_path.exists():
+                raise FileNotFoundError(
+                    f"Cannot resolve the pinned learned run: no CHAMPION.json "
+                    f"under {runs_root} and no trained_at/run_json_path provided. "
+                    f"Refusing to fall back to the latest run.json (revue A2)."
+                )
+            registry = json.loads(champion_path.read_text(encoding="utf-8"))
+        trained_at = _learned_trained_at_from_registry(registry)
+
+    if not trained_at:
+        raise ValueError(
+            "Cannot resolve the pinned learned run: CHAMPION.json has no learned "
+            "model entry with a `trained_at` timestamp. Refusing to load the "
+            "latest run.json instead (would shadow the pinned model — revue A2)."
         )
-    return candidates[-1]
+    run_json_path = runs_root / str(trained_at) / "run.json"
+    if not run_json_path.exists():
+        raise FileNotFoundError(
+            f"Pinned learned run {run_json_path} (trained_at={trained_at} from "
+            f"CHAMPION.json) does not exist. Train it or fix the registry pin; "
+            f"NOT falling back to another run (revue A2)."
+        )
+    return run_json_path
 
 
 def _sigmoid(z: float) -> float:
@@ -65,17 +120,27 @@ class LearnedPredictor(Predictor):
         weather_client: Optional[OpenMeteoClient] = None,
         run_json_path: Optional[Path] = None,
         runs_root: Optional[Path] = None,
+        trained_at: Optional[str] = None,
         sub_climato: Optional[ClimatologyPredictor] = None,
         sub_forecast_blend: Optional[ForecastBlendPredictor] = None,
         sub_ensemble: Optional[EnsemblePredictor] = None,
     ):
-        # Resolve run.json path: explicit > auto-discover under runs_root > project default.
+        # Resolve run.json path. Priority:
+        #   1. explicit run_json_path (tests, ad-hoc inference)
+        #   2. registry pin: runs_learning/<trained_at>/run.json, where
+        #      `trained_at` comes from the caller (live_run reads it off the
+        #      CHAMPION.json model entry) or, if None, is read straight from
+        #      CHAMPION.json here.
+        # We NEVER silently load "the latest run.json": that let a fresh
+        # non-promotable run masquerade as the pinned model (revue A2 / E1).
         if run_json_path is None:
             if runs_root is None:
                 # Project default: <repo>/predictor/runs_learning
                 from src.config import DATA_DIR  # type: ignore
                 runs_root = DATA_DIR.parent / "runs_learning"
-            run_json_path = _find_latest_run_json(Path(runs_root))
+            run_json_path = _resolve_run_json_from_registry(
+                Path(runs_root), trained_at=trained_at
+            )
         run_json_path = Path(run_json_path)
 
         record = json.loads(run_json_path.read_text(encoding="utf-8"))
