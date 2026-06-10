@@ -25,7 +25,7 @@ try:
 except Exception:
     pass
 
-from src.config import MARKETS_DIR, SIMULATION
+from src.config import MARKETS_DIR, SIMULATION, LEDGER_DIR
 from src.kalshi.models import Event
 from src.predictors import ClimatologyPredictor, ForecastBlendPredictor, parse_market
 from src.predictors.normalize import normalize_event_probs
@@ -38,6 +38,29 @@ PREDICTORS = {
     "climatology": ClimatologyPredictor,
     "forecast_blend": ForecastBlendPredictor,
 }
+
+# Ledger DÉDIÉ au simulateur, séparé du ledger live `paper_bets.csv`
+# (revue 2026-06-10 A6 / finding E6). simulate.py écrivait dans le ledger live
+# partagé : ses paris jamais résolus créaient une heat fantôme permanente dans
+# PortfolioHeat.from_ledger et gonflaient n_open au manifest. En l'isolant ici,
+# les paris simulés sont physiquement absents du ledger live → exclus de la
+# heat et des compteurs du manifest, sans toucher au schéma partagé (le writer
+# live live_run._append_ledger_row a un header hardcodé distinct).
+SIMULATE_LEDGER_PATH = LEDGER_DIR / "paper_bets_simulate.csv"
+
+
+def _open_bet_keys(ledger: Ledger) -> set[tuple[str, str]]:
+    """Clés (event_ticker, market_ticker) des paris NON résolus du ledger.
+
+    Même granularité de dédup que daily_auto._already_captured_bin (par bin) :
+    on ne re-parie pas un bin déjà ouvert. Rend simulate.py idempotent sur
+    re-run.
+    """
+    return {
+        (b.event_ticker, b.market_ticker)
+        for b in ledger.read_all()
+        if not b.resolved_at_utc
+    }
 
 
 def main():
@@ -52,7 +75,10 @@ def main():
     args = parser.parse_args()
 
     predictor = PREDICTORS[args.predictor](years_back=args.years_back)
-    ledger = Ledger()
+    ledger = Ledger(SIMULATE_LEDGER_PATH)
+    # Dédup avant append (idempotence sur re-run) : on saute tout bin déjà
+    # ouvert dans le ledger simulate (revue A6).
+    open_keys = _open_bet_keys(ledger)
 
     snapshot_files = sorted(MARKETS_DIR.glob("KX*.json"))
     if not snapshot_files:
@@ -127,6 +153,16 @@ def main():
             if stake <= 0:
                 bets_skipped += 1
                 continue
+
+            # Dédup avant append : même clé (event_ticker, market_ticker) que
+            # daily_auto. Idempotent sur re-run (revue A6).
+            key = (event.event_ticker, market.ticker)
+            if key in open_keys:
+                bets_skipped += 1
+                print(f"   [dedupe] {market.ticker:<35} {spec.raw_subtitle:<22} "
+                      f"déjà ouvert dans le ledger simulate — skip.")
+                continue
+            open_keys.add(key)
 
             bet = PaperBet(
                 bet_id=make_bet_id(),
