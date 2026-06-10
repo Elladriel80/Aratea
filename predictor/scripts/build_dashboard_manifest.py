@@ -550,6 +550,12 @@ def _backtest_ledger_summary() -> dict[str, Any]:
     separately and explicitly EXCLUDED from `n_strict_point_in_time`,
     per CONVENTION.md sec.6.bis: only strict point-in-time records
     contribute to N_backtest in the hybrid effective sample.
+
+    Counts are over UNIQUE market_ticker, not raw rows: a re-run backtest
+    that left duplicate ticker rows in the ledger must not inflate
+    `n_strict_point_in_time` / `N_effective` and the Phase B gate that
+    consumes them (revue 2026-06-10 A1). `by_mode` stays a raw row tally
+    (informational only — it does not feed the gate).
     """
     if not PAPER_BETS_BACKTEST_CSV.exists():
         return {
@@ -558,24 +564,30 @@ def _backtest_ledger_summary() -> dict[str, Any]:
             "n_naive_excluded": 0,
             "by_mode": {},
         }
-    n_total = 0
-    n_strict = 0
-    n_naive = 0
+    n_rows = 0
+    all_tickers: set[str] = set()
+    strict_tickers: set[str] = set()
+    naive_tickers: set[str] = set()
     by_mode: dict[str, int] = {}
     with PAPER_BETS_BACKTEST_CSV.open("r", encoding="utf-8", newline="") as fh:
         reader = csv.DictReader(fh)
         for row in reader:
             mode = (row.get("mode") or "").strip()
-            n_total += 1
+            ticker = (row.get("market_ticker") or "").strip()
+            # Unique key per market_ticker; degrade to a per-row key when the
+            # ticker is missing so distinct markets aren't merged into one.
+            key = ticker or f"__norow_{n_rows}__"
+            n_rows += 1
             by_mode[mode] = by_mode.get(mode, 0) + 1
+            all_tickers.add(key)
             if mode.startswith("replay_naive_"):
-                n_naive += 1
+                naive_tickers.add(key)
             else:
-                n_strict += 1
+                strict_tickers.add(key)
     return {
-        "n_total": n_total,
-        "n_strict_point_in_time": n_strict,
-        "n_naive_excluded": n_naive,
+        "n_total": len(all_tickers),
+        "n_strict_point_in_time": len(strict_tickers),
+        "n_naive_excluded": len(naive_tickers),
         "by_mode": by_mode,
     }
 
