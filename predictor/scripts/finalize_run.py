@@ -131,7 +131,37 @@ def finalize(run_id: str, dry_run: bool = False) -> int:
             print(f"   Relance plus tard quand Kalshi aura officiellement settled.")
             return 1
 
-        # We have a result. Compute outcome.
+        # Marché void/annulé : result ∉ {yes,no} -> EXCLU du scoring (statut
+        # void), PAS compté comme NO (revue 2026-06-10 A7 / M2). Chemin legacy
+        # v1 (Run 001/002) ; un run = un bin, on finalise le run en void.
+        if result not in ("yes", "no"):
+            print(f"   {our_ticker}: result={result or '-'} ∉ {{yes,no}} -> VOID, exclu du scoring.")
+            market_entry["resolution"] = {
+                "outcome": "void",
+                "result_raw": result,
+                "observed_value_f": None,
+                "observed_range_f": None,
+                "winning_bin_ticker": None,
+                "ts_utc": now_iso,
+                "pnl_usd": 0.0,
+                "won": False,
+                "note": "Marché void/annulé : ni yes ni no, exclu du scoring, P&L=0.",
+            }
+            report["scoring"] = {
+                "outcome": "void",
+                "n_datapoints": 0,
+                "note": "Run void — exclu du scoring (revue 2026-06-10 A7 / M2).",
+            }
+            if dry_run:
+                print("\n[DRY RUN] would write void resolution to report.json.")
+            else:
+                report_path.write_text(
+                    json.dumps(report, indent=2, default=str), encoding="utf-8"
+                )
+                print(f">> patched (void): {report_path}")
+            return 0
+
+        # We have a yes/no result. Compute outcome.
         outcome = 1 if result == "yes" else 0
         print(f"   {our_ticker}: status={status}, result={result}, outcome={outcome}")
 
@@ -321,6 +351,101 @@ def _compute_pnl(side: str, n_contracts: float, entry_price: float, outcome: int
     }
 
 
+def _finalize_v2_void(
+    report: dict,
+    report_path: Path,
+    run_dir: Path,
+    market_entry: dict,
+    result: str,
+    run_id: str,
+    now_iso: str,
+    dry_run: bool,
+) -> int:
+    """Finalise un run dont le marché est résolu void/annulé (result ∉ {yes,no}).
+
+    Le marché est EXCLU du scoring (statut void), PAS compté comme NO (revue
+    2026-06-10 A7 / finding M2). La résolution void est persistée pour que le
+    run ne soit plus considéré ouvert (sinon re-finalisé indéfiniment), et la
+    ligne ledger du champion est marquée resolved-void (P&L=0, mise remboursée)
+    — donc plus de heat fantôme. Hypothèse : un run = un bin (daily_auto
+    capture un seul marché par run).
+    """
+    our_ticker = market_entry["ticker"]
+    print(f"   {our_ticker}: result={result or '-'} ∉ {{yes,no}} -> VOID, exclu du scoring.")
+
+    market_entry["resolution"] = {
+        "outcome": "void",
+        "result_raw": result,
+        "observed_value_f": None,
+        "observed_range_f": None,
+        "winning_bin_ticker": None,
+        "ts_utc": now_iso,
+        "champion_pnl_usd": 0.0,
+        "champion_payout_usd": 0.0,
+        "champion_cost_usd": 0.0,
+        "champion_won": False,
+        "note": ("Marché void/annulé par Kalshi : ni yes ni no. Exclu du "
+                 "scoring, mise remboursée, P&L=0."),
+    }
+    market_entry.pop("_shadow_pnls", None)
+    report["scoring"] = {
+        "outcome": "void",
+        "by_model": {},
+        "ranking_by_brier": [],
+        "best_brier_model": None,
+        "champion_at_time_of_run": report.get("champion_at_time_of_run"),
+        "champion_is_best": None,
+        "n_datapoints": 0,
+        "note": ("Run void : aucun marché résolu yes/no — exclu du scoring "
+                 "(revue 2026-06-10 A7 / M2). N'entre pas dans la gate."),
+    }
+
+    if dry_run:
+        print("\n[DRY RUN] would write void resolution to report.json + ledger.")
+        return 0
+
+    report_path.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
+    print(f">> patched (void): {report_path}")
+
+    # Ledger : marque la ligne du champion resolved-void (P&L 0), même logique
+    # de patch que la finalisation normale.
+    ledger_path = ROOT / "data" / "ledger" / "paper_bets.csv"
+    if ledger_path.exists():
+        reader = csv.DictReader(io.StringIO(ledger_path.read_text(encoding="utf-8")))
+        fieldnames = reader.fieldnames or []
+        rows = list(reader)
+        target_bet_ids = {
+            m["champion_position"]["ledger_bet_id"]
+            for m in report["markets"]
+            if m.get("champion_position", {}).get("ledger_bet_id")
+        }
+        patched = 0
+        for row in rows:
+            if row.get("bet_id") in target_bet_ids:
+                row["resolved_at_utc"] = now_iso
+                row["resolution"] = "void"
+                row["pnl_usd"] = "0.00"
+                patched += 1
+        if patched:
+            out_io = io.StringIO()
+            writer = csv.DictWriter(out_io, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(rows)
+            ledger_path.write_text(out_io.getvalue(), encoding="utf-8")
+            print(f">> patched (void): {ledger_path} ({patched} row(s))")
+
+    post_run_path = run_dir / "POST_RUN.md"
+    post_run_path.write_text(
+        f"# Run {run_id} — VOID\n\n"
+        f"Marché résolu void/annulé par Kalshi (ni yes ni no). Exclu du scoring "
+        f"(revue 2026-06-10 A7 / M2). Mise remboursée, P&L=0.\n",
+        encoding="utf-8",
+    )
+    print(f">> wrote (void): {post_run_path}")
+    print(f"\n>> Run {run_id} finalized as VOID (exclu du scoring).")
+    return 0
+
+
 def _finalize_v2(report: dict, report_path: Path, run_dir: Path, dry_run: bool) -> int:
     """v2 schema: multi-model report with champion + challengers + baseline."""
     run_id = report["run_id"]
@@ -360,6 +485,15 @@ def _finalize_v2(report: dict, report_path: Path, run_dir: Path, dry_run: bool) 
             print(f"!! {our_ticker} pas encore settled (status={status}, result={result or '-'})")
             print(f"   Relance plus tard quand Kalshi aura officiellement settled.")
             return 1
+
+        # Marché void/annulé : result ∉ {yes,no} -> EXCLU du scoring (statut
+        # void), surtout PAS compté comme NO (revue 2026-06-10 A7 / finding M2).
+        # Un run daily_auto = un bin, donc on finalise le run entier en void.
+        if result not in ("yes", "no"):
+            return _finalize_v2_void(
+                report, report_path, run_dir, market_entry, result,
+                run_id, now_iso, dry_run,
+            )
 
         outcome = 1 if result == "yes" else 0
         print(f"   {our_ticker}: status={status}, result={result}, outcome={outcome}")
