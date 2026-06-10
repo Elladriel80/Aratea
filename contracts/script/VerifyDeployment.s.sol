@@ -48,7 +48,13 @@ contract VerifyDeployment is Script {
 
         // --- Token-specific sanity ---
         require(token.totalSupply() == 0, "token: totalSupply must be 0 at fresh deploy");
-        require(keccak256(bytes(token.name())) == keccak256(bytes("Aratea POC Token")), "token: name mismatch");
+        // Le nom réellement déployé est "Augure POC Token" (AugPocToken.sol), pas
+        // "Aratea POC Token" — cette assertion échouait toujours (revue 2026-06-10
+        // B2 / finding S-1). On s'aligne sur l'on-chain ; le contrat déployé ne
+        // change pas. TODO(humain) : si rename "Aratea POC Token" décidé, il faudra
+        // un REDÉPLOIEMENT (le nom est aussi le domaine EIP-712 du permit, cf.
+        // ERC20Permit) et mettre à jour cette chaîne en même temps.
+        require(keccak256(bytes(token.name())) == keccak256(bytes("Augure POC Token")), "token: name mismatch");
         require(keccak256(bytes(token.symbol())) == keccak256(bytes("AUG-POC")), "token: symbol mismatch");
         require(token.decimals() == 18, "token: decimals must be 18");
 
