@@ -56,6 +56,7 @@ from src.predictors import (
     parse_market,
 )
 from src.predictors.ensemble import EnsemblePredictor
+from src.predictors.normalize import normalize_event_probs
 from src.predictors.parsers import SERIES_MAP
 from src.simulation.scoring import aggregate_metrics, event_top1_accuracy
 
@@ -361,11 +362,11 @@ def main():
                     continue
                 # Align with daily_auto._select_target_bins: only consider central
                 # bins (strike_type == "between"). Tail bins ("X° or below",
-                # "X° or above") represent cumulative probability mass and would
-                # dominate the per-event mutual-exclusivity normalization below —
-                # collapsing top-1 onto a tail and exploding the Brier on central
-                # outcomes (observed BSS = -0.31 on 2026-05-17 smoke before this
-                # filter was added).
+                # "X° or above") represent cumulative probability mass and are
+                # excluded so the backtest scores the same bins as the deployed
+                # model. Survivors are then scored UNCONDITIONALLY on their raw
+                # P(YES) (see normalize_event_probs below) — they are NOT
+                # renormalized to sum to 1 (revue A3 / E3).
                 raw = next(
                     (r for r in (ev.raw.get("markets") or [])
                      if r.get("ticker") == market.ticker),
@@ -395,12 +396,16 @@ def main():
                 event_records.append(rec)
                 event_record_refs.append((ev, market, spec, series_ticker))
 
-            # Normaliser par event mutuellement exclusif
-            if event_records and ev.mutually_exclusive:
-                s = sum(r["prob_yes"] for r in event_records)
-                if s > 0:
-                    for r in event_records:
-                        r["prob_yes"] = r["prob_yes"] / s
+            # Convention live (daily_auto) : P(YES) brute par bin, scoring
+            # INCONDITIONNEL, sans renormalisation mutuellement exclusive
+            # (revue A3 / E3). On route par la fonction partagée pour garantir
+            # l'identité des trois pipelines (backtest / simulate / daily_auto).
+            if event_records:
+                normed = normalize_event_probs(
+                    [r["prob_yes"] for r in event_records]
+                )
+                for r, p in zip(event_records, normed):
+                    r["prob_yes"] = p
 
             # Write per-record backtest report + ledger row (post-normalization,
             # so the prob_yes persisted matches what the global aggregator sees).
