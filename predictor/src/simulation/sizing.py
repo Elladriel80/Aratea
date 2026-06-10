@@ -51,17 +51,20 @@ def kelly_fractional_size(
     px = max(0.01, min(0.99, market_yes_price))
 
     if side.upper() == "YES":
-        # Acheter YES à 'px', payoff +1 si OUI, perte -px sinon (Kalshi paie 1$ sur résolution)
-        # Edge = p_yes - px ; odds = (1-px)/px (gain si on gagne / mise)
+        # Acheter YES à 'px' : payoff +1 si OUI (gain net 1-px), -px sinon.
+        # Kelly correct = (p - px) / (1 - px). L'ancienne version edge/b avec
+        # b = (1-px)/px valait (p-px)·px/(1-px) = Kelly · px → sous-mise d'un
+        # facteur px (revue 2026-06-10 A4 / finding E2). px est clampé à
+        # [0.01, 0.99] plus haut, donc (1-px) ne s'annule jamais.
         edge = p_yes - px
-        b = (1 - px) / px           # net odds
-        f_kelly = max(0.0, edge / b)  # fraction du bankroll
+        f_kelly = max(0.0, edge / (1.0 - px))
     elif side.upper() == "NO":
+        # Symétrique : on parie NO, prix implicite NO = 1-px, P(NO) = 1-p.
+        # Kelly correct = (p_no - px_no) / (1 - px_no), avec 1 - px_no = px.
         p_no = 1 - p_yes
         px_no = 1 - px
         edge = p_no - px_no
-        b = (1 - px_no) / px_no
-        f_kelly = max(0.0, edge / b)
+        f_kelly = max(0.0, edge / (1.0 - px_no))
     else:
         raise ValueError(f"side doit être YES ou NO, reçu: {side}")
 
