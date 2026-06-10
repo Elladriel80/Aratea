@@ -247,17 +247,35 @@ def _write_backtest_report(
 
 
 def _append_backtest_ledger_row(row: dict) -> None:
-    """Append one row to paper_bets_backtest.csv, creating header if missing."""
+    """Upsert one row into paper_bets_backtest.csv keyed by market_ticker.
+
+    Re-running a backtest replays the same tickers. Appending blindly would
+    double-count each market and inflate the Phase B effective sample / BSS
+    (revue 2026-06-10 A1). To stay idempotent, any existing row with the same
+    market_ticker is dropped and replaced by this (most recent) one. The whole
+    file is rewritten on each call — O(n) per row, fine for the few-hundred-row
+    backtest ledger.
+    """
     fieldnames = _ledger_fieldnames()
-    write_header = not LEDGER_BACKTEST_PATH.exists()
     LEDGER_BACKTEST_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with LEDGER_BACKTEST_PATH.open("a", newline="", encoding="utf-8") as f:
+    for k in fieldnames:
+        row.setdefault(k, "")
+    ticker = row.get("market_ticker")
+
+    kept: list[dict] = []
+    if LEDGER_BACKTEST_PATH.exists():
+        with LEDGER_BACKTEST_PATH.open("r", newline="", encoding="utf-8") as f:
+            for existing in csv.DictReader(f):
+                if ticker and existing.get("market_ticker") == ticker:
+                    continue  # stale replay of the same ticker → replaced below
+                kept.append(existing)
+    kept.append(row)
+
+    with LEDGER_BACKTEST_PATH.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
-        if write_header:
-            writer.writeheader()
-        for k in fieldnames:
-            row.setdefault(k, "")
-        writer.writerow(row)
+        writer.writeheader()
+        for r in kept:
+            writer.writerow({k: r.get(k, "") for k in fieldnames})
 
 
 def main():
