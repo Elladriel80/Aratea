@@ -28,6 +28,7 @@ except Exception:
 from src.config import MARKETS_DIR, SIMULATION
 from src.kalshi.models import Event
 from src.predictors import ClimatologyPredictor, ForecastBlendPredictor, parse_market
+from src.predictors.normalize import normalize_event_probs
 from src.simulation import Ledger, PaperBet
 from src.simulation.ledger import make_bet_id
 from src.simulation.sizing import kelly_fractional_size
@@ -86,12 +87,14 @@ def main():
         if not event_predictions:
             continue
 
-        # Normalisation par event (si mutuellement exclusifs)
-        if event.mutually_exclusive:
-            total = sum(p.prob_yes for _, _, p in event_predictions)
-            if total > 0:
-                for _, _, p in event_predictions:
-                    p.prob_yes = p.prob_yes / total
+        # Convention live (daily_auto) : P(YES) brute par market, scoring
+        # INCONDITIONNEL, sans renormalisation mutuellement exclusive
+        # (revue A3 / E3 — uniformisé via la fonction partagée).
+        normed = normalize_event_probs(
+            [p.prob_yes for _, _, p in event_predictions]
+        )
+        for (_, _, p), val in zip(event_predictions, normed):
+            p.prob_yes = val
 
         # Décision pour chaque market
         print(f">> {event.event_ticker}: {event.title}")

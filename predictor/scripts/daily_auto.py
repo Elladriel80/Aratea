@@ -75,6 +75,7 @@ from src.predictors import (  # noqa: E402
     parse_market,
 )
 from src.predictors.parsers import SERIES_MAP  # noqa: E402
+from src.predictors.normalize import normalize_event_probs  # noqa: E402
 from src.config import SIMULATION  # noqa: E402
 from src.simulation.clusters import BetContext, parse_city_from_ticker  # noqa: E402
 from src.simulation.ledger import Ledger  # noqa: E402
@@ -705,6 +706,17 @@ def step_capture(dry_run: bool) -> dict:
                 champion_p_yes_by_ticker[m.ticker] = float(pred.prob_yes)
             except Exception as e:
                 print(f"   [warn] predict error on {m.ticker}: {e}")
+
+        # Convention de scoring : P(YES) brute par bin, inconditionnelle
+        # (revue A3 / E3). daily_auto est la référence ; on route quand même par
+        # la fonction partagée pour que la convention vive à un seul endroit et
+        # que les trois pipelines restent prouvablement identiques.
+        if champion_p_yes_by_ticker:
+            _tickers = list(champion_p_yes_by_ticker.keys())
+            _normed = normalize_event_probs(
+                [champion_p_yes_by_ticker[t] for t in _tickers]
+            )
+            champion_p_yes_by_ticker = dict(zip(_tickers, _normed))
 
         if not champion_p_yes_by_ticker:
             print("   [skip] no markets could be scored.")
