@@ -27,6 +27,15 @@ export function shortAddress(addr: string, chars = 4): string {
   return `${addr.slice(0, 2 + chars)}…${addr.slice(-chars)}`;
 }
 
+/**
+ * True iff `s` is a well-formed 32-byte round hash (`0x` + 64 hex chars).
+ * Used to reject malformed `round/[hash]` params BEFORE any on-chain scan,
+ * so an arbitrary/huge param can't trigger a full event sweep (revue C3).
+ */
+export function isValidRoundHash(s: string): boolean {
+  return /^0x[0-9a-fA-F]{64}$/.test(s);
+}
+
 /** Unix seconds → ISO date string in UTC. */
 export function formatUtcDate(unixSeconds: bigint | number): string {
   const ms = Number(unixSeconds) * 1000;
