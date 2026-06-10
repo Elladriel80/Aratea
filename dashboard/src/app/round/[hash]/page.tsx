@@ -135,7 +135,9 @@ export default async function RoundDetailPage({ params }: Props) {
         <div className="rounded-md border border-border bg-panel p-4 font-mono text-sm space-y-2">
           <div>
             <span className="text-muted">{dict.round_detail.ipfs_uri} </span>
-            {round.ipfsUri ? (
+            {!round.ipfsUri ? (
+              <span className="text-muted">{dict.round_detail.ipfs_none}</span>
+            ) : ipfsHttpUrl(round.ipfsUri) ? (
               <a
                 href={ipfsHttpUrl(round.ipfsUri)}
                 target="_blank"
@@ -145,7 +147,9 @@ export default async function RoundDetailPage({ params }: Props) {
                 {round.ipfsUri}
               </a>
             ) : (
-              <span className="text-muted">{dict.round_detail.ipfs_none}</span>
+              // Schéma non autorisé (ni ipfs:// ni https://) -> rendu texte sans
+              // href, anti-XSS (revue 2026-06-10 C1).
+              <span className="break-all">{round.ipfsUri}</span>
             )}
           </div>
           <div className="text-xs text-muted">{dict.round_detail.ipfs_help}</div>
