@@ -109,10 +109,21 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
         string calldata reasonIpfsUri
     ) external {
         Round storage r = _rounds[roundHash];
-        if (r.status != RoundStatus.Proposed) revert RoundNotProposed();
+        // Autorise un challenge tant que le round est Proposed OU déjà Challenged.
+        // Avant, le premier challenge consommait l'unique "slot" : un griefer
+        // pouvait front-runner avec une raison vide et évincer un challenger
+        // légitime sans laisser de trace (revue 2026-06-10 B3 / finding R-1).
+        // Désormais chaque challenger ré-émet RoundChallenged (trace on-chain pour
+        // le panel). La MACHINE À ÉTATS est inchangée : le premier challenge fait
+        // Proposed->Challenged, les suivants gardent le statut Challenged.
+        if (r.status != RoundStatus.Proposed && r.status != RoundStatus.Challenged) {
+            revert RoundNotProposed();
+        }
         if (block.timestamp >= _windowEnd(r)) revert ChallengeWindowExpired();
 
-        r.status = RoundStatus.Challenged;
+        if (r.status == RoundStatus.Proposed) {
+            r.status = RoundStatus.Challenged;
+        }
         emit RoundChallenged(roundHash, msg.sender, reasonIpfsUri);
     }
 
