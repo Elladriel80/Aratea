@@ -22,6 +22,7 @@ import type {
 } from "@/lib/manifest";
 import { seriesFromEventTicker } from "@/lib/manifest";
 import { loadManifest } from "@/lib/manifest.server";
+import { matchesStatusFilter, statusFilterOptions } from "@/lib/runFilters";
 
 export const metadata: Metadata = {
   title: "Predictor — aratea",
@@ -70,7 +71,7 @@ function filterLiveRuns(
     ) {
       return false;
     }
-    if (status.length > 0 && !status.includes(r.resolution.status)) {
+    if (!matchesStatusFilter(r.resolution.status, status)) {
       return false;
     }
     return true;
@@ -84,7 +85,7 @@ function filterBacktestRuns(
 ): BacktestRunRecord[] {
   return runs.filter((r) => {
     if (series.length > 0 && !series.includes(r.series)) return false;
-    if (status.length > 0 && !status.includes(r.resolution.status)) return false;
+    if (!matchesStatusFilter(r.resolution.status, status)) return false;
     return true;
   });
 }
@@ -286,10 +287,13 @@ function Layer3({
   ).length;
   const droppedCount = features.filter((f) => f.current_status === "dropped").length;
 
-  const statusOptions = [
-    dict.predictor.filters.status_open,
-    dict.predictor.filters.status_resolved,
-  ];
+  // value = statut brut (matché contre r.resolution.status), label = localisé.
+  // Sans cette séparation, le param d'URL portait le libellé ("ouvert") et ne
+  // matchait jamais "open" en locale FR -> tableaux vides (revue C5).
+  const statusOptions = statusFilterOptions({
+    open: dict.predictor.filters.status_open,
+    resolved: dict.predictor.filters.status_resolved,
+  });
 
   return (
     <div className="space-y-10">
@@ -331,7 +335,7 @@ function Layer3({
       <NEffSection sample={hybridSample} />
 
       <FilterBar
-        seriesOptions={seriesOptions}
+        seriesOptions={seriesOptions.map((s) => ({ value: s, label: s }))}
         statusOptions={statusOptions}
         labels={{
           series_label: dict.predictor.filters.series_label,
