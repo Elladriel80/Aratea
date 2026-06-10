@@ -3,9 +3,21 @@
 import type { Route } from "next";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+/**
+ * A filter chip. `value` is what goes into the URL param and is matched against
+ * the raw data field (`open` / `resolved`, a series ticker). `label` is the
+ * localized display text. Keeping them separate fixes the FR-locale bug where
+ * the localized label ("ouvert") was sent as the value and never matched the
+ * raw status "open" -> empty tables (revue 2026-06-10 C5).
+ */
+export interface FilterOption {
+  value: string;
+  label: string;
+}
+
 interface Props {
-  seriesOptions: string[];
-  statusOptions: string[];
+  seriesOptions: FilterOption[];
+  statusOptions: FilterOption[];
   labels: {
     series_label: string;
     status_label: string;
@@ -50,7 +62,7 @@ export function FilterBar({ seriesOptions, statusOptions, labels }: Props) {
     setValues(key, new Set());
   }
 
-  function group(key: string, label: string, options: string[]) {
+  function group(key: string, label: string, options: FilterOption[]) {
     const active = activeValues(key);
     return (
       <div className="flex items-center gap-2 flex-wrap">
@@ -58,12 +70,12 @@ export function FilterBar({ seriesOptions, statusOptions, labels }: Props) {
           {label}
         </span>
         {options.map((opt) => {
-          const on = active.has(opt);
+          const on = active.has(opt.value);
           return (
             <button
-              key={opt}
+              key={opt.value}
               type="button"
-              onClick={() => toggle(key, opt)}
+              onClick={() => toggle(key, opt.value)}
               aria-pressed={on}
               className={`px-2 py-0.5 rounded border text-[11px] font-mono transition-colors ${
                 on
@@ -71,7 +83,7 @@ export function FilterBar({ seriesOptions, statusOptions, labels }: Props) {
                   : "border-border bg-bg/40 text-muted hover:text-text"
               }`}
             >
-              {opt}
+              {opt.label}
             </button>
           );
         })}
