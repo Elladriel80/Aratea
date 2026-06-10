@@ -47,13 +47,24 @@ export function formatCountdown(targetUnixSeconds: bigint | number, nowSeconds: 
   return `${mins}m`;
 }
 
-/** Convert ipfs:// URI to a public HTTP gateway URL (Cloudflare). */
+/**
+ * Convert an `ipfs://` URI to a public HTTP gateway URL, or pass through an
+ * `https://` URL. ANY other scheme (`javascript:`, `data:`, `http:`, `vbscript:`,
+ * …) returns `""` so the caller renders plain text instead of a clickable href.
+ *
+ * The URI comes from on-chain round data and is therefore untrusted: rendering it
+ * directly in an `href` allowed `javascript:`-style XSS (revue 2026-06-10 C1).
+ * The `ipfs.io` gateway replaces the decommissioned `cloudflare-ipfs.com`.
+ */
 export function ipfsHttpUrl(ipfsUri: string): string {
   if (!ipfsUri) return "";
   if (ipfsUri.startsWith("ipfs://")) {
     const cid = ipfsUri.slice("ipfs://".length);
-    return `https://cloudflare-ipfs.com/ipfs/${cid}`;
+    return `https://ipfs.io/ipfs/${cid}`;
   }
-  return ipfsUri;
+  if (ipfsUri.startsWith("https://")) {
+    return ipfsUri;
+  }
+  return "";
 }
 
