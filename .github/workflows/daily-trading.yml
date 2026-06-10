@@ -69,12 +69,13 @@ jobs:
         with:
           # Need full history for git operations later in the job.
           fetch-depth: 0
-          # Use a fine-grained PAT (stored as BOT_PAT secret) so the push at
-          # the end of the job runs as a user that the main branch ruleset
-          # bypass list accepts. The default GITHUB_TOKEN is github-actions[bot]
-          # and is rejected by "Require pull request" enforcement. The PAT
-          # is associated with the repo admin who already has bypass rights.
-          token: ${{ secrets.BOT_PAT }}
+          # Ne PAS persister de credentials dans .git/config (revue 2026-06-10
+          # D2). Avant, `token: BOT_PAT` laissait le PAT en clair dans
+          # .git/config pendant TOUT le job. Le clone se fait avec le
+          # GITHUB_TOKEN par défaut (lecture suffit) ; le PAT fine-grained
+          # (BOT_PAT, admin du repo, bypass des règles de branche) n'est
+          # injecté qu'à l'étape push, et seulement là.
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -137,6 +138,11 @@ jobs:
 
       - name: Commit and push
         if: ${{ inputs.dry_run != true && steps.diff.outputs.has_changes == 'true' }}
+        env:
+          # PAT injecté UNIQUEMENT ici, via l'env de l'étape — jamais persisté
+          # dans .git/config (revue 2026-06-10 D2). GitHub masque BOT_PAT dans
+          # les logs. github.repository = owner/repo (pas un secret).
+          BOT_PAT: ${{ secrets.BOT_PAT }}
         run: |
           DATE_ISO=$(date -u +%Y-%m-%d)
           git add predictor/runs \
@@ -149,4 +155,4 @@ jobs:
             echo "Nothing staged after add; that's OK."
             exit 0
           }
-          git push origin HEAD:main
+          git push "https://x-access-token:${BOT_PAT}@github.com/${{ github.repository }}.git" HEAD:main
