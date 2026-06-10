@@ -141,8 +141,13 @@ def _predict_all_models(
                 p_yes = pred.prob_yes
                 inputs_summary = _ensemble_components(p_yes, pred.inputs)
             elif method == "learned_v2":
+                # Pin the run to the registry entry's trained_at (revue A2 / E1):
+                # otherwise LearnedPredictor would load the latest run.json, which
+                # may be a non-promotable challenger, and the "learned_v2" Brier
+                # would measure a different model than the registry pins.
                 learned = LearnedPredictor(
                     weather_client=weather,
+                    trained_at=model_meta.get("trained_at"),
                     sub_climato=climato,
                     sub_forecast_blend=forecast_blend,
                     sub_ensemble=ensemble,
