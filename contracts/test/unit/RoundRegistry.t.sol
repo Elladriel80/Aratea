@@ -271,11 +271,34 @@ contract RoundRegistryTest is Test {
         registry.challengeRound(ghost, "ipfs://reason");
     }
 
-    function test_Challenge_RevertsOnAlreadyChallenged() public {
+    /// @dev Revue 2026-06-10 B3 / finding R-1 : plusieurs challenges sont autorisés
+    ///      dans la fenêtre. Chaque challenger ré-émet RoundChallenged (trace on-chain
+    ///      pour le panel) ; la machine à états ne bouge pas (reste Challenged).
+    function test_Challenge_AllowsMultipleChallengesEmitsEachTime() public {
+        bytes32 h = _proposeBasicRound();
+
+        // 1er challenge (griefer raison vide) : Proposed -> Challenged.
+        vm.expectEmit(true, true, false, true);
+        emit IRoundRegistry.RoundChallenged(h, eve, "");
+        vm.prank(eve);
+        registry.challengeRound(h, "");
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Challenged));
+
+        // 2e challenge (légitime) : event ré-émis, statut inchangé (Challenged).
+        vm.expectEmit(true, true, false, true);
+        emit IRoundRegistry.RoundChallenged(h, carol, "ipfs://legit-reason");
+        vm.prank(carol);
+        registry.challengeRound(h, "ipfs://legit-reason");
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Challenged));
+    }
+
+    function test_Challenge_MultipleStillRevertsAfterWindowExpiry() public {
         bytes32 h = _proposeBasicRound();
         vm.prank(eve);
         registry.challengeRound(h, "ipfs://x");
-        vm.expectRevert(IRoundRegistry.RoundNotProposed.selector);
+        // Hors fenêtre, même un round déjà Challenged refuse un nouveau challenge.
+        vm.warp(block.timestamp + 7 days);
+        vm.expectRevert(IRoundRegistry.ChallengeWindowExpired.selector);
         vm.prank(carol);
         registry.challengeRound(h, "ipfs://y");
     }
