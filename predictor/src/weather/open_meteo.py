@@ -41,7 +41,7 @@ CITIES: dict[str, dict] = {
     "LOSANGELES":   {"lat": 33.9416, "lon": -118.4085, "tz": "America/Los_Angeles", "label": "LAX"},
     "MIAMI":        {"lat": 25.7959, "lon":  -80.2870, "tz": "America/New_York",    "label": "Miami International"},
     "MINNEAPOLIS":  {"lat": 44.8819, "lon":  -93.2218, "tz": "America/Chicago",     "label": "Minneapolis-St Paul"},
-    "NYC":          {"lat": 40.6413, "lon":  -73.7781, "tz": "America/New_York",    "label": "JFK Airport"},
+    "NYC":          {"lat": 40.7794, "lon":  -73.9692, "tz": "America/New_York",    "label": "Central Park (KNYC)"},  # revue A4/E4 : station de résolution Kalshi (CLINYC), cf. src/kalshi/resolution.py
     "PHILADELPHIA": {"lat": 39.8729, "lon":  -75.2437, "tz": "America/New_York",    "label": "Philadelphia International"},
     "PHOENIX":      {"lat": 33.4373, "lon": -112.0078, "tz": "America/Phoenix",     "label": "Phoenix Sky Harbor"},
     "SANANTONIO":   {"lat": 29.5337, "lon":  -98.4698, "tz": "America/Chicago",     "label": "San Antonio International"},
