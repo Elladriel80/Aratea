@@ -3,6 +3,8 @@ pragma solidity 0.8.24;
 
 import {Test} from "forge-std/Test.sol";
 
+import {IAccessControl} from "@openzeppelin/contracts/access/IAccessControl.sol";
+
 import {IReclaim} from "../src/interfaces/IReclaim.sol";
 import {IWeatherSource} from "../src/interfaces/IWeatherSource.sol";
 import {ReclaimWeatherSource} from "../src/sources/ReclaimWeatherSource.sol";
@@ -34,7 +36,14 @@ contract ReclaimWeatherSourceTest is Test {
         vm.warp(FIXED_NOW);
 
         verifier = new MockReclaimVerifier();
-        source = new ReclaimWeatherSource(IReclaim(address(verifier)), LOCATION_KJFK, TYPE_TEMP_C);
+        // admin = address(this) (le contrat de test = deployer) -> reçoit
+        // DEFAULT_ADMIN_ROLE + KEEPER_ROLE, donc les appels directs
+        // submitMeasurement (sans prank) passent la garde onlyRole.
+        source = new ReclaimWeatherSource(
+            IReclaim(address(verifier)), LOCATION_KJFK, TYPE_TEMP_C, address(this)
+        );
+        // Accorde aussi KEEPER_ROLE au EOA KEEPER utilisé par les tests pranked.
+        source.grantRole(source.KEEPER_ROLE(), KEEPER);
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -49,17 +58,28 @@ contract ReclaimWeatherSourceTest is Test {
 
     function test_constructor_zeroVerifier_reverts() public {
         vm.expectRevert(ReclaimWeatherSource.ZeroAddressVerifier.selector);
-        new ReclaimWeatherSource(IReclaim(address(0)), LOCATION_KJFK, TYPE_TEMP_C);
+        new ReclaimWeatherSource(IReclaim(address(0)), LOCATION_KJFK, TYPE_TEMP_C, address(this));
+    }
+
+    function test_constructor_zeroAdmin_reverts() public {
+        vm.expectRevert(ReclaimWeatherSource.ZeroAddressAdmin.selector);
+        new ReclaimWeatherSource(IReclaim(address(verifier)), LOCATION_KJFK, TYPE_TEMP_C, address(0));
     }
 
     function test_constructor_zeroLocation_reverts() public {
         vm.expectRevert(ReclaimWeatherSource.ZeroLocation.selector);
-        new ReclaimWeatherSource(IReclaim(address(verifier)), bytes32(0), TYPE_TEMP_C);
+        new ReclaimWeatherSource(IReclaim(address(verifier)), bytes32(0), TYPE_TEMP_C, address(this));
     }
 
     function test_constructor_zeroMeasurementType_reverts() public {
         vm.expectRevert(ReclaimWeatherSource.ZeroMeasurementType.selector);
-        new ReclaimWeatherSource(IReclaim(address(verifier)), LOCATION_KJFK, bytes32(0));
+        new ReclaimWeatherSource(IReclaim(address(verifier)), LOCATION_KJFK, bytes32(0), address(this));
+    }
+
+    function test_constructor_grantsRolesToAdmin() public view {
+        assertTrue(source.hasRole(source.DEFAULT_ADMIN_ROLE(), address(this)));
+        assertTrue(source.hasRole(source.KEEPER_ROLE(), address(this)));
+        assertTrue(source.hasRole(source.KEEPER_ROLE(), KEEPER));
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -102,6 +122,23 @@ contract ReclaimWeatherSourceTest is Test {
     /*//////////////////////////////////////////////////////////////
                             SUBMIT — REVERTS
     //////////////////////////////////////////////////////////////*/
+
+    /// @dev Revue 2026-06-10 B1 / finding O-1 : une adresse sans KEEPER_ROLE ne
+    ///      peut plus écrire de mesure (avant : submitMeasurement permissionless).
+    function test_submit_nonKeeper_reverts() public {
+        address stranger = address(0xD00D);
+        assertFalse(source.hasRole(source.KEEPER_ROLE(), stranger));
+
+        bytes memory submission = _encodeSubmission(_proofWithSalt(1), 20_000, uint64(FIXED_NOW - 30));
+
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, stranger, source.KEEPER_ROLE()
+            )
+        );
+        vm.prank(stranger);
+        source.submitMeasurement(submission);
+    }
 
     function test_submit_invalidProof_bubblesUp() public {
         // The source contract ignores the verifier's return value (deployed Reclaim
