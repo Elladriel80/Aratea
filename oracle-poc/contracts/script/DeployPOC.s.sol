@@ -34,8 +34,9 @@ contract DeployPOC is Script {
         console2.log("Location key:", locationKey);
         console2.log("Type key:", typeKey);
 
+        // admin = deployer : reçoit DEFAULT_ADMIN_ROLE + KEEPER_ROLE (revue B1 / O-1).
         vm.startBroadcast(deployer);
-        source = new ReclaimWeatherSource(IReclaim(verifierAddress), location, measurementType);
+        source = new ReclaimWeatherSource(IReclaim(verifierAddress), location, measurementType, deployer);
         vm.stopBroadcast();
 
         console2.log("ReclaimWeatherSource deployed at:", address(source));

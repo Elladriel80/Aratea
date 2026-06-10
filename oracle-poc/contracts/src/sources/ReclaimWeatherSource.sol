@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity 0.8.24;
 
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 import {IReclaim} from "../interfaces/IReclaim.sol";
@@ -12,18 +13,27 @@ import {IWeatherSource} from "../interfaces/IWeatherSource.sol";
 ///         then stores the latest measurement for a single (location, type) pair.
 /// @dev    Scope is intentionally narrow (POC, whitepaper v0.5 §5 brick #1):
 ///         - Single-station, single-type instance (set at construction).
-///         - The contract trusts the keeper to declare value/timestamp matching the
-///           proof's `context.extractedParameters`. It does NOT parse the JSON context
-///           on-chain. This is acceptable for the POC because the keeper is the project
-///           itself; Phase 2/3 will add `context` parsing and slashing-backed honesty.
+///         - `submitMeasurement` is gated by `KEEPER_ROLE` (AccessControl): only an
+///           authorised keeper can write a measurement. The admin (DEFAULT_ADMIN_ROLE,
+///           = the deployer) can rotate keepers. Before this gate (revue 2026-06-10 B1 /
+///           finding O-1) the function was permissionless: anyone with ANY valid Reclaim
+///           proof could write an arbitrary temperature and DoS the keeper via the
+///           timestamp-monotonicity rule. The contract still trusts the keeper to declare
+///           value/timestamp matching the proof's `context.extractedParameters`; it does
+///           NOT parse the JSON context on-chain. Phase 2/3 will add `context` parsing and
+///           slashing-backed honesty.
 ///         - No multi-source aggregation, no dispute, no slashing. See SPEC.md and
 ///           docs/POC-NOTES.md for the explicit out-of-scope matrix.
 ///         - The Reclaim verifier is UUPS-upgradeable upstream; ReentrancyGuard protects
 ///           against a hypothetical compromised upgrade re-entering this contract.
-contract ReclaimWeatherSource is IWeatherSource, ReentrancyGuard {
+contract ReclaimWeatherSource is IWeatherSource, AccessControl, ReentrancyGuard {
     /*//////////////////////////////////////////////////////////////
                                 CONSTANTS
     //////////////////////////////////////////////////////////////*/
+
+    /// @notice Role allowed to submit measurements. Granted to the keeper(s) at
+    ///         construction; the admin (DEFAULT_ADMIN_ROLE = deployer) can grant/revoke.
+    bytes32 public constant KEEPER_ROLE = keccak256("KEEPER_ROLE");
 
     /// @notice Minimum acceptable measurement value, in milliCelsius. -100.000 C is below
     ///         the lowest reliably recorded terrestrial temperature (~-89 C, Vostok 1983)
@@ -76,6 +86,7 @@ contract ReclaimWeatherSource is IWeatherSource, ReentrancyGuard {
     //////////////////////////////////////////////////////////////*/
 
     error ZeroAddressVerifier();
+    error ZeroAddressAdmin();
     error ZeroLocation();
     error ZeroMeasurementType();
     error ProofAlreadyConsumed();
@@ -93,18 +104,27 @@ contract ReclaimWeatherSource is IWeatherSource, ReentrancyGuard {
     ///        (e.g. keccak256("KJFK")).
     /// @param expectedMeasurementType The single measurement type this instance accepts
     ///        (e.g. keccak256("TEMP_C")).
+    /// @param admin Address granted DEFAULT_ADMIN_ROLE and KEEPER_ROLE at construction
+    ///        (the deployer / keeper). It can later grant/revoke KEEPER_ROLE.
     constructor(
         IReclaim verifier,
         bytes32 expectedLocation,
-        bytes32 expectedMeasurementType
+        bytes32 expectedMeasurementType,
+        address admin
     ) {
         if (address(verifier) == address(0)) revert ZeroAddressVerifier();
+        if (admin == address(0)) revert ZeroAddressAdmin();
         if (expectedLocation == bytes32(0)) revert ZeroLocation();
         if (expectedMeasurementType == bytes32(0)) revert ZeroMeasurementType();
 
         VERIFIER = verifier;
         EXPECTED_LOCATION = expectedLocation;
         EXPECTED_MEASUREMENT_TYPE = expectedMeasurementType;
+
+        // admin = deployer : DEFAULT_ADMIN_ROLE (gère les rôles) + KEEPER_ROLE
+        // (soumet les mesures). Pour le POC le keeper EST le projet lui-même.
+        _grantRole(DEFAULT_ADMIN_ROLE, admin);
+        _grantRole(KEEPER_ROLE, admin);
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -129,7 +149,7 @@ contract ReclaimWeatherSource is IWeatherSource, ReentrancyGuard {
     // slither-disable-next-line reentrancy-no-eth
     function submitMeasurement(
         bytes calldata encodedSubmission
-    ) external nonReentrant {
+    ) external nonReentrant onlyRole(KEEPER_ROLE) {
         (IReclaim.Proof memory proof, int256 declaredValueMc, uint64 declaredTimestamp) =
             abi.decode(encodedSubmission, (IReclaim.Proof, int256, uint64));
 
