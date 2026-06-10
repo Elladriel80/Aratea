@@ -5,6 +5,7 @@
  * status. Pure read-only — never broadcasts.
  */
 
+import { unstable_cache } from "next/cache";
 import { type Address, type Hex } from "viem";
 
 import { publicClient } from "./chain";
@@ -24,11 +25,10 @@ export interface RoundSummary {
 }
 
 /**
- * Fetch every round committed to the registry and return them sorted by
- * proposedAt descending (most recent first). Best-effort: any round whose
- * Proposed event we can't decode is silently skipped.
+ * Internal RPC scan (4 full-range getContractEvents). Wrapped by the cached
+ * `fetchAllRounds` below — do not call directly from pages.
  */
-export async function fetchAllRounds(): Promise<RoundSummary[]> {
+async function _scanAllRounds(): Promise<RoundSummary[]> {
   const proposedLogs = await publicClient.getContractEvents({
     address: registryAddress,
     abi: roundRegistryAbi,
@@ -98,6 +98,58 @@ export async function fetchAllRounds(): Promise<RoundSummary[]> {
   }
 
   return Array.from(rounds.values()).sort((a, b) => Number(b.proposedAt - a.proposedAt));
+}
+
+/**
+ * JSON-serializable mirror of RoundSummary: every bigint is a decimal string.
+ * Next's Data Cache (unstable_cache) can't serialize BigInt, so the cached
+ * scan stores this shape and `fetchAllRounds` revives it (revue 2026-06-10 C3).
+ */
+type SerializableRound = Omit<
+  RoundSummary,
+  "proposedAt" | "amounts" | "totalAmount" | "lastEventBlock"
+> & {
+  proposedAt: string;
+  amounts: readonly string[];
+  totalAmount: string;
+  lastEventBlock: string;
+};
+
+/**
+ * Cached RPC scan. The 4 full-range eth_getLogs are the shortest path to a
+ * dashboard outage (RPC quota) — every page render did them uncached. We cache
+ * the result for 60 s (revue C3); bigints are stringified for the Data Cache.
+ */
+const _fetchAllRoundsCached = unstable_cache(
+  async (): Promise<SerializableRound[]> => {
+    const rounds = await _scanAllRounds();
+    return rounds.map((r) => ({
+      ...r,
+      proposedAt: r.proposedAt.toString(),
+      amounts: r.amounts.map((a) => a.toString()),
+      totalAmount: r.totalAmount.toString(),
+      lastEventBlock: r.lastEventBlock.toString(),
+    }));
+  },
+  ["aratea:all-rounds"],
+  { revalidate: 60 },
+);
+
+/**
+ * Fetch every round committed to the registry, sorted by proposedAt descending
+ * (most recent first). Backed by a 60 s cache so concurrent requests share one
+ * RPC scan. Best-effort: any round whose Proposed event we can't decode is
+ * silently skipped.
+ */
+export async function fetchAllRounds(): Promise<RoundSummary[]> {
+  const cached = await _fetchAllRoundsCached();
+  return cached.map((r) => ({
+    ...r,
+    proposedAt: BigInt(r.proposedAt),
+    amounts: r.amounts.map((a) => BigInt(a)),
+    totalAmount: BigInt(r.totalAmount),
+    lastEventBlock: BigInt(r.lastEventBlock),
+  }));
 }
 
 /**

@@ -6,7 +6,7 @@ import { AddressLink } from "@/components/AddressLink";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { StatusBadge } from "@/components/StatusBadge";
 import { isDeployed, RoundStatus, roundStatusLabel } from "@/lib/contracts";
-import { formatTokenAmount, formatUtcDate, ipfsHttpUrl } from "@/lib/format";
+import { formatTokenAmount, formatUtcDate, ipfsHttpUrl, isValidRoundHash } from "@/lib/format";
 import { getDict } from "@/lib/i18n";
 import { fetchAllRounds, windowEnd } from "@/lib/rounds";
 
@@ -19,6 +19,10 @@ interface Props {
 export default async function RoundDetailPage({ params }: Props) {
   const dict = await getDict();
   const { hash } = await params;
+
+  // Valide le hash AVANT tout scan on-chain : un param malformé/énorme ne doit
+  // pas déclencher un balayage complet des events (revue 2026-06-10 C3).
+  if (!isValidRoundHash(hash)) notFound();
 
   if (!isDeployed()) {
     return (
