@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "run_id": "215",
+  "type": "live",
+  "ts_utc": "2026-06-11T21:00:11Z",
+  "event": {
+    "ticker": "KXLOWTCHI-26JUN12",
+    "title": "Lowest temperature in Chicago on Jun 12, 2026?",
+    "target_market_ticker": "KXLOWTCHI-26JUN12-B59.5",
+    "resolution_source": "NWS official daily climate report (per Kalshi rules)"
+  },
+  "champion_at_time_of_run": "vendor_ensemble",
+  "models": [
+    {
+      "name": "vendor_ensemble",
+      "role": "champion",
+      "method": "ensemble",
+      "p_yes": 0.1379402039858713,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "ensemble",
+        "p_ensemble": 0.1379402039858713,
+        "p_climato": 0.09337349397590361,
+        "p_forecast": 0.14387419248197636,
+        "blend_weight_forecast": 0.8824969025845955,
+        "days_ahead": 1,
+        "mu": 62.6,
+        "sigma_inter_models": 1.238951169336384,
+        "sigma_total": 4.211368542409937,
+        "n_models_active": 4,
+        "per_model_value": {
+          "ecmwf_ifs025": 62.3,
+          "ecmwf_aifs025_single": 62.3,
+          "gfs_global": 61.2,
+          "jma_gsm": 64.6
+        }
+      }
+    },
+    {
+      "name": "learned_v2",
+      "role": "challenger",
+      "method": "learned_v2",
+      "p_yes": 0.20674512667448877,
+      "feature_set": "v2",
+      "trained_at": "20260512T134515Z",
+      "inputs_summary": {
+        "method": "learned_v2",
+        "trained_at": "20260512T134515Z",
+        "feature_set": "v2",
+        "run_json_path": "/home/runner/work/Aratea/Aratea/predictor/runs_learning/20260512T134515Z/run.json"
+      }
+    },
+    {
+      "name": "kalshi_mid_baseline",
+      "role": "baseline",
+      "method": "kalshi_mid",
+      "p_yes": 0.255,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "kalshi_mid",
+        "yes_mid_at_snapshot": 0.255
+      }
+    }
+  ],
+  "markets": [
+    {
+      "platform": "kalshi",
+      "ticker": "KXLOWTCHI-26JUN12-B59.5",
+      "url": "https://kalshi.com/markets/KXLOWTCHI",
+      "snapshot_pre": {
+        "yes_bid": 0.25,
+        "yes_ask": 0.26,
+        "yes_mid": 0.255,
+        "spread_cents": 1.0,
+        "ts_utc": "2026-06-11T21:00:11Z"
+      },
+      "edge_bps_by_model": {
+        "vendor_ensemble": -1171,
+        "learned_v2": -483,
+        "kalshi_mid_baseline": 0
+      },
+      "champion_position": {
+        "model": "vendor_ensemble",
+        "method": "ensemble",
+        "side": "NO",
+        "size_usd": 24.22,
+        "entry_price_yes_cents": 25.5,
+        "entry_price_no_cents": 74.5,
+        "entry_price": 0.745,
+        "n_contracts": 32,
+        "cost_usd": 23.84,
+        "opened_at_utc": "2026-06-11T21:00:11Z",
+        "paper": true,
+        "ledger_bet_id": "20260611T210006Z435694"
+      },
+      "challenger_shadow_positions": [
+        {
+          "model": "learned_v2",
+          "method": "learned_v2",
+          "side": "NO",
+          "size_usd": 24.22,
+          "entry_price_yes_cents": 25.5,
+          "entry_price_no_cents": 74.5,
+          "entry_price": 0.745,
+          "n_contracts": 32,
+          "cost_usd": 23.84,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        },
+        {
+          "model": "kalshi_mid_baseline",
+          "method": "kalshi_mid",
+          "side": "NO",
+          "size_usd": 24.22,
+          "entry_price_yes_cents": 25.5,
+          "entry_price_no_cents": 74.5,
+          "entry_price": 0.745,
+          "n_contracts": 32,
+          "cost_usd": 23.84,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        }
+      ],
+      "resolution": {
+        "outcome": null,
+        "observed_value_f": null,
+        "ts_utc": null,
+        "pnl_usd": null
+      }
+    }
+  ],
+  "scoring": null,
+  "notes": "Auto-captured by daily_auto.py on 2026-06-11T21:00:11Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.117, side=NO, Kelly capped size=$24.22 (bankroll=$1210.85, portfolio_heat_after_register=19.6%)."
+}
