@@ -122,6 +122,20 @@ jobs:
           fi
           python predictor/scripts/daily_auto.py $DRY_RUN_FLAG
 
+      - name: Announce to Discord (captures + résolutions)
+        # continue-on-error : une panne Discord ne doit JAMAIS bloquer le
+        # commit/push du manifest (leçon du gel du 8-11 juin 2026). Le
+        # script lit le working tree (git status) AVANT le commit pour
+        # savoir ce que daily_auto vient d'écrire. Webhook absent →
+        # ::warning:: visible dans l'UI, pas de skip invisible.
+        if: ${{ inputs.dry_run != true }}
+        continue-on-error: true
+        env:
+          DISCORD_WEBHOOK_PREDICTIONS: ${{ secrets.DISCORD_WEBHOOK_PREDICTIONS }}
+          DISCORD_WEBHOOK_PNL_TRACKER: ${{ secrets.DISCORD_WEBHOOK_PNL_TRACKER }}
+        run: |
+          python predictor/scripts/announce_daily.py
+
       - name: Configure git identity
         if: ${{ inputs.dry_run != true }}
         run: |

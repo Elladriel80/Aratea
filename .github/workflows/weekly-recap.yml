@@ -88,7 +88,11 @@ jobs:
       - name: Post to Discord
         if: ${{ steps.gate.outputs.post == 'true' && !inputs.dry_run && vars.ANNOUNCE_DISABLE_DISCORD != 'true' }}
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # DISCORD_WEBHOOK_RECAP (channel #weekly-recap) si défini, sinon
+          # fallback sur DISCORD_WEBHOOK_URL (= #build-log depuis la
+          # rotation du 2026-05-12, "Option A"). Poser le secret RECAP
+          # ramène les recaps dans leur channel sans casser l'existant.
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_RECAP || secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_MESSAGE_PATH: recap.discord.md
         run: node .github/scripts/post-discord.mjs
 
