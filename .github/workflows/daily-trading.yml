@@ -61,7 +61,11 @@ concurrency:
 jobs:
   daily-auto:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # 50 min : la learning capture prend 20-25 min quand les APIs météo/Kalshi
+    # rament (runs des 9-10 juin tués à 25 min → site figé au 8 juin). Le
+    # garde-fou fin est le timeout par step dans daily_run.py (13 min/step),
+    # qui laisse daily_auto + le push du manifest tourner même si un step cale.
+    timeout-minutes: 50
 
     steps:
       - name: Checkout

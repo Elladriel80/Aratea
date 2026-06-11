@@ -37,13 +37,18 @@ def run_step(name: str, cmd: list[str]) -> bool:
     try:
         result = subprocess.run(
             cmd, cwd=str(ROOT), check=False,
-            timeout=60 * 30,  # 30 minutes max par step
+            # 13 min max par step : DOIT rester < timeout-minutes du job CI
+            # (50 min ≥ 3×13 + setup + daily_auto). Avant : 30 min/step avec
+            # un job à 25 min → le job était tué AVANT que le step échoue
+            # proprement, donc daily_auto + manifest + push jamais exécutés
+            # (site figé du 8 au 11 juin 2026, runs 34-35 cancelled).
+            timeout=60 * 13,
         )
         ok = result.returncode == 0
         print(f"  → exit code: {result.returncode} ({'OK' if ok else 'FAIL'})")
         return ok
     except subprocess.TimeoutExpired:
-        print(f"  → TIMEOUT après 30 min")
+        print(f"  → TIMEOUT après 13 min")
         return False
     except Exception:
         print(f"  → EXCEPTION:")
