@@ -308,6 +308,7 @@ export default async function Home() {
                 <a className="btn btn-primary" href={LINKS.discord} target="_blank" rel="noopener noreferrer">{dict.contribute.discord} <span className="arr">→</span></a>
                 <a className="btn btn-ghost" href={LINKS.github} target="_blank" rel="noopener noreferrer">{dict.contribute.github}</a>
               </div>
+              <Link className="btn btn-ghost band-account" href="/contribuer">{dict.contribute.account} <span className="arr">→</span></Link>
               <ContributeForm t={dict.contribute} />
             </div>
             <div className="links">
