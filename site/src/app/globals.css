@@ -249,6 +249,39 @@ svg .draw { stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-
 .cf-msg.ok { color: var(--teal); }
 .cf-msg.err { color: var(--amber); }
 .band-cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 22px 0 6px; }
+.band-account { margin-top: 18px; }
+
+/* contributor account flow (/contribuer) */
+.acct { display: flex; flex-direction: column; gap: 14px; max-width: 640px; }
+.acct-nofunds { font-size: 14px; color: var(--fg-dim); border-left: 2px solid var(--teal);
+  padding: 6px 0 6px 14px; margin-bottom: 4px; }
+.acct-err { font-size: 14px; color: var(--amber); background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.3); border-radius: var(--radius-sm); padding: 10px 14px; }
+.acct-step { display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px;
+  transition: border-color 0.2s, opacity 0.2s; }
+.acct-step.is-active { border-color: var(--line-strong); }
+.acct-step.is-done { border-color: rgba(94, 234, 212, 0.35); }
+.acct-step.is-locked { opacity: 0.55; }
+.acct-num { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-mono), monospace; font-size: 15px; color: var(--fg-dim);
+  background: var(--bg-2); border: 1px solid var(--line-strong); }
+.acct-step.is-done .acct-num { color: var(--teal); border-color: rgba(94, 234, 212, 0.5); }
+.acct-body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.acct-body h3 { font-family: var(--font-fraunces), serif; font-weight: 600; font-size: 18px; }
+.acct-body .btn { align-self: flex-start; }
+.acct-ok { font-size: 15px; color: var(--fg); }
+.acct-ok strong, .acct-ok code { color: var(--teal); }
+.acct-muted { font-size: 14px; color: var(--fg-faint); }
+.acct-msglabel { font-size: 13px; color: var(--fg-dim); }
+.acct-msg { background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+  padding: 12px 14px; overflow-x: auto; font-family: var(--font-mono), monospace; font-size: 12.5px;
+  color: var(--fg); white-space: pre-wrap; word-break: break-word; }
+.acct-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.acct-reset { align-self: flex-start; background: none; border: 0; color: var(--fg-faint);
+  font-family: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; padding: 0; margin-top: 4px; }
+.acct-reset:hover { color: var(--fg-dim); }
+.btn-ghost.warn { border-color: rgba(251, 191, 36, 0.4); color: var(--amber); }
 
 /* footer */
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 40px 0 64px; }

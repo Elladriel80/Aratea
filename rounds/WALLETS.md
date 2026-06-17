@@ -16,6 +16,14 @@ To be eligible for mint, a contributor must publicly link their GitHub handle to
 
 ## Registration procedure / Procédure d'enregistrement
 
+**Easiest — self-service:** use the site at `/contribuer`. Sign in with GitHub,
+connect your wallet, sign the canonical message; a verified PR is opened for you
+and a ratifier merges it. *(Le plus simple — self-service : passe par `/contribuer`
+sur le site. Connecte GitHub, connecte ton wallet, signe le message ; une PR
+vérifiée est ouverte et un ratificateur la merge.)*
+
+**Manual / Manuel :**
+
 1. Fork this repo. *(Forker ce repo.)*
 2. Add a row to the table below with your handle and address. *(Ajouter une ligne avec ton handle et ton adresse.)*
 3. Sign with your Ethereum key a message containing your GitHub handle and the date. Paste the signature in the PR. *(Signer avec ta clé Ethereum un message contenant ton handle GitHub et la date. Coller la signature dans le PR.)*
