@@ -1,0 +1,132 @@
+name: aratea-keeper
+
+# Automated monthly mint keeper for the Phase 2 governance (testnet, Arbitrum Sepolia).
+#
+# Secrets / variables and THEIR SCOPE (set by JS in the repo settings — never committed):
+#   secrets.KEEPER_PRIVATE_KEY   HOT key. Holds ROUND_PROPOSER_ROLE on the registry ONLY:
+#                                it can propose rounds and trigger the permissionless finalize.
+#                                It CANNOT execute a contested round, cancel, challenge, mint, or
+#                                change roles. A compromise cannot mint outside the rules.
+#   secrets.RPC_ARBITRUM_SEPOLIA Arbitrum Sepolia RPC URL.
+#   vars.ARATEA_REGISTRY_ADDRESS RoundRegistry address.
+#   vars.ARATEA_GOVERNOR_ADDRESS MintGovernor address.
+#   vars.ARATEA_ROUND_HASH       (optional) hash of the round the scheduled run should finalize.
+#
+# The admin (cold) key and the canceller circuit-breaker are NOT in CI. Deployment is NOT done
+# here — JS deploys and wires roles out of band, then sets the secrets/vars above.
+#
+# Triggers:
+#   - schedule: monthly attempt to finalize the current uncontested round (no-op if not due /
+#     contested / unset). Proposing the monthly allocation is done via manual dispatch, because
+#     the allocation is computed off-chain by the valuation agent.
+#   - workflow_dispatch: manual propose / finalize with explicit inputs.
+
+on:
+  schedule:
+    - cron: '0 9 1 * *' # 1st of each month, 09:00 UTC
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'propose or finalize'
+        required: true
+        default: 'finalize'
+        type: choice
+        options: [propose, finalize]
+      round_hash:
+        description: 'finalize: the round hash (0x...)'
+        required: false
+        type: string
+      beneficiaries:
+        description: 'propose: comma-separated addresses'
+        required: false
+        type: string
+      amounts:
+        description: 'propose: comma-separated wei amounts'
+        required: false
+        type: string
+      ipfs:
+        description: 'propose: ipfs:// URI of the valuation report'
+        required: false
+        type: string
+      window_days:
+        description: 'propose: challenge window in days'
+        required: false
+        default: '7'
+        type: string
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: contracts
+
+jobs:
+  keeper:
+    name: Keeper (propose / finalize)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Never run on forks; require the keeper key to be configured.
+    if: ${{ github.repository_owner == 'Elladriel80' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@c7450ba673e133f5ee30098b3b54f444d3a2ca2d # v1.8.0
+        with:
+          version: stable
+
+      - name: Install dependencies (forge install)
+        run: |
+          forge install --no-git foundry-rs/forge-std@v1.9.4
+          forge install --no-git OpenZeppelin/openzeppelin-contracts@v5.1.0
+
+      - name: Guard — keeper key configured
+        id: guard
+        env:
+          KEEPER_PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+        run: |
+          if [ -z "$KEEPER_PRIVATE_KEY" ]; then
+            echo "KEEPER_PRIVATE_KEY not set — skipping (nothing to do)."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Propose round (manual dispatch)
+        if: ${{ steps.guard.outputs.run == 'true' && github.event_name == 'workflow_dispatch' && inputs.action == 'propose' }}
+        env:
+          RPC_ARBITRUM_SEPOLIA: ${{ secrets.RPC_ARBITRUM_SEPOLIA }}
+          KEEPER_PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+          REGISTRY_ADDRESS: ${{ vars.ARATEA_REGISTRY_ADDRESS }}
+          ROUND_BENEFICIARIES: ${{ inputs.beneficiaries }}
+          ROUND_AMOUNTS: ${{ inputs.amounts }}
+          ROUND_IPFS: ${{ inputs.ipfs }}
+          ROUND_WINDOW_DAYS: ${{ inputs.window_days }}
+        run: |
+          forge script script/KeeperProposeRound.s.sol:KeeperProposeRound \
+            --rpc-url "$RPC_ARBITRUM_SEPOLIA" \
+            --private-key "$KEEPER_PRIVATE_KEY" \
+            --broadcast -vv
+
+      - name: Finalize round (scheduled or manual dispatch)
+        if: ${{ steps.guard.outputs.run == 'true' && (github.event_name == 'schedule' || inputs.action == 'finalize') }}
+        env:
+          RPC_ARBITRUM_SEPOLIA: ${{ secrets.RPC_ARBITRUM_SEPOLIA }}
+          KEEPER_PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+          REGISTRY_ADDRESS: ${{ vars.ARATEA_REGISTRY_ADDRESS }}
+          GOVERNOR_ADDRESS: ${{ vars.ARATEA_GOVERNOR_ADDRESS }}
+          # On schedule, finalize the configured current round; on dispatch, the provided one.
+          ROUND_HASH: ${{ inputs.round_hash || vars.ARATEA_ROUND_HASH }}
+        run: |
+          if [ -z "$ROUND_HASH" ]; then
+            echo "No ROUND_HASH configured — nothing to finalize. Skipping."
+            exit 0
+          fi
+          forge script script/KeeperFinalize.s.sol:KeeperFinalize \
+            --rpc-url "$RPC_ARBITRUM_SEPOLIA" \
+            --private-key "$KEEPER_PRIVATE_KEY" \
+            --broadcast -vv

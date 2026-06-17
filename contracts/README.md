@@ -104,6 +104,21 @@ Full threat model in [`docs/SECURITY.md`](docs/SECURITY.md).
 
 Detail in [`docs/ROUND-LIFECYCLE.md`](docs/ROUND-LIFECYCLE.md).
 
+## Phase 2 — automatic mint + token-weighted contestation
+
+> Testnet / pre-audit. Full spec and decisions: [`/docs/gouvernance-auto-mint.fr.md`](../docs/gouvernance-auto-mint.fr.md).
+
+A `MintGovernor` sits **on top of the unchanged `RoundRegistry`** (still the sole minter) to make the monthly mint automatic yet contestable:
+
+- **Nominal**: a keeper (proposer only) proposes a round at J0; after the challenge window, anyone calls `MintGovernor.finalize` → the Governor (sole executor) mints. No daily human signature.
+- **Contested**: a token holder calls `MintGovernor.challenge` → a token-weighted vote opens. **Vote weight is frozen at the round's `proposedAt`** via `ERC20Votes` checkpoints (timestamp clock) — tokens bought after the proposal carry no weight. The original is rejected iff **quorum reached (15% of circulating) AND `against > for`**; otherwise it mints. On rejection, holders ≥ 1% submit alternatives, voted **sequentially** at simple majority; the first accepted mints and cancels the rest.
+
+Role topology (least privilege): keeper = `ROUND_PROPOSER_ROLE` only (hot key, in CI); Governor = `PROPOSER`+`EXECUTOR`+`CANCELLER`+`CHALLENGER`; admin = `DEFAULT_ADMIN` + `CANCELLER` circuit-breaker (cold key, out of CI, EXECUTOR revoked). `MINTER_ROLE` stays with the registry. Wired by `script/DeployPhase2Governor.s.sol`.
+
+Minimal registry change: `challengeRound` is now gated by a new `ROUND_CHALLENGER_ROLE` (held by the Governor) so a stake-free direct challenge cannot freeze a round with no vote to resolve it. See the spec §8 for the full deviation list.
+
+Keeper operations: `script/KeeperProposeRound.s.sol` + `script/KeeperFinalize.s.sol`, driven by the scheduled `.github/workflows/aratea-keeper.yml` (keeper key as a CI secret; admin key never in CI).
+
 ## Roadmap (milestones)
 
 | Milestone | Scope | Status |
@@ -114,6 +129,7 @@ Detail in [`docs/ROUND-LIFECYCLE.md`](docs/ROUND-LIFECYCLE.md).
 | **M3** | `RoundRegistry` (propose / challenge / execute / cancel) | ✅ done |
 | **M4** | Deployment scripts on Arbitrum Sepolia + operational helpers | ✅ done |
 | **M5** | Read-only dashboard (Next.js + viem) | pending |
+| **M6** | Phase 2 — `MintGovernor` (auto-mint + token-weighted vote) + keeper | ✅ done (testnet, pre-audit) |
 
 ## License
 

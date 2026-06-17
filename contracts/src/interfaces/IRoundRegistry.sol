@@ -81,11 +81,13 @@ interface IRoundRegistry {
         uint32 challengeWindowDays
     ) external;
 
-    /// @notice File a formal challenge against a Proposed round during its challenge window.
-    ///         The off-chain panel resolves the challenge: if upheld, the Safe calls
-    ///         `cancelRound`; if dismissed, the Safe lets the window expire and calls
-    ///         `executeRound`.
-    /// @dev    Public — anyone can challenge.
+    /// @notice File a formal challenge against a Proposed round during its challenge window,
+    ///         moving it to `Challenged` so the permissionless finalization can no longer
+    ///         auto-execute it; resolution happens through the MintGovernor's token-weighted vote.
+    /// @dev    Phase 2: caller must hold ROUND_CHALLENGER_ROLE (the MintGovernor). Token holders
+    ///         challenge through the Governor's public `challenge()`, which opens the vote and then
+    ///         calls this. Gating it prevents a stake-free direct challenge from freezing a round
+    ///         with no vote to resolve it.
     function challengeRound(
         bytes32 roundHash,
         string calldata reasonIpfsUri

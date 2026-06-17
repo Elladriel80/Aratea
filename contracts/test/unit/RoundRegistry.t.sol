@@ -38,12 +38,18 @@ contract RoundRegistryTest is Test {
         bytes32 proposerRole = registry.ROUND_PROPOSER_ROLE();
         bytes32 executorRole = registry.ROUND_EXECUTOR_ROLE();
         bytes32 cancellerRole = registry.ROUND_CANCELLER_ROLE();
+        bytes32 challengerRole = registry.ROUND_CHALLENGER_ROLE();
 
         vm.startPrank(admin);
         token.grantRole(minterRole, address(registry));
         registry.grantRole(proposerRole, proposer);
         registry.grantRole(executorRole, executor);
         registry.grantRole(cancellerRole, canceller);
+        // Phase 2 (revue 2026-06-17) : challengeRound est gardé par ROUND_CHALLENGER_ROLE
+        // (porté par le MintGovernor en prod). Ces tests exercent la machine à états du
+        // registry en isolation, donc on accorde le rôle aux adresses jouant le challenger.
+        registry.grantRole(challengerRole, eve);
+        registry.grantRole(challengerRole, carol);
         vm.stopPrank();
 
         vm.warp(TEST_TS);
@@ -241,11 +247,25 @@ contract RoundRegistryTest is Test {
         assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Challenged));
     }
 
-    function test_Challenge_AnyoneCanChallenge() public {
+    function test_Challenge_RequiresChallengerRole() public {
         bytes32 h = _proposeBasicRound();
+        // A role holder (carol) can challenge.
         vm.prank(carol);
         registry.challengeRound(h, "ipfs://x");
-        // No revert — public function.
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Challenged));
+    }
+
+    function test_Challenge_RevertsWithoutChallengerRole() public {
+        bytes32 h = _proposeBasicRound();
+        // `bob` holds no role: the role gate must reject the direct challenge (Phase 2 — only
+        // the MintGovernor, holder of ROUND_CHALLENGER_ROLE, is the challenge front-door).
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, bob, registry.ROUND_CHALLENGER_ROLE()
+            )
+        );
+        vm.prank(bob);
+        registry.challengeRound(h, "ipfs://x");
     }
 
     function test_Challenge_RevertsAfterWindowExpiry() public {
