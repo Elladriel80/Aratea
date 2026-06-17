@@ -3,6 +3,8 @@ pragma solidity 0.8.24;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {ERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import {ERC20Votes} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import {Nonces} from "@openzeppelin/contracts/utils/Nonces.sol";
 import {AccessControlEnumerable} from "@openzeppelin/contracts/access/extensions/AccessControlEnumerable.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
@@ -29,7 +31,16 @@ import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 ///         Pause semantics: pause blocks user-to-user transfers only. Mint and burn paths remain
 ///         operational so an in-flight round execution or a critical conversion cannot be frozen
 ///         by a defensive pause. See contracts/docs/SECURITY.md §5.5.
-contract AugPocToken is ERC20, ERC20Permit, AccessControlEnumerable, Pausable {
+///
+///         Vote snapshots (Phase 2): the token extends OpenZeppelin `ERC20Votes`, which checkpoints
+///         each holder's voting units on every balance change, and the total supply on every
+///         mint/burn. The clock is TIMESTAMP-based (ERC-6372 `mode=timestamp`) so the MintGovernor
+///         can read `getPastVotes(account, proposedAt)` / `getPastTotalSupply(proposedAt)` directly
+///         from a round's `proposedAt` timestamp — freezing vote weight at proposal time. This is
+///         the anti-vote-buying guarantee: tokens acquired AFTER a round is proposed carry no weight
+///         in that round's vote. NOTE: as with any ERC20Votes token, a holder must `delegate` (e.g.
+///         self-delegate) for their balance to count as voting power. See docs/gouvernance-auto-mint.fr.md.
+contract AugPocToken is ERC20, ERC20Permit, ERC20Votes, AccessControlEnumerable, Pausable {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant BURNER_ROLE = keccak256("BURNER_ROLE");
@@ -79,17 +90,43 @@ contract AugPocToken is ERC20, ERC20Permit, AccessControlEnumerable, Pausable {
         _unpause();
     }
 
-    /// @dev Override ERC20._update to enforce pause on user-to-user transfers only.
-    ///      Mint paths (from == address(0)) and burn paths (to == address(0)) bypass the pause
-    ///      check intentionally — see SECURITY.md §5.5 and the natspec on this contract.
+    /// @dev Override `_update` to enforce pause on user-to-user transfers only AND to keep the
+    ///      ERC20Votes balance/supply checkpoints up to date. Mint paths (from == address(0)) and
+    ///      burn paths (to == address(0)) bypass the pause check intentionally — see SECURITY.md
+    ///      §5.5 and the natspec on this contract. `super._update` walks ERC20Votes._update (which
+    ///      moves voting units / updates the total-supply checkpoint) then ERC20._update.
     function _update(
         address from,
         address to,
         uint256 value
-    ) internal override {
+    ) internal override(ERC20, ERC20Votes) {
         if (from != address(0) && to != address(0)) {
             _requireNotPaused();
         }
         super._update(from, to, value);
+    }
+
+    /// @dev ERC20Permit and ERC20Votes (via Nonces) both expose `nonces`; resolve the override.
+    function nonces(
+        address owner
+    ) public view override(ERC20Permit, Nonces) returns (uint256) {
+        return super.nonces(owner);
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                          ERC-6372 CLOCK (TIMESTAMP)
+    //////////////////////////////////////////////////////////////*/
+
+    /// @notice Timestamp-based clock for ERC20Votes checkpoints (ERC-6372). Chosen over the default
+    ///         block-number clock so the MintGovernor can snapshot vote weight at a round's
+    ///         `proposedAt` (a `block.timestamp`) without any block-number bookkeeping.
+    function clock() public view override returns (uint48) {
+        return uint48(block.timestamp);
+    }
+
+    /// @notice Machine-readable description of the clock (ERC-6372).
+    // solhint-disable-next-line func-name-mixedcase
+    function CLOCK_MODE() public pure override returns (string memory) {
+        return "mode=timestamp";
     }
 }

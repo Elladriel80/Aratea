@@ -24,6 +24,10 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
     bytes32 public constant ROUND_PROPOSER_ROLE = keccak256("ROUND_PROPOSER_ROLE");
     bytes32 public constant ROUND_EXECUTOR_ROLE = keccak256("ROUND_EXECUTOR_ROLE");
     bytes32 public constant ROUND_CANCELLER_ROLE = keccak256("ROUND_CANCELLER_ROLE");
+    /// @notice Role allowed to move a round into `Challenged`. Phase 2: held by the MintGovernor,
+    ///         which is the single front-door for challenges (it opens the token-weighted vote that
+    ///         resolves them). See the note on `challengeRound`.
+    bytes32 public constant ROUND_CHALLENGER_ROLE = keccak256("ROUND_CHALLENGER_ROLE");
 
     /*//////////////////////////////////////////////////////////////
                               CONSTANTS
@@ -107,15 +111,18 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
     function challengeRound(
         bytes32 roundHash,
         string calldata reasonIpfsUri
-    ) external {
+    ) external onlyRole(ROUND_CHALLENGER_ROLE) {
         Round storage r = _rounds[roundHash];
-        // Autorise un challenge tant que le round est Proposed OU déjà Challenged.
-        // Avant, le premier challenge consommait l'unique "slot" : un griefer
-        // pouvait front-runner avec une raison vide et évincer un challenger
-        // légitime sans laisser de trace (revue 2026-06-10 B3 / finding R-1).
-        // Désormais chaque challenger ré-émet RoundChallenged (trace on-chain pour
-        // le panel). La MACHINE À ÉTATS est inchangée : le premier challenge fait
-        // Proposed->Challenged, les suivants gardent le statut Challenged.
+        // Phase 2 (revue 2026-06-17) : `challengeRound` est désormais gardé par
+        // ROUND_CHALLENGER_ROLE, détenu par le MintGovernor. Justification : un
+        // challenge doit déclencher un vote token-weighted ; or seule la fenêtre
+        // décide de l'exécution, et un round `Challenged` n'est plus exécutable par
+        // la finalisation permissionless. Si n'importe qui pouvait flipper un round
+        // en `Challenged` directement (ancien comportement public), il le gèlerait
+        // sans vote pour le résoudre (DoS). Le Governor est donc le guichet unique :
+        // son `challenge()` reste ouvert à tout détenteur de tokens et ouvre le vote.
+        // La MACHINE À ÉTATS est inchangée : Proposed->Challenged au 1er appel, les
+        // suivants ré-émettent RoundChallenged en gardant le statut Challenged.
         if (r.status != RoundStatus.Proposed && r.status != RoundStatus.Challenged) {
             revert RoundNotProposed();
         }
@@ -137,7 +144,7 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
         }
         if (block.timestamp < _windowEnd(r)) revert ChallengeWindowNotExpired();
 
-        uint256 totalMint;
+        uint256 totalMint = 0;
         for (uint256 i = 0; i < r.amounts.length; i++) {
             totalMint += r.amounts[i];
         }

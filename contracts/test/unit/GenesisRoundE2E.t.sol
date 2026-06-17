@@ -31,6 +31,7 @@ contract GenesisRoundE2E is Test {
     address internal proposer = makeAddr("proposer");
     address internal executor = makeAddr("executor");
     address internal canceller = makeAddr("canceller");
+    address internal challenger = makeAddr("challenger");
 
     // 34_039_500 sats translated to wei (token has 18 decimals, 1 sat ≡ 1 token by mint
     // convention). Genesis valuation per `rounds/archives/2026-05-genesis/valuation_report.md`.
@@ -50,6 +51,10 @@ contract GenesisRoundE2E is Test {
         registry.grantRole(proposerRole, proposer);
         registry.grantRole(executorRole, executor);
         registry.grantRole(cancellerRole, canceller);
+        // Phase 2: challengeRound is gated by ROUND_CHALLENGER_ROLE. The genesis flow is decoupled
+        // from the MintGovernor (single holder), so the test grants the role to a challenger EOA to
+        // exercise the registry's challenge → execute / cancel state machine directly.
+        registry.grantRole(registry.ROUND_CHALLENGER_ROLE(), challenger);
         vm.stopPrank();
 
         // Anchor at the date of the genesis report: 2026-05-08 12:00 UTC.
@@ -99,10 +104,9 @@ contract GenesisRoundE2E is Test {
         vm.prank(proposer);
         registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30);
 
-        // A prospective investor files a challenge mid-window.
+        // A challenge is filed mid-window (through the challenge front-door, here the test EOA).
         vm.warp(block.timestamp + 15 days);
-        address prospectiveInvestor = makeAddr("prospectiveInvestor");
-        vm.prank(prospectiveInvestor);
+        vm.prank(challenger);
         registry.challengeRound(roundHash, "ipfs://challenge-rationale");
         assertEq(uint8(registry.statusOf(roundHash)), uint8(IRoundRegistry.RoundStatus.Challenged));
 
@@ -127,7 +131,7 @@ contract GenesisRoundE2E is Test {
         vm.prank(proposer);
         registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30);
 
-        vm.prank(makeAddr("challenger"));
+        vm.prank(challenger);
         registry.challengeRound(roundHash, "ipfs://reason");
 
         vm.prank(canceller);

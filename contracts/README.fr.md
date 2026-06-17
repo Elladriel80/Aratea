@@ -104,6 +104,21 @@ Threat model complet dans [`docs/SECURITY.fr.md`](docs/SECURITY.fr.md).
 
 Détail dans [`docs/ROUND-LIFECYCLE.fr.md`](docs/ROUND-LIFECYCLE.fr.md).
 
+## Phase 2 — mint automatique + contestation token-weighted
+
+> Testnet / pré-audit. Spec complète et décisions : [`/docs/gouvernance-auto-mint.fr.md`](../docs/gouvernance-auto-mint.fr.md).
+
+Un `MintGovernor` se pose **au-dessus du `RoundRegistry` inchangé** (qui reste la seule source du mint) pour rendre le mint mensuel automatique mais contestable :
+
+- **Nominal** : un keeper (proposeur seulement) propose un round à J0 ; après la fenêtre, n'importe qui appelle `MintGovernor.finalize` → le Governor (seul exécuteur) mint. Plus de signature humaine quotidienne.
+- **Contesté** : un détenteur appelle `MintGovernor.challenge` → un vote token-weighted s'ouvre. **Le poids est figé au `proposedAt` du round** via les checkpoints `ERC20Votes` (horloge timestamp) — les tokens achetés après la proposition ne pèsent rien. L'original est rejeté ssi **quorum atteint (15 % du circulant) ET `contre > pour`** ; sinon il est minté. En cas de rejet, les détenteurs ≥ 1 % soumettent des alternatives, votées **séquentiellement** à la majorité simple ; la première acceptée est mintée et annule les autres.
+
+Topologie des rôles (moindre privilège) : keeper = `ROUND_PROPOSER_ROLE` seul (clé chaude, en CI) ; Governor = `PROPOSER`+`EXECUTOR`+`CANCELLER`+`CHALLENGER` ; admin = `DEFAULT_ADMIN` + coupe-circuit `CANCELLER` (clé froide, hors-CI, EXECUTOR révoqué). `MINTER_ROLE` reste au registry. Câblé par `script/DeployPhase2Governor.s.sol`.
+
+Modif registry minimale : `challengeRound` est désormais gardé par un nouveau `ROUND_CHALLENGER_ROLE` (détenu par le Governor) pour qu'un challenge direct sans enjeu ne puisse pas geler un round sans vote pour le résoudre. Liste complète des déviations en §8 de la spec.
+
+Opérations keeper : `script/KeeperProposeRound.s.sol` + `script/KeeperFinalize.s.sol`, pilotés par le workflow planifié `.github/workflows/aratea-keeper.yml` (clé keeper en secret CI ; clé admin jamais en CI).
+
 ## Roadmap (jalons)
 
 | Jalon | Périmètre | Statut |
@@ -114,6 +129,7 @@ Détail dans [`docs/ROUND-LIFECYCLE.fr.md`](docs/ROUND-LIFECYCLE.fr.md).
 | **M3** | `RoundRegistry` (propose / challenge / execute / cancel) | ✅ fait |
 | **M4** | Scripts de déploiement Arbitrum Sepolia + helpers opérationnels | ✅ fait |
 | **M5** | Dashboard read-only (Next.js + viem) | en attente |
+| **M6** | Phase 2 — `MintGovernor` (auto-mint + vote token-weighted) + keeper | ✅ fait (testnet, pré-audit) |
 
 ## Licence
 

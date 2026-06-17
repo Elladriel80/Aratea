@@ -38,12 +38,15 @@ contract AugPocTokenFuzzTest is Test {
     }
 
     /// @dev mint(any non-zero EOA recipient, any amount) increases totalSupply and balance by the
-    ///      exact amount, and never overflows for a single mint up to type(uint256).max.
+    ///      exact amount, up to the ERC20Votes safe-supply cap (2^208 - 1). That cap is inherent
+    ///      to the vote-checkpoint storage added in Phase 2 and sits far above any realistic
+    ///      supply (~4.1e62 wei ≈ 4.1e44 whole tokens).
     function testFuzz_Mint_IncreasesSupplyAndBalanceExactly(
         address recipient,
         uint256 amount
     ) public {
         _assumeStdReceiver(recipient);
+        amount = bound(amount, 0, (uint256(1) << 208) - 1);
 
         uint256 supplyBefore = token.totalSupply();
         uint256 balanceBefore = token.balanceOf(recipient);

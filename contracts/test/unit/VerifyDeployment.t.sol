@@ -17,17 +17,18 @@ contract VerifyDeploymentTest is Test {
     // Anvil default account #0 — déterministe, jamais utilisé en prod.
     address internal constant ANVIL_TEST_ADDR = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
 
-    function _deploy()
-        internal
-        returns (AugPocToken token, RoundRegistry registry, address admin)
-    {
+    function _deploy() internal returns (AugPocToken token, RoundRegistry registry, address admin) {
         vm.setEnv("ADMIN_ADDRESS", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
         DeployArateaPhase1 deploy = new DeployArateaPhase1();
         DeployArateaPhase1.DeploymentResult memory result = deploy.run();
         return (result.token, result.registry, result.admin);
     }
 
-    function _wireEnv(AugPocToken token, RoundRegistry registry, address admin) internal {
+    function _wireEnv(
+        AugPocToken token,
+        RoundRegistry registry,
+        address admin
+    ) internal {
         vm.setEnv("TOKEN_ADDRESS", vm.toString(address(token)));
         vm.setEnv("REGISTRY_ADDRESS", vm.toString(address(registry)));
         vm.setEnv("ADMIN_ADDRESS", vm.toString(admin));

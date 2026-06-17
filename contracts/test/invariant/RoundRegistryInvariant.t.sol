@@ -161,6 +161,13 @@ contract RoundRegistryInvariantTest is StdInvariant, Test {
         vm.warp(1_778_544_000); // 2026-05-09 UTC
 
         handler = new RoundRegistryHandler(token, registry, proposer, executor, canceller);
+        // Phase 2: challengeRound is role-gated. The handler challenges as itself, so it needs
+        // ROUND_CHALLENGER_ROLE — otherwise every challenge() call would revert and the
+        // Challenged branch of the state machine would never be exercised. Precompute the role
+        // getter before vm.prank so the prank applies to grantRole, not the getter call.
+        bytes32 challengerRole = registry.ROUND_CHALLENGER_ROLE();
+        vm.prank(admin);
+        registry.grantRole(challengerRole, address(handler));
         targetContract(address(handler));
 
         bytes4[] memory selectors = new bytes4[](5);
