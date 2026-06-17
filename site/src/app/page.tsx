@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
-import ContributeForm from "@/components/ContributeForm";
 import { getDictAndLocale } from "@/lib/i18n";
 import { fetchManifest } from "@/lib/manifest";
 import { publicClient } from "@/lib/chain";
@@ -305,11 +304,8 @@ export default async function Home() {
               </div>
               <p className="closing">{dict.contribute.closing}</p>
               <div className="band-cta">
-                <a className="btn btn-primary" href={LINKS.discord} target="_blank" rel="noopener noreferrer">{dict.contribute.discord} <span className="arr">→</span></a>
-                <a className="btn btn-ghost" href={LINKS.github} target="_blank" rel="noopener noreferrer">{dict.contribute.github}</a>
+                <Link className="btn btn-primary band-account" href="/contribuer">{dict.contribute.account} <span className="arr">→</span></Link>
               </div>
-              <Link className="btn btn-ghost band-account" href="/contribuer">{dict.contribute.account} <span className="arr">→</span></Link>
-              <ContributeForm t={dict.contribute} />
             </div>
             <div className="links">
               {linkItems.map((l) => (
