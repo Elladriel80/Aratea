@@ -124,13 +124,68 @@
         }
       ],
       "resolution": {
-        "outcome": null,
+        "outcome": "no",
         "observed_value_f": null,
-        "ts_utc": null,
-        "pnl_usd": null
+        "observed_range_f": null,
+        "winning_bin_ticker": "KXLOWTDEN-26JUN16-T50",
+        "ts_utc": "2026-06-17T13:08:27Z",
+        "champion_pnl_usd": 1.82,
+        "champion_payout_usd": 11.0,
+        "champion_cost_usd": 9.18,
+        "champion_won": true
       }
     }
   ],
-  "scoring": null,
+  "scoring": {
+    "outcome": "no",
+    "by_model": {
+      "vendor_ensemble": {
+        "role": "champion",
+        "method": "ensemble",
+        "p_yes": 0.103,
+        "brier": 0.0106,
+        "won": true,
+        "pnl_usd": 1.82,
+        "pnl_type": "actual"
+      },
+      "learned_v2": {
+        "role": "challenger",
+        "method": "learned_v2",
+        "p_yes": 0.1591,
+        "brier": 0.0253,
+        "won": true,
+        "pnl_usd": 1.82,
+        "pnl_type": "theoretical"
+      },
+      "kalshi_mid_baseline": {
+        "role": "baseline",
+        "method": "kalshi_mid",
+        "p_yes": 0.165,
+        "brier": 0.0272,
+        "won": true,
+        "pnl_usd": 1.82,
+        "pnl_type": "theoretical"
+      }
+    },
+    "ranking_by_brier": [
+      {
+        "model": "vendor_ensemble",
+        "brier": 0.0106
+      },
+      {
+        "model": "learned_v2",
+        "brier": 0.0253
+      },
+      {
+        "model": "kalshi_mid_baseline",
+        "brier": 0.0272
+      }
+    ],
+    "best_brier_model": "vendor_ensemble",
+    "champion_at_time_of_run": "vendor_ensemble",
+    "champion_is_best": true,
+    "n_datapoints": 1,
+    "note": "Run 253 multi-model trade. Single point \u2014 directional only, not statistically significant. The champion promotion rule requires N>=10 with sign test p<0.10."
+  },
   "notes": "Auto-captured by daily_auto.py on 2026-06-15T21:15:17Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.062, side=NO, Kelly capped size=$9.38 (bankroll=$3006.37, portfolio_heat_after_register=30.0%)."
 }
