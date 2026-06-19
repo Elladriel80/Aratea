@@ -1,7 +1,8 @@
 # Spec — mint automatique + contestation par vote token-weighted (Phase 2)
 
-*v0.4 — 2026-06-17. Statut : **implémenté** (contrats + tests), **testnet Arbitrum Sepolia uniquement, pré-audit**. Voir §8 pour l'implémentation réelle.*
+*v0.5 — 2026-06-19. Statut : **implémenté** (contrats + tests), **testnet Arbitrum Sepolia uniquement, pré-audit**. Voir §8 pour l'implémentation réelle.*
 *Décisions actées 2026-06-17 : vote **token-weighted** (1 token = 1 voix) ; **aucun plafond par wallet**. Remplace le panel ET le cap 25 % du `token_model.md` (§6, §9).*
+*Correctif 2026-06-19 : une alternative est désormais soumise au **même quorum que l'original** (et non plus à la majorité simple) ; la file d'alternatives est **plafonnée** (`MAX_ALTERNATIVES`).*
 
 > ⚠️ **Audit requis avant mainnet.** Du code qui mint de la valeur, piloté par un vote on-chain, est la catégorie la plus risquée. Aucun déploiement mainnet sans audit communautaire.
 
@@ -35,11 +36,15 @@ remplacée par le keeper + la fenêtre de contestation.
 3. **Rejet** si : quorum atteint **ET** > 50 % des voix exprimées votent CONTRE
    (50 % + 1 token des exprimés).
 4. **Si rejeté** → cycle de **re-proposition** : une nouvelle clé de répartition
-   est proposée, resoumise au vote à la majorité des voix exprimées. Accord →
-   mint. Refus → on recommence.
-5. **Propositions concurrentes** : plusieurs alternatives possibles, mises au vote
-   **séquentiellement par date de soumission**. Dès qu'une est **acceptée**, elle
-   est mintée et **toutes les autres rejetées** automatiquement.
+   est proposée, resoumise au vote sous le **même quorum que l'original** (quorum
+   atteint **ET** majorité « pour »). Accord → mint. Refus → on recommence. Le
+   montant d'une alternative reste libre (on veut pouvoir corriger une
+   sous-évaluation) ; c'est le **quorum** qui protège contre une capture par un
+   gros détenteur à faible participation.
+5. **Propositions concurrentes** : plusieurs alternatives possibles (au plus
+   `MAX_ALTERNATIVES` par contestation), mises au vote **séquentiellement par date
+   de soumission**. Dès qu'une est **acceptée**, elle est mintée et **toutes les
+   autres rejetées** automatiquement.
 
 ---
 
@@ -141,11 +146,29 @@ jamais de rôle qui mint hors-règles ni qui change les rôles.
 | `quorumBps` | **1500** (15 %) | du supply circulant au snapshot ; `ceilDiv` (arrondi défavorable à l'attaquant) |
 | `voteDurationDays` | **7** | un vote ne finit jamais avant la clôture de la fenêtre de contestation |
 | `proposalThresholdBps` | **100** (1 %) | poids minimal pour soumettre une alternative |
-| `treasury` | `address(0)` | si défini, exclu du circulant — **doit s'auto-déléguer** |
+| `treasury` | `address(0)` | si défini, exclu du circulant — **doit s'auto-déléguer** (sinon la soustraction du quorum est inexacte) |
+| `MAX_ALTERNATIVES` | **16** (constante) | nombre maximal d'**alternatives** par contestation (l'original n'est pas compté) ; borne anti-spam / anti-DoS gaz |
 
 Rejet de l'original = **quorum atteint** (`exprimés ≥ quorum`) **ET** `contre > pour` (strictement
 > 50 % ; entiers, sans division). Quorum non atteint → round validé tel quel. Alternative acceptée
-= **majorité simple** des exprimés (`pour > contre`).
+= **même quorum que l'original** (`exprimés ≥ quorum`) **ET** `pour > contre`. Une alternative sous le
+quorum est rejetée (pas de mint) et on passe à la suivante.
+
+**Plafond de la file (`MAX_ALTERNATIVES = 16`).** Sans borne, un détenteur ≥ seuil pourrait spammer
+`proposeAlternative` jusqu'à ce que les boucles de résolution (`_activateNextPending` /
+`_executeWinner`, qui parcourent toute la file) dépassent le *block gas limit* — la contestation
+resterait gelée. `proposeAlternative` revert (`TooManyAlternatives`) au-delà de 16 alternatives. Le
+correctif retenu est le plus simple ; une borne « une alternative active par proposeur » reste une
+défense complémentaire possible si nécessaire.
+
+**Limitations connues (documentées, pré-audit).**
+- *Original rejeté sans alternative déposée* : le round reste `Challenged` indéfiniment. Nettoyage
+  uniquement via l'admin `CANCELLER_ROLE` (`cancelRound`) — procédure **manuelle** assumée à ce
+  stade ; un `cancelRejectedOriginal` permissionless (le Governor détient déjà `CANCELLER`) pourra
+  être exposé plus tard si le besoin se confirme.
+- *Treasury exclue du circulant* : `setTreasury` n'**impose pas** l'auto-délégation de la trésorerie.
+  Pour que la soustraction du quorum soit exacte, la treasury **doit s'auto-déléguer** (checkpoints
+  `ERC20Votes`) — à vérifier au câblage du déploiement.
 
 ### Déviations vs design (justifiées)
 1. **`challengeRound` passe en rôle-gated (`ROUND_CHALLENGER_ROLE` → Governor).** Une
@@ -169,9 +192,11 @@ Rejet de l'original = **quorum atteint** (`exprimés ≥ quorum`) **ET** `contre
   proposer/finaliser. Clé admin (déploiement/rôles) **hors-CI**.
 
 ### Tests
-`forge test` (131 tests) : unitaires + **fuzz** (règle quorum/majorité, anti-achat-de-vote) +
+`forge test` (134 tests) : unitaires + **fuzz** (règle quorum/majorité, anti-achat-de-vote) +
 **invariants** (le supply n'augmente que par des rounds exécutés ; le Governor n'est jamais admin ;
-keeper en moindre privilège). **Slither** sans alerte `medium+`.
+keeper en moindre privilège). Couverture ajoutée pour le correctif 2026-06-19 : alternative sous le
+quorum **non** acceptée, alternative au quorum acceptée (+ annulation des sœurs), et dépassement de
+`MAX_ALTERNATIVES` qui revert. **Slither** sans alerte `medium+`.
 
 ### Scénario end-to-end testnet
 1. (Pré-requis) Phase 1 déployée : `DeployArateaPhase1` (token + registry, admin = clé froide).

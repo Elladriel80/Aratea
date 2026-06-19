@@ -27,8 +27,10 @@ import {IRoundRegistry} from "../interfaces/IRoundRegistry.sol";
 ///           - The original is REJECTED iff quorum is reached AND strictly more than half of the
 ///             expressed votes are AGAINST. Quorum not reached → round validated as-is.
 ///           - On rejection, a re-proposition cycle opens: holders ≥ proposalThreshold submit
-///             alternative allocations, voted SEQUENTIALLY by submission order at simple majority
-///             of expressed votes. The first accepted is minted and all siblings are cancelled.
+///             alternative allocations (capped at MAX_ALTERNATIVES per dispute), voted SEQUENTIALLY
+///             by submission order. An alternative is accepted under the SAME quorum as the original
+///             (quorum reached AND for > against). The first accepted is minted and all siblings are
+///             cancelled.
 ///
 ///         Security posture (see the contract's tests + docs):
 ///           - Anti-vote-buying: weights snapshotted at proposal time.
@@ -84,6 +86,10 @@ contract MintGovernor is AccessControl, ReentrancyGuard {
     uint16 public constant BPS_DENOMINATOR = 10_000;
     uint32 public constant MIN_VOTE_DAYS = 1;
     uint32 public constant MAX_VOTE_DAYS = 365;
+    /// @notice Cap on the number of ALTERNATIVES per dispute (the original is not counted). Bounds
+    ///         the `queue` loops in `_activateNextPending`/`_executeWinner` so a holder ≥ threshold
+    ///         cannot grow the queue until those loops exceed the block gas limit (resolution DoS).
+    uint256 public constant MAX_ALTERNATIVES = 16;
 
     /*//////////////////////////////////////////////////////////////
                             IMMUTABLE WIRING
@@ -160,6 +166,7 @@ contract MintGovernor is AccessControl, ReentrancyGuard {
     error OriginalNotRejected();
     error BelowProposalThreshold();
     error EmptyAllocation();
+    error TooManyAlternatives();
 
     /*//////////////////////////////////////////////////////////////
                               CONSTRUCTOR
@@ -319,8 +326,10 @@ contract MintGovernor is AccessControl, ReentrancyGuard {
                 _executeWinner(d, b.dispute, ballotRound);
             }
         } else {
-            // Alternative: simple majority of expressed votes (for > against).
-            bool accepted = b.forVotes > b.againstVotes;
+            // Alternative: SAME quorum as the original (anti-capture by a low-turnout whale).
+            // Accepted iff quorum reached AND strictly more "for" than "against" votes.
+            bool quorumReached = (b.forVotes + b.againstVotes) >= d.quorumVotes;
+            bool accepted = quorumReached && (b.forVotes > b.againstVotes);
             if (accepted) {
                 b.state = BallotState.Accepted;
                 _executeWinner(d, b.dispute, ballotRound);
@@ -350,6 +359,8 @@ contract MintGovernor is AccessControl, ReentrancyGuard {
         // Re-proposition only opens once the original is decided-and-not-resolved, i.e. rejected.
         if (!d.originalDecided) revert OriginalNotRejected();
         if (beneficiaries.length == 0) revert EmptyAllocation();
+        // queue[0] is the original; cap the number of ALTERNATIVES (anti-spam / anti-DoS gas).
+        if (d.queue.length - 1 >= MAX_ALTERNATIVES) revert TooManyAlternatives();
 
         uint256 thresholdVotes = Math.max(Math.mulDiv(d.circulating, proposalThresholdBps, BPS_DENOMINATOR), 1);
         if (token.getPastVotes(msg.sender, d.snapshot) < thresholdVotes) revert BelowProposalThreshold();
