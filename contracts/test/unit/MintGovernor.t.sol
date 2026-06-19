@@ -335,6 +335,7 @@ contract MintGovernorTest is Test {
     function test_ReProposition_AlternativeAcceptedMintsAndCancelsOriginal() public {
         _mintAndDelegate(whale, 700 * E);
         _mintAndDelegate(alice, 300 * E);
+        // total 1000 → quorum ceil(1000*15%) = 150 (the SAME quorum applies to alternatives).
         vm.warp(START + 10);
         bytes32 h = _propose(1000 * E, "ipfs://original");
         vm.warp(block.timestamp + 1);
@@ -355,7 +356,7 @@ contract MintGovernorTest is Test {
         vm.prank(whale);
         governor.proposeAlternative(h, bens, amts, altUri);
 
-        // Vote the alternative through at simple majority (whale for).
+        // Vote the alternative through: whale's 700 "for" clears the 150 quorum and beats 0 "against".
         vm.prank(whale);
         governor.castVote(altHash, true);
         vm.warp(block.timestamp + 7 days + 1);
@@ -408,7 +409,7 @@ contract MintGovernorTest is Test {
             uint8(registry.statusOf(alt1)), uint8(IRoundRegistry.RoundStatus.Challenged), "alt1 rejected, not minted"
         );
 
-        // Now alt2 accepts.
+        // Now alt2 accepts: whale's 1000 "for" clears the 150 quorum and beats 0 "against".
         vm.prank(whale);
         governor.castVote(alt2, true);
         vm.warp(block.timestamp + 7 days + 1);
@@ -417,6 +418,128 @@ contract MintGovernorTest is Test {
         assertEq(token.balanceOf(bob), 200 * E, "alt2 minted");
         assertEq(token.balanceOf(carol), 0, "alt1 never minted");
         assertEq(uint8(registry.statusOf(alt2)), uint8(IRoundRegistry.RoundStatus.Executed));
+    }
+
+    /// @dev An alternative with for > against but expressed votes BELOW quorum is NOT accepted — it
+    ///      is held to the SAME quorum as the original. No mint; the dispute stays open.
+    function test_Alternative_BelowQuorumNotAccepted() public {
+        _mintAndDelegate(whale, 900 * E);
+        _mintAndDelegate(alice, 100 * E);
+        // total 1000 → quorum ceil(1000*15%) = 150.
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://original");
+        vm.warp(block.timestamp + 1);
+
+        // Reject the original (whale 900 against).
+        vm.prank(alice);
+        governor.challenge(h, "ipfs://reason");
+        vm.prank(whale);
+        governor.castVote(h, false);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(h);
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Challenged), "original rejected");
+
+        // alice (100 ≥ 1% of 1000 = 10) proposes an alternative paying carol.
+        (address[] memory bens, uint256[] memory amts) = _alloc(carol, 400 * E);
+        string memory altUri = "ipfs://alt";
+        bytes32 altHash = _hash(bens, amts, altUri);
+        vm.prank(alice);
+        governor.proposeAlternative(h, bens, amts, altUri);
+
+        // alice alone votes for (100): for > against (0), BUT expressed 100 < quorum 150 → rejected.
+        vm.prank(alice);
+        governor.castVote(altHash, true);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(altHash);
+
+        assertEq(
+            uint8(registry.statusOf(altHash)),
+            uint8(IRoundRegistry.RoundStatus.Challenged),
+            "alt below quorum not minted"
+        );
+        assertEq(token.balanceOf(carol), 0, "no mint below quorum");
+        // Dispute stays open: no winner, no pending sibling, ready for a fresh alternative.
+        (,,, bytes32 activeBallot,, bool resolved,,) = governor.getDispute(h);
+        assertEq(activeBallot, bytes32(0), "no active ballot");
+        assertFalse(resolved, "dispute not resolved");
+    }
+
+    /// @dev An alternative reaching quorum with for > against is accepted: minted, and every sibling
+    ///      (the rejected original AND a still-pending concurrent alternative) is cancelled.
+    function test_Alternative_ReachesQuorumAccepted() public {
+        _mintAndDelegate(whale, 800 * E);
+        _mintAndDelegate(alice, 200 * E);
+        // total 1000 → quorum 150.
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://original");
+        vm.warp(block.timestamp + 1);
+
+        // Reject the original.
+        vm.prank(alice);
+        governor.challenge(h, "ipfs://reason");
+        vm.prank(whale);
+        governor.castVote(h, false);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(h);
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Challenged), "original rejected");
+
+        // Two concurrent alternatives: alt1 (active) pays carol, alt2 (pending) pays bob.
+        (address[] memory b1, uint256[] memory a1) = _alloc(carol, 300 * E);
+        bytes32 alt1 = _hash(b1, a1, "ipfs://alt1");
+        vm.prank(whale);
+        governor.proposeAlternative(h, b1, a1, "ipfs://alt1");
+
+        (address[] memory b2, uint256[] memory a2) = _alloc(bob, 200 * E);
+        bytes32 alt2 = _hash(b2, a2, "ipfs://alt2");
+        vm.prank(whale);
+        governor.proposeAlternative(h, b2, a2, "ipfs://alt2");
+
+        // whale's 800 "for" on alt1 clears the 150 quorum and beats 0 "against" → accepted.
+        vm.prank(whale);
+        governor.castVote(alt1, true);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(alt1);
+
+        assertEq(uint8(registry.statusOf(alt1)), uint8(IRoundRegistry.RoundStatus.Executed), "alt1 minted");
+        assertEq(token.balanceOf(carol), 300 * E, "winner minted");
+        assertEq(token.balanceOf(bob), 0, "pending sibling never minted");
+        // Both siblings cancelled in the registry: the rejected original and the pending alt2.
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Cancelled), "original cancelled");
+        assertEq(uint8(registry.statusOf(alt2)), uint8(IRoundRegistry.RoundStatus.Cancelled), "alt2 cancelled");
+        (,,,,, bool resolved, bytes32 executed,) = governor.getDispute(h);
+        assertTrue(resolved, "dispute resolved");
+        assertEq(executed, alt1, "executed = alt1");
+    }
+
+    /// @dev The alternatives queue is capped at MAX_ALTERNATIVES per dispute (the original is not
+    ///      counted). One submission beyond the cap reverts (anti-spam / anti-DoS gas).
+    function test_ProposeAlternative_RevertsAboveMax() public {
+        _mintAndDelegate(whale, 1000 * E); // total 1000 → 1% threshold = 10; whale qualifies.
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://original");
+        vm.warp(block.timestamp + 1);
+
+        // Reject the original to open the re-proposition cycle.
+        vm.prank(whale);
+        governor.challenge(h, "ipfs://reason");
+        vm.prank(whale);
+        governor.castVote(h, false);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(h);
+
+        // Fill the queue with exactly MAX_ALTERNATIVES alternatives (distinct amounts + URIs).
+        uint256 max = governor.MAX_ALTERNATIVES();
+        for (uint256 i = 0; i < max; i++) {
+            (address[] memory bens, uint256[] memory amts) = _alloc(carol, (i + 1) * E);
+            vm.prank(whale);
+            governor.proposeAlternative(h, bens, amts, string(abi.encodePacked("ipfs://alt", vm.toString(i))));
+        }
+
+        // The next alternative exceeds the cap.
+        (address[] memory bx, uint256[] memory ax) = _alloc(carol, 1_000_000 * E);
+        vm.expectRevert(MintGovernor.TooManyAlternatives.selector);
+        vm.prank(whale);
+        governor.proposeAlternative(h, bx, ax, "ipfs://alt-overflow");
     }
 
     function test_ReProposition_BelowThresholdReverts() public {
