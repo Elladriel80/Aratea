@@ -116,6 +116,50 @@ def f_days_ahead(rec: dict[str, Any]) -> float | None:
     return None
 
 
+# ---------- Interaction features ----------
+
+def f_is_hightemp(rec: dict[str, Any]) -> float | None:
+    """Binary indicator: 1.0 for high-temperature contracts (KXHIGHT*), 0.0 for low-temp.
+
+    Hypothesis: high-temp (KXHIGHT*) and low-temp (KXLOWT*) contracts show
+    systematically different p_consensus biases. On 61 dates, KXHIGHTSFO has
+    bias(p_consensus - y) = -0.090 vs -0.081 for KXLOWTCHI and -0.069 for
+    KXLOWTNYC. A single global LR intercept cannot correct this per-series
+    asymmetry. Adding this binary flag lets the model learn a series-specific
+    offset for free (one extra coefficient).
+
+    Source: derived from event_ticker prefix (2026-06-20). Status: experimental.
+    """
+    ticker = (rec.get("event_ticker") or rec.get("ticker") or "").upper()
+    if "HIGHT" in ticker:
+        return 1.0
+    elif "LOWT" in ticker:
+        return 0.0
+    return None
+
+
+def f_consensus_x_spread(rec: dict[str, Any]) -> float | None:
+    """Interaction term: p_consensus × forecast_spread.
+
+    Hypothesis: the predictive value of p_consensus is modulated by the
+    level of disagreement between vendor models (forecast_spread). When
+    spread is high, the "consensus" is fragile — a seemingly high p_consensus
+    of 0.7 backed by vendors ranging 0.2–0.9 is far less informative than
+    0.7 with spread 0.05. LR cannot learn this coupling from p_consensus and
+    forecast_spread alone; giving it the product lets it fit a first-order
+    interaction on one coefficient, without the structural changes needed by
+    a tree model.
+
+    Source: derived from f_p_consensus and f_forecast_spread (2026-06-20).
+    Status: experimental.
+    """
+    pc = f_p_consensus(rec)
+    fs = f_forecast_spread(rec)
+    if pc is None or fs is None:
+        return None
+    return pc * fs
+
+
 # ---------- V1 feature: NWS NDFD vendor forecast ----------
 
 def _normal_cdf(x: float) -> float:
@@ -383,6 +427,16 @@ FEATURES_V3: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
     ("days_ahead",      f_days_ahead),
 ]
 
+# V3+: V3 extended with experimental features tested 2026-06-20.
+# Not promoted to a numbered version until holdout verdict is known.
+FEATURES_V3_EXPERIMENTAL: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
+    ("p_consensus",          f_p_consensus),
+    ("forecast_spread",      f_forecast_spread),
+    ("days_ahead",           f_days_ahead),
+    ("consensus_x_spread",   f_consensus_x_spread),
+    ("is_hightemp",          f_is_hightemp),
+]
+
 
 # Convenience map for --feature-set CLI flag.
 FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]]]] = {
@@ -390,6 +444,7 @@ FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]
     "v1": FEATURES_V1,
     "v2": FEATURES_V2,
     "v3": FEATURES_V3,
+    "v3x": FEATURES_V3_EXPERIMENTAL,
 }
 
 
