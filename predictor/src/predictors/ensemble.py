@@ -92,12 +92,15 @@ class EnsemblePredictor(Predictor):
         # passer le Brier ensemble 0.116 -> 0.098 (BSS 0.165 -> 0.294),
         # gagnant sur 3/3 journees, bien calibre. Reglable sans toucher au
         # code via ARATEA_ENS_CLIMATO_SIGMA_W / ARATEA_ENS_SIGMA_FLOOR.
-        # Defaut = comportement historique (0.5 / pas de plancher) tant que
-        # la validation live multi-dates n'a pas confirme sur N complet.
+        # Defaut bascule le 2026-06-20 sur la dispersion inter-modeles
+        # (poids climato 0.0 + plancher 1.0F) : valide 7/7 dates distinctes
+        # (sign-test p=0.0078, gate >=3 dates franchie ; hypothese fixe, non
+        # calee sur les donnees). Reversible a chaud via les deux variables
+        # d'env ci-dessus ; remettre 0.5 / 0.0 restaure le comportement v0.7.
         if climato_sigma_weight is None:
-            climato_sigma_weight = float(os.environ.get("ARATEA_ENS_CLIMATO_SIGMA_W", "0.5"))
+            climato_sigma_weight = float(os.environ.get("ARATEA_ENS_CLIMATO_SIGMA_W", "0.0"))
         if sigma_floor is None:
-            sigma_floor = float(os.environ.get("ARATEA_ENS_SIGMA_FLOOR", "0.0"))
+            sigma_floor = float(os.environ.get("ARATEA_ENS_SIGMA_FLOOR", "1.0"))
         self.climato_sigma_weight = climato_sigma_weight
         self.sigma_floor = sigma_floor
 
