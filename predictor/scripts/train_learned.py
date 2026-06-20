@@ -206,7 +206,7 @@ def update_features_md(deltas: dict[str, float], status_for: dict[str, str]) -> 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--feature-set", choices=sorted(FEATURE_SETS.keys()),
-                        default="v0",
+                        default="v3",
                         help="Which feature spec to train on. See "
                              "src/learning/features.py.")
     parser.add_argument("--train-frac", type=float, default=0.7)
