@@ -1,11 +1,11 @@
-"""Learned model wrapper — sklearn LogisticRegression L2 with feature importance.
+"""Learned model wrappers — LogisticRegression L2 and GradientBoosting.
 
 Simple by design. The point of Phase A.3 isn't a fancy model — it's a
 trained model where each feature's weight is explicit and we can
 iterate on the feature set.
 
-Switch to gradient boosting (xgboost, lightgbm) only if LR plateaus
-above kalshi_mid Brier after exhausting the feature ideas.
+GBMLearnedModel is the GBM hypothesis (2026-06-20): captures non-linear
+interactions that LR misses (e.g. p_consensus × forecast_spread coupling).
 """
 from __future__ import annotations
 
@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 # sklearn is the only external dep. If it's not installed:
 #   pip install --break-system-packages scikit-learn
 import numpy as np
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
@@ -59,6 +60,53 @@ class LearnedModel:
             return []
         coefs = self.clf.coef_[0]
         return list(zip(self.feature_names, coefs.tolist()))
+
+
+@dataclass
+class GBMLearnedModel:
+    """GBM alternative — captures non-linear interactions between features.
+
+    Hypothesis: the relationship between p_consensus and the outcome is
+    modulated by forecast_spread (high spread → consensus less reliable).
+    A depth-2 tree can model this second-order effect; LR cannot.
+
+    Params kept intentionally weak (depth=2, n_estimators=30, subsample=0.8)
+    to avoid overfitting on small weather-date datasets (~400-500 rows).
+    """
+    feature_names: list[str]
+    scaler: StandardScaler = field(default_factory=StandardScaler)
+    clf: GradientBoostingClassifier = field(default_factory=lambda: GradientBoostingClassifier(
+        n_estimators=30,
+        max_depth=2,
+        learning_rate=0.1,
+        subsample=0.8,
+        min_samples_leaf=10,
+        random_state=42,
+    ))
+
+    def _matrix(self, X: list[dict]) -> np.ndarray:
+        return np.array(
+            [[row[name] for name in self.feature_names] for row in X],
+            dtype=float,
+        )
+
+    def fit(self, X: list[dict], y: list[int]) -> "GBMLearnedModel":
+        Xm = self._matrix(X)
+        Xs = self.scaler.fit_transform(Xm)
+        self.clf.fit(Xs, np.asarray(y, dtype=int))
+        return self
+
+    def predict_proba(self, X: list[dict]) -> np.ndarray:
+        """Return P(YES) for each row, shape (n,)."""
+        Xm = self._matrix(X)
+        Xs = self.scaler.transform(Xm)
+        return self.clf.predict_proba(Xs)[:, 1]
+
+    def feature_importance(self) -> list[tuple[str, float]]:
+        """Gini-based feature importances (GBM intrinsic)."""
+        if not hasattr(self.clf, "feature_importances_"):
+            return []
+        return list(zip(self.feature_names, self.clf.feature_importances_.tolist()))
 
 
 def brier_score(y_true: list[int], p_yes: np.ndarray) -> float:
