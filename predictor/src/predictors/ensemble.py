@@ -4,8 +4,8 @@ Phase A.1.2. Logique :
 1. Requête N modèles en un appel (forecast_multi_model).
 2. mu = moyenne (uniform ou pondérée par perf historique récente) des modèles.
 3. sigma_inter = std des prévisions des modèles (= proxy d'incertitude epistémique).
-4. sigma_total = sqrt(sigma_inter² + sigma_climato²) — combine désaccord modèles
-   et variabilité climatique résiduelle.
+4. sigma_total = sqrt(sigma_inter² + (w·sigma_climato)²) — combine désaccord modèles
+   et variabilité climatique résiduelle (w = climato_sigma_weight).
 5. P(YES) sous N(mu, sigma_total²) avec correction d'arrondi NWS.
 
 L'idée centrale : quand les modèles convergent (sigma_inter ≈ 0), on est confiant
@@ -18,6 +18,7 @@ tient compte du fait qu'au-delà de J+5, GFS et ECMWF peuvent diverger de 5°C.
 from __future__ import annotations
 
 import math
+import os
 import statistics
 from datetime import date
 from typing import Optional
@@ -74,12 +75,31 @@ class EnsemblePredictor(Predictor):
         window_days: int = 5,
         weights: Optional[dict[str, float]] = None,  # None = uniform
         max_horizon_days: int = 10,
+        climato_sigma_weight: Optional[float] = None,
+        sigma_floor: Optional[float] = None,
     ):
         self.weather = weather_client or OpenMeteoClient()
         self.models = models or DEFAULT_ENSEMBLE
         self.weights = weights
         self.climato = ClimatologyPredictor(self.weather, years_back, window_days)
         self.max_horizon = max_horizon_days
+
+        # Pondération de la variance climatologique ajoutee a la dispersion
+        # inter-modeles pour former sigma_total. Historiquement figee a 0.5,
+        # ce qui sur-elargit la distribution (la variance climato re-injecte
+        # une incertitude que les modeles ont deja resolue) et tire P(YES)
+        # vers le base rate. XP holdout 2026-06-20 : 0.0 + plancher 1.0F fait
+        # passer le Brier ensemble 0.116 -> 0.098 (BSS 0.165 -> 0.294),
+        # gagnant sur 3/3 journees, bien calibre. Reglable sans toucher au
+        # code via ARATEA_ENS_CLIMATO_SIGMA_W / ARATEA_ENS_SIGMA_FLOOR.
+        # Defaut = comportement historique (0.5 / pas de plancher) tant que
+        # la validation live multi-dates n'a pas confirme sur N complet.
+        if climato_sigma_weight is None:
+            climato_sigma_weight = float(os.environ.get("ARATEA_ENS_CLIMATO_SIGMA_W", "0.5"))
+        if sigma_floor is None:
+            sigma_floor = float(os.environ.get("ARATEA_ENS_SIGMA_FLOOR", "0.0"))
+        self.climato_sigma_weight = climato_sigma_weight
+        self.sigma_floor = sigma_floor
 
         unknown = [m for m in self.models if m not in AVAILABLE_MODELS]
         if unknown:
@@ -174,10 +194,14 @@ class EnsemblePredictor(Predictor):
         else:
             sigma_inter = 0.0
 
-        # Combinaison quadratique : la variance totale = epistémique + résiduelle climato
-        # On ne reprend qu'une fraction de sigma_climato (les modèles capturent déjà
-        # une grande partie de la dynamique journalière).
-        sigma_total = math.sqrt(sigma_inter ** 2 + (0.5 * sigma_climato) ** 2)
+        # Combinaison quadratique : variance totale = epistemique + fraction climato.
+        # climato_sigma_weight regle la part de sigma_climato re-injectee ; un plancher
+        # (sigma_floor) evite une distribution degeneree quand les modeles convergent.
+        sigma_total = math.sqrt(
+            sigma_inter ** 2 + (self.climato_sigma_weight * sigma_climato) ** 2
+        )
+        if self.sigma_floor > 0.0:
+            sigma_total = max(self.sigma_floor, sigma_total)
 
         # Correction d'arrondi NWS : pour les températures, élargit l'intervalle
         # de ±0.5°F (l'arrondi entier capture les valeurs entre n-0.5 et n+0.5).
@@ -201,6 +225,8 @@ class EnsemblePredictor(Predictor):
                 "sigma_inter_models": sigma_inter,
                 "sigma_climato": sigma_climato,
                 "sigma_total": sigma_total,
+                "climato_sigma_weight": self.climato_sigma_weight,
+                "sigma_floor": self.sigma_floor,
                 "p_forecast": p_forecast,
                 "p_climato": clim.prob_yes,
                 "blend_weight_forecast": blend_w,
