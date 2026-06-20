@@ -528,4 +528,42 @@ contract RoundRegistryTest is Test {
         bytes32 h = _proposeBasicRound();
         assertEq(registry.windowEndOf(h), block.timestamp + 7 days);
     }
+
+    function test_View_GetRoundBeneficiaries_KnownRound() public {
+        bytes32 h = _proposeBasicRound();
+        address[] memory bens = registry.getRoundBeneficiaries(h);
+        assertEq(bens.length, 2);
+        assertEq(bens[0], alice);
+        assertEq(bens[1], bob);
+    }
+
+    function test_View_GetRoundAmounts_KnownRound() public {
+        bytes32 h = _proposeBasicRound();
+        uint256[] memory amts = registry.getRoundAmounts(h);
+        assertEq(amts.length, 2);
+        assertEq(amts[0], 1000e18);
+        assertEq(amts[1], 2000e18);
+    }
+
+    /*//////////////////////////////////////////////////////////////
+              PROPOSE — WINDOW BOUNDARY COVERAGE
+    //////////////////////////////////////////////////////////////*/
+
+    function test_Propose_AcceptsMinimumWindow() public {
+        (address[] memory bens, uint256[] memory amts, string memory uri, bytes32 h) = _basicRoundInputs();
+        vm.prank(proposer);
+        registry.proposeRound(h, bens, amts, uri, 1);
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
+        (, , uint32 win,) = registry.getRound(h);
+        assertEq(win, 1);
+    }
+
+    function test_Propose_AcceptsMaximumWindow() public {
+        (address[] memory bens, uint256[] memory amts, string memory uri, bytes32 h) = _basicRoundInputs();
+        vm.prank(proposer);
+        registry.proposeRound(h, bens, amts, uri, 365);
+        assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
+        (, , uint32 win,) = registry.getRound(h);
+        assertEq(win, 365);
+    }
 }

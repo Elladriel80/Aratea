@@ -760,4 +760,209 @@ contract MintGovernorTest is Test {
         vm.expectRevert(MintGovernor.ZeroAddress.selector);
         new MintGovernor(address(0), registry, IVotes(address(token)), address(0), 1500, 100, 7);
     }
+
+    /*//////////////////////////////////////////////////////////////
+              CONSTRUCTOR — ADDITIONAL BOUNDARY COVERAGE
+    //////////////////////////////////////////////////////////////*/
+
+    function test_Constructor_RevertsOnZeroRegistry() public {
+        vm.expectRevert(MintGovernor.ZeroAddress.selector);
+        new MintGovernor(admin, RoundRegistry(address(0)), IVotes(address(token)), address(0), 1500, 100, 7);
+    }
+
+    function test_Constructor_RevertsOnZeroToken() public {
+        vm.expectRevert(MintGovernor.ZeroAddress.selector);
+        new MintGovernor(admin, registry, IVotes(address(0)), address(0), 1500, 100, 7);
+    }
+
+    function test_Constructor_RevertsOnQuorumAboveMax() public {
+        vm.expectRevert(MintGovernor.InvalidParam.selector);
+        new MintGovernor(admin, registry, IVotes(address(token)), address(0), 10_001, 100, 7);
+    }
+
+    function test_Constructor_RevertsOnProposalThresholdAboveMax() public {
+        vm.expectRevert(MintGovernor.InvalidParam.selector);
+        new MintGovernor(admin, registry, IVotes(address(token)), address(0), 1500, 10_001, 7);
+    }
+
+    function test_Constructor_RevertsOnVoteDurationAboveMax() public {
+        vm.expectRevert(MintGovernor.InvalidParam.selector);
+        new MintGovernor(admin, registry, IVotes(address(token)), address(0), 1500, 100, 366);
+    }
+
+    /*//////////////////////////////////////////////////////////////
+              PARAMS — ADDITIONAL SETTER COVERAGE
+    //////////////////////////////////////////////////////////////*/
+
+    function test_SetQuorumBps_RevertsAboveMax() public {
+        vm.expectRevert(MintGovernor.InvalidParam.selector);
+        vm.prank(admin);
+        governor.setQuorumBps(10_001);
+    }
+
+    function test_SetProposalThresholdBps_HappyPath() public {
+        vm.prank(admin);
+        governor.setProposalThresholdBps(200);
+        assertEq(governor.proposalThresholdBps(), 200);
+    }
+
+    function test_SetProposalThresholdBps_RevertsAboveMax() public {
+        vm.expectRevert(MintGovernor.InvalidParam.selector);
+        vm.prank(admin);
+        governor.setProposalThresholdBps(10_001);
+    }
+
+    function test_SetProposalThresholdBps_RevertsUnauthorized() public {
+        vm.expectRevert(
+            abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, attacker, bytes32(0))
+        );
+        vm.prank(attacker);
+        governor.setProposalThresholdBps(200);
+    }
+
+    function test_SetVoteDurationDays_HappyPath() public {
+        vm.prank(admin);
+        governor.setVoteDurationDays(14);
+        assertEq(governor.voteDurationDays(), 14);
+    }
+
+    function test_SetVoteDurationDays_RevertsZero() public {
+        vm.expectRevert(MintGovernor.InvalidParam.selector);
+        vm.prank(admin);
+        governor.setVoteDurationDays(0);
+    }
+
+    function test_SetVoteDurationDays_RevertsTooLarge() public {
+        vm.expectRevert(MintGovernor.InvalidParam.selector);
+        vm.prank(admin);
+        governor.setVoteDurationDays(366);
+    }
+
+    function test_SetVoteDurationDays_RevertsUnauthorized() public {
+        vm.expectRevert(
+            abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, attacker, bytes32(0))
+        );
+        vm.prank(attacker);
+        governor.setVoteDurationDays(14);
+    }
+
+    function test_SetTreasury_HappyPath() public {
+        vm.prank(admin);
+        governor.setTreasury(alice);
+        assertEq(governor.treasury(), alice);
+    }
+
+    function test_SetTreasury_ToZeroDisablesSubtraction() public {
+        vm.startPrank(admin);
+        governor.setTreasury(alice);
+        governor.setTreasury(address(0));
+        vm.stopPrank();
+        assertEq(governor.treasury(), address(0));
+    }
+
+    function test_SetTreasury_RevertsUnauthorized() public {
+        vm.expectRevert(
+            abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, attacker, bytes32(0))
+        );
+        vm.prank(attacker);
+        governor.setTreasury(alice);
+    }
+
+    /*//////////////////////////////////////////////////////////////
+              CHALLENGE — ERROR PATH COVERAGE
+    //////////////////////////////////////////////////////////////*/
+
+    function test_Challenge_RevertsOnUnknownRound() public {
+        _mintAndDelegate(alice, 100 * E);
+        vm.warp(START + 1);
+        vm.expectRevert(MintGovernor.RoundUnknown.selector);
+        vm.prank(alice);
+        governor.challenge(bytes32(uint256(0xdead)), "ipfs://reason");
+    }
+
+    function test_Challenge_RevertsWhenSnapshotNotInPast() public {
+        _mintAndDelegate(alice, 100 * E);
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://r1");
+        // block.timestamp == proposedAt in the same block → SnapshotNotInPast.
+        vm.expectRevert(MintGovernor.SnapshotNotInPast.selector);
+        vm.prank(alice);
+        governor.challenge(h, "ipfs://reason");
+    }
+
+    /*//////////////////////////////////////////////////////////////
+              PROPOSE_ALTERNATIVE — ERROR PATH COVERAGE
+    //////////////////////////////////////////////////////////////*/
+
+    function test_ProposeAlternative_RevertsOnUnknownOriginal() public {
+        (address[] memory bens, uint256[] memory amts) = _alloc(carol, 100 * E);
+        vm.expectRevert(MintGovernor.RoundUnknown.selector);
+        governor.proposeAlternative(bytes32(uint256(0xdead)), bens, amts, "ipfs://alt");
+    }
+
+    function test_ProposeAlternative_RevertsOnEmptyAllocation() public {
+        _mintAndDelegate(whale, 1000 * E);
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://original");
+        vm.warp(block.timestamp + 1);
+        vm.prank(whale);
+        governor.challenge(h, "ipfs://reason");
+        vm.prank(whale);
+        governor.castVote(h, false);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(h);
+
+        vm.expectRevert(MintGovernor.EmptyAllocation.selector);
+        vm.prank(whale);
+        governor.proposeAlternative(h, new address[](0), new uint256[](0), "ipfs://alt");
+    }
+
+    function test_ProposeAlternative_RevertsWhenDisputeResolved() public {
+        _mintAndDelegate(whale, 1000 * E);
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://original");
+        vm.warp(block.timestamp + 1);
+        vm.prank(whale);
+        governor.challenge(h, "ipfs://reason");
+        vm.prank(whale);
+        governor.castVote(h, false);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(h);
+
+        (address[] memory bens, uint256[] memory amts) = _alloc(carol, 500 * E);
+        string memory altUri = "ipfs://alt";
+        bytes32 altHash = keccak256(abi.encode(bens, amts, altUri));
+        vm.prank(whale);
+        governor.proposeAlternative(h, bens, amts, altUri);
+        vm.prank(whale);
+        governor.castVote(altHash, true);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(altHash);
+
+        (address[] memory bens2, uint256[] memory amts2) = _alloc(bob, 200 * E);
+        vm.expectRevert(MintGovernor.DisputeAlreadyResolved.selector);
+        vm.prank(whale);
+        governor.proposeAlternative(h, bens2, amts2, "ipfs://alt2");
+    }
+
+    /*//////////////////////////////////////////////////////////////
+              VIEWS — COVERAGE FOR UNKNOWN / ZERO-STATE KEYS
+    //////////////////////////////////////////////////////////////*/
+
+    function test_GetDispute_UnknownReturnsDefaults() public view {
+        (uint64 snapshot,,,,,,,) = governor.getDispute(bytes32(uint256(0xdead)));
+        assertEq(snapshot, 0);
+    }
+
+    function test_GetBallot_UnknownReturnsNoneState() public view {
+        (,,,,,,MintGovernor.BallotState state) = governor.getBallot(bytes32(uint256(0xdead)));
+        assertEq(uint8(state), uint8(MintGovernor.BallotState.None));
+    }
+
+    function test_CirculatingSupplyAt_NoTreasury() public {
+        _mintAndDelegate(alice, 100 * E);
+        vm.warp(START + 10);
+        // governor has treasury = address(0); circulating == total supply at timepoint in past.
+        assertEq(governor.circulatingSupplyAt(START + 5), 100 * E);
+    }
 }
