@@ -29,6 +29,7 @@ class PaperBet:
     resolved_at_utc: Optional[str] = None
     resolution: Optional[str] = None     # "yes", "no", "void"
     pnl_usd: Optional[float] = None      # gain/perte simulé en USD
+    algo_signal: str = "bet"             # "bet" ou "no_bet" (groupe témoin Phase 1)
 
 
 class Ledger:
@@ -42,6 +43,27 @@ class Ledger:
         self._field_names = [f.name for f in fields(PaperBet)]
         if not self.path.exists():
             self._write_header()
+        else:
+            self._migrate_if_needed()
+
+    def _migrate_if_needed(self) -> None:
+        """Ajoute la colonne algo_signal aux anciens fichiers CSV (16 → 17 col)."""
+        text = self.path.read_text(encoding="utf-8")
+        lines = text.splitlines(keepends=True)
+        if not lines:
+            return
+        header = lines[0].rstrip("\r\n")
+        if "algo_signal" in header.split(","):
+            return
+        # Ancienne en-tête : ajouter la colonne
+        new_lines = [header + ",algo_signal\n"]
+        for line in lines[1:]:
+            stripped = line.rstrip("\r\n")
+            if stripped:
+                new_lines.append(stripped + ",bet\n")
+            else:
+                new_lines.append(line)
+        self.path.write_text("".join(new_lines), encoding="utf-8")
 
     def _write_header(self):
         with self.path.open("w", encoding="utf-8", newline="") as f:

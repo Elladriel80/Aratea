@@ -225,13 +225,34 @@ def _edge_bps(p_model: Optional[float], yes_mid: Optional[float]) -> Optional[in
     return int(round((p_model - yes_mid) * 10000))
 
 
+def _ensure_algo_signal_column() -> None:
+    """Migre un ancien CSV 16-colonnes en ajoutant algo_signal avec valeur par défaut 'bet'."""
+    if not LEDGER_PATH.exists():
+        return
+    text = LEDGER_PATH.read_text(encoding="utf-8")
+    lines = text.splitlines(keepends=True)
+    if not lines:
+        return
+    header = lines[0].rstrip("\r\n")
+    if "algo_signal" in header.split(","):
+        return
+    new_lines = [header + ",algo_signal\n"]
+    for line in lines[1:]:
+        stripped = line.rstrip("\r\n")
+        if stripped:
+            new_lines.append(stripped + ",bet\n")
+        else:
+            new_lines.append(line)
+    LEDGER_PATH.write_text("".join(new_lines), encoding="utf-8")
+
+
 def _append_ledger_row(row: dict) -> None:
     """Append one row to paper_bets.csv, creating the file with header if missing."""
     fieldnames = [
         "bet_id", "placed_at_utc", "market_ticker", "event_ticker",
         "target_date", "side", "stake_usd", "entry_price", "prob_model",
         "prob_market_implied", "edge", "method", "spec",
-        "resolved_at_utc", "resolution", "pnl_usd",
+        "resolved_at_utc", "resolution", "pnl_usd", "algo_signal",
     ]
     write_header = not LEDGER_PATH.exists()
     LEDGER_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -242,6 +263,9 @@ def _append_ledger_row(row: dict) -> None:
         # Ensure all fields are present (empty if unresolved).
         for k in fieldnames:
             row.setdefault(k, "")
+        # Default algo_signal to "bet" when not provided.
+        if not row.get("algo_signal"):
+            row["algo_signal"] = "bet"
         writer.writerow(row)
 
 
