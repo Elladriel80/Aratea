@@ -965,4 +965,96 @@ contract MintGovernorTest is Test {
         // governor has treasury = address(0); circulating == total supply at timepoint in past.
         assertEq(governor.circulatingSupplyAt(START + 5), 100 * E);
     }
+
+    /*//////////////////////////////////////////////////////////////
+              EMERGENCY — forceResolveStuck (GOV-2)
+    //////////////////////////////////////////////////////////////*/
+
+    /// @dev Opens a dispute (original rejected), then admin force-resolves: resolved=true, no mint.
+    function test_ForceResolveStuck_MarksResolvedWithoutMinting() public {
+        _mintAndDelegate(whale, 700 * E);
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://stuck");
+        vm.warp(block.timestamp + 1);
+
+        vm.prank(whale);
+        governor.challenge(h, "ipfs://reason");
+        vm.prank(whale);
+        governor.castVote(h, false);
+        vm.warp(block.timestamp + 7 days + 1);
+        governor.resolve(h); // original rejected, re-proposition open (no activeBallot now)
+
+        (,,,, bool originalDecided, bool resolved,,) = governor.getDispute(h);
+        assertTrue(originalDecided);
+        assertFalse(resolved, "not yet resolved before force");
+
+        vm.expectEmit(true, false, false, false);
+        emit MintGovernor.DisputeForceResolved(h);
+        vm.prank(admin);
+        governor.forceResolveStuck(h);
+
+        (,,, bytes32 activeBallot,, bool resolvedAfter,,) = governor.getDispute(h);
+        assertTrue(resolvedAfter, "resolved after force");
+        assertEq(activeBallot, bytes32(0), "activeBallot cleared");
+        assertEq(token.balanceOf(dave), 0, "no tokens minted");
+    }
+
+    /// @dev forceResolveStuck with an active ballot: clears activeBallot and marks ballot Rejected.
+    function test_ForceResolveStuck_ClearsActiveBallot() public {
+        _mintAndDelegate(whale, 700 * E);
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://stuck2");
+        vm.warp(block.timestamp + 1);
+
+        vm.prank(whale);
+        governor.challenge(h, "ipfs://reason"); // activeBallot = h
+
+        (,,, bytes32 activeBefore,,,, ) = governor.getDispute(h);
+        assertEq(activeBefore, h, "active ballot set");
+
+        vm.prank(admin);
+        governor.forceResolveStuck(h);
+
+        (,,, bytes32 activeAfter,, bool resolvedAfter,,) = governor.getDispute(h);
+        assertEq(activeAfter, bytes32(0), "activeBallot cleared");
+        assertTrue(resolvedAfter);
+        (,,,,,, MintGovernor.BallotState state) = governor.getBallot(h);
+        assertEq(uint8(state), uint8(MintGovernor.BallotState.Rejected), "ballot marked Rejected");
+    }
+
+    function test_ForceResolveStuck_RevertsForNonAdmin() public {
+        _mintAndDelegate(alice, 100 * E);
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://stuck3");
+        vm.warp(block.timestamp + 1);
+        vm.prank(alice);
+        governor.challenge(h, "ipfs://reason");
+
+        vm.expectRevert(
+            abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, attacker, bytes32(0))
+        );
+        vm.prank(attacker);
+        governor.forceResolveStuck(h);
+    }
+
+    function test_ForceResolveStuck_RevertsOnUnknownRound() public {
+        vm.expectRevert(MintGovernor.RoundUnknown.selector);
+        vm.prank(admin);
+        governor.forceResolveStuck(bytes32(uint256(0xdead)));
+    }
+
+    function test_ForceResolveStuck_RevertsIfAlreadyResolved() public {
+        _mintAndDelegate(whale, 700 * E);
+        vm.warp(START + 10);
+        bytes32 h = _propose(1000 * E, "ipfs://stuck4");
+        vm.warp(block.timestamp + 1);
+        vm.prank(whale);
+        governor.challenge(h, "ipfs://reason");
+        vm.prank(admin);
+        governor.forceResolveStuck(h); // first call resolves
+
+        vm.expectRevert(MintGovernor.DisputeAlreadyResolved.selector);
+        vm.prank(admin);
+        governor.forceResolveStuck(h); // second call reverts
+    }
 }

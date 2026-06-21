@@ -139,6 +139,8 @@ contract MintGovernor is AccessControl, ReentrancyGuard {
     );
     event AlternativeProposed(bytes32 indexed originalRound, bytes32 indexed altRound, address indexed proposer);
     event DisputeResolved(bytes32 indexed originalRound, bytes32 indexed executedRound);
+    /// @notice Emitted when an admin force-resolves a stuck dispute without minting.
+    event DisputeForceResolved(bytes32 indexed originalRound);
     event ParamUpdated(string indexed key, uint256 value);
     event TreasuryUpdated(address treasury);
 
@@ -427,6 +429,30 @@ contract MintGovernor is AccessControl, ReentrancyGuard {
     ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         treasury = newTreasury;
         emit TreasuryUpdated(newTreasury);
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                              EMERGENCY
+    //////////////////////////////////////////////////////////////*/
+
+    /// @notice Last-resort admin escape hatch: mark a stuck dispute as resolved WITHOUT minting.
+    /// @dev    Needed only if `_executeWinner` can never complete — e.g. the registry reverted
+    ///         `executeRound` because `ROUND_EXECUTOR_ROLE` was accidentally revoked. Marks
+    ///         `resolved = true` (no token transfer occurs). If there is still an `activeBallot`,
+    ///         it is marked `Rejected` and cleared so that `resolve()` cannot be called again.
+    ///         Protected by `DEFAULT_ADMIN_ROLE`. SHOULD NEVER be needed in normal operation.
+    function forceResolveStuck(
+        bytes32 originalRound
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        Dispute storage d = _disputes[originalRound];
+        if (d.snapshot == 0) revert RoundUnknown();
+        if (d.resolved) revert DisputeAlreadyResolved();
+        d.resolved = true;
+        if (d.activeBallot != bytes32(0)) {
+            _ballots[d.activeBallot].state = BallotState.Rejected;
+            d.activeBallot = bytes32(0);
+        }
+        emit DisputeForceResolved(originalRound);
     }
 
     /*//////////////////////////////////////////////////////////////
