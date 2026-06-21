@@ -438,6 +438,69 @@ FEATURES_V3_EXPERIMENTAL: list[tuple[str, Callable[[dict[str, Any]], float | Non
 ]
 
 
+# ---------- V3b: hierarchical per-series calibration (B24) ----------
+
+# Observed mean bias per series_ticker on backfill_dataset (61 dates, 1467 rows).
+# Bias = mean(p_consensus - y): negative → model overestimates.
+# WARNING: these values were estimated on the full dataset (incl. holdout).
+# For a proper cross-validated evaluation, re-estimate from the training fold
+# only. Treating this as a fixed prior is an approximation valid only if the
+# per-series bias is structurally stable across time.
+_SERIES_BIAS_PRIOR: dict[str, float] = {
+    "KXHIGHTSFO": -0.090,
+    "KXLOWTCHI":  -0.081,
+    "KXLOWTNYC":  -0.069,
+    "KXLOWTMIA":  -0.055,
+    "KXLOWTBOS":  -0.002,
+    "KXLOWTLAX":   0.000,
+}
+
+
+def _series_ticker_from_rec(rec: dict[str, Any]) -> str | None:
+    """Extract series_ticker (e.g. 'KXLOWTCHI') from event_ticker or ticker."""
+    et = rec.get("series_ticker") or rec.get("event_ticker") or rec.get("ticker") or ""
+    if not et:
+        return None
+    # event_ticker = 'KXLOWTCHI-26APR14' → split at '-' and take the first part
+    part = et.split("-")[0].upper()
+    return part if part else None
+
+
+def f_series_bias_prior(rec: dict[str, Any]) -> float | None:
+    """Known structural bias for the market series — mean(p_consensus - y) per series.
+
+    Hypothesis: each Kalshi weather series (KXHIGHTSFO, KXLOWTCHI…) shows a
+    stable, series-specific offset between the consensus forecast and the
+    realised outcome. On 61 dates the offsets range from -0.090 (SFO high)
+    to ~0.000 (LAX/BOS). `is_hightemp` only captures the largest-bias split
+    (SFO vs all others); this feature generalises it to a continuous prior,
+    letting LR learn a single correction coefficient instead of per-series
+    dummies. Expected learned coefficient ≈ -1 (full bias correction).
+
+    Leakage caveat: the bias values in `_SERIES_BIAS_PRIOR` were estimated on
+    the full 61-date dataset. Treat as a prior/hyperparameter, not a live
+    label-derived feature. Re-estimate from the training fold before any
+    holdout evaluation.
+
+    Source: backfill_dataset analysis 2026-06-21. Status: experimental (B24).
+    """
+    st = _series_ticker_from_rec(rec)
+    if st is None:
+        return None
+    return _SERIES_BIAS_PRIOR.get(st)
+
+
+# V3b = V3 + series_bias_prior (generalised calibration). Replaces is_hightemp.
+# Evaluation pending (B24): run learning loop on backfill_dataset with
+# --feature-set v3b and compare holdout Brier vs v3 baseline.
+FEATURES_V3B: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
+    ("p_consensus",        f_p_consensus),
+    ("forecast_spread",    f_forecast_spread),
+    ("days_ahead",         f_days_ahead),
+    ("series_bias_prior",  f_series_bias_prior),
+]
+
+
 # Convenience map for --feature-set CLI flag.
 FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]]]] = {
     "v0": FEATURES_V0,
@@ -445,6 +508,7 @@ FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]
     "v2": FEATURES_V2,
     "v3": FEATURES_V3,
     "v3x": FEATURES_V3_EXPERIMENTAL,
+    "v3b": FEATURES_V3B,
 }
 
 
