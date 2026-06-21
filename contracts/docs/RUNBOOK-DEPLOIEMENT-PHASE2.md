@@ -148,17 +148,33 @@ Update CI secrets and Vercel environment variables:
 
 ### 3.2 Independent verification
 
+Run the dedicated Phase 2 verification script (comprehensive — all 11 wiring properties):
+
 ```bash
-# Verify governor has the 4 operational roles
+cd contracts
+source .env
+export GOVERNOR_ADDRESS=0x<GOVERNOR_ADDRESS>
+
+forge script script/VerifyDeploymentPhase2.s.sol:VerifyDeploymentPhase2 \
+  --rpc-url $RPC_ARBITRUM_SEPOLIA -vv
+```
+
+Expected output: `== All Phase 2 assertions passed ==` + `REG-1 CONFIRMED: admin does NOT hold ROUND_EXECUTOR_ROLE`.
+
+For quick spot checks with `cast`:
+
+```bash
+# Governor has EXECUTOR
 cast call $REGISTRY_ADDRESS "hasRole(bytes32,address)(bool)" \
-  $(cast keccak "ROUND_PROPOSER_ROLE") $GOVERNOR_ADDRESS \
+  $(cast keccak "ROUND_EXECUTOR_ROLE") $GOVERNOR_ADDRESS \
   --rpc-url $RPC_ARBITRUM_SEPOLIA
 # → true
 
+# Admin does NOT have EXECUTOR (REG-1)
 cast call $REGISTRY_ADDRESS "hasRole(bytes32,address)(bool)" \
   $(cast keccak "ROUND_EXECUTOR_ROLE") $ADMIN_ADDRESS \
   --rpc-url $RPC_ARBITRUM_SEPOLIA
-# → false  (admin no longer holds executor after Phase 2)
+# → false
 ```
 
 ### 3.3 Configure keeper in CI
