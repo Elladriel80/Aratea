@@ -45,6 +45,8 @@ Every feature on this list MUST have:
 | `elevation_m` | USGS EPQS elevation at the station point. Hypothesis: thinner air at altitude amplifies the diurnal swing (Denver KDEN ~1638 m vs. Miami KMIA ~2 m at the extremes of our station set). | USGS EPQS `https://epqs.nationalmap.gov/v1/json` | 2026-05-11 | +0.0000 | dropped (v3, 2026-06-05 — noise as additive linear term) |
 | `distance_to_coast_km` | Haversine distance to the nearest Natural Earth 1:50m coastline vertex. Hypothesis: maritime regime (Boston, Miami, SFO) damps extremes; continental regime (Denver, Oklahoma City) amplifies them. | Natural Earth `ne_50m_coastline.geojson` | 2026-05-11 | -0.0003 | dropped (v3, 2026-06-05 — noise as additive linear term) |
 | `latitude` | Station latitude (degrees, signed). Hypothesis: insolation, daylight length, and seasonal amplitude scale with `cos(latitude)` — explicit feature lets the learner discover the interaction with the date-of-year encoded in climatology. | NWS_STATIONS table | 2026-05-11 | +0.0000 | dropped (v3, 2026-06-05 — noise as additive linear term) |
+| `series_bias_prior` | Known mean bias (p_consensus − y) per series_ticker over 61-date backfill. Hypothesis: each Kalshi weather series has a stable series-specific intercept (KXHIGHTSFO −0.090 to BOS/LAX ~0); this continuous prior generalises `is_hightemp` without per-series dummy variables. Expected coef ≈ −1. | backfill_dataset analysis (B24) | 2026-06-21 | TBD (v3b run, pending HOLDOUT > 20 dates) | experimental |
+| `forecast_revision` | Change in p_consensus between earliest and latest capture of the same ticker. Hypothesis: drift velocity of the consensus toward YES/NO encodes atmospheric persistence; complementary to the level (p_consensus) and the horizon decay (days_ahead). | derived via dataset.annotate_revision_drift() across multi-day forward captures (B23) | 2026-06-21 | TBD (v4, pending multi-capture pipeline) | experimental |
 
 ## Feature sets
 
@@ -71,6 +73,16 @@ Every feature on this list MUST have:
   forecast signal lands on one stable coefficient. Use `--feature-set v3`.
   A leaner 2-feature variant `{p_consensus, forecast_spread}` is the next
   ablation if `days_ahead` is also noise on v3.
+- `FEATURES_V3B` (4 features, B24 2026-06-21) — V3 + `series_bias_prior`
+  (hierarchical per-series calibration bias). Replaces the binary
+  `is_hightemp` with a continuous prior per series. **Evaluation pending**:
+  run `_learning_loop.py --feature-set v3b` once HOLDOUT > 20 dates.
+- `FEATURES_V4` (5 features, B23 2026-06-21) — V3B + `forecast_revision`
+  (velocity of p_consensus between earliest and latest capture of a ticker).
+  **Requires multi-capture pipeline**: use `dataset.build_with_revision`
+  (not `dataset.build`). With the current single-capture `backfill_dataset`
+  all v4 rows drop. Activate once the daily forward pipeline runs ≥ 2
+  consecutive days on the same markets. Use `--feature-set v4`.
 
 ## Updates
 
