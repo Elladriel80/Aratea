@@ -49,7 +49,12 @@ priors are structurally stable: TRAIN-only vs full-dataset estimates differ ≤ 
 Next lever: more dates via daily pipeline or new structural feature.
 
 NO-GO hypotheses tested (62-date dataset):
-`GBM depth=2`, `consensus×spread`, `is_hightemp (p=0.117)`, `month_sin/cos (p=0.102, only 3 months)`.
+`GBM depth=2`, `consensus×spread`, `is_hightemp (p=0.117)`, `month_sin/cos (p=0.102, 3 months)`,
+`p_consensus×series_bias_fa (p=0.912)`, `days_ahead×series_bias_fa (p=0.633)`.
+
+**Current verdict:** model at exact market parity (0.1173 = 0.1173) with 12 HOLDOUT dates.
+Edge detection requires more data. **Next lever:** expand Kalshi universe to 10-12 series
+(code supports 20+ via `src/kalshi/resolution.py`) — see TODO-HUMAIN.md section B39.
 
 ### Feature sets
 
@@ -140,6 +145,7 @@ Stack: Next.js 15 + React 19, TypeScript strict, viem 2.x, Tailwind. No backend,
 
 ## Recent changes (since 2026-06-10)
 
+- **2026-06-21** — v3fb interaction features (B38 NO-GO): p_consensus×bias, days_ahead×bias both rejected (p=0.912/0.633). 160 tests. Universe expansion B39 documented. — PR #172 + housekeeping.
 - **2026-06-21** — v3fa (fold-aware series bias), HOLDOUT ties market; v4 revision feature; algo_signal control group — PR #170.
 - **2026-06-21** — Internal security audit (B33) — 7 findings, testnet GO, mainnet NO-GO — PR #167.
 - **2026-06-21** — Governance UI `/governance` with MetaMask + on-chain vote — PR #166.
