@@ -47,6 +47,8 @@ Every feature on this list MUST have:
 | `latitude` | Station latitude (degrees, signed). Hypothesis: insolation, daylight length, and seasonal amplitude scale with `cos(latitude)` — explicit feature lets the learner discover the interaction with the date-of-year encoded in climatology. | NWS_STATIONS table | 2026-05-11 | +0.0000 | dropped (v3, 2026-06-05 — noise as additive linear term) |
 | `series_bias_prior` | Known mean bias (p_consensus − y) per series_ticker over 61-date backfill. Hypothesis: each Kalshi weather series has a stable series-specific intercept (KXHIGHTSFO −0.090 to BOS/LAX ~0); this continuous prior generalises `is_hightemp` without per-series dummy variables. Expected coef ≈ −1. | backfill_dataset analysis (B24) | 2026-06-21 | TBD (v3b run, pending HOLDOUT > 20 dates) | experimental |
 | `forecast_revision` | Change in p_consensus between earliest and latest capture of the same ticker. Hypothesis: drift velocity of the consensus toward YES/NO encodes atmospheric persistence; complementary to the level (p_consensus) and the horizon decay (days_ahead). | derived via dataset.annotate_revision_drift() across multi-day forward captures (B23) | 2026-06-21 | TBD (v4, pending multi-capture pipeline) | experimental |
+| `p_consensus_x_series_bias_fa` | Interaction p_consensus × series_bias_fa. Hypothesis: bias correction should scale with confidence level — when p_consensus is high and series overestimates, the error is larger. Tested B38 2026-06-21: NO-GO (VALID p=0.912, 3/12 dates, Brier worse than incumbent). | derived from p_consensus × series_bias_fa | 2026-06-21 | +0.0002 (VALID, worse) | dropped (v3fb NO-GO, 2026-06-21) |
+| `days_ahead_x_series_bias_fa` | Interaction days_ahead × series_bias_fa. Hypothesis: per-series calibration bias scales with forecast horizon — longer horizons may amplify series-specific miscalibration. Tested B38 2026-06-21: NO-GO (VALID p=0.633, 6/12 dates, tie). | derived from days_ahead × series_bias_fa | 2026-06-21 | 0.0000 (VALID, tie) | dropped (v3fb NO-GO, 2026-06-21) |
 
 ## Feature sets
 
@@ -83,6 +85,12 @@ Every feature on this list MUST have:
   (not `dataset.build`). With the current single-capture `backfill_dataset`
   all v4 rows drop. Activate once the daily forward pipeline runs ≥ 2
   consecutive days on the same markets. Use `--feature-set v4`.
+- `FEATURES_V3FB` (6 features, B38 2026-06-21) — V3FA + two fold-aware
+  interaction terms: `p_consensus_x_series_bias_fa` and
+  `days_ahead_x_series_bias_fa`. **Both rejected on 62-date dataset**
+  (p=0.912 and p=0.633 respectively on 12 VALID dates). Included for
+  institutional memory; conclusion: interaction effects are undetectable
+  at current sample size. Re-test once HOLDOUT > 30 dates.
 
 ## Updates
 
