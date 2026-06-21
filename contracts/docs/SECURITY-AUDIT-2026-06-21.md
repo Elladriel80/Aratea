@@ -104,7 +104,7 @@ externe.
 | ID | Severity | Title | Status |
 |----|----------|-------|--------|
 | GOV-1 | H | Param changes (quorum, treasury) sans Timelock | Risk for mainnet |
-| GOV-2 | M | Dispute bloqué si executeRound() revert | No escape hatch |
+| GOV-2 | M | Dispute bloqué si executeRound() revert | ✅ Mitigated — `forceResolveStuck()` added |
 | GOV-3 | I | Double check `AlreadyDisputed` redondant | Harmless |
 | GOV-4 | I | `proposeAlternative` : rollback sur duplicate altHash | Safe by design |
 
@@ -127,7 +127,7 @@ compromise) peut :
 jours) et transférer `DEFAULT_ADMIN_ROLE` du Governor au Timelock. L'admin EOA
 devient proposer du Timelock ; la communauté peut annuler en 7 jours.
 
-**GOV-2 — Dispute bloqué sans mécanisme d'urgence (Severity: Medium)**
+**GOV-2 — Dispute bloqué sans mécanisme d'urgence (Severity: Medium) — ✅ FIXED**
 
 Si `_executeWinner()` est appelé mais que `registry.executeRound(winner)` revert
 (ex. : MintGovernor n'a plus ROUND_EXECUTOR_ROLE, ou un bug de registre), la
@@ -136,10 +136,10 @@ transaction revert intégralement et le dispute reste bloqué pour toujours (`re
 
 *Impact* : un dispute contesté et résolu ne peut plus être exécuté ni clos. Les
 tokens ne sont pas mintés. Le round reste en attente indéfiniment.
-*Recommandation* : ajouter une fonction admin de dernier recours
-`forceResolveStuck(bytes32 originalRound)` qui marque `resolved = true` sans
-exécuter, pour les cas où le registre est dans un état incohérent. Protéger par
-`DEFAULT_ADMIN_ROLE` + émission d'un event `DisputeForceResolved`.
+*Fix* : `forceResolveStuck(bytes32 originalRound)` ajouté dans MintGovernor.sol
+(section EMERGENCY). Marque `resolved = true`, efface `activeBallot` et marque
+le ballot `Rejected` si un vote était encore ouvert. Protégé par `DEFAULT_ADMIN_ROLE`.
+Émet `DisputeForceResolved`. 5 tests unitaires ajoutés (B40).
 
 **GOV-3 — Double check AlreadyDisputed**
 
@@ -159,28 +159,16 @@ et toute la transaction est annulée, y compris les effets préalables sur `d.qu
 
 | ID | Severity | Title | Status |
 |----|----------|-------|--------|
-| INFRA-1 | I | Slither absent de la CI | Recommended addition |
+| INFRA-1 | I | Slither absent de la CI | ✅ Done — `static-analysis` job in contracts-ci.yml |
 | INFRA-2 | ✅ | SHA pinning GitHub Actions | Done (B16) |
 | INFRA-3 | ✅ | Gitleaks secret scan | Done (B19) |
 | INFRA-4 | ✅ | persist-credentials:false + BOT_PAT isolé | Done (B17) |
 
-**INFRA-1 — Slither non intégré en CI**
+**INFRA-1 — Slither intégré en CI ✅ DONE**
 
-Slither (outil de détection statique Solidity) n'est pas dans `contracts-ci.yml`.
-Il aurait capté les patterns ci-dessus (loops non bornées, param changes non
-timeclockés) de manière automatisée.
-
-*Recommandation* : ajouter un step `slither .` dans `contracts-ci.yml`, avec
-sortie en `--json` archivée comme artefact de CI. À exécuter sur chaque PR qui
-modifie `contracts/src/`.
-
-```yaml
-- name: Slither static analysis
-  uses: crytic/slither-action@v0.4.0  # pin SHA avant merge
-  with:
-    target: contracts/
-    slither-args: --json slither-output.json
-```
+Le job `static-analysis` dans `contracts-ci.yml` exécute `crytic/slither-action@v0.4.0`
+(SHA pinned) avec `slither.config.json` (filtre `lib/,test/,script/`, `fail_on: medium`).
+Tourne sur chaque push/PR modifiant `contracts/**`.
 
 ---
 
@@ -223,11 +211,11 @@ Conditions non encore remplies :
       sur AugPocToken ET MintGovernor
 - [ ] **TimelockController** avec delay ≥ 7 jours pour les param changes du
       Governor (GOV-1)
-- [ ] **ROUND_EXECUTOR_ROLE** : vérifier post-rewiring Phase 2 que l'admin EOA
-      n'a plus ce rôle (REG-1)
-- [ ] **Mécanisme d'urgence** `forceResolveStuck()` ajouté au MintGovernor (GOV-2)
-      ou accepté comme risque documenté
-- [ ] **Slither CI** intégré et sortie propre (INFRA-1)
+- [x] **ROUND_EXECUTOR_ROLE** : test post-rewiring Phase 2 ajouté (REG-1 — B41 :
+      `DeployArateaPhase2.t.sol::test_Phase2_AdminLosesExecutorRole`). À vérifier
+      on-chain après le broadcast Ledger (B6).
+- [x] **Mécanisme d'urgence** `forceResolveStuck()` ajouté au MintGovernor (GOV-2) — B40
+- [x] **Slither CI** intégré et sortie propre (INFRA-1) — `contracts-ci.yml` job `static-analysis`
 - [ ] **Supply cap ou garde-fous d'émission** : décision DAO documentée et
       archivée on-chain
 
