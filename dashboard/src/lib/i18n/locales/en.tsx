@@ -8,6 +8,7 @@ export const en = {
       predictor: "predictor",
       token: "token",
       rounds: "rounds",
+      governance: "governance",
       github: "github ↗",
     },
     footer:

@@ -9,6 +9,7 @@ export const fr: Dictionary = {
       predictor: "prédicteur",
       token: "token",
       rounds: "rounds",
+      governance: "gouvernance",
       github: "github ↗",
     },
     footer:
