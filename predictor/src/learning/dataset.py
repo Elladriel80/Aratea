@@ -73,6 +73,81 @@ def fetch_resolutions(records: list[dict]) -> dict[str, str]:
     return resolutions
 
 
+def annotate_revision_drift(records: list[dict]) -> list[dict]:
+    """Pre-compute forecast revision drift and attach it as `_revision` to each record.
+
+    For each ticker that has at least two captures (different `_capture_at` values),
+    compute revision = p_consensus(latest capture) − p_consensus(earliest capture).
+    A positive value means the consensus probability moved UP as the market approached
+    resolution; negative means it moved DOWN.
+
+    Call this BEFORE `keep_earliest_with_quote` so that all captures per ticker are
+    still available for the comparison.  After `keep_earliest_with_quote` each ticker
+    has exactly one record, which carries the `_revision` annotated here.
+
+    When fewer than two captures exist for a ticker (or p_consensus is None in either),
+    `_revision` is set to None and the row is dropped by `extract()` if the feature
+    spec includes `f_forecast_revision`.
+    """
+    from src.learning.features import f_p_consensus, f_days_ahead  # noqa: F401
+
+    by_ticker: dict[str, list[dict]] = {}
+    for r in records:
+        t = r.get("ticker") or r.get("event_ticker")
+        if t:
+            by_ticker.setdefault(t, []).append(r)
+
+    for ticker, recs in by_ticker.items():
+        # Sort by capture timestamp ascending (earliest first)
+        sorted_recs = sorted(recs, key=lambda x: x.get("_capture_at") or "")
+        pc_early = f_p_consensus(sorted_recs[0])
+        pc_late = f_p_consensus(sorted_recs[-1])
+        revision: float | None = (
+            pc_late - pc_early
+            if (len(recs) >= 2 and pc_early is not None and pc_late is not None)
+            else None
+        )
+        for r in recs:
+            r["_revision"] = revision
+
+    return records
+
+
+def build_with_revision(spec) -> tuple[list[dict], list[int], list[dict]]:
+    """Like `build`, but first annotates revision drift across all captures.
+
+    Use this instead of `build` when the feature spec contains
+    `f_forecast_revision`.  Requires at least two `forward_*.json` files
+    that captured the same markets at different dates; when only one capture
+    per ticker exists `_revision` is None and those rows are dropped.
+    """
+    all_records = load_forward_records()
+    annotate_revision_drift(all_records)       # mutates records in-place
+    unique = keep_earliest_with_quote(all_records)
+    resolutions = fetch_resolutions(unique)
+
+    X: list[dict] = []
+    y: list[int] = []
+    meta: list[dict] = []
+    for r in unique:
+        outcome = resolutions.get(r["ticker"])
+        if outcome not in ("yes", "no"):
+            continue
+        feats = extract(r, spec)
+        if feats is None:
+            continue
+        X.append(feats)
+        y.append(1 if outcome == "yes" else 0)
+        meta.append({
+            "ticker": r["ticker"],
+            "event_ticker": r["event_ticker"],
+            "target_date": r.get("target_date"),
+            "capture_at": r.get("_capture_at"),
+            "yes_mid": r.get("yes_mid"),
+        })
+    return X, y, meta
+
+
 def build(spec) -> tuple[list[dict], list[int], list[dict]]:
     """Return (X_feature_dicts, y_outcomes, meta) for the given feature spec.
 
