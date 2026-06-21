@@ -1,0 +1,224 @@
+{
+  "schema": "learning_loop/1",
+  "timestamp_utc": "20260621T162639Z",
+  "base_feature_set": "v3fa",
+  "model_type": "lr",
+  "initial_config": {
+    "features": [
+      "p_consensus",
+      "forecast_spread",
+      "days_ahead",
+      "series_bias_fa"
+    ],
+    "C": 1.0
+  },
+  "final_config": {
+    "features": [
+      "p_consensus",
+      "forecast_spread",
+      "days_ahead",
+      "series_bias_fa"
+    ],
+    "C": 0.1
+  },
+  "params": {
+    "train_frac": 0.6,
+    "valid_frac": 0.2,
+    "alpha": 0.1,
+    "min_distinct_dates": 3
+  },
+  "split": {
+    "n_train": 891,
+    "n_valid": 288,
+    "n_holdout": 288,
+    "train_dates": "2026-04-11..2026-05-20 (38 dates)",
+    "valid_dates": "2026-05-21..2026-06-01 (12 dates)",
+    "holdout_dates": "2026-06-02..2026-06-13 (12 dates)"
+  },
+  "n_trials": 7,
+  "n_accepted": 1,
+  "ledger": [
+    {
+      "trial": 1,
+      "candidate": {
+        "op": "set_C",
+        "value": 0.1
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "series_bias_fa"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.13016995473505388,
+      "brier_valid_incumbent": 0.13112061951351,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 9,
+        "p_value": 0.046142578125,
+        "method": "wilcoxon"
+      },
+      "accepted": true
+    },
+    {
+      "trial": 2,
+      "candidate": {
+        "op": "set_C",
+        "value": 0.3
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "series_bias_fa"
+        ],
+        "C": 0.3
+      },
+      "brier_valid": 0.1308254828439249,
+      "brier_valid_incumbent": 0.13016995473505388,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 3,
+        "p_value": 0.953857421875,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 3,
+      "candidate": {
+        "op": "set_C",
+        "value": 3.0
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "series_bias_fa"
+        ],
+        "C": 3.0
+      },
+      "brier_valid": 0.1312123748825164,
+      "brier_valid_incumbent": 0.13016995473505388,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 3,
+        "p_value": 0.968017578125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 4,
+      "candidate": {
+        "op": "drop_feature",
+        "feature": "days_ahead"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "series_bias_fa"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.1301699547350539,
+      "brier_valid_incumbent": 0.13016995473505388,
+      "sign_test": {
+        "n_dates_compared": 2,
+        "wins": 0,
+        "p_value": 1.0,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 5,
+      "candidate": {
+        "op": "drop_feature",
+        "feature": "series_bias_fa"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.13121134986537153,
+      "brier_valid_incumbent": 0.13016995473505388,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 4,
+        "p_value": 0.866943359375,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 6,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "is_hightemp"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "series_bias_fa",
+          "is_hightemp"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.1300606661873114,
+      "brier_valid_incumbent": 0.13016995473505388,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 7,
+        "p_value": 0.23486328125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 7,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "consensus_x_spread"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "series_bias_fa",
+          "consensus_x_spread"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.1301356361130353,
+      "brier_valid_incumbent": 0.13016995473505388,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 6,
+        "p_value": 0.425048828125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    }
+  ],
+  "holdout": {
+    "brier_initial": 0.1178203516580609,
+    "brier_final": 0.1172573071799269,
+    "brier_kalshi_mid": 0.11731128472222221,
+    "generalized": true
+  },
+  "multiple_testing_note": "7 candidates were tested against the same validation slice; the holdout verdict above is the only unbiased number in this file."
+}

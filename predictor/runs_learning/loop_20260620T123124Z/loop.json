@@ -1,0 +1,294 @@
+{
+  "schema": "learning_loop/1",
+  "timestamp_utc": "20260620T123124Z",
+  "base_feature_set": "v3",
+  "initial_config": {
+    "features": [
+      "p_consensus",
+      "forecast_spread",
+      "days_ahead"
+    ],
+    "C": 1.0
+  },
+  "final_config": {
+    "features": [
+      "p_consensus",
+      "forecast_spread",
+      "days_ahead",
+      "latitude"
+    ],
+    "C": 0.1
+  },
+  "params": {
+    "train_frac": 0.6,
+    "valid_frac": 0.2,
+    "alpha": 0.1,
+    "min_distinct_dates": 3
+  },
+  "split": {
+    "n_train": 444,
+    "n_valid": 144,
+    "n_holdout": 144,
+    "train_dates": "2026-04-14..2026-05-20 (37 dates)",
+    "valid_dates": "2026-05-21..2026-06-01 (12 dates)",
+    "holdout_dates": "2026-06-02..2026-06-13 (12 dates)"
+  },
+  "n_trials": 10,
+  "n_accepted": 3,
+  "ledger": [
+    {
+      "trial": 1,
+      "candidate": {
+        "op": "set_C",
+        "value": 0.3
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead"
+        ],
+        "C": 0.3
+      },
+      "brier_valid": 0.15847081130577745,
+      "brier_valid_incumbent": 0.15904847022515126,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 9,
+        "p_value": 0.03857421875,
+        "method": "wilcoxon"
+      },
+      "accepted": true
+    },
+    {
+      "trial": 2,
+      "candidate": {
+        "op": "set_C",
+        "value": 3.0
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead"
+        ],
+        "C": 3.0
+      },
+      "brier_valid": 0.15922590976250797,
+      "brier_valid_incumbent": 0.15847081130577745,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 3,
+        "p_value": 0.968017578125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 3,
+      "candidate": {
+        "op": "set_C",
+        "value": 0.1
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15714461437293015,
+      "brier_valid_incumbent": 0.15847081130577745,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 9,
+        "p_value": 0.046142578125,
+        "method": "wilcoxon"
+      },
+      "accepted": true
+    },
+    {
+      "trial": 4,
+      "candidate": {
+        "op": "drop_feature",
+        "feature": "days_ahead"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15714461437293015,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 0,
+        "wins": 0,
+        "p_value": 1.0,
+        "method": "none"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 5,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "distance_to_coast_km"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "distance_to_coast_km"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15710979411241563,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 7,
+        "p_value": 0.36669921875,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 6,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "elevation_m"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "elevation_m"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15716829752285819,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 8,
+        "p_value": 0.3955078125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 7,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "forest_pct_5km"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "forest_pct_5km"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15673150094831667,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 7,
+        "p_value": 0.31103515625,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 8,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "latitude"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "latitude"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15713136561291102,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 9,
+        "p_value": 0.03857421875,
+        "method": "wilcoxon"
+      },
+      "accepted": true
+    },
+    {
+      "trial": 9,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "urban_density_5km"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "latitude",
+          "urban_density_5km"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15677196957105924,
+      "brier_valid_incumbent": 0.15713136561291102,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 7,
+        "p_value": 0.31103515625,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 10,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "water_pct_10km"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "latitude",
+          "water_pct_10km"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15687711276000288,
+      "brier_valid_incumbent": 0.15713136561291102,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 7,
+        "p_value": 0.31103515625,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    }
+  ],
+  "holdout": {
+    "brier_initial": 0.13704758081074198,
+    "brier_final": 0.1366680174821451,
+    "brier_kalshi_mid": 0.1340090277777778,
+    "generalized": true
+  },
+  "multiple_testing_note": "10 candidates were tested against the same validation slice; the holdout verdict above is the only unbiased number in this file."
+}

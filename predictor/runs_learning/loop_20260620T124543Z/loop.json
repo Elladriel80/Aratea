@@ -1,0 +1,144 @@
+{
+  "schema": "learning_loop/1",
+  "timestamp_utc": "20260620T124543Z",
+  "base_feature_set": "v3",
+  "model_type": "lr",
+  "initial_config": {
+    "features": [
+      "p_consensus",
+      "forecast_spread",
+      "days_ahead"
+    ],
+    "C": 1.0
+  },
+  "final_config": {
+    "features": [
+      "p_consensus",
+      "forecast_spread",
+      "days_ahead"
+    ],
+    "C": 0.1
+  },
+  "params": {
+    "train_frac": 0.6,
+    "valid_frac": 0.2,
+    "alpha": 0.1,
+    "min_distinct_dates": 3
+  },
+  "split": {
+    "n_train": 444,
+    "n_valid": 144,
+    "n_holdout": 144,
+    "train_dates": "2026-04-14..2026-05-20 (37 dates)",
+    "valid_dates": "2026-05-21..2026-06-01 (12 dates)",
+    "holdout_dates": "2026-06-02..2026-06-13 (12 dates)"
+  },
+  "n_trials": 4,
+  "n_accepted": 1,
+  "ledger": [
+    {
+      "trial": 1,
+      "candidate": {
+        "op": "set_C",
+        "value": 0.1
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.15714461437293015,
+      "brier_valid_incumbent": 0.15904847022515126,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 9,
+        "p_value": 0.046142578125,
+        "method": "wilcoxon"
+      },
+      "accepted": true
+    },
+    {
+      "trial": 2,
+      "candidate": {
+        "op": "add_feature",
+        "feature": "consensus_x_spread"
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead",
+          "consensus_x_spread"
+        ],
+        "C": 0.1
+      },
+      "brier_valid": 0.1571643979188584,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 5,
+        "p_value": 0.661376953125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 3,
+      "candidate": {
+        "op": "set_C",
+        "value": 0.3
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead"
+        ],
+        "C": 0.3
+      },
+      "brier_valid": 0.15847081130577745,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 3,
+        "p_value": 0.96142578125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    },
+    {
+      "trial": 4,
+      "candidate": {
+        "op": "set_C",
+        "value": 3.0
+      },
+      "config": {
+        "features": [
+          "p_consensus",
+          "forecast_spread",
+          "days_ahead"
+        ],
+        "C": 3.0
+      },
+      "brier_valid": 0.15922590976250797,
+      "brier_valid_incumbent": 0.15714461437293015,
+      "sign_test": {
+        "n_dates_compared": 12,
+        "wins": 3,
+        "p_value": 0.96142578125,
+        "method": "wilcoxon"
+      },
+      "accepted": false
+    }
+  ],
+  "holdout": {
+    "brier_initial": 0.13704758081074198,
+    "brier_final": 0.13691105357820219,
+    "brier_kalshi_mid": 0.1340090277777778,
+    "generalized": true
+  },
+  "multiple_testing_note": "4 candidates were tested against the same validation slice; the holdout verdict above is the only unbiased number in this file."
+}
