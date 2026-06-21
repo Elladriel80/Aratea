@@ -387,6 +387,50 @@ def _select_target_bins(ev, champion_p_yes_by_ticker: dict[str, float]) -> list[
     return candidates[:MAX_BINS_PER_EVENT]
 
 
+def _select_control_bins(ev, probs: dict[str, float], n: int,
+                          exclude_tickers: set[str]) -> list[dict]:
+    """Sélectionne jusqu'à n bins témoins (algo_signal='no_bet').
+
+    Critères :
+      - ticker non présent dans exclude_tickers (pas déjà sélectionné comme pari)
+      - |edge vs mid| < EDGE_THRESHOLD (sous le seuil — ne mérite pas d'être parié)
+      - yes_bid et yes_ask non-null (bin tradable, pour avoir un yes_mid cohérent)
+    Tri par |prob - 0.5| croissant (plus proche du milieu en premier, pour maximiser
+    la diversité des bins témoins). Retourne [] si n == 0 ou aucun bin qualifie.
+    """
+    if n == 0:
+        return []
+    candidates = []
+    for m in ev.markets:
+        if m.ticker in exclude_tickers:
+            continue
+        p = probs.get(m.ticker)
+        if p is None:
+            continue
+        yb = m.yes_bid
+        ya = m.yes_ask
+        if yb is None or ya is None:
+            continue
+        yes_mid = (float(yb) + float(ya)) / 2.0
+        edge = p - yes_mid
+        abs_edge = abs(edge)
+        if abs_edge >= EDGE_THRESHOLD:
+            continue
+        candidates.append({
+            "ticker": m.ticker,
+            "yes_bid": float(yb),
+            "yes_ask": float(ya),
+            "yes_mid": yes_mid,
+            "spread": float(ya) - float(yb),
+            "p_champion": p,
+            "edge": edge,
+            "abs_edge": abs_edge,
+        })
+    # Trier par |p - 0.5| croissant (bins les plus neutres en premier).
+    candidates.sort(key=lambda c: abs(c["p_champion"] - 0.5))
+    return candidates[:n]
+
+
 def _already_captured_bin(event_ticker: str, market_ticker: str) -> Optional[str]:
     """Return run_id of an open run matching (event_ticker, market_ticker), or None.
 
@@ -425,6 +469,7 @@ def _capture_one_bin(
     portfolio: PortfolioHeat,
     current_bankroll: float,
     dry_run: bool,
+    algo_signal: str = "bet",
 ) -> dict:
     """Capture one (event, bin) into runs/<NNN>/report.json + ledger.
 
@@ -438,6 +483,12 @@ def _capture_one_bin(
         (defensive : symétrique au validateur unknown_series de step_capture) ;
       - les caps portefeuille saturent (amount = 0 → refus pur, aucun
         redimensionnement à epsilon).
+
+    Quand algo_signal == "no_bet" (bin témoin Phase 1) :
+      - stake forcée à 0 (aucune mise réelle) ;
+      - portfolio.register() non appelé (pas de heat engagée) ;
+      - la ligne ledger est quand même écrite avec stake_usd=0 et le
+        marqueur "no_bet" pour le suivi du groupe témoin.
     """
     target_market = next(m for m in ev.markets if m.ticker == target["ticker"])
     spec = parse_market(target_market)
@@ -448,6 +499,43 @@ def _capture_one_bin(
 
     side = "NO" if target["edge"] < 0 else "YES"
     ledger_bet_id = _bet_id() if not dry_run else "DRY_RUN_NO_LEDGER"
+
+    # Groupe témoin : mise zéro, pas de sizing, pas de heat.
+    if algo_signal == "no_bet":
+        models = _predict_all_models(registry, weather, spec, target["yes_mid"])
+        ts_utc = _now_iso()
+        champion_name = registry["current_champion"]
+        champion_method = next(
+            (m["method"] for m in models if m["name"] == champion_name), "unknown"
+        )
+        champion_p_yes = next(
+            (m["p_yes"] for m in models if m["name"] == champion_name), None
+        )
+        if not dry_run:
+            _append_ledger_row({
+                "bet_id": ledger_bet_id,
+                "placed_at_utc": ts_utc,
+                "market_ticker": target["ticker"],
+                "event_ticker": ev.event_ticker,
+                "target_date": spec.target_date.isoformat(),
+                "side": side,
+                "stake_usd": 0.0,
+                "entry_price": target["yes_mid"],
+                "prob_model": champion_p_yes,
+                "prob_market_implied": target["yes_mid"],
+                "edge": (champion_p_yes - target["yes_mid"]) if champion_p_yes is not None else "",
+                "method": champion_method,
+                "spec": spec.describe(),
+                "algo_signal": "no_bet",
+            })
+        return {
+            "captured": True,
+            "dry_run": dry_run,
+            "algo_signal": "no_bet",
+            "size_usd": 0.0,
+            "event_ticker": ev.event_ticker,
+            "market_ticker": target["ticker"],
+        }
 
     try:
         size_usd, bet_ctx = _size_with_caps(
@@ -576,7 +664,7 @@ def _capture_one_bin(
               f"(heat: {portfolio.total_open_fraction()*100:.1f}% → {heat_after_pct:.1f}%)")
         return {"captured": True, "dry_run": True, "run_id": run_id,
                 "event_ticker": ev.event_ticker, "market_ticker": target["ticker"],
-                "side": side, "size_usd": size_usd}
+                "side": side, "size_usd": size_usd, "algo_signal": algo_signal}
 
     run_dir = RUNS_DIR / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -599,6 +687,7 @@ def _capture_one_bin(
         "edge": (champion_p_yes - target["yes_mid"]) if champion_p_yes is not None else "",
         "method": champion_method,
         "spec": spec.describe(),
+        "algo_signal": algo_signal,
     })
     print(f"   appended ledger row (bet_id={ledger_bet_id})")
 
@@ -612,7 +701,7 @@ def _capture_one_bin(
     return {"captured": True, "dry_run": False, "run_id": run_id,
             "event_ticker": ev.event_ticker, "market_ticker": target["ticker"],
             "side": side, "n_contracts": pos["n_contracts"], "size_usd": size_usd,
-            "heat_after_pct": heat_after_pct}
+            "heat_after_pct": heat_after_pct, "algo_signal": algo_signal}
 
 
 def step_capture(dry_run: bool) -> dict:

@@ -501,6 +501,35 @@ FEATURES_V3B: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
 ]
 
 
+# ---------- V3fa: fold-aware bias (B35 — biais estimés depuis TRAIN uniquement) ----------
+
+# Same concept as V3b but the bias values are estimated from the TRAIN fold
+# only (no leakage into VALID/HOLDOUT).  Stored in pre-computed dataset files
+# as the key "series_bias_fa" (see backfill_dataset_v3b_fa.json).
+# The extractor just reads the pre-computed value from the record dict.
+
+def f_series_bias_fa(rec: dict[str, Any]) -> float | None:
+    """Fold-aware series bias — estimated from TRAIN dates only.
+
+    Same semantics as f_series_bias_prior but without data leakage:
+    bias values are computed from the TRAIN window before being applied
+    to VALID/HOLDOUT. Must use a pre-augmented dataset (backfill_dataset_v3b_fa.json)
+    where the key 'series_bias_fa' is already present.
+
+    Source: B35 fold-aware evaluation 2026-06-21.
+    """
+    v = rec.get("series_bias_fa")
+    return float(v) if v is not None else None
+
+
+FEATURES_V3FA: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
+    ("p_consensus",      f_p_consensus),
+    ("forecast_spread",  f_forecast_spread),
+    ("days_ahead",       f_days_ahead),
+    ("series_bias_fa",   f_series_bias_fa),
+]
+
+
 # ---------- V4 features: forecast revision drift (B23) ----------
 
 def f_forecast_revision(rec: dict[str, Any]) -> float | None:
@@ -549,13 +578,14 @@ FEATURES_V4: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
 
 # Convenience map for --feature-set CLI flag.
 FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]]]] = {
-    "v0": FEATURES_V0,
-    "v1": FEATURES_V1,
-    "v2": FEATURES_V2,
-    "v3": FEATURES_V3,
-    "v3x": FEATURES_V3_EXPERIMENTAL,
-    "v3b": FEATURES_V3B,
-    "v4":  FEATURES_V4,
+    "v0":   FEATURES_V0,
+    "v1":   FEATURES_V1,
+    "v2":   FEATURES_V2,
+    "v3":   FEATURES_V3,
+    "v3x":  FEATURES_V3_EXPERIMENTAL,
+    "v3b":  FEATURES_V3B,
+    "v3fa": FEATURES_V3FA,
+    "v4":   FEATURES_V4,
 }
 
 

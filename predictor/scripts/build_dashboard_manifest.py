@@ -593,35 +593,84 @@ def _backtest_ledger_summary() -> dict[str, Any]:
 
 
 def _paper_bets_summary() -> dict[str, Any]:
-    """Aggregate counters from the paper-bet ledger. No row-level leakage."""
+    """Aggregate counters from the paper-bet ledger. No row-level leakage.
+
+    Les lignes avec algo_signal == "no_bet" (groupe témoin Phase 1) sont
+    comptabilisées séparément et exclues du P&L et du compteur Phase 1.
+    Les lignes sans colonne algo_signal (anciens fichiers) sont traitées
+    comme "bet" (comportement rétro-compatible).
+    """
     if not PAPER_BETS_CSV.exists():
         return {
             "n_open": 0,
             "n_resolved": 0,
             "pnl_usd_cumulative": 0.0,
+            "wins": 0,
+            "losses": 0,
             "phase_1_counter": f"0/{PHASE_1_TARGET}",
+            "control_group": {"n_resolved": 0, "wins": 0, "losses": 0},
         }
     n_open = 0
     n_resolved = 0
     pnl_cum = 0.0
+    wins = 0
+    losses = 0
+    ctrl_resolved = 0
+    ctrl_wins = 0
+    ctrl_losses = 0
     with PAPER_BETS_CSV.open("r", encoding="utf-8", newline="") as fh:
         reader = csv.DictReader(fh)
         for row in reader:
+            signal = (row.get("algo_signal") or "bet").strip() or "bet"
             resolution = (row.get("resolution") or "").strip()
-            if resolution:
-                n_resolved += 1
-                try:
-                    pnl_cum += float(row.get("pnl_usd") or 0.0)
-                except ValueError:
-                    pass
+            is_resolved = bool(resolution)
+            pnl_raw = row.get("pnl_usd") or ""
+            try:
+                pnl_val = float(pnl_raw) if pnl_raw else 0.0
+            except ValueError:
+                pnl_val = 0.0
+
+            if signal == "no_bet":
+                # Groupe témoin : suivi séparé, exclu du P&L principal.
+                if is_resolved:
+                    ctrl_resolved += 1
+                    if pnl_val > 0:
+                        ctrl_wins += 1
+                    elif pnl_val < 0:
+                        ctrl_losses += 1
+                    else:
+                        # pnl == 0 : on déduit le résultat de la direction du pari
+                        # (NO bet gagne si resolution == "no", YES bet gagne si "yes").
+                        side = (row.get("side") or "").strip().upper()
+                        if (side == "NO" and resolution == "no") or (side == "YES" and resolution == "yes"):
+                            ctrl_wins += 1
+                        else:
+                            ctrl_losses += 1
             else:
-                n_open += 1
+                # Pari normal (algo_signal == "bet" ou absent).
+                if is_resolved:
+                    n_resolved += 1
+                    pnl_cum += pnl_val
+                    if pnl_val > 0:
+                        wins += 1
+                    else:
+                        losses += 1
+                else:
+                    n_open += 1
+
     total = n_open + n_resolved
     return {
         "n_open": n_open,
         "n_resolved": n_resolved,
         "pnl_usd_cumulative": round(pnl_cum, 2),
+        "wins": wins,
+        "losses": losses,
         "phase_1_counter": f"{total}/{PHASE_1_TARGET}",
+        "control_group": {
+            "n_resolved": ctrl_resolved,
+            "wins": ctrl_wins,
+            "losses": ctrl_losses,
+        },
     }
 
 
