@@ -1,6 +1,6 @@
 # Status
 
-*Last updated: 2026-06-02*
+*Last updated: 2026-06-21*
 
 Snapshot of where Aratea actually stands across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
@@ -14,233 +14,149 @@ For the phased plan that frames these tracks, see [`ROADMAP.md`](ROADMAP.md).
 ## Predictor — Phase 1 Kalshi POC
 
 Mode: **paper trading only**. No real-money position has been opened.
-The Phase 1 go / no-go criterion is recorded in
-[`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §6:
-on N > 50 resolved runs, the meta-ensemble must beat both the best
-individual model and climatology on Brier score.
 
 ### Live model lineup
 
 Registry: [`predictor/runs_learning/CHAMPION.json`](predictor/runs_learning/CHAMPION.json).
 
-| Role | Model | Active since | Method |
+| Role | Model | Feature set | Status |
 |---|---|---|---|
-| Champion | `vendor_ensemble` | 2026-05-10 | Mean of four vendor probabilities (ECMWF + GraphCast + GFS + JMA), blended with climatology by horizon. No training. |
-| Challenger | `learned_v2` | 2026-05-12 | `sklearn.LogisticRegression(L2, C=1.0)` over 11 features (5 forecast-derived + 6 static geographic). |
-| Baseline | `kalshi_mid_baseline` | 2026-05-13 | The Kalshi market mid-price as the prediction — the floor a model must beat to claim any edge. |
+| Champion | `learned_v3` | v3 — p_consensus, forecast_spread, days_ahead | Active since 2026-06-04 (sigma-bascule) |
+| Baseline | `kalshi_mid_baseline` | — | Floor the model must beat |
 
-Promotion of a challenger requires three independent conditions
-(encoded in `CHAMPION.json`): its source training run must have
-`promotable: true` (`n_distinct_test_split_values >= 3`), its rolling-mean
-Brier over the last N ≥ 10 resolved trades must be strictly lower than
-the champion's, and a 1-sided binomial sign test on per-trade Brier wins
-must yield p < 0.10.
+### Training — backfill dataset (2026-06-20)
 
-### Resolved paper runs
+| Metric | Value |
+|---|---|
+| Total rows | 1 467 |
+| Distinct `target_date` | **62** (G1 target: 60 ✅) |
+| Series covered | KXLOWTNYC, KXHIGHTSFO, KXLOWTCHI, KXLOWTBOS, KXLOWTMIA, KXLOWTLAX |
+| Feature set built | v3 + interaction features |
 
-The daily auto-capture (see *CI* below) has grown the dataset well past the
-go / no-go threshold. Counts below come from the union of
-[`predictor/runs/*/report.json`](predictor/runs/) (`scoring.outcome`) and the
-ledger [`predictor/data/ledger/paper_bets.csv`](predictor/data/ledger/paper_bets.csv).
+### Latest learning loop results (2026-06-21)
 
-| Metric | Value | Source |
+62 dates, chronological split TRAIN 38 / VALID 12 / HOLDOUT 12:
+
+| Config | HOLDOUT Brier | vs Kalshi mid |
 |---|---|---|
-| Captured runs | **142** (`runs/001`–`142`) | `predictor/runs/` |
-| Resolved runs | **115** | `report.json` with `scoring.outcome ∈ {yes,no}` |
-| Open (awaiting settlement) | **27** | `142 − 115` |
-| Champion (`vendor_ensemble`) mean Brier | **0.1994** over 115 resolved | `report.json` §scoring |
-| Champion win rate | **56 / 115** (≈ 49 %) | `report.json` §scoring |
-| Champion best-of-3 models on the event | **35 / 115** (≈ 30 %) | `report.json` `champion_is_best` |
-| Champion net actual P&L | **−$11.61** | `paper_bets.csv` (`pnl_type = actual`) |
+| v3 baseline (C=0.1) | 0.1369 | +0.0029 above market |
+| v3b (series_bias_prior, global) | 0.1170 | −0.0003 (minor leakage) |
+| **v3fa (series_bias_fa, TRAIN-only)** | **0.1173** | **= market (tie, clean)** |
 
-Total resolved: **115 / 50** required for the Phase 1 go / no-go — the
-**N > 50 threshold is now crossed** (criterion: [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §6).
-The formal written go / no-go is therefore the **active pending Phase 1
-deliverable**. Preliminary aggregates do **not** yet show a clear edge: the
-champion ranks best of the three live models on only ~30 % of events and its
-mean Brier (0.199) sits near the base-rate Brier band, so the honest reading
-is "no edge demonstrated yet" pending the formal write-up — not an automatic go.
+**Key finding:** Series-specific bias correction (per-series mean overestimation)
+brings the model from +0.0029 above market (v3) to exact parity (v3fa). Bias
+priors are structurally stable: TRAIN-only vs full-dataset estimates differ ≤ 0.011.
+Next lever: more dates via daily pipeline or new structural feature.
 
-### Open paper runs
+NO-GO hypotheses tested (62-date dataset):
+`GBM depth=2`, `consensus×spread`, `is_hightemp (p=0.117)`, `month_sin/cos (p=0.102, only 3 months)`.
 
-**27 runs** are currently open (captured, awaiting NWS settlement) — the tail
-of the `runs/001`–`142` sequence. Each is opened automatically by the CI
-workflow (see *CI* below) and records a champion position with a real
-`paper_bets.csv` ledger row plus shadow positions for the challenger and the
-baseline (same side, same size, theoretical P&L only) so Brier scores remain
-directly comparable. Most settle on the NWS daily climate report (~J+1), but
-Kalshi settlement can lag a few days, which is why the open count stays around
-two to three days of capture volume.
+### Feature sets
 
-### Latest training run (decision-gate)
+| Key | Features | Holdout | Status |
+|---|---|---|---|
+| `v3` | p_consensus, forecast_spread, days_ahead | 0.1369 | Committed champion |
+| `v3b` | v3 + series_bias_prior (global lookup) | 0.1170 | Experimental |
+| **`v3fa`** | **v3 + series_bias_fa (TRAIN-only)** | **0.1173 = market** | **Best clean result** |
+| `v4` | v3fa + forecast_revision | pending | Activates with ≥2 captures/ticker |
 
-[`predictor/runs_learning/20260514T191934Z/run.json`](predictor/runs_learning/20260514T191934Z/run.json) — feature set v2,
-chronological split on `target_date`.
+### Control-group tracking (PR #170, 2026-06-21)
 
-| Metric | learned_v2 (test) | kalshi_mid (test) |
-|---|---|---|
-| Brier | 0.1323 | **0.1305** |
-| Log loss | 0.4222 | **0.4071** |
-
-`kalshi_mid` leads by 0.0018 Brier. The run is marked `promotable: false`
-because the test set spans **a single distinct `target_date`**
-(2026-05-13). Gate requires ≥ 3 distinct values, so this verdict is not
-yet a generalization claim — it describes one point in time. The next
-batch of resolved events is the bottleneck.
-
-### Feature signal
-
-Registry: [`predictor/src/learning/FEATURES.md`](predictor/src/learning/FEATURES.md). The latest run's
-leave-one-out Brier deltas surface two clean facts:
-
-- The forecast-derived features carry the signal:
-  `p_ensemble` coefficient ≈ +1.07, `p_forecast_blend` ≈ -0.87,
-  `p_climatology` ≈ -0.40, `forecast_spread` ≈ -0.13. The signs on the
-  three probability features are a classic L2 compensation pattern under
-  multicollinearity — flagged for a possible feature set v3 that
-  collapses them into `p_consensus + forecast_spread`.
-- The six static geographic features (`urban_density_5km`,
-  `water_pct_10km`, `forest_pct_5km`, `elevation_m`,
-  `distance_to_coast_km`, `latitude`) are **noise as additive features**
-  in this configuration: `|coef| < 0.04` for all six and Brier deltas in
-  the `1e-5` band. They do not earn their place in a linear model —
-  either drop them or test them as interactions.
-
-### Methodology gate (2026-05-14 fix)
-
-A prior training run ([`predictor/runs_learning/_invalidated/20260514T141925Z/`](predictor/runs_learning/_invalidated/20260514T141925Z/)) was
-explicitly invalidated because its test set collapsed to a single
-`capture_at` value, inflating the `kalshi_mid` baseline to an artificial
-0.0752 (vs. the historical ~0.12–0.14 band). The correctif rewrote
-`chronological_split` to be group-aware on `target_date`, bumped
-`run.json` to schema v3, surfaced `split_key` / `n_distinct_test_split_values`
-in the dashboard manifest, and added a hard gate: any run with
-`n_distinct_test_split_values < 3` is marked `promotable: false`.
-
-Full report: [`predictor/docs/rapport-split-temporel-2026-05-14.md`](predictor/docs/rapport-split-temporel-2026-05-14.md) (French).
+`PaperBet.algo_signal: "bet" | "no_bet"`. Control-group positions are
+tracked at zero stake to measure counterfactual P&L. Dashboard P&L
+filters to `algo_signal == "bet"` rows only.
 
 ---
 
-## Contracts — Phase 1 settlement layer
-
-The on-chain ratification and execution layer for the labor-value mint
-mechanism described in [`docs/token_model.md`](docs/token_model.md).
-Detail and threat model in [`contracts/README.md`](contracts/README.md) and
-[`contracts/docs/SECURITY.md`](contracts/docs/SECURITY.md).
+## Contracts — Phase 1+2 settlement layer
 
 ### Milestones
 
 | Milestone | Scope | Status |
 |---|---|---|
 | **M0** | Foundry scaffold, CI, threat model, bilingual docs | ✅ done |
-| **M1** | `AugPocToken` — ERC-20 + Permit + AccessControl + Pausable + 4 roles | ✅ done |
-| **M2** | ~~`MonthlyMintCap` library~~ — removed 2026-05-17 (no on-chain emission cap; quality gated off-chain — see `contracts/docs/ROUND-LIFECYCLE.md` §5 and white paper §7.7) | — |
-| **M3** | `RoundRegistry` — propose / challenge / execute / cancel lifecycle | ✅ done |
-| **M4** | Deployment scripts on Arbitrum Sepolia + Safe calldata helpers | ✅ done |
-| **M5** | Read-only dashboard (Next.js + viem) | 🟡 in progress — UI built and deployed ([aratea-app.vercel.app](https://aratea-app.vercel.app/)); acceptance still pending the first on-chain round to render real registry data (see *Deployment state* below). |
+| **M1** | `AugPocToken` — ERC-20 + Permit + AccessControl + Pausable | ✅ done |
+| **M2** | ~~`MonthlyMintCap`~~ — removed (quality gated off-chain) | — |
+| **M3** | `RoundRegistry` — propose / challenge / execute / cancel | ✅ done |
+| **M3b** | `MintGovernor` — Phase 2 auto-mint, token-weighted vote | ✅ done (PR #163) |
+| **M4** | Deploy scripts + dry-run forge anvil validated | ✅ done (PR #164) |
+| **M5** | Testnet Arbitrum Sepolia — live deploy | 🟡 blocked (human: install Foundry + run forge deploy) |
+| **M6** | Governance UI `/governance` — wallet + on-chain vote | ✅ done (PR #166) |
 
-### Test coverage discipline
+### Test coverage (as of 2026-06-21)
 
-Unit tests target ≥ 95 % line coverage on business logic, fuzz tests run
-10 000 iterations by default, and invariant tests cover the two
-properties that must never break: no mint before the challenge window
-expires, and `MINTER_ROLE` held only by the `RoundRegistry` (granted to
-the Safe multisig at the admin level). No on-chain emission cap is
-enforced — quality is guaranteed off-chain (white paper §7.7). Toolchain: Foundry, Solidity 0.8.24, OpenZeppelin v5.1.0,
-`forge-std` v1.9.4, Slither 0.10.4 (CI fails on `medium`).
+| Contract | Line | Branch | Function |
+|---|---|---|---|
+| `AugPocToken` | 100% | 100% | 100% |
+| `RoundRegistry` | 100% | 100% | 100% |
+| `MintGovernor` | 100% | 91.49% | 100% |
+| **Full suite** | — | — | **162 tests** |
+
+### Security (internal audit 2026-06-21)
+
+Full report: [`contracts/docs/SECURITY-AUDIT-2026-06-21.md`](contracts/docs/SECURITY-AUDIT-2026-06-21.md) (~620 SLOC, 7 findings).
+
+**Testnet: GO. Mainnet: NO-GO** (requires external audit + Safe multisig + Timelock + REG-1/GOV-1 fixes).
+
+Key open items for mainnet: GOV-1 (param changes no Timelock), REG-1 (ROUND_EXECUTOR_ROLE scope post-Phase2), TOK-2 (admin EOA → Safe).
 
 ### Deployment state
 
-- **Target chain:** Arbitrum Sepolia (testnet).
-- **Live testnet deploy:** not yet executed (M4 ships the scripts;
-  the genesis-round execution is the M5 acceptance test).
-- **Mainnet:** blocked until at least one community audit
-  (Code4rena Arena-X, Sherlock Watson, or documented peer review).
+- **Dry-run:** validated on `forge anvil` — Phase 1 + Phase 2 + ProposeGenesisRound — see [`contracts/docs/DRY-RUN-ANVIL.md`](contracts/docs/DRY-RUN-ANVIL.md).
+- **Testnet (Arbitrum Sepolia):** not yet deployed.
+- **Mainnet:** blocked — external audit required.
 
 ---
 
 ## Dashboard
 
 Live: **[aratea-app.vercel.app](https://aratea-app.vercel.app/)**.
-Source: [`dashboard/`](dashboard/). (Distinct from the companion landing site
-[aratea.vercel.app](https://aratea.vercel.app/), whose source is [`site/`](site/) —
-the two are separate Vercel projects, both live.)
-
-Read-only by design — the dashboard never asks for a signature, never
-broadcasts a transaction, never holds a key. Operations on the contracts
-(`proposeRound`, `executeRound`, `cancelRound`) go through Foundry
-scripts in [`contracts/script/`](contracts/script/), not this UI.
-
-### Surfaces
 
 | Page | What it shows |
 |---|---|
-| `/` (Token) | Name, symbol, decimals, total supply, pause state, emission-policy note (no on-chain cap — quality gated off-chain per white paper §7.7), Arbiscan links. |
-| `/rounds` | Every round committed to the registry, ordered by proposal date. Status pill + challenge-window end + total amount + beneficiary count. |
-| `/round/[hash]` | Full per-round metadata, live countdown to challenge-window end, IPFS link to the pinned `valuation_report.md`, per-beneficiary allocation breakdown. |
-| `/predictor` | Latest training run summary card with Brier vs `kalshi_mid`, feature registry with per-run Brier deltas, run history table, Brier trajectory chart. |
+| `/` | ERC-20 state, total supply, Arbiscan links |
+| `/rounds` | Round registry, lifecycle, challenge window |
+| `/round/[hash]` | Per-round metadata, IPFS link, beneficiary breakdown |
+| `/predictor` | Training run card, feature registry, Brier trajectory |
+| `/governance` | Propose/vote/finalize via MetaMask — shows "not deployed" until `NEXT_PUBLIC_GOVERNOR_ADDRESS` set |
 
-### Stack
-
-Next.js 15 (App Router) + React 19, TypeScript strict, viem 2.x for chain
-reads, Tailwind for styling. No wagmi, no UI kit, no backend, no database,
-no analytics. Every page server-renders against a public RPC; the
-predictor page reads a static manifest (`public/predictor_manifest.json`)
-regenerated at every build via `npm run manifest` →
-`predictor/scripts/build_dashboard_manifest.py`.
+Stack: Next.js 15 + React 19, TypeScript strict, viem 2.x, Tailwind. No backend, no database.
 
 ---
 
 ## CI
 
-Workflows live in [`.github/workflows/`](.github/workflows/).
-
 | Workflow | Trigger | Purpose |
 |---|---|---|
-| `daily-trading.yml` | cron `0 18 * * *` UTC + manual dispatch | Run `daily_auto.py`: auto-finalize settled runs, then scan **16 event series** and auto-capture up to **3 bins/event** where `|edge vs kalshi_mid| ≥ 0.05` and `spread ≤ 0.08` (live defaults in [`predictor/scripts/daily_auto.py`](predictor/scripts/daily_auto.py); the `0.10 / 0.05`, NYC-only values are the env-overridable rollback path), rebuild manifest, commit + push so Vercel redeploys. |
-| `contracts-ci.yml` | push / PR on `contracts/**` | Forge build + test + coverage + Slither. |
-| `dashboard-ci.yml` | push / PR on `dashboard/**` | Typecheck + Next.js build + manifest shim test. |
-| `announce-release.yml` | `run-*` annotated tags | Auto-announce paper-run open / close to Discord. |
-| `weekly-recap.yml` | weekly cron | Generates a weekly summary. |
-| `codeql.yml` | push / PR + schedule | GitHub-hosted security scanning. |
-| `stale.yml` | scheduled | Auto-management of inactive issues. |
-
-The daily-trading job uses a fine-grained PAT (`BOT_PAT` secret) so the
-final push respects the main-branch ruleset. Fork PRs cannot trigger
-that workflow (schedule + workflow_dispatch only).
+| `daily-trading.yml` | cron `0 18 * * *` UTC + manual | Finalize + capture + manifest rebuild + Vercel redeploy |
+| `contracts-ci.yml` | push/PR on `contracts/**` | forge build + test + coverage + Slither |
+| `dashboard-ci.yml` | push/PR on `dashboard/**` | typecheck + Next.js build |
+| `security-scan.yml` | push/PR | gitleaks secret scan, SHA-pinned (PR #161) |
+| `announce-release.yml` | `run-*` tags | Discord announcements |
+| `weekly-recap.yml` | weekly | Weekly summary |
+| `codeql.yml` | push/PR + schedule | GitHub security scanning |
 
 ---
 
-## Recent infrastructure
+## Recent changes (since 2026-06-10)
 
-- **2026-05-11** — Rename Augure → Aratea after diligence flagged a
-  conflict with Augur (Ethereum prediction-markets protocol). White
-  papers (FR + EN) updated on Notion; root `README.md` / `CONTRIBUTING.md`
-  / module READMEs migrated. Token symbol `AUG-POC` and the contract name
-  `AugPocToken` are preserved through Phase 1 — the convert step to
-  `ARA` happens at Phase 2 DAO launch via the `BURNER_ROLE` reserved for
-  a future `AraConverter`.
-- **2026-05-11** — Security audit pass: PR #18 merged, email scrub +
-  history rewrite over 102 commits, push protection rules enabled.
-- **2026-05-11** — Branch protection enabled on `main`. Solo development
-  now goes through a PR flow with self-approval, even single-author.
-- **2026-05-12** — Secret rotations: Pinata + four Discord webhooks +
-  Etherscan API key. Paper trail in [`docs/SECURITY-rotation-log.md`](docs/SECURITY-rotation-log.md).
-  Next routine rotation: 2026-08-12.
-- **2026-05-14** — Polymarket dropped as a Phase 1 secondary venue.
-  Rationale recorded in [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §2.
-- **2026-05-14** — Chronological-split methodology fix (see *Methodology
-  gate* above).
-- **2026-05-14** — Dependabot major-version PRs (#35, #36, #38) closed
-  for `next`, `typescript`, `@types/node`. Major bumps are handled as
-  dedicated migration sessions, not in the weekly dependency batch.
+- **2026-06-21** — v3fa (fold-aware series bias), HOLDOUT ties market; v4 revision feature; algo_signal control group — PR #170.
+- **2026-06-21** — Internal security audit (B33) — 7 findings, testnet GO, mainnet NO-GO — PR #167.
+- **2026-06-21** — Governance UI `/governance` with MetaMask + on-chain vote — PR #166.
+- **2026-06-20** — gitleaks CI secret scanning (SHA-pinned) — PR #161.
+- **2026-06-20** — MintGovernor Phase 2 (+28 tests, >91% branch coverage) — PR #163.
+- **2026-06-20** — Dry-run forge anvil validated + bilingual runbook — PR #164.
+- **2026-06-20** — VISION.md + VISION.fr.md (one-pager FR/EN) — PR #165.
+- **2026-06-20** — v3b series_bias_prior (calibration hiérarchique).
+- **2026-06-20** — sigma bascule merged (Brier 0.137 on 62-date backfill).
+- **2026-06-10** — Code review pass — 7 findings, all resolved.
 
 ---
 
 ## Where to read next
 
-- **Vision & phasing**: [`docs/architecture.md`](docs/architecture.md), [`ROADMAP.md`](ROADMAP.md).
-- **Token economic model**: [`docs/token_model.md`](docs/token_model.md), [`docs/value_engine.md`](docs/value_engine.md).
-- **Contracts threat model**: [`contracts/docs/SECURITY.md`](contracts/docs/SECURITY.md), [`contracts/docs/ARCHITECTURE.md`](contracts/docs/ARCHITECTURE.md).
-- **Run convention** (paper-trade logging schema): [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md).
-- **Genesis round decomposition**: [`rounds/archives/2026-05-genesis/phases.md`](rounds/archives/2026-05-genesis/phases.md).
+- **Vision**: [`docs/VISION.md`](docs/VISION.md), [`ROADMAP.md`](ROADMAP.md).
+- **Security audit**: [`contracts/docs/SECURITY-AUDIT-2026-06-21.md`](contracts/docs/SECURITY-AUDIT-2026-06-21.md).
+- **Feature engineering**: [`predictor/src/learning/FEATURES.md`](predictor/src/learning/FEATURES.md).
+- **Token model**: [`docs/token_model.md`](docs/token_model.md).
+- **Dry-run guide**: [`contracts/docs/DRY-RUN-ANVIL.md`](contracts/docs/DRY-RUN-ANVIL.md).
