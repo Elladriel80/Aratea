@@ -576,6 +576,57 @@ FEATURES_V4: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
 ]
 
 
+# ---------- V3fb: interaction features on fold-aware bias (B38) ----------
+
+def f_p_consensus_x_series_bias_fa(rec: dict[str, Any]) -> float | None:
+    """Interaction p_consensus × series_bias_fa (fold-aware).
+
+    Hypothesis: the series-specific bias correction should scale with
+    forecast confidence. When p_consensus is high (0.85) and the series
+    systematically overestimates (bias_fa = -0.090), the calibration error
+    is larger in absolute probability space than at moderate consensus (0.50).
+    An additive series_bias_fa (v3fa) removes a fixed offset; this interaction
+    lets LR learn a conditional correction that grows with p_consensus.
+
+    Requires series_bias_fa to be pre-annotated in the record (same as v3fa).
+    Source: B38, 2026-06-21.
+    """
+    pc = f_p_consensus(rec)
+    sb = f_series_bias_fa(rec)
+    if pc is None or sb is None:
+        return None
+    return pc * sb
+
+
+def f_days_ahead_x_series_bias_fa(rec: dict[str, Any]) -> float | None:
+    """Interaction days_ahead × series_bias_fa (fold-aware).
+
+    Hypothesis: the per-series calibration bias may be horizon-dependent.
+    At 3 days ahead, NWP forecasts carry more uncertainty; the market may
+    over- or under-correct relative to the 1-day-ahead case differently
+    per series. This lets LR learn a horizon-scaled bias correction per
+    series without full series × horizon dummies.
+
+    Requires series_bias_fa to be pre-annotated in the record (same as v3fa).
+    Source: B38, 2026-06-21.
+    """
+    da = f_days_ahead(rec)
+    sb = f_series_bias_fa(rec)
+    if da is None or sb is None:
+        return None
+    return da * sb
+
+
+FEATURES_V3FB: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
+    ("p_consensus",                  f_p_consensus),
+    ("forecast_spread",              f_forecast_spread),
+    ("days_ahead",                   f_days_ahead),
+    ("series_bias_fa",               f_series_bias_fa),
+    ("p_consensus_x_series_bias_fa", f_p_consensus_x_series_bias_fa),
+    ("days_ahead_x_series_bias_fa",  f_days_ahead_x_series_bias_fa),
+]
+
+
 # Convenience map for --feature-set CLI flag.
 FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]]]] = {
     "v0":   FEATURES_V0,
@@ -585,6 +636,7 @@ FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]
     "v3x":  FEATURES_V3_EXPERIMENTAL,
     "v3b":  FEATURES_V3B,
     "v3fa": FEATURES_V3FA,
+    "v3fb": FEATURES_V3FB,
     "v4":   FEATURES_V4,
 }
 
