@@ -7,20 +7,23 @@
 
 import { type Address } from "viem";
 
+const ZERO = "0x0000000000000000000000000000000000000000";
 const TOKEN_ADDRESS_RAW = process.env.NEXT_PUBLIC_TOKEN_ADDRESS as `0x${string}` | undefined;
 const REGISTRY_ADDRESS_RAW = process.env.NEXT_PUBLIC_REGISTRY_ADDRESS as `0x${string}` | undefined;
+const GOVERNOR_ADDRESS_RAW = process.env.NEXT_PUBLIC_GOVERNOR_ADDRESS as `0x${string}` | undefined;
 
-export const tokenAddress: Address = (TOKEN_ADDRESS_RAW ||
-  "0x0000000000000000000000000000000000000000") as Address;
-
-export const registryAddress: Address = (REGISTRY_ADDRESS_RAW ||
-  "0x0000000000000000000000000000000000000000") as Address;
+export const tokenAddress: Address = (TOKEN_ADDRESS_RAW || ZERO) as Address;
+export const registryAddress: Address = (REGISTRY_ADDRESS_RAW || ZERO) as Address;
+export const governorAddress: Address = (GOVERNOR_ADDRESS_RAW || ZERO) as Address;
 
 export const deployBlock: bigint = BigInt(process.env.NEXT_PUBLIC_DEPLOY_BLOCK || "0");
 
 export function isDeployed(): boolean {
-  const zero = "0x0000000000000000000000000000000000000000";
-  return tokenAddress.toLowerCase() !== zero && registryAddress.toLowerCase() !== zero;
+  return tokenAddress.toLowerCase() !== ZERO && registryAddress.toLowerCase() !== ZERO;
+}
+
+export function isGovernorDeployed(): boolean {
+  return governorAddress.toLowerCase() !== ZERO;
 }
 
 /* ------------------------------------------------------------------ */
@@ -213,3 +216,148 @@ export const roundStatusLabel: Record<RoundStatus, string> = {
   [RoundStatus.Executed]: "Executed",
   [RoundStatus.Cancelled]: "Cancelled",
 };
+
+/* ------------------------------------------------------------------ */
+/* MintGovernor — governance surface (Phase 2)                        */
+/* ------------------------------------------------------------------ */
+
+export enum BallotState {
+  None = 0,
+  Pending = 1,
+  Voting = 2,
+  Rejected = 3,
+  Accepted = 4,
+}
+
+export const mintGovernorAbi = [
+  /* Views */
+  {
+    type: "function",
+    name: "getDispute",
+    stateMutability: "view",
+    inputs: [{ name: "originalRound", type: "bytes32" }],
+    outputs: [
+      { name: "snapshot", type: "uint64" },
+      { name: "circulating", type: "uint256" },
+      { name: "quorumVotes", type: "uint256" },
+      { name: "activeBallot", type: "bytes32" },
+      { name: "originalDecided", type: "bool" },
+      { name: "resolved", type: "bool" },
+      { name: "executed", type: "bytes32" },
+      { name: "queue", type: "bytes32[]" },
+    ],
+  },
+  {
+    type: "function",
+    name: "getBallot",
+    stateMutability: "view",
+    inputs: [{ name: "ballotRound", type: "bytes32" }],
+    outputs: [
+      { name: "dispute", type: "bytes32" },
+      { name: "isOriginal", type: "bool" },
+      { name: "voteStart", type: "uint64" },
+      { name: "voteEnd", type: "uint64" },
+      { name: "forVotes", type: "uint256" },
+      { name: "againstVotes", type: "uint256" },
+      { name: "state", type: "uint8" },
+    ],
+  },
+  {
+    type: "function",
+    name: "hasVoted",
+    stateMutability: "view",
+    inputs: [
+      { name: "ballotRound", type: "bytes32" },
+      { name: "voter", type: "address" },
+    ],
+    outputs: [{ type: "bool" }],
+  },
+  {
+    type: "function",
+    name: "quorumBps",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint16" }],
+  },
+  {
+    type: "function",
+    name: "voteDurationDays",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint32" }],
+  },
+  /* Writes */
+  {
+    type: "function",
+    name: "finalize",
+    stateMutability: "nonpayable",
+    inputs: [{ name: "roundHash", type: "bytes32" }],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "challenge",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "roundHash", type: "bytes32" },
+      { name: "reasonIpfsUri", type: "string" },
+    ],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "castVote",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "ballotRound", type: "bytes32" },
+      { name: "support", type: "bool" },
+    ],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "resolve",
+    stateMutability: "nonpayable",
+    inputs: [{ name: "ballotRound", type: "bytes32" }],
+    outputs: [],
+  },
+  /* Events */
+  {
+    type: "event",
+    name: "RoundFinalized",
+    inputs: [{ name: "roundHash", type: "bytes32", indexed: true }],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "DisputeOpened",
+    inputs: [
+      { name: "originalRound", type: "bytes32", indexed: true },
+      { name: "challenger", type: "address", indexed: true },
+      { name: "snapshot", type: "uint64", indexed: false },
+      { name: "quorumVotes", type: "uint256", indexed: false },
+      { name: "voteEnd", type: "uint64", indexed: false },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "VoteCast",
+    inputs: [
+      { name: "ballotRound", type: "bytes32", indexed: true },
+      { name: "voter", type: "address", indexed: true },
+      { name: "support", type: "bool", indexed: false },
+      { name: "weight", type: "uint256", indexed: false },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "DisputeResolved",
+    inputs: [
+      { name: "originalRound", type: "bytes32", indexed: true },
+      { name: "executedRound", type: "bytes32", indexed: true },
+    ],
+    anonymous: false,
+  },
+] as const;
