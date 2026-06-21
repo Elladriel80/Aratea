@@ -172,6 +172,41 @@ Tourne sur chaque push/PR modifiant `contracts/**`.
 
 ---
 
+### 2.5 Déploiement — risque de versioning
+
+| ID | Severity | Title | Status |
+|----|----------|-------|--------|
+| DEPLOY-1 | M | Contrat déployé antérieur au code courant | ✅ Documenté + runbook correctif |
+
+**DEPLOY-1 — Versioning déploiement ≠ code (Severity: Medium)**
+
+Détecté le 2026-06-21 : le `RoundRegistry` déployé en mai 2026 sur Arbitrum Sepolia
+(`0xA2324C2E467a6F38032586C1d650BBcC13F11F3F`) a été compilé à partir d'une révision
+de code antérieure à l'ajout de `ROUND_CHALLENGER_ROLE`. Le code courant de
+`DeployPhase2Governor` appelle `registry.ROUND_CHALLENGER_ROLE()` pour câbler le
+rôle — cette fonction est absente du contrat déployé → revert systématique.
+
+*Impact* : `DeployPhase2Governor` est inopérant contre les contrats Phase 1 existants.
+Il est impossible d'activer la Phase 2 sans redéployer Phase 1.
+
+*Mitigation* : runbook de redéploiement complet rédigé et dry-run validé
+(`FullStackRedeployTest`, 7/7 assertions vertes, 2026-06-21). Tâche backlog B43.
+Commande de diagnostic rapide avant toute Phase 2 :
+
+```bash
+cast call $REGISTRY "ROUND_CHALLENGER_ROLE()(bytes32)" --rpc-url $RPC_ARBITRUM_SEPOLIA
+# → 0x0000000000000000000000000000000000000000000000000000000000000000
+#   = ancienne version (BLOQUER Phase 2)
+# → 0x<hash non nul>
+#   = code courant (Phase 2 possible)
+```
+
+*Apprentissage général* : avant toute déploiement de couche (Phase 2, upgrade),
+vérifier systématiquement que les fonctions requises par le script existent
+sur le contrat déployé. Ajouter cette vérification dans la checklist pré-vol.
+
+---
+
 ## 3. Éléments déjà résolus (revue 2026-06-10 + ce cycle)
 
 | ID revue précédente | Titre | Résolu |
@@ -193,9 +228,9 @@ Tourne sur chaque push/PR modifiant `contracts/**`.
 
 Toutes ces conditions sont remplies :
 
-- [x] 162+ tests passent, couverture 100 % lignes sur MintGovernor + RoundRegistry
-- [x] Dry-run forge complet validé (DRY-RUN-ANVIL.md)
-- [x] Runbook Phase 2 bilingue rédigé (RUNBOOK-DEPLOIEMENT-PHASE2)
+- [x] 182+ tests passent, couverture 100 % lignes sur MintGovernor + RoundRegistry
+- [x] Dry-run forge complet validé (DRY-RUN-ANVIL.md + FullStackRedeployTest 7/7)
+- [x] Runbook redéploiement complet bilingue rédigé (RUNBOOK-REDEPLOIEMENT-COMPLET)
 - [x] SHA pinning des Actions CI
 - [x] Gitleaks CI actif
 - [x] Secrets rotés (D2)
