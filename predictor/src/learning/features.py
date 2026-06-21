@@ -501,6 +501,52 @@ FEATURES_V3B: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
 ]
 
 
+# ---------- V4 features: forecast revision drift (B23) ----------
+
+def f_forecast_revision(rec: dict[str, Any]) -> float | None:
+    """Change in p_consensus between the earliest and latest capture of the same ticker.
+
+    Revision = p_consensus(latest capture, fewest days_ahead)
+              − p_consensus(earliest capture, most days_ahead).
+
+    Hypothesis: when the model consensus moves materially between the first and last
+    observed snapshot of a market, the direction of that move (toward YES or toward
+    NO) carries information about atmospheric persistence.  A rising consensus
+    (positive revision) suggests the atmosphere is "confirming" the event; a falling
+    consensus (negative revision) suggests the event is becoming less likely as
+    measurement uncertainty resolves.  This is distinct from days_ahead (which
+    captures horizon-level accuracy decay) and from p_consensus (which captures
+    current level) — the revision is the VELOCITY component of the forecast signal.
+
+    Data requirement: at least two captures of the same ticker must exist in
+    `data/predictions/`.  `dataset.annotate_revision_drift()` must be called on
+    all records BEFORE `keep_earliest_with_quote`.  Use `dataset.build_with_revision`
+    instead of `dataset.build` when this feature is in the spec.
+
+    Returns None (row dropped) when only one capture exists for the ticker or when
+    p_consensus is unavailable in either capture.
+
+    Source: derived across multiple forward_*.json captures (B23, 2026-06-21).
+    Status: experimental — evaluation pending once daily captures accumulate
+    (need ≥ 2 captures per ticker → run for 2+ consecutive days without backfilling).
+    """
+    return rec.get("_revision")
+
+
+# V4 = V3b + forecast revision drift.
+# REQUIRES dataset.build_with_revision (not dataset.build) to annotate _revision.
+# Rows without multi-capture history are dropped (feature returns None).
+# Expected to activate once the daily forward pipeline has run for ≥ 2 days on
+# the same markets — the backfill_dataset.json has only one capture per ticker.
+FEATURES_V4: list[tuple[str, Callable[[dict[str, Any]], float | None]]] = [
+    ("p_consensus",        f_p_consensus),
+    ("forecast_spread",    f_forecast_spread),
+    ("days_ahead",         f_days_ahead),
+    ("series_bias_prior",  f_series_bias_prior),
+    ("forecast_revision",  f_forecast_revision),
+]
+
+
 # Convenience map for --feature-set CLI flag.
 FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]]]] = {
     "v0": FEATURES_V0,
@@ -509,6 +555,7 @@ FEATURE_SETS: dict[str, list[tuple[str, Callable[[dict[str, Any]], float | None]
     "v3": FEATURES_V3,
     "v3x": FEATURES_V3_EXPERIMENTAL,
     "v3b": FEATURES_V3B,
+    "v4":  FEATURES_V4,
 }
 
 
