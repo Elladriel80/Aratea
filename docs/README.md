@@ -35,6 +35,7 @@ is at [README.fr.md](README.fr.md).
 | [SECURITY-audit-2026-05-11-handoff.md](SECURITY-audit-2026-05-11-handoff.md) | FR | Action handoff from the 2026-05-11 audit: what was fixed in-code and what manual rotations remain. |
 | [SECURITY-rotation-procedure.md](SECURITY-rotation-procedure.md) | EN | Runbook for routine (90-day) and incident-driven credential rotations. |
 | [SECURITY-rotation-log.md](SECURITY-rotation-log.md) | EN | Append-only paper trail of every secret rotation (credential names only, never values). |
+| [../contracts/docs/SECURITY-AUDIT-2026-06-21.md](../contracts/docs/SECURITY-AUDIT-2026-06-21.md) | FR/EN | Internal security pass 2026-06-21: AugPocToken · RoundRegistry · MintGovernor findings, mainnet go/no-go checklist, external audit scope. |
 
 ## Contributor onboarding
 
