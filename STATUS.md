@@ -94,16 +94,19 @@ filters to `algo_signal == "bet"` rows only.
 |---|---|---|---|
 | `AugPocToken` | 100% | 100% | 100% |
 | `RoundRegistry` | 100% | 100% | 100% |
-| `MintGovernor` | 100% | 91.49% | 100% |
-| **Full suite** | — | — | **162 tests** |
+| `MintGovernor` | 100% | ≥91% | 100% |
+| **Full suite** | — | — | **170 tests** |
+
+> Branch coverage: last measured on 162-test suite (91.49% MintGovernor). 8 new tests added (PR #173) — re-run `forge coverage` after testnet Foundry install to update.
 
 ### Security (internal audit 2026-06-21)
 
 Full report: [`contracts/docs/SECURITY-AUDIT-2026-06-21.md`](contracts/docs/SECURITY-AUDIT-2026-06-21.md) (~620 SLOC, 7 findings).
 
-**Testnet: GO. Mainnet: NO-GO** (requires external audit + Safe multisig + Timelock + REG-1/GOV-1 fixes).
+**Testnet: GO. Mainnet: NO-GO** (requires external audit + Safe multisig + Timelock + GOV-1 fix).
 
-Key open items for mainnet: GOV-1 (param changes no Timelock), REG-1 (ROUND_EXECUTOR_ROLE scope post-Phase2), TOK-2 (admin EOA → Safe).
+Key open items for mainnet: GOV-1 (param changes no Timelock — Safe + TimelockController), TOK-2 (admin EOA → Safe).
+✅ Resolved: GOV-2 (`forceResolveStuck()` B40), REG-1 (test `DeployArateaPhase2.t.sol` B41), INFRA-1 (Slither CI).
 
 ### Deployment state
 
@@ -145,6 +148,7 @@ Stack: Next.js 15 + React 19, TypeScript strict, viem 2.x, Tailwind. No backend,
 
 ## Recent changes (since 2026-06-10)
 
+- **2026-06-21** — GOV-2 escape hatch `forceResolveStuck()` + Phase 2 wiring test (REG-1) — 170 tests — PR #173.
 - **2026-06-21** — v3fb interaction features (B38 NO-GO): p_consensus×bias, days_ahead×bias both rejected (p=0.912/0.633). 160 tests. Universe expansion B39 documented. — PR #172 + housekeeping.
 - **2026-06-21** — v3fa (fold-aware series bias), HOLDOUT ties market; v4 revision feature; algo_signal control group — PR #170.
 - **2026-06-21** — Internal security audit (B33) — 7 findings, testnet GO, mainnet NO-GO — PR #167.
