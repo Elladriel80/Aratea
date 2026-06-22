@@ -207,6 +207,41 @@ sur le contrat déployé. Ajouter cette vérification dans la checklist pré-vol
 
 ---
 
+### 2.6 Pipeline Predictor
+
+| ID | Severity | Title | Status |
+|----|----------|-------|--------|
+| PRED-1 | M | Fold-aware features incluses dans backfill → 0 row | ✅ Fixed — PR #175 |
+
+**PRED-1 — Fold-aware feature contamination in `feature_spec("full")` (Severity: Medium — Data Integrity)**
+
+`_backfill_dataset.py::feature_spec("full")` unionnait l'ensemble de TOUS les sets
+de features enregistrés, incluant `FEATURES_V3FA` et `FEATURES_V3FB` qui contiennent
+des features *fold-aware* (`series_bias_fa`, `p_consensus_x_series_bias_fa`,
+`days_ahead_x_series_bias_fa`). Ces features lisent un champ pré-calculé
+`rec.get("series_bias_fa")` qui n'existe jamais dans un record brut de backfill —
+elles retournent systématiquement `None`, et la logique de drop-on-None élimine
+**100 % des lignes** (`skips["feature_missing:days_ahead_x_series_bias_fa"] = N`).
+
+Symptôme corollaire : `_learning_loop --base-feature-set v3fa --dataset-cache
+<cache-v3>` échouait avec `"dataset cache lacks features [series_bias_fa, ...]"`
+car la couverture du cache était vérifiée sans distinguer les features fold-aware
+(non stockables dans un cache construit sans labels) des features statiques.
+
+*Impact* : impossibilité d'utiliser `--features full` pour le backfill + impossibilité
+de lancer la learning loop v3fa sur un cache v3 sans pré-augmentation manuelle.
+*Fix* (PR #175, commit a2ccc06) :
+- `_backfill_dataset.py` : ajout de `FOLD_AWARE_FEATURES` ; `feature_spec("full")`
+  les exclut désormais (comme `FORWARD_ONLY_FEATURES`).
+- `_learning_loop.py` : `build_or_load_dataset` ignore les features fold-aware dans
+  le check de coverage ; `_compute_series_bias_fa` + `_inject_series_bias_fa` injectent
+  `series_bias_fa` depuis les labels TRAIN uniquement (pas de leakage) ; re-injection
+  depuis TRAIN+VALID avant l'évaluation finale holdout.
+- Result : v3fa + forest_pct_5km, C=0.1 → HOLDOUT 0.1172 < marché 0.1173 (premier
+  passage sous le marché, 12 dates, confirmation attendue sur dataset élargi).
+
+---
+
 ## 3. Éléments déjà résolus (revue 2026-06-10 + ce cycle)
 
 | ID revue précédente | Titre | Résolu |
