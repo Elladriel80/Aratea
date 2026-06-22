@@ -313,12 +313,17 @@ LOCATION_KEY_TO_ICAO: dict[str, str] = {
     "CHICAGO":       "KORD",
     "DENVER":        "KDEN",
     "HOUSTON":       "KIAH",
+    "LASVEGAS":      "KLAS",
     "LOSANGELES":    "KLAX",
     "MIAMI":         "KMIA",
+    "MINNEAPOLIS":   "KMSP",
     "NYC":           "KNYC",
     "PHILADELPHIA":  "KPHL",
+    "PHOENIX":       "KPHX",
     "SANANTONIO":    "KSAT",
-    "SANFRANCISCO": "KSFO",
+    "SANFRANCISCO":  "KSFO",
+    "SEATTLE":       "KSEA",
+    "WASHINGTON":    "KDCA",
 }
 
 
