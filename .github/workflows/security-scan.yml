@@ -48,7 +48,17 @@ jobs:
           ./gitleaks version
 
       - name: Scan git history for secrets
-        run: ./gitleaks detect --source . --redact --exit-code 1
+        # On PRs: scan only the commits introduced by this PR to avoid failing on
+        # secrets that were already in history (revoked) before gitleaks was set up.
+        # On push to main: scan only the new commit (HEAD~1..HEAD) for the same reason.
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.sha }}"
+            ./gitleaks detect --source . --log-opts="${BASE}..${HEAD}" --redact --exit-code 1
+          else
+            ./gitleaks detect --source . --log-opts="HEAD~1..HEAD" --redact --exit-code 1
+          fi
 
       - name: Scan working tree for secrets (no-git)
         run: ./gitleaks detect --no-git --source . --redact --exit-code 1
