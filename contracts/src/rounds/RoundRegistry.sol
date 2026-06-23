@@ -33,8 +33,11 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
                               CONSTANTS
     //////////////////////////////////////////////////////////////*/
 
-    uint32 public constant MIN_CHALLENGE_WINDOW_DAYS = 1;
-    uint32 public constant MAX_CHALLENGE_WINDOW_DAYS = 365;
+    /// @dev Minimum challenge window in seconds (60 s — allows short testnet cycles).
+    uint32 public constant MIN_CHALLENGE_WINDOW = 60;
+    /// @dev Maximum challenge window in seconds (365 days). Stored as seconds so
+    ///      testnet deployments can use CHALLENGE_WINDOW_SECONDS without special-casing.
+    uint32 public constant MAX_CHALLENGE_WINDOW = 365 days;
 
     /*//////////////////////////////////////////////////////////////
                                STORAGE
@@ -46,7 +49,7 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
     struct Round {
         string ipfsUri;
         uint64 proposedAt;
-        uint32 challengeWindowDays;
+        uint32 challengeWindow; // seconds (mainnet default 30 days; testnet e.g. 300 s)
         RoundStatus status;
         address[] beneficiaries;
         uint256[] amounts;
@@ -78,11 +81,11 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
         address[] calldata beneficiaries,
         uint256[] calldata amounts,
         string calldata ipfsUri,
-        uint32 challengeWindowDays
+        uint32 challengeWindow
     ) external onlyRole(ROUND_PROPOSER_ROLE) {
         if (beneficiaries.length == 0) revert EmptyBeneficiaries();
         if (beneficiaries.length != amounts.length) revert MismatchedArrays();
-        if (challengeWindowDays < MIN_CHALLENGE_WINDOW_DAYS || challengeWindowDays > MAX_CHALLENGE_WINDOW_DAYS) {
+        if (challengeWindow < MIN_CHALLENGE_WINDOW || challengeWindow > MAX_CHALLENGE_WINDOW) {
             revert InvalidChallengeWindow();
         }
 
@@ -99,12 +102,12 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
         Round storage r = _rounds[roundHash];
         r.ipfsUri = ipfsUri;
         r.proposedAt = uint64(block.timestamp);
-        r.challengeWindowDays = challengeWindowDays;
+        r.challengeWindow = challengeWindow;
         r.status = RoundStatus.Proposed;
         r.beneficiaries = beneficiaries;
         r.amounts = amounts;
 
-        emit RoundProposed(roundHash, ipfsUri, uint64(block.timestamp), challengeWindowDays, beneficiaries, amounts);
+        emit RoundProposed(roundHash, ipfsUri, uint64(block.timestamp), challengeWindow, beneficiaries, amounts);
     }
 
     /// @inheritdoc IRoundRegistry
@@ -185,13 +188,13 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
         return _rounds[roundHash].status;
     }
 
-    /// @notice Returns the round's static fields (ipfsUri, proposedAt, challengeWindowDays,
+    /// @notice Returns the round's static fields (ipfsUri, proposedAt, challengeWindow in seconds,
     ///         status). Use `getRoundBeneficiaries` and `getRoundAmounts` for the arrays.
     function getRound(
         bytes32 roundHash
-    ) external view returns (string memory ipfsUri, uint64 proposedAt, uint32 challengeWindowDays, RoundStatus status) {
+    ) external view returns (string memory ipfsUri, uint64 proposedAt, uint32 challengeWindow, RoundStatus status) {
         Round storage r = _rounds[roundHash];
-        return (r.ipfsUri, r.proposedAt, r.challengeWindowDays, r.status);
+        return (r.ipfsUri, r.proposedAt, r.challengeWindow, r.status);
     }
 
     /// @notice Returns the beneficiaries array of a round.
@@ -209,7 +212,7 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
     }
 
     /// @notice Convenience: timestamp at which the challenge window closes (`proposedAt +
-    ///         challengeWindowDays * 1 days`). Returns 0 for an unknown round.
+    ///         challengeWindow` in seconds). Returns 0 for an unknown round.
     function windowEndOf(
         bytes32 roundHash
     ) external view returns (uint256) {
@@ -225,6 +228,6 @@ contract RoundRegistry is AccessControl, ReentrancyGuard, IRoundRegistry {
     function _windowEnd(
         Round storage r
     ) private view returns (uint256) {
-        return uint256(r.proposedAt) + uint256(r.challengeWindowDays) * 1 days;
+        return uint256(r.proposedAt) + uint256(r.challengeWindow);
     }
 }

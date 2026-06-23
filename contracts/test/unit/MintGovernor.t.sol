@@ -38,7 +38,7 @@ contract MintGovernorTest is Test {
 
     uint256 internal constant E = 1e18;
     uint256 internal constant START = 1_778_544_000; // 2026-05-09 UTC
-    uint32 internal constant WINDOW_DAYS = 7;
+    uint32 internal constant ROUND_WINDOW_SEC = 7 days; // challenge window for registry proposeRound
 
     function setUp() public {
         token = new AugPocToken(admin);
@@ -104,7 +104,7 @@ contract MintGovernorTest is Test {
         (address[] memory bens, uint256[] memory amts) = _alloc(dave, amount);
         h = _hash(bens, amts, uri);
         vm.prank(keeper);
-        registry.proposeRound(h, bens, amts, uri, WINDOW_DAYS);
+        registry.proposeRound(h, bens, amts, uri, ROUND_WINDOW_SEC);
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ contract MintGovernorTest is Test {
         vm.expectRevert(IRoundRegistry.ChallengeWindowNotExpired.selector);
         governor.finalize(h);
 
-        vm.warp(START + WINDOW_DAYS * 1 days);
+        vm.warp(START + ROUND_WINDOW_SEC);
         // Permissionless: anyone (here a random address) can finalize.
         vm.prank(makeAddr("anyone"));
         governor.finalize(h);
@@ -137,14 +137,14 @@ contract MintGovernorTest is Test {
         governor.challenge(h, "ipfs://reason");
 
         // Even after the window, a challenged round is NOT finalizable — it must go through the vote.
-        vm.warp(START + WINDOW_DAYS * 1 days + 1);
+        vm.warp(START + ROUND_WINDOW_SEC + 1);
         vm.expectRevert(MintGovernor.NotFinalizable.selector);
         governor.finalize(h);
     }
 
     function test_Finalize_DoubleExecutionImpossible() public {
         bytes32 h = _propose(1000 * E, "ipfs://r1");
-        vm.warp(START + WINDOW_DAYS * 1 days);
+        vm.warp(START + ROUND_WINDOW_SEC);
         governor.finalize(h);
         // Second finalize: round is Executed, not Proposed.
         vm.expectRevert(MintGovernor.NotFinalizable.selector);
@@ -627,7 +627,7 @@ contract MintGovernorTest is Test {
         _mintAndDelegate(alice, 100 * E);
         vm.warp(START + 10);
         bytes32 h = _propose(1000 * E, "ipfs://r1"); // proposedAt = START + 10
-        vm.warp(START + 10 + uint256(WINDOW_DAYS) * 1 days + 1); // past windowEnd
+        vm.warp(START + 10 + ROUND_WINDOW_SEC + 1); // past windowEnd
         vm.expectRevert(MintGovernor.WindowClosed.selector);
         vm.prank(alice);
         governor.challenge(h, "ipfs://reason");
@@ -679,7 +679,7 @@ contract MintGovernorTest is Test {
 
     function test_Keeper_CannotExecuteDirectly() public {
         bytes32 h = _propose(1000 * E, "ipfs://r1");
-        vm.warp(START + WINDOW_DAYS * 1 days);
+        vm.warp(START + ROUND_WINDOW_SEC);
         // Keeper holds PROPOSER, not EXECUTOR — it cannot mint by calling the registry directly.
         vm.expectRevert(
             abi.encodeWithSelector(

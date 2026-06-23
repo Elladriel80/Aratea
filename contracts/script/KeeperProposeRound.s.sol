@@ -18,7 +18,8 @@ import {RoundRegistry} from "../src/rounds/RoundRegistry.sol";
 ///           - ROUND_AMOUNTS         : comma-separated uint256 amounts (wei; 1 sat = 1e18)
 ///           - ROUND_IPFS            : ipfs URI of the valuation report
 ///         Optional env:
-///           - ROUND_WINDOW_DAYS     : challenge window in days (default 7; genesis used 30)
+///           - ROUND_WINDOW_SECONDS  : challenge window in seconds (default 604800 = 7 days;
+///                                     testnet short-cycle: 300)
 ///
 ///         The round hash is `keccak256(abi.encode(beneficiaries, amounts, ipfsUri))` — the
 ///         script logs it so the finalize step (and any observer) can reference the round.
@@ -28,19 +29,19 @@ contract KeeperProposeRound is Script {
         address[] memory beneficiaries = vm.envAddress("ROUND_BENEFICIARIES", ",");
         uint256[] memory amounts = vm.envUint("ROUND_AMOUNTS", ",");
         string memory ipfsUri = vm.envString("ROUND_IPFS");
-        uint32 windowDays = uint32(vm.envOr("ROUND_WINDOW_DAYS", uint256(7)));
+        uint32 windowSec = uint32(vm.envOr("ROUND_WINDOW_SECONDS", uint256(7 days)));
 
         require(beneficiaries.length == amounts.length, "beneficiaries/amounts length mismatch");
 
         roundHash = keccak256(abi.encode(beneficiaries, amounts, ipfsUri));
 
         console2.log("== KeeperProposeRound ==");
-        console2.log("Registry:   ", address(registry));
-        console2.log("Window days:", windowDays);
+        console2.log("Registry:             ", address(registry));
+        console2.log("Window (seconds):     ", windowSec);
         console2.logBytes32(roundHash);
 
         vm.startBroadcast(); // signer from CLI (keeper hot key)
-        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, windowDays);
+        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, windowSec);
         vm.stopBroadcast();
 
         console2.log("Round proposed. Finalize after the window with KeeperFinalize + this hash.");

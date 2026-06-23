@@ -28,7 +28,9 @@ contract FullStackRedeployTest is Test {
     address internal constant ELLADRIEL = 0x9a94552DCB67F036af6eccc9111b749856ab8EEA;
 
     uint256 internal constant GENESIS_AMOUNT_WEI  = 34_039_500 ether;
-    uint32  internal constant GENESIS_WINDOW_DAYS  = 30;
+    // Fenêtre courte pour testnet (5 min) — permet Phase 1→Genesis→Phase2 en UNE session.
+    // Mainnet : passer CHALLENGE_WINDOW_SECONDS=2592000 (30 jours) à ProposeGenesisRound.
+    uint32  internal constant GENESIS_WINDOW_SEC   = 300;
     // URI identique à la prod — même rapport de valorisation 2026-05
     string  internal constant GENESIS_IPFS =
         "ipfs://bafybeih5jb2vk577w57uw62m4j7opyke4poryrphscydhzmd3htvm2ug7u";
@@ -59,7 +61,7 @@ contract FullStackRedeployTest is Test {
 
         // Admin tient ROUND_PROPOSER_ROLE depuis Phase 1
         vm.prank(ADMIN);
-        registry.proposeRound(genesisHash, bens, amts, GENESIS_IPFS, GENESIS_WINDOW_DAYS);
+        registry.proposeRound(genesisHash, bens, amts, GENESIS_IPFS, GENESIS_WINDOW_SEC);
 
         assertEq(
             uint8(registry.statusOf(genesisHash)),
@@ -67,8 +69,8 @@ contract FullStackRedeployTest is Test {
             "genesis doit etre Proposed"
         );
 
-        // Fast-forward fenêtre de 30 jours (dry-run uniquement)
-        vm.warp(block.timestamp + 31 days);
+        // Fast-forward fenêtre courte (300 s testnet — vs 30 j mainnet)
+        vm.warp(block.timestamp + GENESIS_WINDOW_SEC + 1);
 
         // Admin tient ROUND_EXECUTOR_ROLE depuis Phase 1 — AVANT révocation Phase 2
         vm.prank(ADMIN);

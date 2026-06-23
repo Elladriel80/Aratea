@@ -85,7 +85,7 @@ contract RoundRegistryTest is Test {
     function _proposeBasicRound() internal returns (bytes32 h) {
         (address[] memory bens, uint256[] memory amts, string memory uri, bytes32 hash) = _basicRoundInputs();
         vm.prank(proposer);
-        registry.proposeRound(hash, bens, amts, uri, 7);
+        registry.proposeRound(hash, bens, amts, uri, 7 days);
         return hash;
     }
 
@@ -119,16 +119,16 @@ contract RoundRegistryTest is Test {
         (address[] memory bens, uint256[] memory amts, string memory uri, bytes32 h) = _basicRoundInputs();
 
         vm.expectEmit(true, false, false, true);
-        emit IRoundRegistry.RoundProposed(h, uri, uint64(block.timestamp), 7, bens, amts);
+        emit IRoundRegistry.RoundProposed(h, uri, uint64(block.timestamp), 7 days, bens, amts);
 
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, 7);
+        registry.proposeRound(h, bens, amts, uri, 7 days);
 
         assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
         (string memory storedUri, uint64 proposedAt, uint32 win, IRoundRegistry.RoundStatus st) = registry.getRound(h);
         assertEq(storedUri, uri);
         assertEq(proposedAt, uint64(block.timestamp));
-        assertEq(win, 7);
+        assertEq(win, 7 days);
         assertEq(uint8(st), uint8(IRoundRegistry.RoundStatus.Proposed));
 
         address[] memory storedBens = registry.getRoundBeneficiaries(h);
@@ -151,7 +151,7 @@ contract RoundRegistryTest is Test {
             )
         );
         vm.prank(eve);
-        registry.proposeRound(h, bens, amts, uri, 7);
+        registry.proposeRound(h, bens, amts, uri, 7 days);
     }
 
     function test_Propose_RevertsOnEmptyBeneficiaries() public {
@@ -160,7 +160,7 @@ contract RoundRegistryTest is Test {
         bytes32 h = _hashOf(bens, amts, "ipfs://x");
         vm.expectRevert(IRoundRegistry.EmptyBeneficiaries.selector);
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, "ipfs://x", 7);
+        registry.proposeRound(h, bens, amts, "ipfs://x", 7 days);
     }
 
     function test_Propose_RevertsOnMismatchedArrays() public {
@@ -172,7 +172,7 @@ contract RoundRegistryTest is Test {
         bytes32 h = _hashOf(bens, amts, "ipfs://x");
         vm.expectRevert(IRoundRegistry.MismatchedArrays.selector);
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, "ipfs://x", 7);
+        registry.proposeRound(h, bens, amts, "ipfs://x", 7 days);
     }
 
     function test_Propose_RevertsOnInvalidWindow_Zero() public {
@@ -186,7 +186,7 @@ contract RoundRegistryTest is Test {
         (address[] memory bens, uint256[] memory amts, string memory uri, bytes32 h) = _basicRoundInputs();
         vm.expectRevert(IRoundRegistry.InvalidChallengeWindow.selector);
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, 366);
+        registry.proposeRound(h, bens, amts, uri, 365 days + 1);
     }
 
     function test_Propose_RevertsOnInvalidHash() public {
@@ -194,7 +194,7 @@ contract RoundRegistryTest is Test {
         bytes32 bogusHash = bytes32(uint256(0xdeadbeef));
         vm.expectRevert(IRoundRegistry.InvalidRoundHash.selector);
         vm.prank(proposer);
-        registry.proposeRound(bogusHash, bens, amts, uri, 7);
+        registry.proposeRound(bogusHash, bens, amts, uri, 7 days);
     }
 
     function test_Propose_RevertsOnZeroBeneficiary() public {
@@ -207,7 +207,7 @@ contract RoundRegistryTest is Test {
         bytes32 h = _hashOf(bens, amts, "ipfs://x");
         vm.expectRevert(abi.encodeWithSelector(IRoundRegistry.ZeroBeneficiary.selector, 1));
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, "ipfs://x", 7);
+        registry.proposeRound(h, bens, amts, "ipfs://x", 7 days);
     }
 
     function test_Propose_RevertsOnZeroAmount() public {
@@ -220,7 +220,7 @@ contract RoundRegistryTest is Test {
         bytes32 h = _hashOf(bens, amts, "ipfs://x");
         vm.expectRevert(abi.encodeWithSelector(IRoundRegistry.ZeroAmount.selector, 1));
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, "ipfs://x", 7);
+        registry.proposeRound(h, bens, amts, "ipfs://x", 7 days);
     }
 
     function test_Propose_RevertsOnDuplicateHash() public {
@@ -228,7 +228,7 @@ contract RoundRegistryTest is Test {
         (address[] memory bens, uint256[] memory amts, string memory uri,) = _basicRoundInputs();
         vm.expectRevert(IRoundRegistry.RoundAlreadyExists.selector);
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, 7);
+        registry.proposeRound(h, bens, amts, uri, 7 days);
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -418,7 +418,7 @@ contract RoundRegistryTest is Test {
         string memory uri = "ipfs://second-round";
         bytes32 h2 = _hashOf(bens, amts, uri);
         vm.prank(proposer);
-        registry.proposeRound(h2, bens, amts, uri, 7);
+        registry.proposeRound(h2, bens, amts, uri, 7 days);
 
         vm.warp(block.timestamp + 7 days);
         vm.prank(executor);
@@ -444,7 +444,7 @@ contract RoundRegistryTest is Test {
         string memory uri = "ipfs://month2";
         bytes32 h2 = _hashOf(bens, amts, uri);
         vm.prank(proposer);
-        registry.proposeRound(h2, bens, amts, uri, 7);
+        registry.proposeRound(h2, bens, amts, uri, 7 days);
         vm.warp(block.timestamp + 7 days);
 
         vm.prank(executor);
@@ -552,18 +552,18 @@ contract RoundRegistryTest is Test {
     function test_Propose_AcceptsMinimumWindow() public {
         (address[] memory bens, uint256[] memory amts, string memory uri, bytes32 h) = _basicRoundInputs();
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, 1);
+        registry.proposeRound(h, bens, amts, uri, 60);
         assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
         (, , uint32 win,) = registry.getRound(h);
-        assertEq(win, 1);
+        assertEq(win, 60);
     }
 
     function test_Propose_AcceptsMaximumWindow() public {
         (address[] memory bens, uint256[] memory amts, string memory uri, bytes32 h) = _basicRoundInputs();
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, 365);
+        registry.proposeRound(h, bens, amts, uri, 365 days);
         assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
         (, , uint32 win,) = registry.getRound(h);
-        assertEq(win, 365);
+        assertEq(win, 365 days);
     }
 }

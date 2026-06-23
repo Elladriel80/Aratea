@@ -70,7 +70,7 @@ contract RoundRegistryHandler is Test {
         if (hashSeen[h]) return; // never duplicate
 
         vm.prank(proposer);
-        try registry.proposeRound(h, bens, amts, uri, 7) {
+        try registry.proposeRound(h, bens, amts, uri, 7 days) {
             hashSeen[h] = true;
             proposedHashes.push(h);
         } catch { /* benign — bound violation */ }

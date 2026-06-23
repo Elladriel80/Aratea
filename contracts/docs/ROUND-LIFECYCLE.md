@@ -28,7 +28,7 @@
         │            │                                   │Cancelled │ (terminal)
         │            │                                   └──────────┘
         │            │
-        │            │ block.timestamp ≥ proposedAt + challengeWindowDays
+        │            │ block.timestamp ≥ proposedAt + challengeWindow
         │            │ AND status == Proposed
         │            │ executeRound() — ROUND_EXECUTOR_ROLE
         │            │ → mint to beneficiaries (no on-chain cap)
@@ -42,9 +42,9 @@
 
 | From | Function | Caller | Conditions | To |
 |---|---|---|---|---|
-| `None` | `proposeRound` | `ROUND_PROPOSER_ROLE` | `roundHash` unique; `beneficiaries.length == amounts.length`; each `amount > 0`; `challengeWindowDays > 0` | `Proposed` |
-| `Proposed` | `challengeRound` | anyone | `block.timestamp < proposedAt + challengeWindowDays * 1 days` | `Challenged` |
-| `Proposed` | `executeRound` | `ROUND_EXECUTOR_ROLE` | `block.timestamp ≥ proposedAt + challengeWindowDays * 1 days` | `Executed` |
+| `None` | `proposeRound` | `ROUND_PROPOSER_ROLE` | `roundHash` unique; `beneficiaries.length == amounts.length`; each `amount > 0`; `challengeWindow > 0` | `Proposed` |
+| `Proposed` | `challengeRound` | anyone | `block.timestamp < proposedAt + challengeWindow` | `Challenged` |
+| `Proposed` | `executeRound` | `ROUND_EXECUTOR_ROLE` | `block.timestamp ≥ proposedAt + challengeWindow` | `Executed` |
 | `Proposed` | `cancelRound` | `ROUND_CANCELLER_ROLE` | always | `Cancelled` |
 | `Challenged` | `cancelRound` | `ROUND_CANCELLER_ROLE` | always | `Cancelled` |
 | `Challenged` | (none — Safe must `cancelRound` if challenge upheld, otherwise let window expire and `executeRound`) | — | — | — |
@@ -57,7 +57,7 @@ struct Round {
     bytes32 roundHash;          // hash(beneficiaries, amounts, ipfsUri) — unique key
     string  ipfsUri;            // IPFS pointer to /rounds/archives/<round-id>/valuation_report.md snapshot
     uint64  proposedAt;         // block.timestamp at proposeRound
-    uint32  challengeWindowDays;// 7 by default; 30 for genesis (per-round override)
+    uint32  challengeWindow; // in seconds; testnet: 300 s; mainnet genesis: 2 592 000 s (30 d)
     RoundStatus status;
     address[] beneficiaries;
     uint256[] amounts;          // in token base units (wei, 18 decimals)
@@ -73,7 +73,7 @@ event RoundProposed(
     bytes32 indexed roundHash,
     string ipfsUri,
     uint64 proposedAt,
-    uint32 challengeWindowDays,
+    uint32 challengeWindow,
     address[] beneficiaries,
     uint256[] amounts
 );
@@ -105,7 +105,7 @@ The earlier on-chain `MonthlyMintCap` library and its associated state (snapshot
 
 ## 6. Genesis round
 
-`2026-05-genesis` (34 039 500 tokens to `@Elladriel80`) ships with `challengeWindowDays = 30` instead of the default 7. The extended window applies to this single round to give the first prospects investors time to review the historical valuation of JS's pre-open-source work; it is the only reason it differs from later rounds.
+`2026-05-genesis` (34 039 500 tokens to `@Elladriel80`) ships with `challengeWindow = 30` instead of the default 7. The extended window applies to this single round to give the first prospects investors time to review the historical valuation of JS's pre-open-source work; it is the only reason it differs from later rounds.
 
 ## 7. Off-chain ↔ on-chain bridge
 
@@ -119,7 +119,7 @@ The earlier on-chain `MonthlyMintCap` library and its associated state (snapshot
                                               [beneficiaries...],
                                               [amounts...],
                                               "ipfs://bafy...",
-                                              challengeWindowDays
+                                              challengeWindow
                                           )
 ```
 

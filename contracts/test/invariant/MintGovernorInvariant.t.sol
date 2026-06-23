@@ -81,7 +81,7 @@ contract MintGovernorHandler is Test {
         bytes32 h = keccak256(abi.encode(bens, amts, uri));
         if (seen[h]) return;
         vm.prank(keeper);
-        try registry.proposeRound(h, bens, amts, uri, 7) {
+        try registry.proposeRound(h, bens, amts, uri, 7 days) {
             seen[h] = true;
             rounds.push(h);
             amountOf[h] = amt;

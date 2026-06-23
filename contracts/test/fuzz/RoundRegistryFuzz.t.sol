@@ -58,12 +58,12 @@ contract RoundRegistryFuzzTest is Test {
     /// @dev Proposing a well-formed round always succeeds when caller is the proposer.
     function testFuzz_Propose_HappyPath(
         uint8 n,
-        uint32 windowDays,
+        uint32 windowSec,
         uint128 maxAmount,
         uint256 seed
     ) public {
         n = uint8(bound(n, 1, 10));
-        windowDays = uint32(bound(uint256(windowDays), 1, 365));
+        windowSec = uint32(bound(uint256(windowSec), 60, 365 days));
         maxAmount = uint128(bound(maxAmount, 1, type(uint96).max));
 
         (address[] memory bens, uint256[] memory amts) = _makeBensAndAmts(n, maxAmount, seed);
@@ -71,7 +71,7 @@ contract RoundRegistryFuzzTest is Test {
         bytes32 h = keccak256(abi.encode(bens, amts, uri));
 
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, windowDays);
+        registry.proposeRound(h, bens, amts, uri, windowSec);
 
         assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
     }
@@ -94,7 +94,7 @@ contract RoundRegistryFuzzTest is Test {
         bytes32 h = keccak256(abi.encode(bens, amts, uri));
 
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, 7);
+        registry.proposeRound(h, bens, amts, uri, 7 days);
 
         vm.warp(block.timestamp + 7 days);
 
@@ -127,11 +127,11 @@ contract RoundRegistryFuzzTest is Test {
     /// @dev Cancelling at any point before execution always lands in Cancelled state and
     ///      forbids future execution.
     function testFuzz_Cancel_ForbidsExecute(
-        uint32 windowDays,
+        uint32 windowSec,
         uint256 cancelTimeOffset
     ) public {
-        windowDays = uint32(bound(uint256(windowDays), 1, 30));
-        cancelTimeOffset = bound(cancelTimeOffset, 0, uint256(windowDays) * 1 days + 5 days);
+        windowSec = uint32(bound(uint256(windowSec), 60, 30 days));
+        cancelTimeOffset = bound(cancelTimeOffset, 0, uint256(windowSec) + 5 days);
 
         address[] memory bens = new address[](1);
         bens[0] = makeAddr("ben");
@@ -141,7 +141,7 @@ contract RoundRegistryFuzzTest is Test {
         bytes32 h = keccak256(abi.encode(bens, amts, uri));
 
         vm.prank(proposer);
-        registry.proposeRound(h, bens, amts, uri, windowDays);
+        registry.proposeRound(h, bens, amts, uri, windowSec);
 
         vm.warp(block.timestamp + cancelTimeOffset);
 
@@ -149,7 +149,7 @@ contract RoundRegistryFuzzTest is Test {
         registry.cancelRound(h, "ipfs://x");
 
         // Even after the window has passed, executor cannot revive a cancelled round.
-        vm.warp(block.timestamp + uint256(windowDays) * 1 days + 1);
+        vm.warp(block.timestamp + uint256(windowSec) + 1);
         vm.expectRevert(IRoundRegistry.RoundNotProposedOrChallenged.selector);
         vm.prank(executor);
         registry.executeRound(h);
@@ -171,7 +171,7 @@ contract RoundRegistryFuzzTest is Test {
         bytes32 h1 = keccak256(abi.encode(bens, amts, "ipfs://genesis"));
 
         vm.prank(proposer);
-        registry.proposeRound(h1, bens, amts, "ipfs://genesis", 7);
+        registry.proposeRound(h1, bens, amts, "ipfs://genesis", 7 days);
         vm.warp(block.timestamp + 7 days);
         vm.prank(executor);
         registry.executeRound(h1);
@@ -183,7 +183,7 @@ contract RoundRegistryFuzzTest is Test {
         amts[0] = secondMonthAttempt;
         bytes32 h2 = keccak256(abi.encode(bens, amts, "ipfs://month2"));
         vm.prank(proposer);
-        registry.proposeRound(h2, bens, amts, "ipfs://month2", 7);
+        registry.proposeRound(h2, bens, amts, "ipfs://month2", 7 days);
         vm.warp(block.timestamp + 7 days);
 
         uint256 supplyBefore = token.totalSupply();
