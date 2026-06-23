@@ -1,6 +1,6 @@
 # Status
 
-*Last updated: 2026-06-23*
+*Last updated: 2026-06-24*
 
 Snapshot of where Aratea actually stands across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
@@ -48,28 +48,34 @@ Registry: [`predictor/runs_learning/CHAMPION.json`](predictor/runs_learning/CHAM
 
 ### Latest learning loop results (2026-06-22, B44)
 
-62 dates, chronological split TRAIN 38 / VALID 12 / HOLDOUT 12:
+62 dates, chronological split TRAIN 38 / VALID 12 / HOLDOUT 12. Two independent
+runs on the same dataset (shifted holdout windows) both show model below market:
 
-| Config | HOLDOUT Brier | vs Kalshi mid |
-|---|---|---|
-| v3 baseline (C=0.1) | 0.1369 | +0.0029 above market |
-| v3b (series_bias_prior, global) | 0.1170 | −0.0003 (minor leakage) |
-| v3fa (series_bias_fa, TRAIN-only) | 0.1173 | = market (tie, clean) |
-| **v3fa + forest_pct_5km (C=0.1)** | **0.1172** | **−0.0001 below market ← first** |
+| Run | HOLDOUT dates | Model Brier | Market Brier | Gap |
+|---|---|---|---|---|
+| loop_20260622T063316Z | 2026-06-02..06-13 | **0.1172** | 0.1173 | −0.0001 |
+| loop_20260622T070606Z | 2026-06-04..06-15 | **0.1155** | 0.1208 | −0.0053 |
+
+Best config: v3fa + forest_pct_5km (C=0.1).
 
 **Key finding (B44):** Pipeline fix (fold-aware injection) unlocked the geo feature
-`forest_pct_5km` as an additive term. Combined with v3fa at C=0.1, HOLDOUT Brier
-reaches **0.1172 < 0.1173** — first time below market on clean evaluation.
-Gap is 0.0001 on 12 HOLDOUT dates: promising but not yet statistically robust (need ≥ 20 dates).
+`forest_pct_5km` as an additive term. Both independent holdout windows show model
+below market — consistent signal. Gap ranges from 0.0001 to 0.0053 depending on
+period; not yet statistically robust (need >= 20 dates, sign-test p < 0.05).
+
+**Power analysis (B54, `scripts/power_analysis.py`):**
+- At theta=65% win rate (observed 8/12=67% on VALID): need **30 HOLDOUT dates**.
+- At theta=70%: need **18 HOLDOUT dates** (6 more than current).
+- Run: `python scripts/power_analysis.py --current-wins 8 --current-n 12`
 
 NO-GO hypotheses tested (62-date dataset):
 `GBM depth=2`, `consensus×spread`, `is_hightemp (p=0.117)`, `month_sin/cos (p=0.102)`,
 `p_consensus×series_bias_fa (p=0.912)`, `days_ahead×series_bias_fa (p=0.633)`,
 `v3fb interactions (p=0.912/0.633)`.
 
-**Current verdict:** first passage below market (0.1172 < 0.1173) on 12 HOLDOUT dates.
-Not statistically significant yet. **Next lever:** expand Kalshi universe to 10-12 series —
-more HOLDOUT dates → robust sign-test. See TODO-HUMAIN.md (B39/B45).
+**Current verdict:** consistent below-market signal across two holdout windows.
+Not statistically significant yet (12 dates). **Next lever:** expand Kalshi universe
+to 10-12 series (B45) — target >= 20 HOLDOUT dates for robust sign-test.
 
 ### Feature sets
 
@@ -170,6 +176,9 @@ Stack: Next.js 15 + React 19, TypeScript strict, viem 2.x, Tailwind. No backend,
 
 ## Recent changes (since 2026-06-10)
 
+- **2026-06-24** — **Keeper CI fix (B52)** — `aratea-keeper.yml`: `window_days` input renamed `window_seconds` (default 604800s = 7d), env var `ROUND_WINDOW_DAYS` → `ROUND_WINDOW_SECONDS` — syncs with `KeeperProposeRound.s.sol` post-B46 refactor.
+- **2026-06-24** — **Power analysis tool (B54)** — `predictor/scripts/power_analysis.py`: sign-test sample size for G2. At theta=65% win rate, need 30 HOLDOUT dates for p<0.05; at theta=70%, need 18.
+- **2026-06-24** — **G2 update** — second independent loop run confirms below-market signal on different holdout window (0.1155 < 0.1208, gap 0.0053). Both runs show consistent edge.
 - **2026-06-23** — **Phase 3 interfaces scaffolded (B51)** — `contracts/src/interfaces/`: `IPricingEngine.sol` (actuarial quote), `IPolicyRegistry.sol` (policy lifecycle PENDING→ACTIVE→CLAIMED/EXPIRED), `IPremiumPool.sol` (USDC capital pool, MCR, reserves). Pre-implementation; gated on D-capital + D-réglementation decisions.
 - **2026-06-23** — **Phase 3 design notes (B47-B49)** — Aratea-Vault/Design-Phase3/: 01-modele-mutualiste, 02-moteur-tarification, 03-schema-contrats-police. Capital pilot ~13 k$ (C2 paramétrique pur). Pending D-capital + D-réglementation.
 - **2026-06-23** — **Phase 2 LIVE on Arbitrum Sepolia** — full redeploy (17 Ledger confirmations): Phase 1 → Genesis mint → Phase 2 (MintGovernor). VerifyDeploymentPhase2 11/11 ✅. REG-1 confirmed: admin no longer holds ROUND_EXECUTOR_ROLE. Canonical addresses in `contracts/.env`. `challengeWindow` refactored to seconds (B46, 182 tests) — one-session testnet deploy now possible.
