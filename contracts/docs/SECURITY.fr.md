@@ -64,7 +64,7 @@ Il **ne couvre pas** : l'intégrité de l'agent off-chain, la durabilité du pin
 
 | Menace | Mitigation |
 |---|---|
-| `executeRound` appelé avant l'expiration de la fenêtre de challenge | La fonction revert si `block.timestamp < proposedAt + challengeWindowDays * 1 days`. |
+| `executeRound` appelé avant l'expiration de la fenêtre de challenge | La fonction revert si `block.timestamp < proposedAt + challengeWindow`. |
 | `executeRound` appelé deux fois sur le même round | La fonction revert si `status != Proposed`. Après exécution, le status devient `Executed`. |
 | `executeRound` appelé sur un round `Cancelled` | Même check de status. |
 | `proposeRound` avec arrays beneficiaries / amounts non alignés | Check de longueur + chaque amount > 0 imposé. |

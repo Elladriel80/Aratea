@@ -20,26 +20,39 @@ import {IRoundRegistry} from "../src/interfaces/IRoundRegistry.sol";
 ///           - GENESIS_IPFS_URI    : `ipfs://...` pointer to the pinned valuation_report.md
 ///           - PROPOSER_ADDRESS    : address that signs the tx; must hold ROUND_PROPOSER_ROLE
 ///         Optional:
-///           - BROADCAST           : "true" to broadcast, anything else to dry-run / print calldata
+///           - BROADCAST                : "true" to broadcast, anything else to dry-run / print calldata
+///           - CHALLENGE_WINDOW_SECONDS : challenge window in seconds.
+///                                        Default: 2592000 (= 30 days) for mainnet / production.
+///                                        Testnet one-session: set to 300 (5 min) so Phase 1→Genesis→Phase2
+///                                        can be completed in a single session without waiting 30 days.
+///                                        Min: 60 s (registry MIN_CHALLENGE_WINDOW).
 ///
-///         Invocation example with Ledger:
+///         Invocation example with Ledger (mainnet / production):
 ///           BROADCAST=true forge script script/ProposeGenesisRound.s.sol:ProposeGenesisRound \
 ///             --rpc-url $RPC_ARBITRUM_SEPOLIA \
 ///             --ledger --sender $PROPOSER_ADDRESS --hd-paths "m/44'/60'/0'/0/0" \
 ///             --broadcast -vv
 ///
+///         Testnet one-session (5-minute window):
+///           CHALLENGE_WINDOW_SECONDS=300 BROADCAST=true forge script \
+///             script/ProposeGenesisRound.s.sol:ProposeGenesisRound \
+///             --rpc-url $RPC_ARBITRUM_SEPOLIA --ledger --sender $PROPOSER_ADDRESS \
+///             --hd-paths "m/44'/60'/0'/0/0" --broadcast -vv
+///
 ///         Constants — match the off-chain valuation_report.md:
 ///           Genesis amount: 34_039_500 ether (= 34_039_500 sats × 10^18 wei per token)
-///           Challenge window: 30 days (extended for genesis per white paper §11)
+///           Challenge window: 30 days default (mainnet); set CHALLENGE_WINDOW_SECONDS for testnet
 contract ProposeGenesisRound is Script {
     uint256 internal constant GENESIS_AMOUNT_WEI = 34_039_500 ether;
-    uint32 internal constant GENESIS_CHALLENGE_WINDOW_DAYS = 30;
+    /// @dev Default window = 30 days in seconds. Override with CHALLENGE_WINDOW_SECONDS env var.
+    uint256 internal constant DEFAULT_CHALLENGE_WINDOW = 30 days;
 
     function run() external {
         RoundRegistry registry = RoundRegistry(vm.envAddress("REGISTRY_ADDRESS"));
         address beneficiary = vm.envAddress("GENESIS_BENEFICIARY");
         string memory ipfsUri = vm.envString("GENESIS_IPFS_URI");
         bool broadcastMode = vm.envOr("BROADCAST", false);
+        uint32 challengeWindow = uint32(vm.envOr("CHALLENGE_WINDOW_SECONDS", DEFAULT_CHALLENGE_WINDOW));
 
         require(beneficiary != address(0), "ProposeGenesisRound: beneficiary is zero");
         require(bytes(ipfsUri).length > 0, "ProposeGenesisRound: empty IPFS URI");
@@ -59,15 +72,15 @@ contract ProposeGenesisRound is Script {
         );
 
         bytes memory calldataBytes = abi.encodeCall(
-            RoundRegistry.proposeRound, (roundHash, beneficiaries, amounts, ipfsUri, GENESIS_CHALLENGE_WINDOW_DAYS)
+            RoundRegistry.proposeRound, (roundHash, beneficiaries, amounts, ipfsUri, challengeWindow)
         );
 
         console2.log("== ProposeGenesisRound ==");
-        console2.log("Registry:           ", address(registry));
-        console2.log("Beneficiary:        ", beneficiary);
-        console2.log("Amount (wei):       ", GENESIS_AMOUNT_WEI);
-        console2.log("Amount (tokens):    ", GENESIS_AMOUNT_WEI / 1 ether);
-        console2.log("Challenge window:   ", GENESIS_CHALLENGE_WINDOW_DAYS);
+        console2.log("Registry:                   ", address(registry));
+        console2.log("Beneficiary:                ", beneficiary);
+        console2.log("Amount (wei):               ", GENESIS_AMOUNT_WEI);
+        console2.log("Amount (tokens):            ", GENESIS_AMOUNT_WEI / 1 ether);
+        console2.log("Challenge window (seconds): ", challengeWindow);
         console2.log("Round hash:");
         console2.logBytes32(roundHash);
 
@@ -77,7 +90,7 @@ contract ProposeGenesisRound is Script {
             console2.log("Broadcast mode: proposer = ", proposer);
 
             vm.startBroadcast(proposer);
-            registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, GENESIS_CHALLENGE_WINDOW_DAYS);
+            registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, challengeWindow);
             vm.stopBroadcast();
 
             console2.log("Round proposed on-chain.");

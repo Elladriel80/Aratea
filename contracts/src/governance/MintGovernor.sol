@@ -389,7 +389,7 @@ contract MintGovernor is AccessControl, ReentrancyGuard {
         // Interactions: register the alternative and lock it. proposeRound re-validates the
         // hash/arrays and reverts on a duplicate; challengeRound moves it to Challenged so only
         // this Governor's vote-resolution path (never `finalize`) can ever execute it.
-        registry.proposeRound(altHash, beneficiaries, amounts, ipfsUri, voteDurationDays);
+        registry.proposeRound(altHash, beneficiaries, amounts, ipfsUri, uint32(_voteDuration()));
         registry.challengeRound(altHash, ipfsUri);
 
         emit AlternativeProposed(originalRound, altHash, msg.sender);

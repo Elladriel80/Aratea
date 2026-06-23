@@ -9,6 +9,12 @@
 >
 > Dry-run validated end-to-end on 2026-06-21 (test `FullStackRedeployTest`,
 > 7/7 assertions green — see `test/unit/FullStackRedeployTest.t.sol`).
+>
+> **Testnet one-session mode (2026-06-23)**: the challenge window is now configurable
+> in seconds via `CHALLENGE_WINDOW_SECONDS`. Testnet value: **300 s** (5 min) →
+> Phase 1 → Genesis (propose) → wait 5 min → Execute → Phase 2 in a **single session**.
+> Mainnet: keep 2 592 000 s (30 days). The contract enforces `[60 s ; 365 d]`.
+> `FullStackRedeployTest` updated with `GENESIS_WINDOW_SEC = 300`.
 
 ---
 
@@ -30,6 +36,12 @@ ETHERSCAN_API_KEY=<your_key>
 GENESIS_BENEFICIARY=0x9a94552DCB67F036af6eccc9111b749856ab8EEA
 PROPOSER_ADDRESS=0x9a94552DCB67F036af6eccc9111b749856ab8EEA
 GENESIS_IPFS_URI=ipfs://bafybeih5jb2vk577w57uw62m4j7opyke4poryrphscydhzmd3htvm2ug7u
+
+# ── Challenge window (NEW — in seconds) ──
+# Testnet one-session (5 min):
+CHALLENGE_WINDOW_SECONDS=300
+# Mainnet (30 days): comment the line above and uncomment:
+# CHALLENGE_WINDOW_SECONDS=2592000
 
 # TOKEN_ADDRESS and REGISTRY_ADDRESS will be added after step 1.
 ```
@@ -95,10 +107,10 @@ cast call $REGISTRY_ADDRESS "ROUND_CHALLENGER_ROLE()(bytes32)" \
 
 | # | Transaction |
 |---|-------------|
-| 8 | `registry.proposeRound(hash, [ELLADRIEL], [34_039_500e18], ipfsUri, 30)` |
+| 8 | `registry.proposeRound(hash, [ELLADRIEL], [34_039_500e18], ipfsUri, CHALLENGE_WINDOW_SECONDS)` |
 
 ```bash
-source .env   # TOKEN_ADDRESS + REGISTRY_ADDRESS now updated
+source .env   # TOKEN_ADDRESS, REGISTRY_ADDRESS + CHALLENGE_WINDOW_SECONDS now set
 
 BROADCAST=true forge script script/ProposeGenesisRound.s.sol:ProposeGenesisRound \
   --rpc-url $RPC_ARBITRUM_SEPOLIA \
@@ -109,18 +121,28 @@ BROADCAST=true forge script script/ProposeGenesisRound.s.sol:ProposeGenesisRound
   -vv
 ```
 
+Output will show `Challenge window (seconds): 300` (testnet) or `2592000` (mainnet).
+
 **Note the `roundHash`** printed in the output — needed for step 2b.
 
 ---
 
-## ⏳ Wait 30 days (genesis challenge window)
+## ⏳ Wait for the challenge window
 
-The challenge window expires 30 days after the proposal. If no cancel
-occurs before the window closes, the round can be executed.
+| Mode | Wait | Env var |
+|------|------|---------|
+| **Testnet one-session** | **300 seconds (5 min)** | `CHALLENGE_WINDOW_SECONDS=300` |
+| Mainnet / production | 30 days (2 592 000 s) | `CHALLENGE_WINDOW_SECONDS=2592000` |
+
+Check window expiry:
+```bash
+cast call $REGISTRY_ADDRESS "windowEndOf(bytes32)(uint256)" $ROUND_HASH \
+  --rpc-url $RPC_ARBITRUM_SEPOLIA
+```
 
 ---
 
-## 2b. Step 2b — Execute genesis round (after 30 days)
+## 2b. Step 2b — Execute genesis round (after window expires)
 
 **1 Ledger confirmation**
 
@@ -226,10 +248,14 @@ cast call $REGISTRY_ADDRESS "hasRole(bytes32,address)(bool)" \
 | Session | When | Confirmations |
 |---------|------|---------------|
 | Step 1 — Phase 1 | Now | **7** |
-| Step 2 — Propose Genesis | Now | **1** |
-| Step 2b — Execute Genesis | D+30 (after window) | **1** |
-| Step 3 — Phase 2 | D+30 (after execute) | **8** |
+| Step 2 — Propose Genesis | Now (same session) | **1** |
+| Step 2b — Execute Genesis | After window (5 min testnet / 30 d mainnet) | **1** |
+| Step 3 — Phase 2 | Right after 2b (same session on testnet) | **8** |
 | **Total** | | **17** |
+
+> **Testnet one-session**: with `CHALLENGE_WINDOW_SECONDS=300`, steps 1 → 2 → 2b → 3
+> complete in a **single session** (~35 min Ledger + 5 min wait).
+> Mainnet: plan 4 separate sessions (D, D, D+30, D+30).
 
 ---
 
@@ -238,7 +264,8 @@ cast call $REGISTRY_ADDRESS "hasRole(bytes32,address)(bool)" \
 - [ ] Old TOKEN/REGISTRY addresses commented out or removed from `.env`
 - [ ] `ETHERSCAN_API_KEY` valid in `.env`
 - [ ] `KEEPER_ADDRESS` derived from `KEEPER_PRIVATE_KEY` and added to `.env` (step 3)
-- [ ] Local dry-run confirmed: `forge test --match-contract FullStackRedeployTest -vv` → 7/7 PASS
+- [ ] Local dry-run confirmed: `forge test --match-contract FullStackRedeployTest -vv` → 7/7 PASS (300 s window)
+- [ ] `CHALLENGE_WINDOW_SECONDS` set in `.env` (300 testnet, 2592000 mainnet)
 - [ ] Ledger connected, unlocked, Ethereum app open
 - [ ] Admin wallet has enough testnet ETH for 17 txs (est. ~0.05 ETH)
 

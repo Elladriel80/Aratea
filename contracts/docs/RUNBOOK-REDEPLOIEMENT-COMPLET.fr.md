@@ -9,6 +9,13 @@
 >
 > Dry-run validé de bout en bout le 2026-06-21 (test `FullStackRedeployTest`,
 > 7/7 assertions vertes — voir `test/unit/FullStackRedeployTest.t.sol`).
+>
+> **Mode testnet UNE SESSION (2026-06-23)** : la fenêtre de challenge est désormais
+> paramétrable en secondes via `CHALLENGE_WINDOW_SECONDS`. Valeur testnet : **300 s**
+> (5 min) → Phase 1 → Genesis (propose) → attente 5 min → Execute → Phase 2 dans la
+> même session. Mainnet : conserver 2 592 000 s (30 jours). Le contrat valide
+> `[60 s ; 365 j]` — il est impossible de passer une valeur trop courte.
+> Dry-run FullStackRedeployTest mis à jour avec `GENESIS_WINDOW_SEC = 300`.
 
 ---
 
@@ -30,6 +37,12 @@ ETHERSCAN_API_KEY=<ta_clé>
 GENESIS_BENEFICIARY=0x9a94552DCB67F036af6eccc9111b749856ab8EEA
 PROPOSER_ADDRESS=0x9a94552DCB67F036af6eccc9111b749856ab8EEA
 GENESIS_IPFS_URI=ipfs://bafybeih5jb2vk577w57uw62m4j7opyke4poryrphscydhzmd3htvm2ug7u
+
+# ── Fenêtre de challenge (NOUVELLE — en secondes) ──
+# Testnet UNE SESSION (5 min) :
+CHALLENGE_WINDOW_SECONDS=300
+# Production / mainnet (30 jours) : commenter la ligne ci-dessus et décommenter :
+# CHALLENGE_WINDOW_SECONDS=2592000
 
 # ── Les nouvelles adresses TOKEN_ADDRESS et REGISTRY_ADDRESS seront ajoutées
 #    après l'étape 1 (noter la sortie de la commande forge). ──
@@ -99,10 +112,10 @@ cast call $REGISTRY_ADDRESS "ROUND_CHALLENGER_ROLE()(bytes32)" \
 
 | # | Transaction |
 |---|-------------|
-| 8 | `registry.proposeRound(hash, [ELLADRIEL], [34 039 500 * 1e18], ipfsUri, 30)` |
+| 8 | `registry.proposeRound(hash, [ELLADRIEL], [34 039 500 * 1e18], ipfsUri, CHALLENGE_WINDOW_SECONDS)` |
 
 ```bash
-source .env   # TOKEN_ADDRESS et REGISTRY_ADDRESS maintenant à jour
+source .env   # TOKEN_ADDRESS, REGISTRY_ADDRESS et CHALLENGE_WINDOW_SECONDS maintenant à jour
 
 BROADCAST=true forge script script/ProposeGenesisRound.s.sol:ProposeGenesisRound \
   --rpc-url $RPC_ARBITRUM_SEPOLIA \
@@ -113,19 +126,25 @@ BROADCAST=true forge script script/ProposeGenesisRound.s.sol:ProposeGenesisRound
   -vv
 ```
 
+La sortie affiche : `Challenge window (seconds): 300` (testnet) ou `2592000` (mainnet).
+
 **Relever le `roundHash`** affiché dans la sortie — nécessaire à l'étape 2b.
 
 ---
 
-## ⏳ Attendre 30 jours (fenêtre de challenge genesis)
+## ⏳ Attendre la fenêtre de challenge
 
-La fenêtre de challenge expire 30 jours après la proposition. Aucun challenger
-n'est attendu ; si un challenge est déposé, le panneau off-chain statue et, s'il est
-rejeté, l'exécution se poursuit à la fin de la fenêtre.
+| Mode | Durée d'attente | Env var |
+|------|-----------------|---------|
+| **Testnet UNE SESSION** | **300 secondes (5 min)** | `CHALLENGE_WINDOW_SECONDS=300` |
+| Mainnet / production | 30 jours (2 592 000 s) | `CHALLENGE_WINDOW_SECONDS=2592000` |
+
+En testnet, relancer l'étape 2b dès que la fenêtre expire (vérifier avec
+`cast call $REGISTRY_ADDRESS "windowEndOf(bytes32)(uint256)" $ROUND_HASH --rpc-url $RPC_ARBITRUM_SEPOLIA`).
 
 ---
 
-## 2b. Étape 2b — Exécuter le round genesis (après 30 jours)
+## 2b. Étape 2b — Exécuter le round genesis (après la fenêtre)
 
 **1 confirmation Ledger**
 
@@ -236,10 +255,14 @@ cast call $REGISTRY_ADDRESS "hasRole(bytes32,address)(bool)" \
 | Session | Quand | Confirmations |
 |---------|-------|---------------|
 | Étape 1 — Phase 1 | Maintenant | **7** |
-| Étape 2 — Propose Genesis | Maintenant | **1** |
-| Étape 2b — Execute Genesis | J+30 (après la fenêtre) | **1** |
-| Étape 3 — Phase 2 | J+30 (après execute) | **8** |
+| Étape 2 — Propose Genesis | Maintenant (même session) | **1** |
+| Étape 2b — Execute Genesis | Après la fenêtre (5 min testnet / 30 j mainnet) | **1** |
+| Étape 3 — Phase 2 | Juste après 2b (même session en testnet) | **8** |
 | **Total** | | **17** |
+
+> **Testnet UNE SESSION** : avec `CHALLENGE_WINDOW_SECONDS=300`, les étapes 1 → 2 → 2b → 3
+> s'enchaînent dans la **même session** (~35 min de manipulation Ledger + 5 min d'attente).
+> Mainnet : prévoir 4 sessions séparées (J, J, J+30, J+30).
 
 ---
 
@@ -248,7 +271,8 @@ cast call $REGISTRY_ADDRESS "hasRole(bytes32,address)(bool)" \
 - [ ] Anciennes adresses TOKEN/REGISTRY commentées ou retirées du `.env`
 - [ ] `ETHERSCAN_API_KEY` valide dans `.env`
 - [ ] `KEEPER_ADDRESS` dérivé de `KEEPER_PRIVATE_KEY` et ajouté dans `.env` (pour étape 3)
-- [ ] Dry-run local confirmé : `forge test --match-contract FullStackRedeployTest -vv` → 7/7 PASS
+- [ ] Dry-run local confirmé : `forge test --match-contract FullStackRedeployTest -vv` → 7/7 PASS (fenêtre 300 s)
+- [ ] `CHALLENGE_WINDOW_SECONDS` défini dans `.env` (300 testnet, 2592000 mainnet)
 - [ ] Ledger connecté, déverrouillé, application Ethereum ouverte
 - [ ] Wallet admin a assez d'ETH testnet pour les 17 txs (estim. ~0,05 ETH)
 

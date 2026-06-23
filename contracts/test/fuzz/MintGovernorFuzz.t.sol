@@ -30,12 +30,13 @@ contract MintGovernorFuzzTest is Test {
 
     uint256 internal constant START = 1_778_544_000;
     uint16 internal constant QUORUM_BPS = 1500;
-    uint32 internal constant WINDOW_DAYS = 7;
+    uint32 internal constant VOTE_DAYS = 7;           // vote duration for MintGovernor (days)
+    uint32 internal constant ROUND_WINDOW_SEC = 7 days; // challenge window for registry (seconds)
 
     function setUp() public {
         token = new AugPocToken(admin);
         registry = new RoundRegistry(admin, IAugPocToken(address(token)));
-        governor = new MintGovernor(admin, registry, IVotes(address(token)), address(0), QUORUM_BPS, 100, WINDOW_DAYS);
+        governor = new MintGovernor(admin, registry, IVotes(address(token)), address(0), QUORUM_BPS, 100, VOTE_DAYS);
 
         vm.startPrank(admin);
         token.grantRole(token.MINTER_ROLE(), address(registry));
@@ -87,7 +88,7 @@ contract MintGovernorFuzzTest is Test {
         string memory uri = "ipfs://fuzz";
         bytes32 h = keccak256(abi.encode(bens, amts, uri));
         vm.prank(keeper);
-        registry.proposeRound(h, bens, amts, uri, WINDOW_DAYS);
+        registry.proposeRound(h, bens, amts, uri, ROUND_WINDOW_SEC);
 
         vm.warp(block.timestamp + 1);
         vm.prank(voterFor);
@@ -100,7 +101,7 @@ contract MintGovernorFuzzTest is Test {
             governor.castVote(h, false);
         }
 
-        vm.warp(block.timestamp + uint256(WINDOW_DAYS) * 1 days + 1);
+        vm.warp(block.timestamp + ROUND_WINDOW_SEC + 1);
         governor.resolve(h);
 
         uint256 total = fW + aW + abW;
@@ -135,7 +136,7 @@ contract MintGovernorFuzzTest is Test {
         string memory uri = "ipfs://fuzz2";
         bytes32 h = keccak256(abi.encode(bens, amts, uri));
         vm.prank(keeper);
-        registry.proposeRound(h, bens, amts, uri, WINDOW_DAYS);
+        registry.proposeRound(h, bens, amts, uri, ROUND_WINDOW_SEC);
 
         // Attacker acquires weight strictly after the proposal.
         vm.warp(block.timestamp + 1);

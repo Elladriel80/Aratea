@@ -28,7 +28,7 @@
         │            │                                   │Cancelled │ (terminal)
         │            │                                   └──────────┘
         │            │
-        │            │ block.timestamp ≥ proposedAt + challengeWindowDays
+        │            │ block.timestamp ≥ proposedAt + challengeWindow
         │            │ ET status == Proposed
         │            │ executeRound() — ROUND_EXECUTOR_ROLE
         │            │ → mint vers les bénéficiaires (pas de cap on-chain)
@@ -42,9 +42,9 @@
 
 | Depuis | Fonction | Appelant | Conditions | Vers |
 |---|---|---|---|---|
-| `None` | `proposeRound` | `ROUND_PROPOSER_ROLE` | `roundHash` unique ; `beneficiaries.length == amounts.length` ; chaque `amount > 0` ; `challengeWindowDays > 0` | `Proposed` |
-| `Proposed` | `challengeRound` | n'importe qui | `block.timestamp < proposedAt + challengeWindowDays * 1 days` | `Challenged` |
-| `Proposed` | `executeRound` | `ROUND_EXECUTOR_ROLE` | `block.timestamp ≥ proposedAt + challengeWindowDays * 1 days` | `Executed` |
+| `None` | `proposeRound` | `ROUND_PROPOSER_ROLE` | `roundHash` unique ; `beneficiaries.length == amounts.length` ; chaque `amount > 0` ; `challengeWindow > 0` | `Proposed` |
+| `Proposed` | `challengeRound` | n'importe qui | `block.timestamp < proposedAt + challengeWindow` | `Challenged` |
+| `Proposed` | `executeRound` | `ROUND_EXECUTOR_ROLE` | `block.timestamp ≥ proposedAt + challengeWindow` | `Executed` |
 | `Proposed` | `cancelRound` | `ROUND_CANCELLER_ROLE` | toujours | `Cancelled` |
 | `Challenged` | `cancelRound` | `ROUND_CANCELLER_ROLE` | toujours | `Cancelled` |
 | `Challenged` | (aucune — le Safe doit `cancelRound` si le challenge est validé, sinon laisser la fenêtre expirer et `executeRound`) | — | — | — |
@@ -57,7 +57,7 @@ struct Round {
     bytes32 roundHash;          // hash(beneficiaries, amounts, ipfsUri) — clé unique
     string  ipfsUri;            // pointeur IPFS vers le snapshot de /rounds/archives/<round-id>/valuation_report.md
     uint64  proposedAt;         // block.timestamp au proposeRound
-    uint32  challengeWindowDays;// 7 par défaut ; 30 pour le genesis (override par round)
+    uint32  challengeWindow; // en secondes ; testnet : 300 s ; mainnet genesis : 2 592 000 s (30 j)
     RoundStatus status;
     address[] beneficiaries;
     uint256[] amounts;          // en unités de base du token (wei, 18 décimales)
@@ -73,7 +73,7 @@ event RoundProposed(
     bytes32 indexed roundHash,
     string ipfsUri,
     uint64 proposedAt,
-    uint32 challengeWindowDays,
+    uint32 challengeWindow,
     address[] beneficiaries,
     uint256[] amounts
 );
@@ -105,7 +105,7 @@ L'ancienne bibliothèque on-chain `MonthlyMintCap` et l'état associé (snapshot
 
 ## 6. Round genesis
 
-`2026-05-genesis` (34 039 500 tokens à `@Elladriel80`) part avec `challengeWindowDays = 30` au lieu du 7 par défaut. La fenêtre étendue s'applique à ce seul round pour laisser le temps aux premiers prospects investisseurs d'examiner la valuation historique du travail pré-open-source de JS ; c'est la seule raison qu'elle diffère des rounds suivants.
+`2026-05-genesis` (34 039 500 tokens à `@Elladriel80`) part avec `challengeWindow = 30` au lieu du 7 par défaut. La fenêtre étendue s'applique à ce seul round pour laisser le temps aux premiers prospects investisseurs d'examiner la valuation historique du travail pré-open-source de JS ; c'est la seule raison qu'elle diffère des rounds suivants.
 
 ## 7. Pont off-chain ↔ on-chain
 
@@ -119,7 +119,7 @@ L'ancienne bibliothèque on-chain `MonthlyMintCap` et l'état associé (snapshot
                                               [beneficiaries...],
                                               [amounts...],
                                               "ipfs://bafy...",
-                                              challengeWindowDays
+                                              challengeWindow
                                           )
 ```
 

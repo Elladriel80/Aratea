@@ -63,7 +63,7 @@ It does **not** cover: off-chain agent integrity, IPFS pinning durability, Safe 
 
 | Threat | Mitigation |
 |---|---|
-| `executeRound` called before challenge window expires | Function reverts if `block.timestamp < proposedAt + challengeWindowDays * 1 days`. |
+| `executeRound` called before challenge window expires | Function reverts if `block.timestamp < proposedAt + challengeWindow`. |
 | `executeRound` called twice on the same round | Function reverts if `status != Proposed`. After execution, status becomes `Executed`. |
 | `executeRound` called on a `Cancelled` round | Same status check. |
 | `proposeRound` with mismatched beneficiaries / amounts arrays | Length check + each amount > 0 enforced. |

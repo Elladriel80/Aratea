@@ -71,7 +71,7 @@ contract GenesisRoundE2E is Test {
         bytes32 roundHash = keccak256(abi.encode(beneficiaries, amounts, ipfsUri));
 
         vm.prank(proposer);
-        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30);
+        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30 days);
 
         assertEq(uint8(registry.statusOf(roundHash)), uint8(IRoundRegistry.RoundStatus.Proposed));
         assertEq(token.totalSupply(), 0, "supply must still be zero before execution");
@@ -102,7 +102,7 @@ contract GenesisRoundE2E is Test {
         bytes32 roundHash = keccak256(abi.encode(beneficiaries, amounts, ipfsUri));
 
         vm.prank(proposer);
-        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30);
+        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30 days);
 
         // A challenge is filed mid-window (through the challenge front-door, here the test EOA).
         vm.warp(block.timestamp + 15 days);
@@ -129,7 +129,7 @@ contract GenesisRoundE2E is Test {
         bytes32 roundHash = keccak256(abi.encode(beneficiaries, amounts, ipfsUri));
 
         vm.prank(proposer);
-        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30);
+        registry.proposeRound(roundHash, beneficiaries, amounts, ipfsUri, 30 days);
 
         vm.prank(challenger);
         registry.challengeRound(roundHash, "ipfs://reason");

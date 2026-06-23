@@ -31,7 +31,7 @@ interface IRoundRegistry {
         bytes32 indexed roundHash,
         string ipfsUri,
         uint64 proposedAt,
-        uint32 challengeWindowDays,
+        uint32 challengeWindow,
         address[] beneficiaries,
         uint256[] amounts
     );
@@ -78,7 +78,7 @@ interface IRoundRegistry {
         address[] calldata beneficiaries,
         uint256[] calldata amounts,
         string calldata ipfsUri,
-        uint32 challengeWindowDays
+        uint32 challengeWindow
     ) external;
 
     /// @notice File a formal challenge against a Proposed round during its challenge window,
