@@ -48,10 +48,10 @@ on:
         description: 'propose: ipfs:// URI of the valuation report'
         required: false
         type: string
-      window_days:
-        description: 'propose: challenge window in days'
+      window_seconds:
+        description: 'propose: challenge window in seconds (default 604800 = 7 days; testnet short-cycle: 300)'
         required: false
-        default: '7'
+        default: '604800'
         type: string
 
 permissions:
@@ -105,7 +105,7 @@ jobs:
           ROUND_BENEFICIARIES: ${{ inputs.beneficiaries }}
           ROUND_AMOUNTS: ${{ inputs.amounts }}
           ROUND_IPFS: ${{ inputs.ipfs }}
-          ROUND_WINDOW_DAYS: ${{ inputs.window_days }}
+          ROUND_WINDOW_SECONDS: ${{ inputs.window_seconds }}
         run: |
           forge script script/KeeperProposeRound.s.sol:KeeperProposeRound \
             --rpc-url "$RPC_ARBITRUM_SEPOLIA" \

@@ -1,6 +1,6 @@
 # Roadmap
 
-*Last updated: 2026-06-02*
+*Last updated: 2026-06-23*
 
 The phased plan for Aratea. This file frames the journey; [`STATUS.md`](STATUS.md)
 records where we actually are at this moment. Every claim here points
@@ -153,13 +153,15 @@ Roadmap mirrored from [`contracts/README.md`](contracts/README.md):
 | **M2** | ~~`MonthlyMintCap` library~~ — removed 2026-05-17 (no on-chain emission cap; quality gated off-chain — white paper §7.7) | — |
 | **M3** | `RoundRegistry` (propose / challenge / execute / cancel) | ✅ done |
 | **M4** | Deployment scripts on Arbitrum Sepolia + Safe calldata helpers | ✅ done |
-| **M5** | Read-only dashboard (Next.js + viem) | 🟡 in progress — UI built and deployed; acceptance pending the first on-chain round |
+| **M5** | Read-only dashboard (Next.js + viem) + live testnet deploy | ✅ done (2026-06-23) — Phase 2 live on Arbitrum Sepolia |
+| **M3b** | `MintGovernor` — Phase 2 auto-mint + token-weighted vote | ✅ done (PR #163) |
+| **M6** | Governance UI `/governance` — wallet + on-chain vote | ✅ done (PR #166) |
 
-After M5, the on-track-but-out-of-Phase-1 work:
+**Phase 1 contracts track: COMPLETE.** Both tracks (predictor + contracts) must finish before Phase 2 starts. Contracts: done. Predictor: in progress (G2 Brier target 0.098, currently 0.1172 < market 0.1173 on 12 HOLDOUT dates — more data needed).
 
-- **First Arbitrum Sepolia deployment.** Genesis-round execution is the
-  acceptance test — see [`rounds/archives/2026-05-genesis/`](rounds/archives/2026-05-genesis/) for the pinned
-  valuation report this first round will commit.
+After M5, the next steps:
+
+- **Dashboard wiring (pending JS).** Set `NEXT_PUBLIC_TOKEN_ADDRESS`, `NEXT_PUBLIC_REGISTRY_ADDRESS`, `NEXT_PUBLIC_GOVERNOR_ADDRESS` in Vercel + `KEEPER_PRIVATE_KEY` in GitHub Secrets.
 - **Community audit.** Mainnet is blocked until ≥ 1 audit completes
   (Code4rena Arena-X, Sherlock Watson, or documented peer review). See
   [`contracts/README.md`](contracts/README.md) §Target chain.
@@ -255,6 +257,8 @@ Each one points to its source artifact when possible.
 | 2026-05-14 | Dependabot major-version PRs (#35, #36, #38 — `next`, `typescript`, `@types/node`) closed. Majors are handled as dedicated migration sessions, not weekly batches | repo PR history |
 | 2026-06-02 | Phase 1 dataset crossed the gate: **115 resolved live runs** (> 50). N is no longer the blocker; the written go / no-go is now the active deliverable | [`predictor/runs/`](predictor/runs/), [`predictor/runs/CONVENTION.md`](predictor/runs/CONVENTION.md) §6 |
 | 2026-06-02 | Pure-climatology track closed (`PIVOT_REJETÉ`): short-window (5–8 yr) climatology never beats the base-rate baseline (0/16 series BSS > 0; KXHIGHTSFO BSS −0.094 at N=536) | [`predictor/docs/decision-climato-windowed-2026-06-02.md`](predictor/docs/decision-climato-windowed-2026-06-02.md) |
+| 2026-06-23 | **Phase 2 live on Arbitrum Sepolia** — full redeploy (17 Ledger confirmations), MintGovernor wired, genesis minted, VerifyDeploymentPhase2 11/11. REG-1 confirmed. G3 contracts track → 100% done. | `contracts/.env`, `contracts/docs/RUNBOOK-REDEPLOIEMENT-COMPLET.fr.md` |
+| 2026-06-23 | `challengeWindow` refactored from days to seconds (MIN=60 s, MAX=365 d) — allows one-session testnet deployment. Env var `CHALLENGE_WINDOW_SECONDS` (300 testnet / 2 592 000 mainnet). 182/182 tests. | PR from `fix/geo-location-key-phoenix-minneapolis` |
 
 ---
 
