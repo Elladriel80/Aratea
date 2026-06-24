@@ -1,6 +1,6 @@
 # Status
 
-*Last updated: 2026-06-24*
+*Last updated: 2026-06-24 (tour 2)*
 
 Snapshot of where Aratea actually stands across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
@@ -131,6 +131,10 @@ First implementation of the parametric mutual (Phase 3) contracts. Gated on G2 c
 | `PricingEngine` | Actuarial pricing formula (B48 spec) | ✅ done |
 | `PremiumPool` | USDC reserves + MCR floor (Art. R334-6 CA) | ✅ done |
 | `PolicyRegistry` | Policy lifecycle subscribe→settle→payout | ✅ done |
+| `MockWeatherOracle` | Testnet oracle — keeper posts results manually | ✅ done (B63) |
+| `DeployPhase3.s.sol` | Deploy script (PricingEngine+PremiumPool+PolicyRegistry) | ✅ done (B63) |
+| `KeeperSettlePolicy.s.sol` | Keeper script — settle a policy post-oracle | ✅ done (B64) |
+| Dashboard `/insurance` | Read-only page — pool solvency, contract links, guide | ✅ done (B65) |
 
 **Deployment:** NOT YET (requires G2 gate confirmation + 200k€ MCR seed capital).
 
