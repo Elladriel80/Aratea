@@ -17,7 +17,7 @@ For the phased plan that frames these tracks, see [`ROADMAP.md`](ROADMAP.md).
 |---|---|---|
 | **Phase 1** | POC — predictor edge + settlement layer (RoundRegistry, MintGovernor) | ✅ **live** |
 | **Phase 2** | DAO — governance collective on-chain (MintGovernor Phase 2, testnet) | ✅ **live** (2026-06-23) |
-| **Phase 3** | Parametric mutual — premium engine, policy lifecycle, auto-payout | 🔮 design (pending edge confirmation + D-capital + D-réglementation) |
+| **Phase 3** | Parametric mutual — premium engine, policy lifecycle, auto-payout | 🔨 **in progress** — contracts scaffolded (2026-06-24), gated on G2 confirmation + funding |
 | **Phase 4** | Mainnet & scale — external audit, Safe multisig, real members + capital | 🔮 future (post-Phase 3 testnet validated) |
 
 **Current focus:** G2 (confirm edge), operate Phase 2 DAO on testnet.
@@ -117,9 +117,22 @@ filters to `algo_signal == "bet"` rows only.
 | `AugPocToken` | 100% | 100% | 100% |
 | `RoundRegistry` | 100% | 100% | 100% |
 | `MintGovernor` | 100% | ≥91% | 100% |
-| **Full suite** | — | — | **182 tests** |
+| **Full suite** | — | — | **221 tests** (182 Phase 1+2 + 39 Phase 3) |
 
 > Branch coverage: last measured on 162-test suite (91.49% MintGovernor). B46 added 12 more tests (challengeWindow seconds refactor) — re-run `forge coverage` to refresh branch numbers.
+
+### Phase 3 contracts (2026-06-24, B59-B62)
+
+First implementation of the parametric mutual (Phase 3) contracts. Gated on G2 confirmation + funding.
+
+| Contract | Scope | Status |
+|---|---|---|
+| `IWeatherOracle` | Interface oracle (ReclaimWeatherSource abstraction) | ✅ done |
+| `PricingEngine` | Actuarial pricing formula (B48 spec) | ✅ done |
+| `PremiumPool` | USDC reserves + MCR floor (Art. R334-6 CA) | ✅ done |
+| `PolicyRegistry` | Policy lifecycle subscribe→settle→payout | ✅ done |
+
+**Deployment:** NOT YET (requires G2 gate confirmation + 200k€ MCR seed capital).
 
 ### Security (internal audit 2026-06-21)
 
