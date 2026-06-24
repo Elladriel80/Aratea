@@ -8,13 +8,21 @@
 import { type Address } from "viem";
 
 const ZERO = "0x0000000000000000000000000000000000000000";
-const TOKEN_ADDRESS_RAW = process.env.NEXT_PUBLIC_TOKEN_ADDRESS as `0x${string}` | undefined;
+const TOKEN_ADDRESS_RAW    = process.env.NEXT_PUBLIC_TOKEN_ADDRESS as `0x${string}` | undefined;
 const REGISTRY_ADDRESS_RAW = process.env.NEXT_PUBLIC_REGISTRY_ADDRESS as `0x${string}` | undefined;
 const GOVERNOR_ADDRESS_RAW = process.env.NEXT_PUBLIC_GOVERNOR_ADDRESS as `0x${string}` | undefined;
 
-export const tokenAddress: Address = (TOKEN_ADDRESS_RAW || ZERO) as Address;
-export const registryAddress: Address = (REGISTRY_ADDRESS_RAW || ZERO) as Address;
-export const governorAddress: Address = (GOVERNOR_ADDRESS_RAW || ZERO) as Address;
+// Phase 3 — parametric insurance contracts
+const POLICY_REGISTRY_ADDRESS_RAW = process.env.NEXT_PUBLIC_POLICY_REGISTRY_ADDRESS as `0x${string}` | undefined;
+const PREMIUM_POOL_ADDRESS_RAW    = process.env.NEXT_PUBLIC_PREMIUM_POOL_ADDRESS    as `0x${string}` | undefined;
+const PRICING_ENGINE_ADDRESS_RAW  = process.env.NEXT_PUBLIC_PRICING_ENGINE_ADDRESS  as `0x${string}` | undefined;
+
+export const tokenAddress:         Address = (TOKEN_ADDRESS_RAW    || ZERO) as Address;
+export const registryAddress:      Address = (REGISTRY_ADDRESS_RAW || ZERO) as Address;
+export const governorAddress:      Address = (GOVERNOR_ADDRESS_RAW || ZERO) as Address;
+export const policyRegistryAddress: Address = (POLICY_REGISTRY_ADDRESS_RAW || ZERO) as Address;
+export const premiumPoolAddress:    Address = (PREMIUM_POOL_ADDRESS_RAW    || ZERO) as Address;
+export const pricingEngineAddress:  Address = (PRICING_ENGINE_ADDRESS_RAW  || ZERO) as Address;
 
 export const deployBlock: bigint = BigInt(process.env.NEXT_PUBLIC_DEPLOY_BLOCK || "0");
 
@@ -24,6 +32,10 @@ export function isDeployed(): boolean {
 
 export function isGovernorDeployed(): boolean {
   return governorAddress.toLowerCase() !== ZERO;
+}
+
+export function isPremiumPoolDeployed(): boolean {
+  return premiumPoolAddress.toLowerCase() !== ZERO;
 }
 
 /* ------------------------------------------------------------------ */
@@ -359,5 +371,61 @@ export const mintGovernorAbi = [
       { name: "executedRound", type: "bytes32", indexed: true },
     ],
     anonymous: false,
+  },
+] as const;
+
+/* ------------------------------------------------------------------ */
+/* PremiumPool — read-only surface (Phase 3)                          */
+/* ------------------------------------------------------------------ */
+
+export const premiumPoolAbi = [
+  {
+    type: "function",
+    name: "availableCapital",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "totalCapital",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "totalReserved",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "mcrFloor",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "isSolvent",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "bool" }],
+  },
+  {
+    type: "function",
+    name: "annualPremiumsCollected",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "MCR_FLOOR_USDC",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
   },
 ] as const;

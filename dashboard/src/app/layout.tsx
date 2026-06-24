@@ -54,6 +54,9 @@ export default async function RootLayout({
               <Link href="/governance" className="hover:text-accent">
                 {dict.layout.nav.governance}
               </Link>
+              <Link href="/insurance" className="hover:text-accent">
+                {dict.layout.nav.insurance}
+              </Link>
               <a
                 href="https://github.com/Elladriel80/aratea"
                 target="_blank"

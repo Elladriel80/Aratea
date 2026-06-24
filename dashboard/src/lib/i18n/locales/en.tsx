@@ -9,6 +9,7 @@ export const en = {
       token: "token",
       rounds: "rounds",
       governance: "governance",
+      insurance: "insurance",
       github: "github ↗",
     },
     footer:

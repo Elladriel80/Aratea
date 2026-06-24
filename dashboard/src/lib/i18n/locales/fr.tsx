@@ -10,6 +10,7 @@ export const fr: Dictionary = {
       token: "token",
       rounds: "rounds",
       governance: "gouvernance",
+      insurance: "assurance",
       github: "github ↗",
     },
     footer:
