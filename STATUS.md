@@ -1,6 +1,6 @@
 # Status
 
-*Last updated: 2026-06-26*
+*Last updated: 2026-06-26 (B76)*
 
 Snapshot of where Aratea actually stands across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
@@ -17,7 +17,7 @@ For the phased plan that frames these tracks, see [`ROADMAP.md`](ROADMAP.md).
 |---|---|---|
 | **Phase 1** | POC — predictor edge + settlement layer (RoundRegistry, MintGovernor) | ✅ **live** |
 | **Phase 2** | DAO — governance collective on-chain (MintGovernor Phase 2, testnet) | ✅ **live** (2026-06-23) |
-| **Phase 3** | Parametric mutual — premium engine, policy lifecycle, auto-payout | 🔨 **in progress** — contracts complete (228 tests, 2026-06-26), gated on testnet deployment |
+| **Phase 3** | Parametric mutual — premium engine, policy lifecycle, auto-payout | 🔨 **in progress** — contracts complete (248 tests, branch coverage 97-99%, 2026-06-26), gated on testnet deployment |
 | **Phase 4** | Mainnet & scale — external audit, Safe multisig, real members + capital | 🔮 future (post-Phase 3 testnet validated) |
 
 **Current focus:** Phase 2 DAO on testnet — B72 genesis round (JS: install Foundry + Ledger broadcast). Phase 3 testnet deployment prep (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md, pending USDC + Phase 2 genesis settled).
