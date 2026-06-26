@@ -214,8 +214,8 @@ the edge in live conditions. Scope:
 - **Initial contract categories.** Extreme-temperature, accumulated
   precipitation, wind events.
 
-**Status (2026-06-26):** Contracts implemented and tested (B59–B68, 228/228 tests green).
-Pending: (1) Phase 2 genesis round settled on testnet (B72 — JS: Foundry install + Ledger), (2) USDC address on Arbitrum Sepolia, (3) Phase 3 Ledger broadcast (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md — 5 confirmations). Association Alsace-Moselle structure selected (D-capital applied). Solvency formula: Art. R334-6 CA (MCR floor 200 k€). ACPR sandbox + legal opinion recommended before go-live.
+**Status (2026-06-26):** Contracts implemented and tested (B59–B76, 248/248 tests green, branches 97–99%).
+Pending: (1) **Proposer round genesis M5** (B72 — Foundry ✅ 2026-06-26, JS: Ledger broadcast ProposeGenesisRound.s.sol, fenêtre J+30, execute ~2026-07-26), (2) USDC address on Arbitrum Sepolia, (3) Phase 3 Ledger broadcast (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md — 5 confirmations). Association Alsace-Moselle structure selected (D-capital applied). Solvency formula: Art. R334-6 CA (MCR floor 200 k€). ACPR sandbox + legal opinion recommended before go-live.
 
 Reminder of the legal frame: Aratea is not insurance under the French
 *Code des assurances* or Solvency II. It is a **decentralized
