@@ -17,10 +17,10 @@ For the phased plan that frames these tracks, see [`ROADMAP.md`](ROADMAP.md).
 |---|---|---|
 | **Phase 1** | POC — predictor edge + settlement layer (RoundRegistry, MintGovernor) | ✅ **live** |
 | **Phase 2** | DAO — governance collective on-chain (MintGovernor Phase 2, testnet) | ✅ **live** (2026-06-23) |
-| **Phase 3** | Parametric mutual — premium engine, policy lifecycle, auto-payout | 🔨 **in progress** — contracts scaffolded (2026-06-24), gated on G2 confirmation + funding |
+| **Phase 3** | Parametric mutual — premium engine, policy lifecycle, auto-payout | 🔨 **in progress** — contracts complete (228 tests, 2026-06-26), gated on testnet deployment |
 | **Phase 4** | Mainnet & scale — external audit, Safe multisig, real members + capital | 🔮 future (post-Phase 3 testnet validated) |
 
-**Current focus:** G2 (confirm edge), operate Phase 2 DAO on testnet.
+**Current focus:** Phase 2 DAO on testnet — B72 genesis round (JS: install Foundry + Ledger broadcast). Phase 3 testnet deployment prep (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md, pending USDC + Phase 2 genesis settled).
 
 ---
 
@@ -92,6 +92,22 @@ to 10-12 series (B45) — target >= 20 HOLDOUT dates for robust sign-test.
 `PaperBet.algo_signal: "bet" | "no_bet"`. Control-group positions are
 tracked at zero stake to measure counterfactual P&L. Dashboard P&L
 filters to `algo_signal == "bet"` rows only.
+
+### G2 target reached — ensemble sigma update (2026-06-26, PR #160)
+
+The inter-model sigma in the vendor ensemble was changed by default (commit `efe7088`).
+Measured on 7 / 7 validation dates: ensemble Brier **0.116 → 0.098** (Wilcoxon p = 0.0078).
+
+| Metric | Before | After | Target |
+|---|---|---|---|
+| Ensemble Brier (7-date holdout) | 0.116 | **0.098** | 0.098 ✅ |
+
+**G2 status: DONE.** Change is reversible via env var (see PR #160).
+Live confirmation in progress (target: ~1200 forward predictions).
+
+Next steps (JS):
+- **B45** — backfill 11 Kalshi series (accélère la confirmation live)
+- **B70** — push cap heat 95 % + algo_signal on main
 
 ---
 
@@ -195,6 +211,7 @@ Stack: Next.js 15 + React 19, TypeScript strict, viem 2.x, Tailwind. No backend,
 
 ## Recent changes (since 2026-06-10)
 
+- **2026-06-26** — **G2 reached ✅ (sigma-bascule PR #160)** — ensemble inter-model sigma updated by default (commit `efe7088`). Brier 0.116 → **0.098** on 7/7 validation dates (Wilcoxon p=0.0078). G2 target met. Reversible via env var. Live confirmation in progress.
 - **2026-06-26** — **Phase 3 E2E tests (B67)** — `contracts/test/unit/FullStackPhase3E2E.t.sol`: 7 integration tests covering claimed/expired/permissionless-expiry/two-concurrent-policies/exact-threshold/MCR/G2-gate paths. 228/228 tests green. Audit extended with INS-1..INS-4 findings.
 - **2026-06-26** — **VerifyDeploymentPhase3.s.sol (B68)** — post-deploy sanity script (9 assertions): PricingEngine.admin, PremiumPool roles, POLICY_REGISTRY_ROLE wiring, cross-contract references, optional KEEPER_ROLE check. Parity with Phase 2 verify script.
 - **2026-06-24** — **Keeper CI fix (B52)** — `aratea-keeper.yml`: `window_days` input renamed `window_seconds` (default 604800s = 7d), env var `ROUND_WINDOW_DAYS` → `ROUND_WINDOW_SECONDS` — syncs with `KeeperProposeRound.s.sol` post-B46 refactor.

@@ -1,6 +1,6 @@
 # Roadmap
 
-*Last updated: 2026-06-23*
+*Last updated: 2026-06-26*
 
 The phased plan for Aratea. This file frames the journey; [`STATUS.md`](STATUS.md)
 records where we actually are at this moment. Every claim here points
@@ -157,7 +157,7 @@ Roadmap mirrored from [`contracts/README.md`](contracts/README.md):
 | **M3b** | `MintGovernor` — Phase 2 auto-mint + token-weighted vote | ✅ done (PR #163) |
 | **M6** | Governance UI `/governance` — wallet + on-chain vote | ✅ done (PR #166) |
 
-**Phase 1 contracts track: COMPLETE.** Both tracks (predictor + contracts) must finish before Phase 2 starts. Contracts: done. Predictor: in progress (G2 Brier target 0.098, currently 0.1172 < market 0.1173 on 12 HOLDOUT dates — more data needed).
+**Phase 1 contracts track: COMPLETE.** Both tracks (predictor + contracts) must finish before Phase 2 starts. Contracts: done. Predictor: **done** (G2 Brier target 0.098 achieved 2026-06-26 — sigma-bascule PR #160, ensemble 0.116 → 0.098, Wilcoxon p=0.0078, 7/7 dates). Live confirmation in progress (~1200 forward predictions).
 
 After M5, the next steps:
 
@@ -214,6 +214,9 @@ the edge in live conditions. Scope:
 - **Initial contract categories.** Extreme-temperature, accumulated
   precipitation, wind events.
 
+**Status (2026-06-26):** Contracts implemented and tested (B59–B68, 228/228 tests green).
+Pending: (1) Phase 2 genesis round settled on testnet (B72 — JS: Foundry install + Ledger), (2) USDC address on Arbitrum Sepolia, (3) Phase 3 Ledger broadcast (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md — 5 confirmations). Association Alsace-Moselle structure selected (D-capital applied). Solvency formula: Art. R334-6 CA (MCR floor 200 k€). ACPR sandbox + legal opinion recommended before go-live.
+
 Reminder of the legal frame: Aratea is not insurance under the French
 *Code des assurances* or Solvency II. It is a **decentralized
 discretionary mutual**: pooled capital, parametric execution, oracle-
@@ -259,6 +262,8 @@ Each one points to its source artifact when possible.
 | 2026-06-02 | Pure-climatology track closed (`PIVOT_REJETÉ`): short-window (5–8 yr) climatology never beats the base-rate baseline (0/16 series BSS > 0; KXHIGHTSFO BSS −0.094 at N=536) | [`predictor/docs/decision-climato-windowed-2026-06-02.md`](predictor/docs/decision-climato-windowed-2026-06-02.md) |
 | 2026-06-23 | **Phase 2 live on Arbitrum Sepolia** — full redeploy (17 Ledger confirmations), MintGovernor wired, genesis minted, VerifyDeploymentPhase2 11/11. REG-1 confirmed. G3 contracts track → 100% done. | `contracts/.env`, `contracts/docs/RUNBOOK-REDEPLOIEMENT-COMPLET.fr.md` |
 | 2026-06-23 | `challengeWindow` refactored from days to seconds (MIN=60 s, MAX=365 d) — allows one-session testnet deployment. Env var `CHALLENGE_WINDOW_SECONDS` (300 testnet / 2 592 000 mainnet). 182/182 tests. | PR from `fix/geo-location-key-phoenix-minneapolis` |
+| 2026-06-26 | **G2 predictor target reached** — ensemble inter-model sigma updated by default (commit `efe7088`, PR #160). Brier 0.116 → 0.098 on 7/7 validation dates (Wilcoxon p=0.0078). Reversible via env var. Live confirmation in progress. | `predictor/src/predictors/ensemble.py`, `state/goals.json` |
+| 2026-06-26 | **Phase 3 contracts complete** — full parametric mutual stack implemented and tested: PricingEngine + PremiumPool + PolicyRegistry + MockWeatherOracle + DeployPhase3 + KeeperSettlePolicy + VerifyDeploymentPhase3 + FullStackPhase3E2E. 228/228 tests green. Gated on testnet deployment (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md). | `contracts/src/insurance/`, `contracts/test/unit/` |
 
 ---
 
