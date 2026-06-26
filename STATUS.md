@@ -1,6 +1,6 @@
 # Status
 
-*Last updated: 2026-06-24 (tour 2)*
+*Last updated: 2026-06-26*
 
 Snapshot of where Aratea actually stands across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
@@ -117,7 +117,7 @@ filters to `algo_signal == "bet"` rows only.
 | `AugPocToken` | 100% | 100% | 100% |
 | `RoundRegistry` | 100% | 100% | 100% |
 | `MintGovernor` | 100% | ≥91% | 100% |
-| **Full suite** | — | — | **221 tests** (182 Phase 1+2 + 39 Phase 3) |
+| **Full suite** | — | — | **228 tests** (182 Phase 1+2 + 39 Phase 3 unit + 7 Phase 3 E2E) |
 
 > Branch coverage: last measured on 162-test suite (91.49% MintGovernor). B46 added 12 more tests (challengeWindow seconds refactor) — re-run `forge coverage` to refresh branch numbers.
 
@@ -134,6 +134,8 @@ First implementation of the parametric mutual (Phase 3) contracts. Gated on G2 c
 | `MockWeatherOracle` | Testnet oracle — keeper posts results manually | ✅ done (B63) |
 | `DeployPhase3.s.sol` | Deploy script (PricingEngine+PremiumPool+PolicyRegistry) | ✅ done (B63) |
 | `KeeperSettlePolicy.s.sol` | Keeper script — settle a policy post-oracle | ✅ done (B64) |
+| `VerifyDeploymentPhase3.s.sol` | Post-deploy wiring check (9 assertions) | ✅ done (B68) |
+| `FullStackPhase3E2E.t.sol` | E2E integration tests — full lifecycle (7 tests) | ✅ done (B67) |
 | Dashboard `/insurance` | Read-only page — pool solvency, contract links, guide | ✅ done (B65) |
 
 **Deployment:** NOT YET (requires G2 gate confirmation + 200k€ MCR seed capital).
@@ -193,6 +195,8 @@ Stack: Next.js 15 + React 19, TypeScript strict, viem 2.x, Tailwind. No backend,
 
 ## Recent changes (since 2026-06-10)
 
+- **2026-06-26** — **Phase 3 E2E tests (B67)** — `contracts/test/unit/FullStackPhase3E2E.t.sol`: 7 integration tests covering claimed/expired/permissionless-expiry/two-concurrent-policies/exact-threshold/MCR/G2-gate paths. 228/228 tests green. Audit extended with INS-1..INS-4 findings.
+- **2026-06-26** — **VerifyDeploymentPhase3.s.sol (B68)** — post-deploy sanity script (9 assertions): PricingEngine.admin, PremiumPool roles, POLICY_REGISTRY_ROLE wiring, cross-contract references, optional KEEPER_ROLE check. Parity with Phase 2 verify script.
 - **2026-06-24** — **Keeper CI fix (B52)** — `aratea-keeper.yml`: `window_days` input renamed `window_seconds` (default 604800s = 7d), env var `ROUND_WINDOW_DAYS` → `ROUND_WINDOW_SECONDS` — syncs with `KeeperProposeRound.s.sol` post-B46 refactor.
 - **2026-06-24** — **Power analysis tool (B54)** — `predictor/scripts/power_analysis.py`: sign-test sample size for G2. At theta=65% win rate, need 30 HOLDOUT dates for p<0.05; at theta=70%, need 18.
 - **2026-06-24** — **G2 update** — second independent loop run confirms below-market signal on different holdout window (0.1155 < 0.1208, gap 0.0053). Both runs show consistent edge.
