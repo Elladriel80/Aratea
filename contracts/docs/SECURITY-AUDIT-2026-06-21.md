@@ -242,6 +242,65 @@ de lancer la learning loop v3fa sur un cache v3 sans pré-augmentation manuelle.
 
 ---
 
+### 2.7 Phase 3 — Assurance Paramétrique (PricingEngine · PremiumPool · PolicyRegistry)
+
+> Périmètre ajouté 2026-06-24. Contrats implémentés B59-B62 (~320 SLOC).
+> Testnet uniquement (aucun USDC réel). Audit externe requis avant mainnet.
+
+| ID | Severity | Title | Status |
+|----|----------|-------|--------|
+| INS-1 | M | `pBps` subscriber-controlled — pricing adverse possible | Accepted for pilot; oracle-sourced pBps required for production |
+| INS-2 | I | MCR floor 200 000 USDC bloque les souscriptions sans seed admin | Documenté dans runbook |
+| INS-3 | I | `_annualPremiums` cumulatif sans reset annuel | Accepted for pilot |
+| INS-4 | I | `setOracle()` sans Timelock (même classe que GOV-1) | Accepted for testnet |
+
+**INS-1 — pBps subscriber-controlled (Severity: Medium sur production)**
+
+`PolicyRegistry.subscribe(locationKey, targetDate, sumAssured, triggerThresholdF, pBps)`
+accepte `pBps` (probabilité en bps, 0–10 000) directement du souscripteur. Un
+souscripteur peut passer `pBps = 1` (0,01 %) pour un événement à 90 % de probabilité :
+
+- Avec `β_adverse = 5 %` et `PREMIUM_MIN = 5 USDC`, le sol reste `max(5 USDC, 5 % × S)`.
+- Pour `S = 1 000 USDC` et `pBps = 1` : prime = max(5 USDC, 50 USDC) = **50 USDC**
+  au lieu de ~500 USDC (tarif juste à 50 % × S cap pour pBps ≥ 7 000).
+- Gain arbitrage potentiel : facteur 10× sur les événements très probables.
+
+*Impact* : sur un marché ouvert (plusieurs souscripteurs), permet de sélectionner
+le risque à moindre coût, violant l'équilibre actuariel.
+*Atténuation actuelle* : pilote testnet, JS est le seul souscripteur ; `β_adverse`
+limite le floor ; prix trop bas = capital JS drainé → JS ne se nuira pas à lui-même.
+*Recommandation production* : publier `pBps` on-chain depuis un oracle de tarification
+(ex. `PredictorOracle` qui reçoit le score du predictor off-chain) et exiger
+`pBps ≥ oracle.latestPBps(locationKey)`. Ou : PricingEngine consulte directement
+l'oracle pour récupérer la probabilité, sans la laisser au souscripteur.
+
+**INS-2 — MCR floor 200 000 USDC (Severity: Informational)**
+
+`PremiumPool.receivePremium()` rejette tout premium si `_availableCapital < mcrFloor()`.
+Au démarrage, `_annualPremiums = 0`, donc `mcrFloor() = 200 000 USDC`.
+**Conséquence testnet** : l'admin doit déposer ≥ 200 000 USDC (tokens de test) via
+`deposit()` AVANT la première souscription. Documenté dans
+`RUNBOOK-DEPLOIEMENT-PHASE3.fr.md` Étape 0.
+
+**INS-3 — `_annualPremiums` cumulatif (Severity: Informational)**
+
+`_annualPremiums` s'incrémente à chaque `receivePremium()` et ne se réinitialise
+jamais. Après 12 mois, la formule MCR (`18 % × annualPremiums`) utilisera une base
+gonflée : MCR floor dépassera le seuil légal réel, bloquant potentiellement
+withdrawals légitimes.
+*Fix production* : implémenter un rolling window 12 mois ou une fonction `resetAnnualPremiums()`
+admin appelée en début d'exercice comptable.
+
+**INS-4 — `setOracle()` sans Timelock (Severity: Informational)**
+
+`PolicyRegistry.setOracle(address)` est appelable immédiatement par
+`DEFAULT_ADMIN_ROLE`. Un admin compromis peut substituer un oracle malveillant →
+toutes les settlements suivantes retournent un résultat arbitraire (CLAIMED au choix).
+Même classe de risque que GOV-1. Pour mainnet : ajouter un Timelock ≥ 7 jours avant
+le changement d'oracle.
+
+---
+
 ## 3. Éléments déjà résolus (revue 2026-06-10 + ce cycle)
 
 | ID revue précédente | Titre | Résolu |
@@ -259,17 +318,27 @@ de lancer la learning loop v3fa sur un cache v3 sans pré-augmentation manuelle.
 
 ## 4. Checklist Go / No-Go
 
-### ✅ GO — Testnet (Arbitrum Sepolia)
+### ✅ GO — Testnet Phase 1+2 (Arbitrum Sepolia)
 
 Toutes ces conditions sont remplies :
 
-- [x] 182+ tests passent, couverture 100 % lignes sur MintGovernor + RoundRegistry
+- [x] 221 tests passent (182 Phase 1+2 + 39 Phase 3), couverture 100 % lignes sur MintGovernor + RoundRegistry
 - [x] Dry-run forge complet validé (DRY-RUN-ANVIL.md + FullStackRedeployTest 7/7)
 - [x] Runbook redéploiement complet bilingue rédigé (RUNBOOK-REDEPLOIEMENT-COMPLET)
 - [x] SHA pinning des Actions CI
 - [x] Gitleaks CI actif
 - [x] Secrets rotés (D2)
 - [x] Page gouvernance UI opérationnelle (B32)
+
+### ⚠️ CONDITIONNEL — Testnet Phase 3 (Arbitrum Sepolia)
+
+Phase 3 déployable en testnet avec USDC de test et MockWeatherOracle, sous réserve :
+
+- [x] 39 tests Phase 3 verts (PricingEngine 9 + PremiumPool 13 + PolicyRegistry 17)
+- [x] DeployPhase3.s.sol + RUNBOOK-DEPLOIEMENT-PHASE3.{fr,}.md rédigés
+- [ ] **Admin doit déposer ≥ 200 000 USDC mock** avant toute souscription (INS-2)
+- [ ] **pBps oracle-sourced** recommandé avant ouverture à plusieurs souscripteurs (INS-1)
+- [ ] INS-3 (_annualPremiums reset) : acceptable pour pilot, à traiter avant mainnet
 
 ### ❌ NO-GO — Mainnet / Argent réel
 
@@ -296,14 +365,18 @@ Conditions non encore remplies :
 > À utiliser comme cahier des charges dans la candidature Gitcoin DeSci (B28) et
 > pour tout contact avec un auditeur.
 
-**Contrats en périmètre (SLOC ≈ 620 hors libs) :**
+**Contrats en périmètre (SLOC ≈ 940 hors libs) :**
 
 | Fichier | SLOC | Points critiques |
 |---------|------|-----------------|
 | `src/token/AugPocToken.sol` | ~133 | Pause sémantique, clock ERC-6372, MINTER_ROLE |
 | `src/rounds/RoundRegistry.sol` | ~231 | Lifecycle state machine, mint loop, CHALLENGER_ROLE |
 | `src/governance/MintGovernor.sol` | ~576 | Vote-weight snapshot, quorum math, param changes, dispute queue |
-| Scripts de déploiement | ~100 | Séquence de rewiring des rôles Phase 1 → Phase 2 |
+| Scripts de déploiement Phase 1+2 | ~100 | Séquence de rewiring des rôles Phase 1 → Phase 2 |
+| `src/insurance/PricingEngine.sol` | ~149 | Formule actuarielle, loadings bps, pBps subscriber-controlled (INS-1) |
+| `src/insurance/PremiumPool.sol` | ~207 | SafeERC20, MCR enforcement, POLICY_REGISTRY_ROLE, ReentrancyGuard |
+| `src/insurance/PolicyRegistry.sol` | ~271 | Subscribe-settle-expire state machine, oracle trust, nonce uniqueness |
+| `src/insurance/MockWeatherOracle.sol` | ~41 | Testnet only, permissionless — ne pas déployer mainnet |
 
 **Questions prioritaires pour l'auditeur :**
 
