@@ -40,9 +40,13 @@ jobs:
         run: |
           GITLEAKS_VERSION="8.21.2"
           ARCHIVE="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
-          curl -sSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${ARCHIVE}"
-          curl -sSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/checksums.txt"
-          sha256sum --ignore-missing --check checksums.txt
+          CHECKSUMS="gitleaks_${GITLEAKS_VERSION}_checksums.txt"
+          # -f : un 404 doit faire echouer curl au lieu d'ecrire la page d'erreur
+          # dans le fichier (cause de l'echec silencieux des runs #68/#69 quand
+          # l'upstream a renomme checksums.txt -> gitleaks_<ver>_checksums.txt).
+          curl -fsSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${ARCHIVE}"
+          curl -fsSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${CHECKSUMS}"
+          sha256sum --ignore-missing --check "${CHECKSUMS}"
           tar -xzf "${ARCHIVE}" gitleaks
           chmod +x gitleaks
           ./gitleaks version
