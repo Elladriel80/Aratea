@@ -49,6 +49,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import os
 import subprocess
 import sys
@@ -352,6 +353,10 @@ def _select_target_bins(ev, champion_p_yes_by_ticker: dict[str, float]) -> list[
             continue
         yb_f = float(yb)
         ya_f = float(ya)
+        # Guard: Kalshi could return NaN/Inf or out-of-range values on data issues.
+        if not (math.isfinite(yb_f) and math.isfinite(ya_f)
+                and 0.0 <= yb_f <= 1.0 and 0.0 <= ya_f <= 1.0):
+            continue
         # Liquidity check: a bin with yes_bid=0 (or yes_ask=1) means quotes
         # haven't been posted yet — yes_mid would be 0 (or 1) and we can't
         # size a position against that price. Skip until the market is

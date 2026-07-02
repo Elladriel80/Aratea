@@ -81,7 +81,10 @@ def truncate(content: str, limit: int = SAFETY_LIMIT) -> str:
 
 
 def post(webhook_url: str, content: str) -> None:
-    payload = json.dumps({"content": content}).encode("utf-8")
+    payload = json.dumps({
+        "content": content,
+        "allowed_mentions": {"parse": []},
+    }).encode("utf-8")
     req = urllib.request.Request(
         webhook_url,
         data=payload,

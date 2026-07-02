@@ -52,6 +52,10 @@ contract DeployPhase3 is Script {
         require(usdc  != address(0), "USDC_ADDRESS zero");
 
         bool useMock = vm.envOr("USE_MOCK_ORACLE", true);
+        // Safety guard: MockWeatherOracle is permissioned but not production-grade.
+        // Refuse to deploy it on Arbitrum mainnet (chainid 42161) regardless of the env var.
+        require(!useMock || block.chainid != 42161,
+            "USE_MOCK_ORACLE forbidden on Arbitrum mainnet (chainid 42161)");
 
         console2.log("== DeployPhase3 ==");
         console2.log("Admin:", admin);
