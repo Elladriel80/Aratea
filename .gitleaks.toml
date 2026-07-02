@@ -1,0 +1,15 @@
+# Gitleaks configuration — extends the default ruleset.
+#
+# Why this file exists: the generic-api-key rule misfires on Ethereum PUBLIC
+# addresses (20-byte hex, e.g. `TOKEN_ADDRESS=0x5FbDB2...aa3` in deployment
+# runbooks). Addresses are on-chain public data, not secrets. The allowlist
+# below matches ONLY a bare 40-hex-char address as the detected secret, so
+# 32-byte values (private keys, 64 hex chars) are still flagged.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Ethereum public addresses (20-byte hex) are not secrets; 64-hex private keys remain flagged"
+regexTarget = "secret"
+regexes = ['''^0x[a-fA-F0-9]{40}$''']
