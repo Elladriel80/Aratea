@@ -1,6 +1,6 @@
 # Status
 
-*Last updated: 2026-06-26 (B76)*
+*Last updated: 2026-07-02 (B77)*
 
 Snapshot of where Aratea actually stands across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
@@ -20,7 +20,7 @@ For the phased plan that frames these tracks, see [`ROADMAP.md`](ROADMAP.md).
 | **Phase 3** | Parametric mutual — premium engine, policy lifecycle, auto-payout | 🔨 **in progress** — contracts complete (248 tests, branch coverage 97-99%, 2026-06-26), gated on testnet deployment |
 | **Phase 4** | Mainnet & scale — external audit, Safe multisig, real members + capital | 🔮 future (post-Phase 3 testnet validated) |
 
-**Current focus:** Phase 2 DAO on testnet — B72 genesis round (JS: install Foundry + Ledger broadcast). Phase 3 testnet deployment prep (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md, pending USDC + Phase 2 genesis settled).
+**Current focus:** Phase 3 testnet deployment (RUNBOOK-DEPLOIEMENT-PHASE3.fr.md, pending USDC address + Ledger broadcast). Security hardening (B77 correctifs 2026-07-02). M5 genesis round ✅ confirmed on-chain (hash 0x0f68dc33…, 34 039 500 AUG-POC minted to 0x9a94).
 
 ---
 
@@ -133,7 +133,7 @@ Next steps (JS):
 | `AugPocToken` | 100% | 100% | 100% |
 | `RoundRegistry` | 100% | 100% | 100% |
 | `MintGovernor` | 100% | ≥91% | 100% |
-| **Full suite** | — | — | **228 tests** (182 Phase 1+2 + 39 Phase 3 unit + 7 Phase 3 E2E) |
+| **Full suite** | — | — | **248 tests** (182 Phase 1+2 + 39 Phase 3 unit + 7 Phase 3 E2E + 20 Phase 3 coverage) |
 
 > Branch coverage: last measured on 162-test suite (91.49% MintGovernor). B46 added 12 more tests (challengeWindow seconds refactor) — re-run `forge coverage` to refresh branch numbers.
 
@@ -156,19 +156,22 @@ First implementation of the parametric mutual (Phase 3) contracts. Gated on G2 c
 
 **Deployment:** NOT YET (requires G2 gate confirmation + 200k€ MCR seed capital).
 
-### Security (internal audit 2026-06-21)
+### Security (internal audit 2026-06-21 + revue 2026-07-02)
 
 Full report: [`contracts/docs/SECURITY-AUDIT-2026-06-21.md`](contracts/docs/SECURITY-AUDIT-2026-06-21.md) (~620 SLOC, 7 findings).
+Revue sécurité complète (3 volets) : `REVUE-SECURITE-2026-07-02.md` — aucun finding CRITIQUE, 2 findings ÉLEVÉ Phase 3 bloquants avant USDC réels.
 
 **Testnet: GO. Mainnet: NO-GO** (requires external audit + Safe multisig + Timelock + GOV-1 fix).
 
 Key open items for mainnet: GOV-1 (param changes no Timelock — Safe + TimelockController), TOK-2 (admin EOA → Safe).
-✅ Resolved: GOV-2 (`forceResolveStuck()` B40), REG-1 (test `DeployArateaPhase2.t.sol` B41), INFRA-1 (Slither CI).
+Phase 3 pre-USDC: H4 (pricing source — D-h4-pricing-source à décider), H3 (reserve model — D-h3-reserve-model à décider).
+✅ Resolved (2026-06-21): GOV-2 (`forceResolveStuck()` B40), REG-1 (test `DeployArateaPhase2.t.sol` B41), INFRA-1 (Slither CI).
+✅ Resolved (2026-07-02, B77): predictor quotes isfinite guard, Discord `allowed_mentions`, MockWeatherOracle `onlyKeeper`, DeployPhase3 anti-mock-mainnet guard.
 
 ### Deployment state
 
 - **Dry-run:** validated on `forge anvil` — Phase 1 + Phase 2 + ProposeGenesisRound — see [`contracts/docs/DRY-RUN-ANVIL.md`](contracts/docs/DRY-RUN-ANVIL.md).
-- **Testnet (Arbitrum Sepolia):** ✅ **live since 2026-06-23** — Phase 1 + Genesis + Phase 2 deployed (17 Ledger confirmations, VerifyDeploymentPhase2 11/11). Canonical addresses:
+- **Testnet (Arbitrum Sepolia):** ✅ **live since 2026-06-23** — Phase 1 + Genesis + Phase 2 deployed (17 Ledger confirmations, VerifyDeploymentPhase2 11/11). **M5 genesis round ✅ confirmed on-chain 2026-07-02** (hash `0x0f68dc33…`, 34 039 500 AUG-POC minted). Canonical addresses:
   - `TOKEN` — `0x0d8b96f84d3a8fe9d4b28b703c89d34c810fb6ec`
   - `REGISTRY` — `0xbb25c0adf2fc9e0ae2dc47882f3b314e53e4570c`
   - `GOVERNOR` — `0x3126edc0baaaac75802aea086a0cb713fa7ad598`
@@ -211,6 +214,8 @@ Stack: Next.js 15 + React 19, TypeScript strict, viem 2.x, Tailwind. No backend,
 
 ## Recent changes (since 2026-06-10)
 
+- **2026-07-02** — **Security fixes B77 (commit `f1da14f`)** — 4 hardening patches: (1) `daily_auto.py` — `math.isfinite` + bounds [0,1] on Kalshi quotes; (2) `post_to_discord.py` — `allowed_mentions:{parse:[]}` to block accidental @everyone; (3) `MockWeatherOracle.sol` — `onlyKeeper` modifier (deployer = keeper) on `postResult`; (4) `DeployPhase3.s.sol` — anti-mock-mainnet guard (`chainid != 42161`). 248/248 forge tests green.
+- **2026-07-02** — **M5 genesis round confirmed on-chain** — hash `0x0f68dc33e21cd265c83d8c9842d1dd5647671a857ee6e5669119e012f6674026`, status Executed, 34 039 500 AUG-POC minted to `0x9a94`. `ARATEA_ROUND_HASH` documented in `TODO-HUMAIN.md`.
 - **2026-06-26** — **G2 reached ✅ (sigma-bascule PR #160)** — ensemble inter-model sigma updated by default (commit `efe7088`). Brier 0.116 → **0.098** on 7/7 validation dates (Wilcoxon p=0.0078). G2 target met. Reversible via env var. Live confirmation in progress.
 - **2026-06-26** — **Phase 3 E2E tests (B67)** — `contracts/test/unit/FullStackPhase3E2E.t.sol`: 7 integration tests covering claimed/expired/permissionless-expiry/two-concurrent-policies/exact-threshold/MCR/G2-gate paths. 228/228 tests green. Audit extended with INS-1..INS-4 findings.
 - **2026-06-26** — **VerifyDeploymentPhase3.s.sol (B68)** — post-deploy sanity script (9 assertions): PricingEngine.admin, PremiumPool roles, POLICY_REGISTRY_ROLE wiring, cross-contract references, optional KEEPER_ROLE check. Parity with Phase 2 verify script.
