@@ -45,7 +45,7 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
     /// @dev Grace period after targetDate during which the oracle may post a result.
     uint64 private constant SETTLEMENT_GRACE = 2 days;
     /// @dev Minimum days ahead (same-day is still at least 1 in the pricing formula).
-    uint8  private constant MIN_DAYS_AHEAD = 1;
+    uint8 private constant MIN_DAYS_AHEAD = 1;
     /// @dev Maximum subscription horizon (1 year).
     uint64 private constant MAX_SUBSCRIPTION_HORIZON = 365 days;
 
@@ -53,14 +53,14 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
                                 STORAGE
     //////////////////////////////////////////////////////////////*/
 
-    IERC20         public immutable usdc;
+    IERC20 public immutable usdc;
     IPricingEngine public immutable pricingEngine;
-    IPremiumPool   public immutable pool;
-    IWeatherOracle public           oracle; // updatable by admin for oracle upgrades
+    IPremiumPool public immutable pool;
+    IWeatherOracle public oracle; // updatable by admin for oracle upgrades
 
-    mapping(bytes32 => Policy)  private _policies;
+    mapping(bytes32 => Policy) private _policies;
     mapping(address => uint256) private _nonces;
-    mapping(bytes32 => bool)    private _supportedLocations;
+    mapping(bytes32 => bool) private _supportedLocations;
 
     /*//////////////////////////////////////////////////////////////
                                 ERRORS
@@ -81,18 +81,15 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
         address oracle_
     ) {
         if (
-            admin_         == address(0) ||
-            usdc_          == address(0) ||
-            pricingEngine_ == address(0) ||
-            pool_          == address(0) ||
-            oracle_        == address(0)
+            admin_ == address(0) || usdc_ == address(0) || pricingEngine_ == address(0) || pool_ == address(0)
+                || oracle_ == address(0)
         ) revert ZeroAddress();
 
         _grantRole(DEFAULT_ADMIN_ROLE, admin_);
-        usdc          = IERC20(usdc_);
+        usdc = IERC20(usdc_);
         pricingEngine = IPricingEngine(pricingEngine_);
-        pool          = IPremiumPool(pool_);
-        oracle        = IWeatherOracle(oracle_);
+        pool = IPremiumPool(pool_);
+        oracle = IWeatherOracle(oracle_);
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -100,13 +97,18 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
     //////////////////////////////////////////////////////////////*/
 
     /// @notice Update oracle address (admin only — for oracle contract upgrades).
-    function setOracle(address oracle_) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setOracle(
+        address oracle_
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (oracle_ == address(0)) revert ZeroAddress();
         oracle = IWeatherOracle(oracle_);
     }
 
     /// @notice Enable or disable a location key for subscriptions.
-    function setSupportedLocation(bytes32 locationKey, bool supported) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setSupportedLocation(
+        bytes32 locationKey,
+        bool supported
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _supportedLocations[locationKey] = supported;
     }
 
@@ -124,10 +126,10 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
     ///      6. Persist policy and emit events.
     function subscribe(
         bytes32 locationKey,
-        uint64  targetDate,
+        uint64 targetDate,
         uint256 sumAssured,
-        uint16  triggerThresholdF,
-        uint16  pBps
+        uint16 triggerThresholdF,
+        uint16 pBps
     ) external nonReentrant returns (bytes32 policyId) {
         if (!_supportedLocations[locationKey]) revert UnsupportedLocation(locationKey);
         if (sumAssured == 0) revert ZeroSumAssured();
@@ -155,16 +157,16 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
         pool.reserveForPolicy(policyId, sumAssured);
 
         Policy storage p = _policies[policyId];
-        p.policyId          = policyId;
-        p.subscriber        = msg.sender;
-        p.sumAssured        = sumAssured;
-        p.premium           = premium;
+        p.policyId = policyId;
+        p.subscriber = msg.sender;
+        p.sumAssured = sumAssured;
+        p.premium = premium;
         p.triggerThresholdF = triggerThresholdF;
-        p.locationKey       = locationKey;
-        p.targetDate        = targetDate;
-        p.activatesAt       = targetDate;          // oracle can settle from targetDate
-        p.expiresAt         = targetDate + SETTLEMENT_GRACE;
-        p.state             = PolicyState.Pending;
+        p.locationKey = locationKey;
+        p.targetDate = targetDate;
+        p.activatesAt = targetDate; // oracle can settle from targetDate
+        p.expiresAt = targetDate + SETTLEMENT_GRACE;
+        p.state = PolicyState.Pending;
 
         emit PolicySubscribed(policyId, msg.sender, locationKey, targetDate, sumAssured, premium);
     }
@@ -176,7 +178,9 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
     /// @inheritdoc IPolicyRegistry
     /// @dev Keeper calls this once the oracle result is available.
     ///      Transitions: PENDING/ACTIVE → CLAIMED | EXPIRED.
-    function settlePolicy(bytes32 policyId) external onlyRole(KEEPER_ROLE) nonReentrant {
+    function settlePolicy(
+        bytes32 policyId
+    ) external onlyRole(KEEPER_ROLE) nonReentrant {
         Policy storage p = _policies[policyId];
         if (p.subscriber == address(0)) revert PolicyNotFound(policyId);
         PolicyState state = p.state;
@@ -186,7 +190,7 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
 
         uint64 now_ = uint64(block.timestamp);
         if (now_ < p.activatesAt) revert SettlementWindowNotOpen(policyId);
-        if (now_ > p.expiresAt)   revert SettlementWindowNotOpen(policyId);
+        if (now_ > p.expiresAt) revert SettlementWindowNotOpen(policyId);
 
         // Auto-transition PENDING → ACTIVE when activatesAt has passed
         if (state == PolicyState.Pending) {
@@ -216,7 +220,9 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
 
     /// @inheritdoc IPolicyRegistry
     /// @dev Safe clean-up: anyone can expire a policy after the grace period.
-    function expirePolicy(bytes32 policyId) external nonReentrant {
+    function expirePolicy(
+        bytes32 policyId
+    ) external nonReentrant {
         Policy storage p = _policies[policyId];
         if (p.subscriber == address(0)) revert PolicyNotFound(policyId);
         PolicyState state = p.state;
@@ -236,27 +242,31 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
     //////////////////////////////////////////////////////////////*/
 
     /// @inheritdoc IPolicyRegistry
-    function getPolicy(bytes32 policyId) external view returns (Policy memory) {
+    function getPolicy(
+        bytes32 policyId
+    ) external view returns (Policy memory) {
         return _policies[policyId];
     }
 
     /// @inheritdoc IPolicyRegistry
-    function stateOf(bytes32 policyId) external view returns (PolicyState) {
+    function stateOf(
+        bytes32 policyId
+    ) external view returns (PolicyState) {
         return _policies[policyId].state;
     }
 
     /// @inheritdoc IPolicyRegistry
     function quotePolicy(
         bytes32, /* locationKey — not used in pricing formula, kept for API symmetry */
-        uint64  targetDate,
+        uint64 targetDate,
         uint256 sumAssured,
         uint16, /* triggerThresholdF — not used in pricing, kept for API symmetry */
-        uint16  pBps
+        uint16 pBps
     ) external view returns (uint256 premium) {
         if (sumAssured == 0) revert ZeroSumAssured();
-        uint64 now_  = uint64(block.timestamp);
+        uint64 now_ = uint64(block.timestamp);
         uint64 ahead = targetDate > now_ ? targetDate - now_ : 0;
-        uint8  daysAhead = uint8(_clampToUint8(ahead / 1 days + MIN_DAYS_AHEAD));
+        uint8 daysAhead = uint8(_clampToUint8(ahead / 1 days + MIN_DAYS_AHEAD));
         return pricingEngine.quote(pBps, sumAssured, daysAhead);
     }
 
@@ -264,7 +274,9 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
                               HELPERS
     //////////////////////////////////////////////////////////////*/
 
-    function _clampToUint8(uint64 v) private pure returns (uint64) {
+    function _clampToUint8(
+        uint64 v
+    ) private pure returns (uint64) {
         return v > 255 ? 255 : v;
     }
 }

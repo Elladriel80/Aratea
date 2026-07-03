@@ -28,11 +28,11 @@ interface IPolicyRegistry {
     //////////////////////////////////////////////////////////////*/
 
     enum PolicyState {
-        None,    // does not exist
+        None, // does not exist
         Pending, // premium paid, waiting for insured period
-        Active,  // insured period live
+        Active, // insured period live
         Claimed, // event triggered payout — terminal
-        Expired  // period ended without event — terminal
+        Expired // period ended without event — terminal
     }
 
     /// @param policyId          keccak256 of (subscriber, locationKey, targetDate, nonce)
@@ -46,15 +46,15 @@ interface IPolicyRegistry {
     /// @param expiresAt         UNIX timestamp after which the policy expires if unsettled
     /// @param state             current lifecycle state
     struct Policy {
-        bytes32   policyId;
-        address   subscriber;
-        uint256   sumAssured;
-        uint256   premium;
-        uint16    triggerThresholdF;
-        bytes32   locationKey;
-        uint64    targetDate;
-        uint64    activatesAt;
-        uint64    expiresAt;
+        bytes32 policyId;
+        address subscriber;
+        uint256 sumAssured;
+        uint256 premium;
+        uint16 triggerThresholdF;
+        bytes32 locationKey;
+        uint64 targetDate;
+        uint64 activatesAt;
+        uint64 expiresAt;
         PolicyState state;
     }
 
@@ -67,7 +67,7 @@ interface IPolicyRegistry {
         bytes32 indexed policyId,
         address indexed subscriber,
         bytes32 locationKey,
-        uint64  targetDate,
+        uint64 targetDate,
         uint256 sumAssured,
         uint256 premium
     );
@@ -77,10 +77,7 @@ interface IPolicyRegistry {
 
     /// @notice Oracle confirmed event; payout sent; policy → CLAIMED.
     event PolicyClaimed(
-        bytes32 indexed policyId,
-        address indexed subscriber,
-        uint256 payoutAmount,
-        int16   observedTempF
+        bytes32 indexed policyId, address indexed subscriber, uint256 payoutAmount, int16 observedTempF
     );
 
     /// @notice Period ended without event; premium retained; policy → EXPIRED.
@@ -116,10 +113,10 @@ interface IPolicyRegistry {
     /// @return policyId            Unique identifier for the new policy.
     function subscribe(
         bytes32 locationKey,
-        uint64  targetDate,
+        uint64 targetDate,
         uint256 sumAssured,
-        uint16  triggerThresholdF,
-        uint16  pBps
+        uint16 triggerThresholdF,
+        uint16 pBps
     ) external returns (bytes32 policyId);
 
     /// @notice Transition an ACTIVE policy to CLAIMED if the oracle temperature
@@ -128,30 +125,38 @@ interface IPolicyRegistry {
     /// @dev    Caller is the keeper (KeeperSettlePolicy.s.sol). Pulls the oracle
     ///         result from `ReclaimWeatherSource.getResult(locationKey, targetDate)`.
     /// @param  policyId  Policy to settle.
-    function settlePolicy(bytes32 policyId) external;
+    function settlePolicy(
+        bytes32 policyId
+    ) external;
 
     /// @notice Expire a policy whose `expiresAt` has passed and has not been settled.
     ///         Safe to call by anyone (permissionless clean-up).
     /// @param  policyId  Policy to expire.
-    function expirePolicy(bytes32 policyId) external;
+    function expirePolicy(
+        bytes32 policyId
+    ) external;
 
     /*//////////////////////////////////////////////////////////////
                              VIEW FUNCTIONS
     //////////////////////////////////////////////////////////////*/
 
     /// @notice Returns the full Policy struct for a given policyId.
-    function getPolicy(bytes32 policyId) external view returns (Policy memory);
+    function getPolicy(
+        bytes32 policyId
+    ) external view returns (Policy memory);
 
     /// @notice Returns the current state of a policy.
-    function stateOf(bytes32 policyId) external view returns (PolicyState);
+    function stateOf(
+        bytes32 policyId
+    ) external view returns (PolicyState);
 
     /// @notice Compute the premium quote without creating a policy.
     ///         Delegates to IPricingEngine.quote(pBps, sumAssured, daysAhead).
     function quotePolicy(
         bytes32 locationKey,
-        uint64  targetDate,
+        uint64 targetDate,
         uint256 sumAssured,
-        uint16  triggerThresholdF,
-        uint16  pBps
+        uint16 triggerThresholdF,
+        uint16 pBps
     ) external view returns (uint256 premium);
 }

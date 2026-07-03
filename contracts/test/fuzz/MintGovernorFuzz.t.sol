@@ -30,7 +30,7 @@ contract MintGovernorFuzzTest is Test {
 
     uint256 internal constant START = 1_778_544_000;
     uint16 internal constant QUORUM_BPS = 1500;
-    uint32 internal constant VOTE_DAYS = 7;           // vote duration for MintGovernor (days)
+    uint32 internal constant VOTE_DAYS = 7; // vote duration for MintGovernor (days)
     uint32 internal constant ROUND_WINDOW_SEC = 7 days; // challenge window for registry (seconds)
 
     function setUp() public {

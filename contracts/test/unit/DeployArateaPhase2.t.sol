@@ -63,8 +63,7 @@ contract DeployArateaPhase2Test is Test {
 
     function test_Phase2_GovernorIsNotAdmin() public view {
         assertFalse(
-            registry.hasRole(registry.DEFAULT_ADMIN_ROLE(), address(governor)),
-            "governor must NOT be registry admin"
+            registry.hasRole(registry.DEFAULT_ADMIN_ROLE(), address(governor)), "governor must NOT be registry admin"
         );
     }
 
@@ -78,7 +77,9 @@ contract DeployArateaPhase2Test is Test {
 
     function test_Phase2_AdminKeepsCircuitBreaker() public view {
         assertTrue(registry.hasRole(registry.DEFAULT_ADMIN_ROLE(), ANVIL_ADMIN), "admin keeps default-admin");
-        assertTrue(registry.hasRole(registry.ROUND_CANCELLER_ROLE(), ANVIL_ADMIN), "admin keeps canceller (circuit-breaker)");
+        assertTrue(
+            registry.hasRole(registry.ROUND_CANCELLER_ROLE(), ANVIL_ADMIN), "admin keeps canceller (circuit-breaker)"
+        );
     }
 
     function test_Phase2_RegistryRemainesSoleMinter() public view {

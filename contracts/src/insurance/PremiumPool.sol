@@ -61,7 +61,10 @@ contract PremiumPool is AccessControl, ReentrancyGuard, IPremiumPool {
                              CONSTRUCTOR
     //////////////////////////////////////////////////////////////*/
 
-    constructor(address admin_, address usdc_) {
+    constructor(
+        address admin_,
+        address usdc_
+    ) {
         if (admin_ == address(0) || usdc_ == address(0)) revert ZeroAddress();
         _grantRole(DEFAULT_ADMIN_ROLE, admin_);
         usdc = IERC20(usdc_);
@@ -72,7 +75,9 @@ contract PremiumPool is AccessControl, ReentrancyGuard, IPremiumPool {
     //////////////////////////////////////////////////////////////*/
 
     /// @inheritdoc IPremiumPool
-    function deposit(uint256 amount) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+    function deposit(
+        uint256 amount
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         if (amount == 0) revert ZeroAmount();
         usdc.safeTransferFrom(msg.sender, address(this), amount);
         _availableCapital += amount;
@@ -80,11 +85,13 @@ contract PremiumPool is AccessControl, ReentrancyGuard, IPremiumPool {
     }
 
     /// @inheritdoc IPremiumPool
-    function withdraw(uint256 amount) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+    function withdraw(
+        uint256 amount
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         if (amount == 0) revert ZeroAmount();
         if (_availableCapital < amount) revert InsufficientAvailableCapital(amount, _availableCapital);
         uint256 remaining = _availableCapital - amount;
-        uint256 floor     = mcrFloor();
+        uint256 floor = mcrFloor();
         if (remaining < floor) revert SolvencyCheckFailed(remaining, floor);
         _availableCapital -= amount;
         usdc.safeTransfer(msg.sender, amount);
@@ -98,43 +105,41 @@ contract PremiumPool is AccessControl, ReentrancyGuard, IPremiumPool {
     /// @inheritdoc IPremiumPool
     /// @dev USDC is transferred directly by PolicyRegistry to this contract before this call.
     ///      This function only updates internal accounting and enforces the MCR gate.
-    function receivePremium(bytes32 policyId, uint256 amount)
-        external
-        onlyRole(POLICY_REGISTRY_ROLE)
-        nonReentrant
-    {
+    function receivePremium(
+        bytes32 policyId,
+        uint256 amount
+    ) external onlyRole(POLICY_REGISTRY_ROLE) nonReentrant {
         if (amount == 0) revert ZeroAmount();
         uint256 floor = mcrFloor();
         // Reject new subscriptions if pool is already below MCR floor
         if (_availableCapital < floor) revert PoolBelowMCR(_availableCapital, floor);
-        _availableCapital  += amount;
-        _annualPremiums    += amount;
+        _availableCapital += amount;
+        _annualPremiums += amount;
         emit PremiumReceived(policyId, amount);
     }
 
     /// @inheritdoc IPremiumPool
-    function reserveForPolicy(bytes32 policyId, uint256 sumAssured)
-        external
-        onlyRole(POLICY_REGISTRY_ROLE)
-        nonReentrant
-    {
+    function reserveForPolicy(
+        bytes32 policyId,
+        uint256 sumAssured
+    ) external onlyRole(POLICY_REGISTRY_ROLE) nonReentrant {
         if (sumAssured == 0) revert ZeroAmount();
         if (_reserves[policyId] != 0) revert ReserveAlreadyExists(policyId);
         if (_availableCapital < sumAssured) {
             revert InsufficientAvailableCapital(sumAssured, _availableCapital);
         }
         _availableCapital -= sumAssured;
-        _totalReserved    += sumAssured;
+        _totalReserved += sumAssured;
         _reserves[policyId] = sumAssured;
         emit CapitalReserved(policyId, sumAssured);
     }
 
     /// @inheritdoc IPremiumPool
-    function payout(bytes32 policyId, address subscriber, uint256 amount)
-        external
-        onlyRole(POLICY_REGISTRY_ROLE)
-        nonReentrant
-    {
+    function payout(
+        bytes32 policyId,
+        address subscriber,
+        uint256 amount
+    ) external onlyRole(POLICY_REGISTRY_ROLE) nonReentrant {
         if (amount == 0) revert ZeroAmount();
         uint256 reserved = _reserves[policyId];
         if (reserved == 0) revert ReserveNotFound(policyId);
@@ -148,15 +153,13 @@ contract PremiumPool is AccessControl, ReentrancyGuard, IPremiumPool {
     }
 
     /// @inheritdoc IPremiumPool
-    function releaseReserve(bytes32 policyId)
-        external
-        onlyRole(POLICY_REGISTRY_ROLE)
-        nonReentrant
-    {
+    function releaseReserve(
+        bytes32 policyId
+    ) external onlyRole(POLICY_REGISTRY_ROLE) nonReentrant {
         uint256 reserved = _reserves[policyId];
         if (reserved == 0) revert ReserveNotFound(policyId);
         delete _reserves[policyId];
-        _totalReserved    -= reserved;
+        _totalReserved -= reserved;
         _availableCapital += reserved;
         emit ReserveReleased(policyId, reserved);
     }
@@ -181,7 +184,9 @@ contract PremiumPool is AccessControl, ReentrancyGuard, IPremiumPool {
     }
 
     /// @inheritdoc IPremiumPool
-    function reservedForPolicy(bytes32 policyId) external view returns (uint256) {
+    function reservedForPolicy(
+        bytes32 policyId
+    ) external view returns (uint256) {
         return _reserves[policyId];
     }
 

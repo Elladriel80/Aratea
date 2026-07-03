@@ -22,8 +22,8 @@ interface IWeatherOracle {
     ///                        Returns 0 if not yet settled — callers must check `settled`.
     /// @return settled        True if the oracle has posted a confirmed result for
     ///                        this (locationKey, targetDate) pair.
-    function getResult(bytes32 locationKey, uint64 targetDate)
-        external
-        view
-        returns (int16 observedTempF, bool settled);
+    function getResult(
+        bytes32 locationKey,
+        uint64 targetDate
+    ) external view returns (int16 observedTempF, bool settled);
 }

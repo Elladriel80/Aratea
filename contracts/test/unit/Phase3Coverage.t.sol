@@ -4,36 +4,58 @@ pragma solidity 0.8.24;
 import {Test} from "forge-std/Test.sol";
 import {MockERC20} from "forge-std/mocks/MockERC20.sol";
 
-import {PricingEngine}  from "../../src/insurance/PricingEngine.sol";
-import {PremiumPool}    from "../../src/insurance/PremiumPool.sol";
+import {PricingEngine} from "../../src/insurance/PricingEngine.sol";
+import {PremiumPool} from "../../src/insurance/PremiumPool.sol";
 import {PolicyRegistry} from "../../src/insurance/PolicyRegistry.sol";
 import {IWeatherOracle} from "../../src/interfaces/IWeatherOracle.sol";
 import {IPolicyRegistry} from "../../src/interfaces/IPolicyRegistry.sol";
-import {IPremiumPool}    from "../../src/interfaces/IPremiumPool.sol";
+import {IPremiumPool} from "../../src/interfaces/IPremiumPool.sol";
 
 // ─── Minimal helpers (shared with Phase3.t.sol, inlined to avoid import cycles) ──
 
 contract MockUSDC2 is MockERC20 {
-    constructor() { initialize("Mock USDC", "USDC", 6); }
-    function mint(address to, uint256 amount) external { _mint(to, amount); }
+    constructor() {
+        initialize("Mock USDC", "USDC", 6);
+    }
+
+    function mint(
+        address to,
+        uint256 amount
+    ) external {
+        _mint(to, amount);
+    }
 }
 
 contract MockOracle2 is IWeatherOracle {
     mapping(bytes32 => mapping(uint64 => int16)) private _r;
-    mapping(bytes32 => mapping(uint64 => bool))  private _s;
-    function setResult(bytes32 loc, uint64 dt, int16 t) external { _r[loc][dt] = t; _s[loc][dt] = true; }
-    function getResult(bytes32 loc, uint64 dt) external view returns (int16, bool) { return (_r[loc][dt], _s[loc][dt]); }
+    mapping(bytes32 => mapping(uint64 => bool)) private _s;
+
+    function setResult(
+        bytes32 loc,
+        uint64 dt,
+        int16 t
+    ) external {
+        _r[loc][dt] = t;
+        _s[loc][dt] = true;
+    }
+
+    function getResult(
+        bytes32 loc,
+        uint64 dt
+    ) external view returns (int16, bool) {
+        return (_r[loc][dt], _s[loc][dt]);
+    }
 }
 
 // ─── PremiumPool — missing branch coverage ────────────────────────────────────
 
 contract PremiumPoolCoverageTest is Test {
     PremiumPool pool;
-    MockUSDC2   usdc;
+    MockUSDC2 usdc;
 
-    address admin    = makeAddr("admin");
+    address admin = makeAddr("admin");
     address registry = makeAddr("registry");
-    address alice    = makeAddr("alice");
+    address alice = makeAddr("alice");
 
     bytes32 constant PID = keccak256("coverage-policy");
 
@@ -45,7 +67,9 @@ contract PremiumPoolCoverageTest is Test {
         vm.stopPrank();
     }
 
-    function _seed(uint256 amount) internal {
+    function _seed(
+        uint256 amount
+    ) internal {
         usdc.mint(admin, amount);
         vm.startPrank(admin);
         usdc.approve(address(pool), amount);
@@ -96,7 +120,7 @@ contract PremiumPoolCoverageTest is Test {
     function test_payout_revertsZeroAmount() public {
         _seed(300_000e6);
         vm.startPrank(registry);
-        pool.reserveForPolicy(PID, 1_000e6);
+        pool.reserveForPolicy(PID, 1000e6);
         vm.expectRevert(IPremiumPool.ZeroAmount.selector);
         pool.payout(PID, alice, 0);
         vm.stopPrank();
@@ -107,16 +131,16 @@ contract PremiumPoolCoverageTest is Test {
         _seed(300_000e6);
         vm.prank(registry);
         vm.expectRevert(); // ReserveNotFound
-        pool.payout(PID, alice, 1_000e6);
+        pool.payout(PID, alice, 1000e6);
     }
 
     // payout — PayoutExceedsReserve (amount > reserved)
     function test_payout_revertsExceedsReserve() public {
         _seed(300_000e6);
         vm.startPrank(registry);
-        pool.reserveForPolicy(PID, 1_000e6);
+        pool.reserveForPolicy(PID, 1000e6);
         vm.expectRevert(); // PayoutExceedsReserve
-        pool.payout(PID, alice, 2_000e6);
+        pool.payout(PID, alice, 2000e6);
         vm.stopPrank();
     }
 
@@ -146,27 +170,27 @@ contract PremiumPoolCoverageTest is Test {
 // ─── PolicyRegistry — missing branch coverage ─────────────────────────────────
 
 contract PolicyRegistryCoverageTest is Test {
-    PricingEngine  engine;
-    PremiumPool    pool;
+    PricingEngine engine;
+    PremiumPool pool;
     PolicyRegistry reg;
-    MockUSDC2      usdc;
-    MockOracle2    oracle;
+    MockUSDC2 usdc;
+    MockOracle2 oracle;
 
-    address admin  = makeAddr("admin");
+    address admin = makeAddr("admin");
     address keeper = makeAddr("keeper");
-    address alice  = makeAddr("alice");
+    address alice = makeAddr("alice");
 
     bytes32 constant LOC = keccak256("KXHIGHTSFO");
-    uint16  constant THR = 900;
+    uint16 constant THR = 900;
 
     uint64 targetDate;
 
     function setUp() public {
-        usdc   = new MockUSDC2();
+        usdc = new MockUSDC2();
         engine = new PricingEngine(admin);
-        pool   = new PremiumPool(admin, address(usdc));
+        pool = new PremiumPool(admin, address(usdc));
         oracle = new MockOracle2();
-        reg    = new PolicyRegistry(admin, address(usdc), address(engine), address(pool), address(oracle));
+        reg = new PolicyRegistry(admin, address(usdc), address(engine), address(pool), address(oracle));
 
         vm.startPrank(admin);
         pool.grantRole(pool.POLICY_REGISTRY_ROLE(), address(reg));
@@ -188,7 +212,10 @@ contract PolicyRegistryCoverageTest is Test {
         usdc.approve(address(reg), type(uint256).max);
     }
 
-    function _sub(uint256 s, uint16 p) internal returns (bytes32) {
+    function _sub(
+        uint256 s,
+        uint16 p
+    ) internal returns (bytes32) {
         vm.prank(alice);
         return reg.subscribe(LOC, targetDate, s, THR, p);
     }
@@ -213,7 +240,7 @@ contract PolicyRegistryCoverageTest is Test {
         uint64 tooFar = uint64(block.timestamp) + 366 days;
         vm.prank(alice);
         vm.expectRevert(); // HorizonTooFar
-        reg.subscribe(LOC, tooFar, 1_000e6, THR, 4_000);
+        reg.subscribe(LOC, tooFar, 1000e6, THR, 4000);
     }
 
     // settlePolicy — PolicyNotFound
@@ -231,7 +258,7 @@ contract PolicyRegistryCoverageTest is Test {
 
     // expirePolicy — AlreadySettled (policy already claimed)
     function test_expirePolicy_revertsAlreadySettled() public {
-        bytes32 pid = _sub(1_000e6, 4_000);
+        bytes32 pid = _sub(1000e6, 4000);
         vm.warp(targetDate);
         oracle.setResult(LOC, targetDate, int16(THR)); // claimed
         vm.prank(keeper);
@@ -244,7 +271,7 @@ contract PolicyRegistryCoverageTest is Test {
 
     // settlePolicy — auto-transition PENDING→ACTIVE then settle
     function test_settlePolicy_autoTransitionPendingToActive() public {
-        bytes32 pid = _sub(1_000e6, 4_000);
+        bytes32 pid = _sub(1000e6, 4000);
         // Warp to exactly activatesAt (still Pending)
         vm.warp(targetDate);
         oracle.setResult(LOC, targetDate, 850); // below threshold → expired
@@ -257,7 +284,7 @@ contract PolicyRegistryCoverageTest is Test {
     // quotePolicy — targetDate in the past or equal to now → days_ahead=1 (clamp)
     function test_quotePolicy_targetInPastClampsToMinDaysAhead() public {
         // targetDate == now → secondsAhead=0 → daysAhead clamped to MIN_DAYS_AHEAD(1)
-        uint256 q = reg.quotePolicy(LOC, uint64(block.timestamp), 1_000e6, THR, 3_000);
+        uint256 q = reg.quotePolicy(LOC, uint64(block.timestamp), 1000e6, THR, 3000);
         assertGt(q, 0);
     }
 
@@ -271,6 +298,6 @@ contract PolicyRegistryCoverageTest is Test {
         reg.setSupportedLocation(newLoc, false);
         vm.prank(alice);
         vm.expectRevert(); // UnsupportedLocation
-        reg.subscribe(newLoc, targetDate, 1_000e6, THR, 3_000);
+        reg.subscribe(newLoc, targetDate, 1000e6, THR, 3000);
     }
 }

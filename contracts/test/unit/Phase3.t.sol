@@ -5,12 +5,12 @@ import {Test} from "forge-std/Test.sol";
 import {MockERC20} from "forge-std/mocks/MockERC20.sol";
 
 import {PricingEngine} from "../../src/insurance/PricingEngine.sol";
-import {PremiumPool}   from "../../src/insurance/PremiumPool.sol";
+import {PremiumPool} from "../../src/insurance/PremiumPool.sol";
 import {PolicyRegistry} from "../../src/insurance/PolicyRegistry.sol";
 import {IWeatherOracle} from "../../src/interfaces/IWeatherOracle.sol";
 import {IPolicyRegistry} from "../../src/interfaces/IPolicyRegistry.sol";
-import {IPremiumPool}    from "../../src/interfaces/IPremiumPool.sol";
-import {IPricingEngine}  from "../../src/interfaces/IPricingEngine.sol";
+import {IPremiumPool} from "../../src/interfaces/IPremiumPool.sol";
+import {IPricingEngine} from "../../src/interfaces/IPricingEngine.sol";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -18,23 +18,32 @@ contract MockUSDC is MockERC20 {
     constructor() {
         initialize("Mock USDC", "USDC", 6);
     }
-    function mint(address to, uint256 amount) external { _mint(to, amount); }
+
+    function mint(
+        address to,
+        uint256 amount
+    ) external {
+        _mint(to, amount);
+    }
 }
 
 contract MockOracle is IWeatherOracle {
     mapping(bytes32 => mapping(uint64 => int16)) private _results;
-    mapping(bytes32 => mapping(uint64 => bool))  private _settled;
+    mapping(bytes32 => mapping(uint64 => bool)) private _settled;
 
-    function setResult(bytes32 locationKey, uint64 targetDate, int16 tempF) external {
+    function setResult(
+        bytes32 locationKey,
+        uint64 targetDate,
+        int16 tempF
+    ) external {
         _results[locationKey][targetDate] = tempF;
         _settled[locationKey][targetDate] = true;
     }
 
-    function getResult(bytes32 locationKey, uint64 targetDate)
-        external
-        view
-        returns (int16 observedTempF, bool settled)
-    {
+    function getResult(
+        bytes32 locationKey,
+        uint64 targetDate
+    ) external view returns (int16 observedTempF, bool settled) {
         return (_results[locationKey][targetDate], _settled[locationKey][targetDate]);
     }
 }
@@ -50,10 +59,10 @@ contract PricingEngineTest is Test {
     }
 
     function test_defaults() public view {
-        assertEq(engine.expenseLoadingBps(),  2_000);
-        assertEq(engine.solvencyLoadingBps(), 1_500);
-        assertEq(engine.adverseLoadingBps(),  500);
-        assertEq(engine.premiumMin(),         5_000_000);
+        assertEq(engine.expenseLoadingBps(), 2000);
+        assertEq(engine.solvencyLoadingBps(), 1500);
+        assertEq(engine.adverseLoadingBps(), 500);
+        assertEq(engine.premiumMin(), 5_000_000);
     }
 
     function test_quote_floorsAtMin() public view {
@@ -70,7 +79,7 @@ contract PricingEngineTest is Test {
         // horizonSurcharge = 0 (daysAhead=1)
         // total = 966e6 + 50e6 = 1016e6
         // cap = 500e6 → clamped to 500e6
-        uint256 p = engine.quote(7_000, 1_000_000_000, 1);
+        uint256 p = engine.quote(7000, 1_000_000_000, 1);
         assertEq(p, 500_000_000); // capped at 50%
     }
 
@@ -81,8 +90,8 @@ contract PricingEngineTest is Test {
         // surcharge = 138e6 * 5% * 2 = 13.8e6 → 13e6 (integer division)
         // adverseComponent = 500 * 1000e6 / 10000 = 50e6
         // total = 138e6 + 13e6 + 50e6 = 201e6
-        uint256 p3 = engine.quote(1_000, 1_000_000_000, 3);
-        uint256 p1 = engine.quote(1_000, 1_000_000_000, 1);
+        uint256 p3 = engine.quote(1000, 1_000_000_000, 3);
+        uint256 p1 = engine.quote(1000, 1_000_000_000, 1);
         assertGt(p3, p1, "3-day horizon should cost more than 1-day");
     }
 
@@ -93,7 +102,7 @@ contract PricingEngineTest is Test {
 
     function test_quote_revertsOnZeroSumAssured() public {
         vm.expectRevert();
-        engine.quote(5_000, 0, 1);
+        engine.quote(5000, 0, 1);
     }
 
     function test_setAdverseLoading_onlyAdmin() public {
@@ -105,7 +114,7 @@ contract PricingEngineTest is Test {
     function test_setAdverseLoading_tooHigh() public {
         vm.prank(admin);
         vm.expectRevert();
-        engine.setAdverseLoading(2_000); // > 1000 (10% cap)
+        engine.setAdverseLoading(2000); // > 1000 (10% cap)
     }
 
     function test_setAdverseLoading_g2Gate() public {
@@ -119,13 +128,13 @@ contract PricingEngineTest is Test {
 
 contract PremiumPoolTest is Test {
     PremiumPool pool;
-    MockUSDC    usdc;
+    MockUSDC usdc;
 
-    address admin    = makeAddr("admin");
+    address admin = makeAddr("admin");
     address registry = makeAddr("registry");
-    address alice    = makeAddr("alice");
+    address alice = makeAddr("alice");
 
-    bytes32 constant POLICY_ID   = keccak256("test-policy");
+    bytes32 constant POLICY_ID = keccak256("test-policy");
     bytes32 constant POLICY_ID_2 = keccak256("test-policy-2");
 
     function setUp() public {
@@ -139,7 +148,9 @@ contract PremiumPoolTest is Test {
         vm.stopPrank();
     }
 
-    function _seedPool(uint256 amount) internal {
+    function _seedPool(
+        uint256 amount
+    ) internal {
         usdc.mint(admin, amount);
         vm.startPrank(admin);
         usdc.approve(address(pool), amount);
@@ -197,7 +208,7 @@ contract PremiumPoolTest is Test {
         vm.prank(registry);
         pool.reserveForPolicy(POLICY_ID, 50_000e6);
         assertEq(pool.availableCapital(), 250_000e6);
-        assertEq(pool.totalReserved(),      50_000e6);
+        assertEq(pool.totalReserved(), 50_000e6);
         assertEq(pool.reservedForPolicy(POLICY_ID), 50_000e6);
     }
 
@@ -214,27 +225,27 @@ contract PremiumPoolTest is Test {
         _seedPool(100e6); // 100 USDC only
         vm.prank(registry);
         vm.expectRevert(); // InsufficientAvailableCapital
-        pool.reserveForPolicy(POLICY_ID, 1_000e6);
+        pool.reserveForPolicy(POLICY_ID, 1000e6);
     }
 
     function test_payout_sendsUSDCAndReleasesRemainder() public {
         _seedPool(300_000e6);
         vm.startPrank(registry);
-        pool.reserveForPolicy(POLICY_ID, 1_000e6);
-        pool.payout(POLICY_ID, alice, 1_000e6); // full payout
+        pool.reserveForPolicy(POLICY_ID, 1000e6);
+        pool.payout(POLICY_ID, alice, 1000e6); // full payout
         vm.stopPrank();
-        assertEq(usdc.balanceOf(alice), 1_000e6);
+        assertEq(usdc.balanceOf(alice), 1000e6);
         assertEq(pool.reservedForPolicy(POLICY_ID), 0);
     }
 
     function test_payout_partialReleaseRemainder() public {
         _seedPool(300_000e6);
         vm.startPrank(registry);
-        pool.reserveForPolicy(POLICY_ID, 1_000e6);
+        pool.reserveForPolicy(POLICY_ID, 1000e6);
         pool.payout(POLICY_ID, alice, 800e6); // partial payout
         vm.stopPrank();
         // 200e6 returned to available
-        assertEq(pool.availableCapital(), 300_000e6 - 1_000e6 + 200e6);
+        assertEq(pool.availableCapital(), 300_000e6 - 1000e6 + 200e6);
     }
 
     function test_releaseReserve_returnsToAvailable() public {
@@ -261,30 +272,28 @@ contract PremiumPoolTest is Test {
 // ─── PolicyRegistry tests ─────────────────────────────────────────────────────
 
 contract PolicyRegistryTest is Test {
-    PricingEngine  engine;
-    PremiumPool    pool;
+    PricingEngine engine;
+    PremiumPool pool;
     PolicyRegistry registry;
-    MockUSDC       usdc;
-    MockOracle     oracleMock;
+    MockUSDC usdc;
+    MockOracle oracleMock;
 
-    address admin  = makeAddr("admin");
+    address admin = makeAddr("admin");
     address keeper = makeAddr("keeper");
-    address alice  = makeAddr("alice");
+    address alice = makeAddr("alice");
 
-    bytes32 constant LOC_SFO  = keccak256("KXHIGHTSFO");
-    bytes32 constant LOC_CHI  = keccak256("KXLOWTCHI");
+    bytes32 constant LOC_SFO = keccak256("KXHIGHTSFO");
+    bytes32 constant LOC_CHI = keccak256("KXLOWTCHI");
 
-    uint64  targetDate;
-    uint16  constant THRESHOLD_F = 900; // 90.0 °F × 10
+    uint64 targetDate;
+    uint16 constant THRESHOLD_F = 900; // 90.0 °F × 10
 
     function setUp() public {
-        usdc        = new MockUSDC();
-        engine      = new PricingEngine(admin);
-        pool        = new PremiumPool(admin, address(usdc));
-        oracleMock  = new MockOracle();
-        registry    = new PolicyRegistry(
-            admin, address(usdc), address(engine), address(pool), address(oracleMock)
-        );
+        usdc = new MockUSDC();
+        engine = new PricingEngine(admin);
+        pool = new PremiumPool(admin, address(usdc));
+        oracleMock = new MockOracle();
+        registry = new PolicyRegistry(admin, address(usdc), address(engine), address(pool), address(oracleMock));
 
         // Wire roles
         vm.startPrank(admin);
@@ -312,7 +321,10 @@ contract PolicyRegistryTest is Test {
 
     // ── Helpers ───────────────────────────────────────────────────
 
-    function _subscribe(uint256 sumAssured, uint16 pBps) internal returns (bytes32 policyId) {
+    function _subscribe(
+        uint256 sumAssured,
+        uint16 pBps
+    ) internal returns (bytes32 policyId) {
         vm.prank(alice);
         return registry.subscribe(LOC_SFO, targetDate, sumAssured, THRESHOLD_F, pBps);
     }
@@ -320,19 +332,19 @@ contract PolicyRegistryTest is Test {
     // ── subscribe ─────────────────────────────────────────────────
 
     function test_subscribe_createsPolicyPending() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000); // 40% probability
+        bytes32 pid = _subscribe(1000e6, 4000); // 40% probability
         IPolicyRegistry.Policy memory p = registry.getPolicy(pid);
-        assertEq(p.subscriber,        alice);
-        assertEq(p.sumAssured,        1_000e6);
-        assertEq(uint8(p.state),      uint8(IPolicyRegistry.PolicyState.Pending));
-        assertEq(p.locationKey,       LOC_SFO);
-        assertEq(p.targetDate,        targetDate);
-        assertEq(p.activatesAt,       targetDate);
-        assertEq(p.expiresAt,         targetDate + 2 days);
+        assertEq(p.subscriber, alice);
+        assertEq(p.sumAssured, 1000e6);
+        assertEq(uint8(p.state), uint8(IPolicyRegistry.PolicyState.Pending));
+        assertEq(p.locationKey, LOC_SFO);
+        assertEq(p.targetDate, targetDate);
+        assertEq(p.activatesAt, targetDate);
+        assertEq(p.expiresAt, targetDate + 2 days);
     }
 
     function test_subscribe_transfersPremiumToPool() public {
-        bytes32 pid = _subscribe(1_000e6, 3_000);
+        bytes32 pid = _subscribe(1000e6, 3000);
         IPolicyRegistry.Policy memory p = registry.getPolicy(pid);
         // Pool holds the premium (sent directly at subscribe)
         assertGt(usdc.balanceOf(address(pool)), 250_000e6); // initial seed + premium
@@ -343,25 +355,25 @@ contract PolicyRegistryTest is Test {
     function test_subscribe_revertsUnsupportedLocation() public {
         vm.prank(alice);
         vm.expectRevert();
-        registry.subscribe(keccak256("KXHIGHTUNK"), targetDate, 1_000e6, THRESHOLD_F, 4_000);
+        registry.subscribe(keccak256("KXHIGHTUNK"), targetDate, 1000e6, THRESHOLD_F, 4000);
     }
 
     function test_subscribe_revertsTargetInPast() public {
         vm.prank(alice);
         vm.expectRevert();
-        registry.subscribe(LOC_SFO, uint64(block.timestamp) - 1, 1_000e6, THRESHOLD_F, 4_000);
+        registry.subscribe(LOC_SFO, uint64(block.timestamp) - 1, 1000e6, THRESHOLD_F, 4000);
     }
 
     function test_subscribe_revertsZeroSumAssured() public {
         vm.prank(alice);
         vm.expectRevert();
-        registry.subscribe(LOC_SFO, targetDate, 0, THRESHOLD_F, 4_000);
+        registry.subscribe(LOC_SFO, targetDate, 0, THRESHOLD_F, 4000);
     }
 
     // ── settlePolicy — CLAIMED ─────────────────────────────────────
 
     function test_settlePolicy_claimedWhenTempAboveThreshold() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
 
         // Advance to activatesAt
         vm.warp(targetDate);
@@ -373,14 +385,14 @@ contract PolicyRegistryTest is Test {
         registry.settlePolicy(pid);
 
         assertEq(uint8(registry.stateOf(pid)), uint8(IPolicyRegistry.PolicyState.Claimed));
-        assertEq(usdc.balanceOf(alice) - aliceBefore, 1_000e6);
+        assertEq(usdc.balanceOf(alice) - aliceBefore, 1000e6);
         assertEq(pool.reservedForPolicy(pid), 0);
     }
 
     // ── settlePolicy — EXPIRED ─────────────────────────────────────
 
     function test_settlePolicy_expiredWhenTempBelowThreshold() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
 
         vm.warp(targetDate);
         oracleMock.setResult(LOC_SFO, targetDate, 850); // 85.0°F < 90.0°F threshold
@@ -391,13 +403,13 @@ contract PolicyRegistryTest is Test {
 
         assertEq(uint8(registry.stateOf(pid)), uint8(IPolicyRegistry.PolicyState.Expired));
         // sumAssured reserve released back to pool
-        assertEq(pool.availableCapital(), poolBefore + 1_000e6);
+        assertEq(pool.availableCapital(), poolBefore + 1000e6);
     }
 
     // ── settlePolicy — at threshold ────────────────────────────────
 
     function test_settlePolicy_claimedAtExactThreshold() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         vm.warp(targetDate);
         oracleMock.setResult(LOC_SFO, targetDate, int16(THRESHOLD_F)); // exact threshold
 
@@ -409,7 +421,7 @@ contract PolicyRegistryTest is Test {
     // ── settlePolicy — error cases ─────────────────────────────────
 
     function test_settlePolicy_revertsNotKeeper() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         vm.warp(targetDate);
         oracleMock.setResult(LOC_SFO, targetDate, 950);
 
@@ -419,7 +431,7 @@ contract PolicyRegistryTest is Test {
     }
 
     function test_settlePolicy_revertsBeforeActivatesAt() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         // Still before targetDate
         oracleMock.setResult(LOC_SFO, targetDate, 950);
         vm.prank(keeper);
@@ -428,7 +440,7 @@ contract PolicyRegistryTest is Test {
     }
 
     function test_settlePolicy_revertsAfterExpiresAt() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         vm.warp(targetDate + 3 days); // past expiresAt (targetDate + 2 days)
         oracleMock.setResult(LOC_SFO, targetDate, 950);
         vm.prank(keeper);
@@ -437,7 +449,7 @@ contract PolicyRegistryTest is Test {
     }
 
     function test_settlePolicy_revertsOracleNotSettled() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         vm.warp(targetDate);
         // Oracle result not posted
         vm.prank(keeper);
@@ -446,7 +458,7 @@ contract PolicyRegistryTest is Test {
     }
 
     function test_settlePolicy_revertsAlreadySettled() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         vm.warp(targetDate);
         oracleMock.setResult(LOC_SFO, targetDate, 950);
         vm.prank(keeper);
@@ -460,16 +472,16 @@ contract PolicyRegistryTest is Test {
     // ── expirePolicy ───────────────────────────────────────────────
 
     function test_expirePolicy_afterGracePeriod() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         vm.warp(targetDate + 3 days); // past expiresAt
         uint256 poolBefore = pool.availableCapital();
         registry.expirePolicy(pid); // anyone can call
         assertEq(uint8(registry.stateOf(pid)), uint8(IPolicyRegistry.PolicyState.Expired));
-        assertEq(pool.availableCapital(), poolBefore + 1_000e6);
+        assertEq(pool.availableCapital(), poolBefore + 1000e6);
     }
 
     function test_expirePolicy_revertsBeforeExpiresAt() public {
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         vm.warp(targetDate + 1 days); // within grace window
         vm.expectRevert(); // SettlementWindowNotOpen
         registry.expirePolicy(pid);
@@ -478,8 +490,8 @@ contract PolicyRegistryTest is Test {
     // ── quotePolicy ────────────────────────────────────────────────
 
     function test_quotePolicy_matchesSubscribedPremium() public {
-        uint256 quoted = registry.quotePolicy(LOC_SFO, targetDate, 1_000e6, THRESHOLD_F, 4_000);
-        bytes32 pid = _subscribe(1_000e6, 4_000);
+        uint256 quoted = registry.quotePolicy(LOC_SFO, targetDate, 1000e6, THRESHOLD_F, 4000);
+        bytes32 pid = _subscribe(1000e6, 4000);
         IPolicyRegistry.Policy memory p = registry.getPolicy(pid);
         assertEq(quoted, p.premium);
     }
@@ -492,9 +504,9 @@ contract PolicyRegistryTest is Test {
         vm.prank(bob);
         usdc.approve(address(registry), type(uint256).max);
 
-        bytes32 pidAlice = _subscribe(1_000e6, 4_000);
+        bytes32 pidAlice = _subscribe(1000e6, 4000);
         vm.prank(bob);
-        bytes32 pidBob = registry.subscribe(LOC_CHI, targetDate, 500e6, THRESHOLD_F, 2_000);
+        bytes32 pidBob = registry.subscribe(LOC_CHI, targetDate, 500e6, THRESHOLD_F, 2000);
 
         assertTrue(pidAlice != pidBob);
         assertEq(registry.getPolicy(pidAlice).subscriber, alice);

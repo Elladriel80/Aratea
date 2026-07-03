@@ -4,36 +4,35 @@ pragma solidity 0.8.24;
 import {Test} from "forge-std/Test.sol";
 import {MockERC20} from "forge-std/mocks/MockERC20.sol";
 
-import {PricingEngine}    from "../../src/insurance/PricingEngine.sol";
-import {PremiumPool}      from "../../src/insurance/PremiumPool.sol";
-import {PolicyRegistry}   from "../../src/insurance/PolicyRegistry.sol";
+import {PricingEngine} from "../../src/insurance/PricingEngine.sol";
+import {PremiumPool} from "../../src/insurance/PremiumPool.sol";
+import {PolicyRegistry} from "../../src/insurance/PolicyRegistry.sol";
 import {MockWeatherOracle} from "../../src/insurance/MockWeatherOracle.sol";
-import {IPolicyRegistry}  from "../../src/interfaces/IPolicyRegistry.sol";
+import {IPolicyRegistry} from "../../src/interfaces/IPolicyRegistry.sol";
 
 /// @title  FullStackPhase3E2E — end-to-end integration test for the Phase 3 stack
 /// @notice Exercises the complete parametric policy lifecycle:
 ///         Deploy → seed capital → subscribe → oracle post → settle (CLAIMED / EXPIRED)
 ///         Uses MockERC20 as USDC and MockWeatherOracle for oracle results.
 contract FullStackPhase3E2E is Test {
-
     // ── actors ────────────────────────────────────────────────────────────────
-    address internal admin  = makeAddr("admin");
+    address internal admin = makeAddr("admin");
     address internal keeper = makeAddr("keeper");
-    address internal alice  = makeAddr("alice");
-    address internal bob    = makeAddr("bob");
+    address internal alice = makeAddr("alice");
+    address internal bob = makeAddr("bob");
 
     // ── contracts ─────────────────────────────────────────────────────────────
-    MockERC20          internal usdc;
-    PricingEngine      internal engine;
-    PremiumPool        internal pool;
-    MockWeatherOracle  internal oracle;
-    PolicyRegistry     internal registry;
+    MockERC20 internal usdc;
+    PricingEngine internal engine;
+    PremiumPool internal pool;
+    MockWeatherOracle internal oracle;
+    PolicyRegistry internal registry;
 
     // ── constants ─────────────────────────────────────────────────────────────
-    bytes32 internal constant LOC_SFO  = keccak256("KXHIGHTSFO");
-    bytes32 internal constant LOC_CHI  = keccak256("KXLOWTCHI");
-    uint16  internal constant THRESH_SFO = 900;  // 90.0 °F × 10
-    uint16  internal constant THRESH_CHI = 100;  // 10.0 °F × 10
+    bytes32 internal constant LOC_SFO = keccak256("KXHIGHTSFO");
+    bytes32 internal constant LOC_CHI = keccak256("KXLOWTCHI");
+    uint16 internal constant THRESH_SFO = 900; // 90.0 °F × 10
+    uint16 internal constant THRESH_CHI = 100; // 10.0 °F × 10
 
     // ── setup ─────────────────────────────────────────────────────────────────
 
@@ -44,12 +43,10 @@ contract FullStackPhase3E2E is Test {
         usdc = mock;
 
         // 2. Deploy Phase 3 contracts
-        engine   = new PricingEngine(admin);
-        pool     = new PremiumPool(admin, address(usdc));
-        oracle   = new MockWeatherOracle();
-        registry = new PolicyRegistry(
-            admin, address(usdc), address(engine), address(pool), address(oracle)
-        );
+        engine = new PricingEngine(admin);
+        pool = new PremiumPool(admin, address(usdc));
+        oracle = new MockWeatherOracle();
+        registry = new PolicyRegistry(admin, address(usdc), address(engine), address(pool), address(oracle));
 
         // 3. Wire roles
         vm.startPrank(admin);
@@ -67,18 +64,23 @@ contract FullStackPhase3E2E is Test {
 
         // 5. Fund subscribers
         _mintFor(alice, 10_000e6);
-        _mintFor(bob,   10_000e6);
+        _mintFor(bob, 10_000e6);
     }
 
     // ── helpers ───────────────────────────────────────────────────────────────
 
-    function _mintFor(address who, uint256 amount) internal {
+    function _mintFor(
+        address who,
+        uint256 amount
+    ) internal {
         deal(address(usdc), who, amount);
         vm.prank(who);
         usdc.approve(address(registry), type(uint256).max);
     }
 
-    function _mintAndApproveAdmin(uint256 amount) internal {
+    function _mintAndApproveAdmin(
+        uint256 amount
+    ) internal {
         deal(address(usdc), admin, amount);
         vm.prank(admin);
         usdc.approve(address(pool), amount);
@@ -87,10 +89,10 @@ contract FullStackPhase3E2E is Test {
     function _subscribeFor(
         address subscriber,
         bytes32 location,
-        uint64  targetDate,
+        uint64 targetDate,
         uint256 sumAssured,
-        uint16  threshold,
-        uint16  pBps
+        uint16 threshold,
+        uint16 pBps
     ) internal returns (bytes32 policyId) {
         vm.prank(subscriber);
         return registry.subscribe(location, targetDate, sumAssured, threshold, pBps);
@@ -103,13 +105,13 @@ contract FullStackPhase3E2E is Test {
         uint64 targetDate = uint64(block.timestamp) + 7 days;
 
         // Alice subscribes: 1 000 USDC coverage, 40% probability, threshold 90°F
-        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 1_000e6, THRESH_SFO, 4_000);
+        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 1000e6, THRESH_SFO, 4000);
 
         // Verify policy state = Pending
         assertEq(uint8(registry.stateOf(pid)), uint8(IPolicyRegistry.PolicyState.Pending));
 
         // Pool has premium + seed
-        assertGt(pool.availableCapital(), 250_000e6 - 1_000e6); // seed minus reserve
+        assertGt(pool.availableCapital(), 250_000e6 - 1000e6); // seed minus reserve
 
         // Advance to settlement window
         vm.warp(targetDate);
@@ -123,7 +125,7 @@ contract FullStackPhase3E2E is Test {
 
         // Assert CLAIMED + payout received
         assertEq(uint8(registry.stateOf(pid)), uint8(IPolicyRegistry.PolicyState.Claimed));
-        assertEq(usdc.balanceOf(alice) - aliceBefore, 1_000e6, "alice should receive sumAssured");
+        assertEq(usdc.balanceOf(alice) - aliceBefore, 1000e6, "alice should receive sumAssured");
         assertEq(pool.reservedForPolicy(pid), 0, "reserve cleared after payout");
     }
 
@@ -133,7 +135,7 @@ contract FullStackPhase3E2E is Test {
     function test_e2e_expiredPath() public {
         uint64 targetDate = uint64(block.timestamp) + 3 days;
 
-        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 2_000e6, THRESH_SFO, 3_000);
+        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 2000e6, THRESH_SFO, 3000);
         // Capture balance AFTER subscribe — premium already deducted at this point
         uint256 aliceBalAfterSub = usdc.balanceOf(alice);
 
@@ -147,7 +149,7 @@ contract FullStackPhase3E2E is Test {
 
         assertEq(uint8(registry.stateOf(pid)), uint8(IPolicyRegistry.PolicyState.Expired));
         // sumAssured reserve returned to pool
-        assertEq(pool.availableCapital(), poolBefore + 2_000e6, "reserve released to pool");
+        assertEq(pool.availableCapital(), poolBefore + 2000e6, "reserve released to pool");
         // Settlement must not change alice's balance (premium was already deducted at subscription)
         assertEq(usdc.balanceOf(alice), aliceBalAfterSub, "alice balance unchanged (no payout)");
     }
@@ -157,7 +159,7 @@ contract FullStackPhase3E2E is Test {
     /// After grace period anyone can call expirePolicy() to release reserve
     function test_e2e_permissionlessExpiry() public {
         uint64 targetDate = uint64(block.timestamp) + 1 days;
-        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 500e6, THRESH_SFO, 2_000);
+        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 500e6, THRESH_SFO, 2000);
 
         // Advance past grace period (targetDate + 2 days)
         vm.warp(targetDate + 3 days);
@@ -178,9 +180,9 @@ contract FullStackPhase3E2E is Test {
         uint64 targetDate = uint64(block.timestamp) + 5 days;
 
         // Alice: SFO high-temp policy
-        bytes32 pidAlice = _subscribeFor(alice, LOC_SFO, targetDate, 1_000e6, THRESH_SFO, 5_000);
+        bytes32 pidAlice = _subscribeFor(alice, LOC_SFO, targetDate, 1000e6, THRESH_SFO, 5000);
         // Bob: CHI low-temp policy
-        bytes32 pidBob   = _subscribeFor(bob,   LOC_CHI, targetDate, 800e6,   THRESH_CHI, 2_000);
+        bytes32 pidBob = _subscribeFor(bob, LOC_CHI, targetDate, 800e6, THRESH_CHI, 2000);
 
         vm.warp(targetDate);
 
@@ -190,7 +192,7 @@ contract FullStackPhase3E2E is Test {
         oracle.postResult(LOC_CHI, targetDate, 50);
 
         uint256 aliceBefore = usdc.balanceOf(alice);
-        uint256 bobBefore   = usdc.balanceOf(bob);
+        uint256 bobBefore = usdc.balanceOf(bob);
 
         vm.startPrank(keeper);
         registry.settlePolicy(pidAlice);
@@ -198,9 +200,9 @@ contract FullStackPhase3E2E is Test {
         vm.stopPrank();
 
         assertEq(uint8(registry.stateOf(pidAlice)), uint8(IPolicyRegistry.PolicyState.Claimed));
-        assertEq(uint8(registry.stateOf(pidBob)),   uint8(IPolicyRegistry.PolicyState.Expired));
-        assertEq(usdc.balanceOf(alice) - aliceBefore, 1_000e6, "Alice claimed");
-        assertEq(usdc.balanceOf(bob)   - bobBefore,   0,       "Bob no payout");
+        assertEq(uint8(registry.stateOf(pidBob)), uint8(IPolicyRegistry.PolicyState.Expired));
+        assertEq(usdc.balanceOf(alice) - aliceBefore, 1000e6, "Alice claimed");
+        assertEq(usdc.balanceOf(bob) - bobBefore, 0, "Bob no payout");
     }
 
     // ── E2E: exact-threshold trigger ──────────────────────────────────────────
@@ -208,7 +210,7 @@ contract FullStackPhase3E2E is Test {
     /// Temperature exactly at threshold → CLAIMED (>= condition)
     function test_e2e_exactThresholdClaimed() public {
         uint64 targetDate = uint64(block.timestamp) + 2 days;
-        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 1_000e6, THRESH_SFO, 4_500);
+        bytes32 pid = _subscribeFor(alice, LOC_SFO, targetDate, 1000e6, THRESH_SFO, 4500);
 
         vm.warp(targetDate);
         oracle.postResult(LOC_SFO, targetDate, int16(THRESH_SFO)); // exactly 90.0°F
@@ -240,7 +242,7 @@ contract FullStackPhase3E2E is Test {
 
         // Quote at initial 5% adverse loading
         // adverseComponent = 500 × 1000e6 / 10000 = 50e6
-        uint256 premiumBefore = engine.quote(3_000, 1_000e6, 1);
+        uint256 premiumBefore = engine.quote(3000, 1000e6, 1);
 
         // G2 gate confirmed — admin reduces adverse loading from 5% to 2%
         vm.prank(admin);
@@ -249,7 +251,7 @@ contract FullStackPhase3E2E is Test {
         assertEq(engine.adverseLoadingBps(), 200);
 
         // Quote after: adverseComponent = 200 × 1000e6 / 10000 = 20e6 (30e6 cheaper)
-        uint256 premiumAfter = engine.quote(3_000, 1_000e6, 1);
+        uint256 premiumAfter = engine.quote(3000, 1000e6, 1);
         assertLt(premiumAfter, premiumBefore, "premium should be lower after G2 gate reduces adverse loading");
     }
 }

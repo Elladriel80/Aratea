@@ -955,7 +955,7 @@ contract MintGovernorTest is Test {
     }
 
     function test_GetBallot_UnknownReturnsNoneState() public view {
-        (,,,,,,MintGovernor.BallotState state) = governor.getBallot(bytes32(uint256(0xdead)));
+        (,,,,,, MintGovernor.BallotState state) = governor.getBallot(bytes32(uint256(0xdead)));
         assertEq(uint8(state), uint8(MintGovernor.BallotState.None));
     }
 
@@ -1009,7 +1009,7 @@ contract MintGovernorTest is Test {
         vm.prank(whale);
         governor.challenge(h, "ipfs://reason"); // activeBallot = h
 
-        (,,, bytes32 activeBefore,,,, ) = governor.getDispute(h);
+        (,,, bytes32 activeBefore,,,,) = governor.getDispute(h);
         assertEq(activeBefore, h, "active ballot set");
 
         vm.prank(admin);

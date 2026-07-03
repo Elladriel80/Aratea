@@ -75,13 +75,17 @@ interface IPremiumPool {
     ///         Used to meet or top up the MCR floor before accepting subscriptions.
     ///         Only callable by the association admin (ADMIN_ROLE).
     /// @param  amount  USDC amount (6 decimals). Caller must have approved this contract.
-    function deposit(uint256 amount) external;
+    function deposit(
+        uint256 amount
+    ) external;
 
     /// @notice Withdraw surplus capital above the MCR floor.
     ///         Rejected if the remaining balance would breach the MCR.
     ///         Only callable by the association admin (ADMIN_ROLE).
     /// @param  amount  USDC amount (6 decimals).
-    function withdraw(uint256 amount) external;
+    function withdraw(
+        uint256 amount
+    ) external;
 
     /*//////////////////////////////////////////////////////////////
                         POLICY REGISTRY FUNCTIONS
@@ -92,26 +96,38 @@ interface IPremiumPool {
     ///         Premium added to availableCapital after MCR check passes.
     /// @param  policyId  Caller-managed policy identifier.
     /// @param  amount    Premium in USDC (6 decimals). Transferred from PolicyRegistry.
-    function receivePremium(bytes32 policyId, uint256 amount) external;
+    function receivePremium(
+        bytes32 policyId,
+        uint256 amount
+    ) external;
 
     /// @notice Called by PolicyRegistry when a policy activates.
     ///         Locks `sumAssured` USDC from available capital as a reserve.
     ///         Reverts if available capital < sumAssured.
     /// @param  policyId   Policy identifier.
     /// @param  sumAssured Amount to reserve in USDC (6 decimals).
-    function reserveForPolicy(bytes32 policyId, uint256 sumAssured) external;
+    function reserveForPolicy(
+        bytes32 policyId,
+        uint256 sumAssured
+    ) external;
 
     /// @notice Called by PolicyRegistry on a successful claim.
     ///         Transfers `amount` USDC from the reserve to `subscriber` and closes the reserve.
     /// @param  policyId    Policy identifier (must have an existing reserve).
     /// @param  subscriber  Recipient of the payout.
     /// @param  amount      Payout in USDC (6 decimals); must be ≤ reserved amount.
-    function payout(bytes32 policyId, address subscriber, uint256 amount) external;
+    function payout(
+        bytes32 policyId,
+        address subscriber,
+        uint256 amount
+    ) external;
 
     /// @notice Called by PolicyRegistry when a policy expires without a claim.
     ///         Releases reserved capital back to availableCapital.
     /// @param  policyId  Policy identifier (must have an existing reserve).
-    function releaseReserve(bytes32 policyId) external;
+    function releaseReserve(
+        bytes32 policyId
+    ) external;
 
     /*//////////////////////////////////////////////////////////////
                              VIEW FUNCTIONS
@@ -127,7 +143,9 @@ interface IPremiumPool {
     function totalReserved() external view returns (uint256);
 
     /// @notice Reserved amount for a specific policy (0 if not reserved).
-    function reservedForPolicy(bytes32 policyId) external view returns (uint256);
+    function reservedForPolicy(
+        bytes32 policyId
+    ) external view returns (uint256);
 
     /// @notice MCR floor in USDC: minimum required availableCapital at all times.
     ///         Computed from regulatory formula (Art. R334-6 CA) or set by admin.

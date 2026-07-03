@@ -3,7 +3,7 @@ pragma solidity 0.8.24;
 
 import {Script, console2} from "forge-std/Script.sol";
 
-import {PolicyRegistry}  from "../src/insurance/PolicyRegistry.sol";
+import {PolicyRegistry} from "../src/insurance/PolicyRegistry.sol";
 import {IPolicyRegistry} from "../src/interfaces/IPolicyRegistry.sol";
 
 /// @title  KeeperSettlePolicy — settles a parametric policy after the oracle posts a result
@@ -47,9 +47,7 @@ contract KeeperSettlePolicy is Script {
         }
 
         // Read policy state for informational logging (no signer required for view calls)
-        try registry.getPolicy(policyId) returns (
-            IPolicyRegistry.Policy memory p
-        ) {
+        try registry.getPolicy(policyId) returns (IPolicyRegistry.Policy memory p) {
             console2.log("Subscriber:     ", p.subscriber);
             console2.log("LocationKey:    ");
             console2.logBytes32(p.locationKey);

@@ -554,7 +554,7 @@ contract RoundRegistryTest is Test {
         vm.prank(proposer);
         registry.proposeRound(h, bens, amts, uri, 60);
         assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
-        (, , uint32 win,) = registry.getRound(h);
+        (,, uint32 win,) = registry.getRound(h);
         assertEq(win, 60);
     }
 
@@ -563,7 +563,7 @@ contract RoundRegistryTest is Test {
         vm.prank(proposer);
         registry.proposeRound(h, bens, amts, uri, 365 days);
         assertEq(uint8(registry.statusOf(h)), uint8(IRoundRegistry.RoundStatus.Proposed));
-        (, , uint32 win,) = registry.getRound(h);
+        (,, uint32 win,) = registry.getRound(h);
         assertEq(win, 365 days);
     }
 }

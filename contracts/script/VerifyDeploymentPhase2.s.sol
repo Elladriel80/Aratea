@@ -50,7 +50,9 @@ contract VerifyDeploymentPhase2 is Script {
         require(registry.hasRole(registry.ROUND_PROPOSER_ROLE(), address(governor)), "registry: gov missing PROPOSER");
         require(registry.hasRole(registry.ROUND_EXECUTOR_ROLE(), address(governor)), "registry: gov missing EXECUTOR");
         require(registry.hasRole(registry.ROUND_CANCELLER_ROLE(), address(governor)), "registry: gov missing CANCELLER");
-        require(registry.hasRole(registry.ROUND_CHALLENGER_ROLE(), address(governor)), "registry: gov missing CHALLENGER");
+        require(
+            registry.hasRole(registry.ROUND_CHALLENGER_ROLE(), address(governor)), "registry: gov missing CHALLENGER"
+        );
         require(!registry.hasRole(registry.DEFAULT_ADMIN_ROLE(), address(governor)), "registry: gov must NOT be admin");
 
         // Keeper: proposer ONLY (REG-1 scope enforcement).
@@ -62,9 +64,18 @@ contract VerifyDeploymentPhase2 is Script {
 
         // Admin: DEFAULT_ADMIN + CANCELLER only — direct mint path REVOKED (REG-1).
         require(registry.hasRole(registry.DEFAULT_ADMIN_ROLE(), admin), "registry: admin missing DEFAULT_ADMIN");
-        require(registry.hasRole(registry.ROUND_CANCELLER_ROLE(), admin), "registry: admin missing CANCELLER (circuit-breaker)");
-        require(!registry.hasRole(registry.ROUND_EXECUTOR_ROLE(), admin), "REG-1 VIOLATED: admin must NOT hold EXECUTOR after Phase 2");
-        require(!registry.hasRole(registry.ROUND_PROPOSER_ROLE(), admin), "registry: admin must NOT hold PROPOSER after Phase 2");
+        require(
+            registry.hasRole(registry.ROUND_CANCELLER_ROLE(), admin),
+            "registry: admin missing CANCELLER (circuit-breaker)"
+        );
+        require(
+            !registry.hasRole(registry.ROUND_EXECUTOR_ROLE(), admin),
+            "REG-1 VIOLATED: admin must NOT hold EXECUTOR after Phase 2"
+        );
+        require(
+            !registry.hasRole(registry.ROUND_PROPOSER_ROLE(), admin),
+            "registry: admin must NOT hold PROPOSER after Phase 2"
+        );
         require(!registry.hasRole(registry.ROUND_CHALLENGER_ROLE(), admin), "registry: admin must NOT hold CHALLENGER");
 
         // --- Governor wiring ---

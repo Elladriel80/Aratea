@@ -3,10 +3,10 @@ pragma solidity 0.8.24;
 
 import {Script, console2} from "forge-std/Script.sol";
 
-import {PricingEngine}      from "../src/insurance/PricingEngine.sol";
-import {PremiumPool}        from "../src/insurance/PremiumPool.sol";
-import {PolicyRegistry}     from "../src/insurance/PolicyRegistry.sol";
-import {MockWeatherOracle}  from "../src/insurance/MockWeatherOracle.sol";
+import {PricingEngine} from "../src/insurance/PricingEngine.sol";
+import {PremiumPool} from "../src/insurance/PremiumPool.sol";
+import {PolicyRegistry} from "../src/insurance/PolicyRegistry.sol";
+import {MockWeatherOracle} from "../src/insurance/MockWeatherOracle.sol";
 
 /// @title  DeployPhase3 — deploys the parametric insurance stack (Phase 3)
 /// @notice Deploys PricingEngine → PremiumPool → PolicyRegistry in order,
@@ -40,22 +40,19 @@ import {MockWeatherOracle}  from "../src/insurance/MockWeatherOracle.sol";
 ///           4. Set NEXT_PUBLIC_POLICY_REGISTRY_ADDRESS / NEXT_PUBLIC_PREMIUM_POOL_ADDRESS
 ///              / NEXT_PUBLIC_PRICING_ENGINE_ADDRESS in the dashboard env.
 contract DeployPhase3 is Script {
-    function run() external returns (
-        PricingEngine      pricingEngine,
-        PremiumPool        pool,
-        PolicyRegistry     policyRegistry,
-        address            oracle
-    ) {
+    function run()
+        external
+        returns (PricingEngine pricingEngine, PremiumPool pool, PolicyRegistry policyRegistry, address oracle)
+    {
         address admin = vm.envAddress("ADMIN_ADDRESS");
-        address usdc  = vm.envAddress("USDC_ADDRESS");
+        address usdc = vm.envAddress("USDC_ADDRESS");
         require(admin != address(0), "ADMIN_ADDRESS zero");
-        require(usdc  != address(0), "USDC_ADDRESS zero");
+        require(usdc != address(0), "USDC_ADDRESS zero");
 
         bool useMock = vm.envOr("USE_MOCK_ORACLE", true);
         // Safety guard: MockWeatherOracle is permissioned but not production-grade.
         // Refuse to deploy it on Arbitrum mainnet (chainid 42161) regardless of the env var.
-        require(!useMock || block.chainid != 42161,
-            "USE_MOCK_ORACLE forbidden on Arbitrum mainnet (chainid 42161)");
+        require(!useMock || block.chainid != 42_161, "USE_MOCK_ORACLE forbidden on Arbitrum mainnet (chainid 42161)");
 
         console2.log("== DeployPhase3 ==");
         console2.log("Admin:", admin);
@@ -107,7 +104,11 @@ contract DeployPhase3 is Script {
         }
     }
 
-    function _assertWiring(PremiumPool pool, PolicyRegistry registry, address admin) private view {
+    function _assertWiring(
+        PremiumPool pool,
+        PolicyRegistry registry,
+        address admin
+    ) private view {
         require(pool.hasRole(pool.DEFAULT_ADMIN_ROLE(), admin), "pool !admin");
         require(pool.hasRole(pool.POLICY_REGISTRY_ROLE(), address(registry)), "pool !registry role");
         require(registry.hasRole(registry.DEFAULT_ADMIN_ROLE(), admin), "registry !admin");

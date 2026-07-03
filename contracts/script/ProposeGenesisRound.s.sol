@@ -71,9 +71,8 @@ contract ProposeGenesisRound is Script {
             "ProposeGenesisRound: round already exists with this hash on-chain"
         );
 
-        bytes memory calldataBytes = abi.encodeCall(
-            RoundRegistry.proposeRound, (roundHash, beneficiaries, amounts, ipfsUri, challengeWindow)
-        );
+        bytes memory calldataBytes =
+            abi.encodeCall(RoundRegistry.proposeRound, (roundHash, beneficiaries, amounts, ipfsUri, challengeWindow));
 
         console2.log("== ProposeGenesisRound ==");
         console2.log("Registry:                   ", address(registry));
