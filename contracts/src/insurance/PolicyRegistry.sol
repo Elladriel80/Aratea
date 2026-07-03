@@ -143,6 +143,9 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
         uint8 daysAhead = uint8(_clampToUint8(secondsAhead / 1 days + MIN_DAYS_AHEAD));
 
         uint256 premium = pricingEngine.quote(pBps, sumAssured, daysAhead);
+        // Defensive guard only: quote() clamps to PREMIUM_MIN (> 0), so premium
+        // can never be 0 unless the engine is swapped for a broken one.
+        // slither-disable-next-line incorrect-equality
         if (premium == 0) revert PremiumInsufficient(1, 0); // guard (should never happen)
 
         // Unique policy id

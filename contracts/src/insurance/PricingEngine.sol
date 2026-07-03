@@ -101,17 +101,21 @@ contract PricingEngine is IPricingEngine {
         if (pBps > BPS) revert InvalidProbabilityBps(pBps);
         if (sumAssured == 0) revert ZeroSumAssured();
 
-        // Step 1: pure expected loss
-        uint256 expectedLoss = (uint256(pBps) * sumAssured) / BPS;
-
-        // Step 2: actuarial loadings
-        uint256 loaded = expectedLoss * (BPS + _expenseLoadingBps) / BPS * (BPS + _solvencyLoadingBps) / BPS;
+        // Steps 1-2: expected loss with actuarial loadings.
+        // All multiplications are performed on a shared numerator before any
+        // division to avoid compounding integer-division precision loss
+        // (slither: divide-before-multiply). No realistic overflow: the
+        // numerator is bounded by sumAssured * BPS * (2*BPS)^2 = 4e12 * S.
+        uint256 loadedNum = uint256(pBps) * sumAssured * (BPS + _expenseLoadingBps) * (BPS + _solvencyLoadingBps);
+        uint256 loaded = loadedNum / (BPS * BPS * BPS);
 
         // Step 3: adverse-selection floor
         uint256 adverseComponent = (uint256(_adverseLoadingBps) * sumAssured) / BPS;
 
-        // Step 4: horizon surcharge (+5 % per extra day beyond day 1)
-        uint256 horizonSurcharge = daysAhead > 1 ? (loaded * HORIZON_SURCHARGE_PCT * uint256(daysAhead - 1)) / 100 : 0;
+        // Step 4: horizon surcharge (+5 % per extra day beyond day 1),
+        // also computed from the undivided numerator for full precision.
+        uint256 horizonSurcharge =
+            daysAhead > 1 ? (loadedNum * HORIZON_SURCHARGE_PCT * uint256(daysAhead - 1)) / (100 * BPS * BPS * BPS) : 0;
 
         // Step 5: total
         premium = loaded + adverseComponent + horizonSurcharge;
