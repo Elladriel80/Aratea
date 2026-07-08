@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "run_id": "413",
+  "type": "live",
+  "ts_utc": "2026-07-08T19:56:10Z",
+  "event": {
+    "ticker": "KXLOWTLAX-26JUL09",
+    "title": "Lowest temperature in Los Angeles on Jul 9, 2026?",
+    "target_market_ticker": "KXLOWTLAX-26JUL09-B63.5",
+    "resolution_source": "NWS official daily climate report (per Kalshi rules)"
+  },
+  "champion_at_time_of_run": "vendor_ensemble",
+  "models": [
+    {
+      "name": "vendor_ensemble",
+      "role": "champion",
+      "method": "ensemble",
+      "p_yes": 0.3035348218237062,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "ensemble",
+        "p_ensemble": 0.3035348218237062,
+        "p_climato": 0.5,
+        "p_forecast": 0.2773757872680343,
+        "blend_weight_forecast": 0.8824969025845955,
+        "days_ahead": 1,
+        "mu": 65.175,
+        "sigma_inter_models": 1.999218597352473,
+        "sigma_total": 1.999218597352473,
+        "n_models_active": 4,
+        "per_model_value": {
+          "ecmwf_ifs025": 64.5,
+          "ecmwf_aifs025_single": 63.9,
+          "gfs_global": 68.6,
+          "jma_gsm": 63.7
+        }
+      }
+    },
+    {
+      "name": "learned_v2",
+      "role": "challenger",
+      "method": "learned_v2",
+      "p_yes": 0.12063955944113006,
+      "feature_set": "v2",
+      "trained_at": "20260512T134515Z",
+      "inputs_summary": {
+        "method": "learned_v2",
+        "trained_at": "20260512T134515Z",
+        "feature_set": "v2",
+        "run_json_path": "/home/runner/work/Aratea/Aratea/predictor/runs_learning/20260512T134515Z/run.json"
+      }
+    },
+    {
+      "name": "kalshi_mid_baseline",
+      "role": "baseline",
+      "method": "kalshi_mid",
+      "p_yes": 0.6000000000000001,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "kalshi_mid",
+        "yes_mid_at_snapshot": 0.6000000000000001
+      }
+    }
+  ],
+  "markets": [
+    {
+      "platform": "kalshi",
+      "ticker": "KXLOWTLAX-26JUL09-B63.5",
+      "url": "https://kalshi.com/markets/KXLOWTLAX",
+      "snapshot_pre": {
+        "yes_bid": 0.56,
+        "yes_ask": 0.64,
+        "yes_mid": 0.6000000000000001,
+        "spread_cents": 8.0,
+        "ts_utc": "2026-07-08T19:56:10Z"
+      },
+      "edge_bps_by_model": {
+        "vendor_ensemble": -2965,
+        "learned_v2": -4794,
+        "kalshi_mid_baseline": 0
+      },
+      "champion_position": {
+        "model": "vendor_ensemble",
+        "method": "ensemble",
+        "side": "NO",
+        "size_usd": 72.7,
+        "entry_price_yes_cents": 60.0,
+        "entry_price_no_cents": 40.0,
+        "entry_price": 0.3999999999999999,
+        "n_contracts": 181,
+        "cost_usd": 72.4,
+        "opened_at_utc": "2026-07-08T19:56:10Z",
+        "paper": true,
+        "ledger_bet_id": "20260708T195540Z294998"
+      },
+      "challenger_shadow_positions": [
+        {
+          "model": "learned_v2",
+          "method": "learned_v2",
+          "side": "NO",
+          "size_usd": 72.7,
+          "entry_price_yes_cents": 60.0,
+          "entry_price_no_cents": 40.0,
+          "entry_price": 0.3999999999999999,
+          "n_contracts": 181,
+          "cost_usd": 72.4,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        },
+        {
+          "model": "kalshi_mid_baseline",
+          "method": "kalshi_mid",
+          "side": "NO",
+          "size_usd": 72.7,
+          "entry_price_yes_cents": 60.0,
+          "entry_price_no_cents": 40.0,
+          "entry_price": 0.3999999999999999,
+          "n_contracts": 181,
+          "cost_usd": 72.4,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        }
+      ],
+      "resolution": {
+        "outcome": null,
+        "observed_value_f": null,
+        "ts_utc": null,
+        "pnl_usd": null
+      }
+    }
+  ],
+  "scoring": null,
+  "notes": "Auto-captured by daily_auto.py on 2026-07-08T19:56:10Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.296, side=NO, Kelly capped size=$72.70 (bankroll=$3634.93, portfolio_heat_after_register=15.1%)."
+}
