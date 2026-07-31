@@ -274,10 +274,18 @@ def _scan_open_runs() -> list[tuple[str, Path]]:
 def step_finalize() -> dict:
     """Try to finalize every open run. Returns a summary dict."""
     print(">> step 1: auto-finalize open runs")
+    # Témoins Phase 1 (no_bet) : ledger-only, invisibles pour finalize_run
+    # (pas de run report). Réglés ici, indépendamment des runs ouverts.
+    # continue-on-error : un hoquet Kalshi ne doit pas bloquer le step.
+    try:
+        controls = _settle_control_rows()
+    except Exception as e:
+        print(f"   !! settlement témoins no_bet: {e}")
+        controls = {"error": str(e)}
     open_runs = _scan_open_runs()
     if not open_runs:
         print("   nothing open. skip.")
-        return {"open_before": 0, "finalized": []}
+        return {"open_before": 0, "finalized": [], "controls": controls}
 
     print(f"   {len(open_runs)} open run(s): {[r[0] for r in open_runs]}")
     finalized = []
@@ -300,7 +308,8 @@ def step_finalize() -> dict:
         else:
             print(f"   !! finalize_run returned rc={rc} for {run_id}")
             skipped.append(run_id)
-    return {"open_before": len(open_runs), "finalized": finalized, "skipped": skipped}
+    return {"open_before": len(open_runs), "finalized": finalized,
+            "skipped": skipped, "controls": controls}
 
 
 # ---- step 2: auto-capture -------------------------------------------------
@@ -464,6 +473,79 @@ def _already_captured_bin(event_ticker: str, market_ticker: str) -> Optional[str
             if (m.get("resolution") or {}).get("outcome") is None:
                 return run_dir.name
     return None
+
+
+def _already_captured_control(event_ticker: str, market_ticker: str) -> bool:
+    """True si une ligne témoin (no_bet) existe déjà au ledger pour ce bin.
+
+    Les témoins sont ledger-only (pas de run report), donc le dedupe par
+    runs/ (_already_captured_bin) ne les voit pas. On dédoublonne ici sur
+    (event_ticker, market_ticker) pour qu'un re-run le même jour (cron +
+    relance manuelle) n'écrive pas deux fois le même témoin.
+    """
+    if not LEDGER_PATH.exists():
+        return False
+    for b in Ledger(LEDGER_PATH).read_all():
+        if (b.algo_signal == "no_bet"
+                and b.event_ticker == event_ticker
+                and b.market_ticker == market_ticker):
+            return True
+    return False
+
+
+def _settle_control_rows() -> dict:
+    """Résout les lignes témoins (no_bet) non-settled du ledger.
+
+    Les témoins n'ont pas de run report — finalize_run ne les voit donc
+    jamais et ne peut pas patcher leur résolution. On interroge Kalshi
+    directement (même convention que finalize_run : status settled/finalized
+    ou result présent) : result yes/no → resolution + resolved_at_utc +
+    pnl_usd=0.0 (mise nulle) ; result void/annulé → resolution='void'.
+    Marché pas encore settled → la ligne reste ouverte, retry au run suivant.
+    """
+    if not LEDGER_PATH.exists():
+        return {"open_controls": 0, "settled": 0}
+    ledger = Ledger(LEDGER_PATH)
+    bets = ledger.read_all()
+    open_controls = [b for b in bets
+                     if b.algo_signal == "no_bet" and not b.resolution]
+    if not open_controls:
+        return {"open_controls": 0, "settled": 0}
+
+    # 1 fetch Kalshi par event : les témoins d'un même event partagent le payload.
+    by_event: dict[str, list] = {}
+    for b in open_controls:
+        by_event.setdefault(b.event_ticker, []).append(b)
+
+    client = KalshiClient()
+    now_iso = _now_iso()
+    settled = 0
+    for event_ticker, rows in by_event.items():
+        try:
+            ev = client.get_event(event_ticker)
+        except Exception as e:
+            print(f"   [warn] témoin no_bet: fetch {event_ticker} a échoué: {e}")
+            continue
+        raw_by_ticker = {r.get("ticker"): r for r in ev.raw.get("markets", [])}
+        for b in rows:
+            raw = raw_by_ticker.get(b.market_ticker)
+            if raw is None:
+                print(f"   [warn] témoin no_bet: {b.market_ticker} absent du "
+                      f"payload {event_ticker}, skip.")
+                continue
+            status = (raw.get("status") or "").lower()
+            result = (raw.get("result") or "").lower()
+            if status not in ("settled", "finalized") and not result:
+                continue  # pas encore settled — retry demain
+            b.resolution = result if result in ("yes", "no") else "void"
+            b.resolved_at_utc = now_iso
+            b.pnl_usd = 0.0
+            settled += 1
+    if settled:
+        ledger.write_all(bets)
+    print(f"   témoins no_bet: {settled}/{len(open_controls)} résolus "
+          f"(mise nulle, P&L 0).")
+    return {"open_controls": len(open_controls), "settled": settled}
 
 
 def _capture_one_bin(
@@ -850,18 +932,55 @@ def step_capture(dry_run: bool) -> dict:
             if result.get("captured"):
                 event_captured += 1
 
+        # --- Groupe témoin Phase 1 (algo_signal='no_bet') ------------------
+        # Autant de bins témoins que de paris effectivement capturés sur cet
+        # event, choisis SOUS le seuil d'edge (l'algo ne recommandait pas),
+        # à mise nulle et sans heat. Baseline pour valider l'edge (comparaison
+        # bet vs no_bet dans _paper_bets_summary.control_group).
+        controls_captured = 0
+        if event_captured > 0:
+            exclude = {t["ticker"] for t in targets}
+            controls = _select_control_bins(
+                ev, champion_p_yes_by_ticker, n=event_captured,
+                exclude_tickers=exclude,
+            )
+            if not controls:
+                print("   [info] aucun bin témoin sous le seuil sur cet event.")
+            for ctrl in controls:
+                if _already_captured_control(event_ticker, ctrl["ticker"]):
+                    print(f"   [dedupe] témoin {ctrl['ticker']} déjà au ledger, skip.")
+                    continue
+                print(f"   témoin : {ctrl['ticker']}  yes_mid={ctrl['yes_mid']:.3f}  "
+                      f"p_champion={ctrl['p_champion']:.3f}  "
+                      f"edge={ctrl['edge']:+.3f}  (no_bet, mise 0)")
+                result = _capture_one_bin(
+                    ev=ev, target=ctrl, weather=weather, registry=registry,
+                    portfolio=portfolio, current_bankroll=current_bankroll,
+                    dry_run=dry_run, algo_signal="no_bet",
+                )
+                captures.append(result)
+                if result.get("captured"):
+                    controls_captured += 1
+
         per_event_summaries.append({
             "event_ticker": event_ticker, "skipped": False,
             "qualifying_bins": len(targets),
             "captured_count": event_captured,
+            "control_count": controls_captured,
         })
 
-    n_captured = sum(1 for c in captures if c.get("captured"))
-    print(f"\n   TOTAL: {n_captured} captures across "
-          f"{len(EVENT_SERIES_LIST)} events scanned")
+    # captured_count = paris "bet" seuls (les témoins no_bet sont comptés à
+    # part : ils ne doivent pas gonfler le compteur affiché dashboard/Discord).
+    n_captured = sum(1 for c in captures
+                     if c.get("captured") and c.get("algo_signal") != "no_bet")
+    n_controls = sum(1 for c in captures
+                     if c.get("captured") and c.get("algo_signal") == "no_bet")
+    print(f"\n   TOTAL: {n_captured} captures (+{n_controls} témoins no_bet) "
+          f"across {len(EVENT_SERIES_LIST)} events scanned")
 
     return {
         "captured_count": n_captured,
+        "control_count": n_controls,
         "captures": captures,
         "per_event": per_event_summaries,
     }

@@ -183,3 +183,172 @@ def test_paper_bets_summary_splits_bet_and_control(tmp_path: Path, monkeypatch) 
     assert s["control_group"]["n_resolved"] == 2
     assert s["control_group"]["wins"] == 1
     assert s["control_group"]["losses"] == 1
+
+
+# --- _already_captured_control ---------------------------------------------
+def _ledger_with(tmp_path: Path, *bets: PaperBet) -> Path:
+    path = tmp_path / "paper_bets.csv"
+    led = Ledger(path)
+    for b in bets:
+        led.append(b)
+    return path
+
+
+def _mk_bet(bet_id: str, ticker: str = "M2", signal: str = "no_bet",
+            resolution: str | None = None) -> PaperBet:
+    return PaperBet(
+        bet_id=bet_id, placed_at_utc="t", market_ticker=ticker,
+        event_ticker="KXLOWTNYC-26MAY17", target_date="2026-05-17",
+        side="YES", stake_usd=0.0, entry_price=0.42, prob_model=0.43,
+        prob_market_implied=0.42, edge=0.01, method="ensemble", spec="s",
+        resolution=resolution,
+        resolved_at_utc="t2" if resolution else None,
+        pnl_usd=0.0 if resolution else None,
+        algo_signal=signal,
+    )
+
+
+def test_already_captured_control_dedupes_on_ledger(tmp_path: Path, monkeypatch) -> None:
+    path = _ledger_with(tmp_path, _mk_bet("c1", ticker="M2", signal="no_bet"))
+    monkeypatch.setattr(daily_auto, "LEDGER_PATH", path)
+    assert daily_auto._already_captured_control("KXLOWTNYC-26MAY17", "M2") is True
+    # Autre bin ou autre event : pas de dedupe.
+    assert daily_auto._already_captured_control("KXLOWTNYC-26MAY17", "M3") is False
+    assert daily_auto._already_captured_control("KXLOWTNYC-26MAY18", "M2") is False
+
+
+def test_already_captured_control_ignores_bet_rows(tmp_path: Path, monkeypatch) -> None:
+    # Une ligne "bet" sur le même bin ne bloque PAS un témoin.
+    path = _ledger_with(tmp_path, _mk_bet("b1", ticker="M2", signal="bet"))
+    monkeypatch.setattr(daily_auto, "LEDGER_PATH", path)
+    assert daily_auto._already_captured_control("KXLOWTNYC-26MAY17", "M2") is False
+
+
+# --- _settle_control_rows --------------------------------------------------
+class _FakeKalshi:
+    """KalshiClient factice : get_event sert un payload raw fixé d'avance."""
+
+    payload_by_event: dict = {}
+
+    def get_event(self, event_ticker: str):
+        raw = self.payload_by_event[event_ticker]
+        return SimpleNamespace(raw=raw)
+
+
+def test_settle_control_rows_patches_settled_leaves_open(tmp_path: Path, monkeypatch) -> None:
+    path = _ledger_with(
+        tmp_path,
+        _mk_bet("c1", ticker="M2", signal="no_bet"),           # settled yes
+        _mk_bet("c2", ticker="M3", signal="no_bet"),           # pas encore settled
+        _mk_bet("c3", ticker="M4", signal="no_bet"),           # void
+        _mk_bet("b1", ticker="M5", signal="bet"),              # bet : jamais touché
+        _mk_bet("c9", ticker="M6", signal="no_bet", resolution="no"),  # déjà résolu
+    )
+    monkeypatch.setattr(daily_auto, "LEDGER_PATH", path)
+    _FakeKalshi.payload_by_event = {
+        "KXLOWTNYC-26MAY17": {"markets": [
+            {"ticker": "M2", "status": "settled", "result": "yes"},
+            {"ticker": "M3", "status": "active", "result": ""},
+            {"ticker": "M4", "status": "settled", "result": "annulled"},
+            {"ticker": "M5", "status": "settled", "result": "no"},
+            {"ticker": "M6", "status": "settled", "result": "no"},
+        ]},
+    }
+    monkeypatch.setattr(daily_auto, "KalshiClient", _FakeKalshi)
+
+    summary = daily_auto._settle_control_rows()
+    assert summary == {"open_controls": 3, "settled": 2}
+
+    rows = {b.bet_id: b for b in Ledger(path).read_all()}
+    assert rows["c1"].resolution == "yes"
+    assert rows["c1"].pnl_usd == 0.0
+    assert rows["c1"].resolved_at_utc
+    assert rows["c2"].resolution is None          # reste ouvert, retry demain
+    assert rows["c3"].resolution == "void"
+    assert rows["b1"].resolution is None          # les "bet" passent par finalize_run
+    assert rows["c9"].resolution == "no"          # déjà résolu : intouché
+
+
+def test_settle_control_rows_noop_without_controls(tmp_path: Path, monkeypatch) -> None:
+    path = _ledger_with(tmp_path, _mk_bet("b1", ticker="M5", signal="bet"))
+    monkeypatch.setattr(daily_auto, "LEDGER_PATH", path)
+
+    class _Boom:
+        def get_event(self, *_a):  # pragma: no cover - ne doit jamais être appelé
+            raise AssertionError("no_bet absent : Kalshi ne doit pas être appelé")
+
+    monkeypatch.setattr(daily_auto, "KalshiClient", _Boom)
+    assert daily_auto._settle_control_rows() == {"open_controls": 0, "settled": 0}
+
+
+# --- câblage step_capture : témoins capturés après les paris ----------------
+def test_step_capture_wires_control_bins(monkeypatch, tmp_path: Path) -> None:
+    """Vérifie le câblage bout-en-bout (bug 2026-07-31 : _select_control_bins
+    définie mais jamais appelée → 0 ligne no_bet en 6 semaines)."""
+    path = tmp_path / "paper_bets.csv"
+    Ledger(path)  # crée l'en-tête
+    monkeypatch.setattr(daily_auto, "LEDGER_PATH", path)
+
+    ev = _fake_event()
+
+    class _FakeClient:
+        def get_event(self, event_ticker):
+            return ev
+
+    fake_spec = SimpleNamespace(target_date=date(2026, 5, 17))
+    fake_spec.describe = lambda: "spec"
+
+    monkeypatch.setattr(daily_auto, "KalshiClient", _FakeClient)
+    monkeypatch.setattr(daily_auto, "OpenMeteoClient", lambda: None)
+    monkeypatch.setattr(daily_auto, "EnsemblePredictor", lambda w: SimpleNamespace(
+        predict=lambda spec: SimpleNamespace(prob_yes=0.5)))
+    monkeypatch.setattr(daily_auto, "_load_champion_registry",
+                        lambda: {"current_champion": "ensemble"})
+    monkeypatch.setattr(daily_auto, "_compute_current_bankroll", lambda: 1000.0)
+    monkeypatch.setattr(daily_auto, "parse_market", lambda m: fake_spec)
+    monkeypatch.setattr(daily_auto, "_already_captured_bin", lambda e, m: None)
+    monkeypatch.setattr(daily_auto, "EVENT_SERIES_LIST", ["KXLOWTNYC"])
+    # Probabilités contrôlées : M1 seul au-dessus du seuil (pari), M2/M3 témoins.
+    probs = {"M1": 0.70, "M2": 0.43, "M3": 0.33}
+    monkeypatch.setattr(daily_auto, "normalize_event_probs", lambda ps: ps)
+
+    # Court-circuite le scoring par marché : injecte directement les probs.
+    real_select_targets = daily_auto._select_target_bins
+    real_select_controls = daily_auto._select_control_bins
+    calls = {"targets": 0, "controls": 0}
+
+    def spy_targets(ev_, p):
+        calls["targets"] += 1
+        return [{"ticker": "M1", "yes_bid": 0.48, "yes_ask": 0.52,
+                 "yes_mid": 0.50, "spread": 0.04, "p_champion": 0.70,
+                 "edge": 0.20, "abs_edge": 0.20}]
+
+    def spy_controls(ev_, p, n, exclude_tickers):
+        calls["controls"] += 1
+        assert n == 1                      # autant de témoins que de paris capturés
+        assert "M1" in exclude_tickers     # le bin parié est exclu
+        return real_select_controls(ev_, probs, n, exclude_tickers)
+
+    monkeypatch.setattr(daily_auto, "_select_target_bins", spy_targets)
+    monkeypatch.setattr(daily_auto, "_select_control_bins", spy_controls)
+
+    captured_signals = []
+
+    def fake_capture(ev, target, weather, registry, portfolio,
+                     current_bankroll, dry_run, algo_signal="bet"):
+        captured_signals.append((target["ticker"], algo_signal))
+        return {"captured": True, "algo_signal": algo_signal,
+                "event_ticker": ev.event_ticker, "market_ticker": target["ticker"]}
+
+    monkeypatch.setattr(daily_auto, "_capture_one_bin", fake_capture)
+
+    summary = daily_auto.step_capture(dry_run=True)
+
+    assert calls["targets"] == 1
+    assert calls["controls"] == 1          # LE câblage : la sélection témoin est appelée
+    assert ("M1", "bet") in captured_signals
+    no_bets = [t for t, s in captured_signals if s == "no_bet"]
+    assert len(no_bets) == 1               # n = event_captured = 1
+    assert no_bets[0] in {"M2", "M3"}
+    assert summary["captured_count"] == 1  # les témoins ne gonflent pas le compteur
+    assert summary["control_count"] == 1
