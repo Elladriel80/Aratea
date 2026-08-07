@@ -16,6 +16,83 @@ Aratea récompense la valeur travail apportée au projet, sous toute forme : cod
    - **Cash** — virement BTC à l'adresse multisig publiée. Subscription window mensuelle ; le cash est **soumis à ratification** comme tout autre apport et peut être refusé avec motivation écrite.
 4. **Cooldown** : ta première contribution doit être mergée > 30 jours avant éligibilité au mint. Filtre les drive-by.
 
+## Pas de plateformes de bounty tierces
+
+Aratea dispose de son propre mécanisme de compensation via les rounds de mint mensuels (voir [`docs/bounty-mechanism.md`](docs/bounty-mechanism.md) et [`rounds/HOURLY_RATES.fr.md`](rounds/HOURLY_RATES.fr.md)). Ce mécanisme est **interne au projet** et entièrement décrit dans ce dépôt.
+
+Ce dépôt **n'est pas enregistré** sur Opire, Algora, ou toute autre plateforme similaire. Les pull requests qui :
+
+- réclament une bounty via une plateforme externe,
+- demandent un paiement vers un compte PayPal, portefeuille crypto, ou tout service tiers dans le corps du PR ou dans les commentaires,
+- sont ouvertes par des comptes自动化 faisant du ciblage de masse sur les labels `good-first-issue`,
+
+seront **fermées sans examen**. Les récidivistes sont bloqués au niveau du dépôt. Ceci est indépendant du mécanisme de ratification interne qui ne s'applique qu'aux contributions faites via le processus PR décrit ici.
+
+## Configuration locale
+
+Choisis le module correspondant à ta modification et lance uniquement les vérifications pertinentes.
+
+### Predictor
+
+```bash
+cd predictor
+python -m venv .venv
+.venv\Scripts\activate   # Windows
+source .venv/bin/activate              # Linux / macOS
+pip install -r requirements.lock --require-hashes
+python scripts/test_ensemble.py
+python scripts/test_resolution.py
+python scripts/test_microstructure.py
+```
+
+### Contracts
+
+```bash
+cd contracts
+forge install --no-commit foundry-rs/forge-std@v1.9.4 OpenZeppelin/openzeppelin-contracts@v5.1.0
+forge build
+forge test -vvv
+```
+
+### Dashboard
+
+```bash
+cd dashboard
+cp .env.example .env.local
+npm install
+npm run typecheck
+npm run build
+```
+
+### Site statique et docs
+
+Aucun build requis pour `site/` ou les modifications Markdown seules. Utilise les hooks pre-commit ci-dessous pour les vérifications d'hygiène.
+
+## Style de code et vérifications de sécurité
+
+Avant d'ouvrir un PR :
+
+```bash
+pip install pre-commit
+pre-commit run --all-files
+```
+
+Les hooks lancent un scan de secrets et des vérifications basiques d'hygiène des fichiers. Ne les bypass pas sauf si un mainteneur te le demande explicitement et que la raison est documentée dans le PR.
+
+Ne commite jamais de vrais fichiers `.env`, URLs de webhooks, clés privées, seeds de wallet, tokens API, ou datasets privés. Utilise les fichiers `.env.example` comme documentation uniquement.
+
+## Comment proposer une correction
+
+1. Ouvre ou picking une issue avant de commencer un travail non-trivial.
+2. Garde le PR cantonné à un module et un problème.
+3. Lie l'issue dans la description du PR.
+4. Explique la valeur de l'artefact : ce qui a changé, pourquoi c'est important, et comment ça peut être vérifié à partir de preuves visibles dans Git.
+5. Inclut les commandes que tu as lancées et leur résultat.
+6. Si une commande ne peut pas être lancée localement, explique pourquoi et nomme la plus petite vérification côté reviewer qui couvrirait le changement.
+
+Les bonnes premières issues sont suivies dans [`docs/contributor-starter-issues.md`](docs/contributor-starter-issues.md).
+Le placeholder de la future politique de bounty est dans [`docs/bounty-mechanism.md`](docs/bounty-mechanism.md).
+
 ## Ce qui n'est PAS valorisé
 
 - Promesses, intentions, brainstorms purs.
@@ -24,6 +101,8 @@ Aratea récompense la valeur travail apportée au projet, sous toute forme : cod
 - Heures auto-déclarées ou submissions narratives : le système ne les accepte pas.
 - Code auto-généré sans curation humaine documentée.
 - Gaming visible (commits fragmentés, diffs gonflés, sock-puppet reviews).
+- PRs de comptes de farming automatisés (corps au template "Implémentation Complète", réclamations de bounty-platform, signatures agent IA, handles génériques sans historique d'activité réelle).
+
 
 ## Bonnes pratiques
 
