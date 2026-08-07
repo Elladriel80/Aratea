@@ -1,0 +1,59 @@
+{
+  "generated_at": "20260807T002821Z",
+  "n_capture_files": 61,
+  "n_unique_markets": 8214,
+  "n_resolved": 7686,
+  "summary": {
+    "climatology": {
+      "n": 7686,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.6916471506635441,
+      "brier_score": 0.17550739595227288,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": -0.2636532508563647,
+      "log_loss": 0.5548013550958724,
+      "top1": {
+        "n_events": 1281,
+        "top1_correct": 233,
+        "top1_accuracy": 0.18188914910226386
+      }
+    },
+    "forecast_blend": {
+      "n": 7686,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.8347645068956544,
+      "brier_score": 0.1392974149558122,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": -0.002941387681847596,
+      "log_loss": 0.4491994461714252,
+      "top1": {
+        "n_events": 1281,
+        "top1_correct": 301,
+        "top1_accuracy": 0.23497267759562843
+      }
+    },
+    "ensemble": {
+      "n": 7686,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.8356752537080406,
+      "brier_score": 0.12200953681828658,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": 0.12153133490833667,
+      "log_loss": 0.39340832434205203,
+      "top1": {
+        "n_events": 1281,
+        "top1_correct": 471,
+        "top1_accuracy": 0.36768149882903983
+      }
+    },
+    "kalshi_mid": {
+      "n": 7686,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.873015873015873,
+      "brier_score": 0.08953038966952902,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": 0.3553811943793911,
+      "log_loss": 0.2860940995673469
+    }
+  }
+}
