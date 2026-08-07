@@ -12,7 +12,7 @@ Aratea est en phase initiale. Sa première étape est de valider un edge prédic
 
 > **Contributeurs bienvenus.** Aratea rémunère les contributeurs en tokens, valorisés en BTC via un rubric public, fact-only depuis Git.
 > - **5 good-first-issues ouvertes maintenant** → [`docs/contributor-starter-issues.md`](docs/contributor-starter-issues.md)
-> - **Comment marche le paiement** → [`docs/value_engine.md`](docs/value_engine.md)
+> - **Comment marche le paiement** → [`docs/value_engine.fr.md`](docs/value_engine.fr.md)
 > - **État actuel du projet** → [`STATUS.md`](STATUS.md)
 
 ---
@@ -49,14 +49,14 @@ Documentation transverse : modèle économique du token, spec du moteur de valua
 
 ## Modèle de token en une phrase
 
-Un seul token (AUG-POC, puis ARA après lancement DAO). Une seule mécanique : chaque apport — cash ou travail — est valorisé en équivalent BTC et minté à la NAV. Pas de buckets pré-attribués, pas de bonus founder, pas de catégorie privilégiée. La cap table émerge des valuations accumulées. Détail dans [`docs/token_model.md`](docs/token_model.md).
+Un seul token (AUG-POC, puis ARA après lancement DAO). Une seule mécanique : chaque apport — cash ou travail — est valorisé en équivalent BTC et minté à la NAV. Pas de buckets pré-attribués, pas de bonus founder, pas de catégorie privilégiée. La cap table émerge des valuations accumulées. Détail dans [`docs/token_model.fr.md`](docs/token_model.fr.md).
 
 ## Comment participer
 
 Commence ici :
 
 1. **Choisis une issue de démarrage** → [`docs/contributor-starter-issues.md`](docs/contributor-starter-issues.md) (5 ouvertes, scopées sur 1 module chacune, pas de credentials)
-2. **Comprends comment tu es payé** → [`docs/value_engine.md`](docs/value_engine.md) (fact-only Git, valuation en BTC, rubric public)
+2. **Comprends comment tu es payé** → [`docs/value_engine.fr.md`](docs/value_engine.fr.md) (fact-only Git, valuation en BTC, rubric public)
 3. **Enregistre ton wallet** quand tu es prêt pour le round mensuel suivant → [`rounds/WALLETS.md`](rounds/WALLETS.md)
 4. **Process complet** → [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
