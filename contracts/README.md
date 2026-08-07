@@ -106,7 +106,7 @@ Detail in [`docs/ROUND-LIFECYCLE.md`](docs/ROUND-LIFECYCLE.md).
 
 ## Phase 2 — automatic mint + token-weighted contestation
 
-> Testnet / pre-audit. Full spec and decisions: [`/docs/gouvernance-auto-mint.fr.md`](../docs/gouvernance-auto-mint.fr.md).
+> Testnet / pre-audit. Full spec and decisions: [`/docs/gouvernance-auto-mint.md`](../docs/gouvernance-auto-mint.md).
 
 A `MintGovernor` sits **on top of the unchanged `RoundRegistry`** (still the sole minter) to make the monthly mint automatic yet contestable:
 

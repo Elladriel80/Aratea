@@ -1,97 +1,103 @@
+<!-- Version française : architecture.fr.md -->
+
 # Aratea — architecture overview
 
-*Date : 2026-05-08 — version 0.1*
+*Date: 2026-05-08 — version 0.1*
 
 ## Vision
 
-Aratea est un protocole décentralisé de **mutuelle paramétrique météo**, alimenté par un moteur prédictif communautaire. Trois piliers :
+Aratea is a decentralised protocol for **parametric weather mutual cover**, powered by a community-built predictive engine. Three pillars:
 
-1. **Moteur prédictif** : méta-ensemble de modèles météo IA + données crowdsourcées. Open-source, contributif, mesuré sur Kalshi en phase POC.
-2. **DAO mutualiste** : pool de mutualisation tokenisé façon Nexus Mutual. Membres apportent du collatéral, payouts paramétriques déclenchés par oracles météo.
-3. **DePIN data layer** : stations physiques rémunérées en token. Améliore la résolution locale et réduit la dépendance aux feeds gouvernementaux.
+1. **Predictive engine**: meta-ensemble of AI weather models plus crowdsourced data. Open-source, contribution-driven, measured against Kalshi during the POC phase.
+2. **Mutual DAO**: tokenised risk-sharing pool in the vein of Nexus Mutual. Members supply collateral; parametric payouts are triggered by weather oracles.
+3. **DePIN data layer**: physical stations rewarded in token. Improves local resolution and reduces dependence on government feeds.
 
-> **Précision juridique** — Aratea n'est pas un assureur réglementé. Le terme "mutuelle" recouvre ici une **mutuelle discrétionnaire décentralisée** : les membres mutualisent un pool, l'exécution des indemnisations est paramétrique-automatique (oracle on-chain), aucun engagement contractuel d'assureur. Cf. white paper section 4.
+> **Legal clarification** — Aratea is not a regulated insurer. The term "mutual" here means a **decentralised discretionary mutual**: members pool capital, claim execution is parametric and automatic (on-chain oracle), and there is no insurer's contractual undertaking. See white paper section 4.
 
-Les trois piliers se renforcent : meilleure prédiction → meilleur pricing → plus de contrats vendus → plus de stakers attirés → financement de plus de capteurs DePIN → meilleure prédiction.
+The three pillars reinforce one another: better prediction → better pricing → more contracts sold → more stakers attracted → funding for more DePIN sensors → better prediction.
 
 ## Phases
 
-### Phase 1 — POC Kalshi *(en cours)*
+### Phase 1 — Kalshi POC *(in progress)*
 
-Objectif : démontrer que le moteur prédictif a un edge mesurable. Pas de produit final, pas de smart contract, pas de risk pool. Le critère go/no-go est strictement quantitatif : ensemble IA bat best single model et bat climatologie sur N>50 events forward-testés (sans data leakage).
+Goal: demonstrate that the predictive engine has a measurable edge. No final product, no smart contract, no risk pool. The go/no-go criterion is strictly quantitative: the AI ensemble must beat the best single model and beat climatology over N>50 forward-tested events (with no data leakage).
 
-Code : `predictor/`. Off-chain entièrement. Bankroll de trading sur Kalshi finance la suite.
+Code: `predictor/`. Entirely off-chain. The Kalshi trading bankroll funds what comes next.
 
-### Phase 2 — DAO Aratea (token + gouvernance)
+### Phase 2 — Aratea DAO (token + governance)
 
-Démarre une fois la Phase 1 validée. Objectifs :
-- Déployer l'ERC-20 AUG-POC sur Base/Arbitrum/Optimism (chain à trancher).
-- Activer le module mint via les rounds mensuels existants (déjà testés en off-chain).
-- Mettre en place la gouvernance par panel Top-X holders.
-- Convertir AUG-POC vers ARA (token DAO final) par vote ≥ 67 %.
+Starts once Phase 1 is validated. Goals:
 
-Code : `contracts/token/`, `contracts/rounds/`, `contracts/governance/`.
+- Deploy the AUG-POC ERC-20 on Base/Arbitrum/Optimism (chain to be decided).
+- Activate the mint module through the existing monthly rounds (already tested off-chain).
+- Put Top-X holder panel governance in place.
+- Convert AUG-POC into ARA (the final DAO token) by a ≥ 67 % vote.
 
-### Phase 3 — Mutuelle paramétrique
+Code: `contracts/token/`, `contracts/rounds/`, `contracts/governance/`.
 
-Démarre une fois la DAO opérationnelle et le predictor démontré en live. Objectifs :
-- Pool de mutualisation : les membres déposent USDC/BTC, perçoivent les primes des contrats vendus via appréciation de la NAV.
-- Pricing : moteur prédictif (off-chain) émet des prix de contrat, signés et postés on-chain.
-- Résolution : Chainlink Custom au-dessus des feeds NOAA/NWS (et DePIN propre quand disponible).
-- Catégories initiales : température extrême, précipitations cumulées, événements vent.
+### Phase 3 — Parametric mutual
 
-**Promesse de couverture bornée et transparence radicale.** La mutuelle s'engage à indemniser chaque sinistre paramétrique éligible *dans la limite des capitaux disponibles* du pool, tels qu'établis on-chain à la liquidation. Si plusieurs engagements actifs se déclenchent simultanément au-delà du *Free Capital* disponible, l'indemnisation est exécutée au prorata. Le ratio engagements actifs / capital total mobilisable est lisible on-chain en continu, et opposable au souscripteur de plein droit (cf. article 4 bis des statuts).
+Starts once the DAO is operational and the predictor is proven live. Goals:
 
-Cette mécanique est l'inverse exact du modèle classique d'assurance, dont l'opacité a été identifiée comme un facteur central de l'effondrement d'AIG en 2008 (≈ 440 milliards USD de CDS notionnels souscrits via AIG Financial Products sans capitalisation correspondante, sauvetage fédéral américain ≈ 182 milliards USD). En rendant le ratio engagements/capital visible en temps réel, l'architecture rend toute opacité de cette nature structurellement impossible.
+- Risk-sharing pool: members deposit USDC/BTC and earn the premiums of contracts sold through NAV appreciation.
+- Pricing: the (off-chain) predictive engine emits contract prices, signed and posted on-chain.
+- Resolution: Chainlink Custom on top of NOAA/NWS feeds (and our own DePIN feed once available).
+- Initial categories: extreme temperature, cumulative rainfall, wind events.
 
-Code : `contracts/mutual/`, `predictor/oracle/` (signature des prix), pipeline de résolution dans `predictor/scripts/`.
+**Bounded cover promise and radical transparency.** The mutual undertakes to indemnify every eligible parametric claim *within the limit of the pool's available capital*, as established on-chain at settlement. If several active undertakings trigger simultaneously beyond the available *Free Capital*, indemnification is executed pro rata. The ratio of active undertakings to total mobilisable capital is readable on-chain continuously, and is enforceable by the subscriber as of right (see article 4 bis of the articles of association).
+
+This mechanism is the exact inverse of the classical insurance model, whose opacity was identified as a central factor in the 2008 collapse of AIG (≈ USD 440 billion in notional CDS written through AIG Financial Products without matching capitalisation; US federal rescue ≈ USD 182 billion). By making the undertakings/capital ratio visible in real time, the architecture makes opacity of that nature structurally impossible.
+
+Code: `contracts/mutual/`, `predictor/oracle/` (price signing), resolution pipeline in `predictor/scripts/`.
 
 ### Phase 4 — DePIN data layer
 
-Stations physiques (partenariat WeatherXM ou réseau propre, à arbitrer). Récompense en token ARA basée sur :
-- Disponibilité de la station (uptime).
-- Qualité des données (cohérence avec voisins, validation par modèles, pas d'outliers manuels).
-- Densité géographique (bonus pour les zones sous-couvertes).
+Physical stations (partnership with WeatherXM or an own network, to be decided). Rewards in ARA token based on:
 
-Le module rounds gère la valuation de ces apports comme tout autre travail (non-code).
+- Station availability (uptime).
+- Data quality (consistency with neighbours, model-based validation, no manual outliers).
+- Geographic density (bonus for under-covered areas).
 
-## Composants transverses
+The rounds module values these contributions like any other (non-code) work.
 
-### Modèle économique du token
+## Cross-cutting components
 
-Voir [`token_model.md`](token_model.md) — un seul token, valeur travail comme principe unifiant, mint à NAV, refusabilité symétrique entre apports cash et travail, gouvernance Top-X holders.
+### Token economic model
 
-### Moteur de valuation
+See [`token_model.md`](token_model.md) — a single token, labour value as the unifying principle, mint at NAV, symmetric refusability between cash and labour contributions, Top-X holder governance.
 
-Voir [`value_engine.md`](value_engine.md) — agent IA fact-only sur artefacts Git, rubric et grille de taux publics et versionnés, fenêtre de challenge 7 jours, ratification par panel des Top-X holders en cas de contestation.
+### Valuation engine
 
-### Oracles météo
+See [`value_engine.md`](value_engine.md) — fact-only AI agent running on Git artefacts, public and versioned rubric and rate table, 7-day challenge window, ratification by the Top-X holder panel in case of contest.
 
-Phase 3+. Architecture cible :
-1. Source primaire : NOAA / NWS pour les marchés US (résolutions Kalshi-compatibles).
-2. Source secondaire : ECMWF / Météo-France / DWD pour les marchés européens à venir.
-3. Cross-validation : DePIN stations propres pour résolution locale haute fréquence.
+### Weather oracles
 
-Le module `predictor/src/kalshi/resolution.py` actuel sert de prototype : règles précises de mapping station ↔ market, gestion des arrondis, conventions Trace. Sera ré-utilisé et étendu pour l'oracle on-chain.
+Phase 3+. Target architecture:
 
-### Stack data
+1. Primary source: NOAA / NWS for US markets (Kalshi-compatible resolutions).
+2. Secondary source: ECMWF / Météo-France / DWD for upcoming European markets.
+3. Cross-validation: our own DePIN stations for high-frequency local resolution.
 
-- Forecasts : Open-Meteo (gratuit, multi-modèle) en POC. Aurora/Pangu/FourCastNet/GenCast via HuggingFace + GPU cloud en Phase A.2.
-- Historical : ERA5 via Open-Meteo.
-- Markets Kalshi : API REST publique (lecture). Intégration write API quand DAO active si élargissement à d'autres prediction markets.
-- Crowdsourced : à intégrer (PWS, Twitter, traffic cams).
+The current `predictor/src/kalshi/resolution.py` module serves as the prototype: precise station ↔ market mapping rules, rounding handling, Trace conventions. It will be reused and extended for the on-chain oracle.
 
-## Décisions ouvertes
+### Data stack
 
-- **Chain de déploiement** : Base / Arbitrum / Optimism. Critères : gas, écosystème DeFi/risk-pool, custody options.
-- **Stable de bankroll** : USDC, EURC, multi-stable. Impact : frais conversion Kalshi (USD only).
-- **Custody Kalshi POC** : compte personnel JS, structure intermédiaire LLC US, foundation. Détermine la structure juridique amont.
-- **Toolchain smart contracts** : Foundry retenu, à graver dans `contracts/README.md`.
-- **Wallet registry** : fichier signé en Phase 1 (`rounds/WALLETS.md`), registry on-chain à partir de Phase 2.
+- Forecasts: Open-Meteo (free, multi-model) for the POC. Aurora/Pangu/FourCastNet/GenCast via HuggingFace + cloud GPU in Phase A.2.
+- Historical: ERA5 via Open-Meteo.
+- Kalshi markets: public REST API (read). Write API integration once the DAO is active, if we expand to other prediction markets.
+- Crowdsourced: to be integrated (PWS, Twitter, traffic cams).
 
-## Voir aussi
+## Open decisions
 
-- Modèle de tokens (§7.7 Garde-fous) → [`token_model.md`](token_model.md)
-- Moteur de valuation (§7 Garde-fous opérationnels) → [`value_engine.md`](value_engine.md)
-- **Projet de statuts FR** (art. 4 bis « Limite des engagements de couverture et principe de transparence radicale » + art. 32 « Moteur de valuation et émission de tokens ») → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
+- **Deployment chain**: Base / Arbitrum / Optimism. Criteria: gas, DeFi/risk-pool ecosystem, custody options.
+- **Bankroll stablecoin**: USDC, EURC, multi-stable. Impact: Kalshi conversion fees (USD only).
+- **Kalshi POC custody**: JS personal account, intermediate US LLC structure, foundation. Determines the upstream legal structure.
+- **Smart contract toolchain**: Foundry selected, to be recorded in `contracts/README.md`.
+- **Wallet registry**: signed file in Phase 1 (`rounds/WALLETS.md`), on-chain registry from Phase 2.
+
+## See also
+
+- Token model (§7.7 Guardrails) → [`token_model.md`](token_model.md)
+- Valuation engine (§7 Operational guardrails) → [`value_engine.md`](value_engine.md)
+- **Draft articles of association, FR** (art. 4 bis "Limite des engagements de couverture et principe de transparence radicale" + art. 32 "Moteur de valuation et émission de tokens") → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
 - **Draft Articles of Association EN** → [`../../statuts-aratea-v0-projet-2026-05-16-EN.md`](../../statuts-aratea-v0-projet-2026-05-16-EN.md)

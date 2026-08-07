@@ -1,128 +1,132 @@
-# Modèle de tokens — Aratea POC
+<!-- Version française : token_model.fr.md -->
 
-*Date : 2026-05-08 — version 0.3, monorepo*
+# Token model — Aratea POC
 
-> Ce document est la version canonique du modèle de tokens, hébergée dans le repo public Aratea. Une version de travail est conservée dans le workspace local du founder.
+*Date: 2026-05-08 — version 0.3, monorepo*
 
-## 1. Principe fondateur
+> This document is the canonical version of the token model, hosted in the public Aratea repository. A working copy is kept in the founder's local workspace.
 
-**Un seul type d'apporteur : la valeur travail.**
+## 1. Founding principle
 
-Le cash est du travail déjà cristallisé sous forme monétaire. Le code, la donnée, l'expertise sont du travail en cours de cristallisation. Tous les apports convergent sur la même unité de mesure et reçoivent le même traitement.
+**One kind of contributor only: labour value.**
 
-Le token AUG-POC représente une part de la valeur travail accumulée dans le projet. Pas de catégorie privilégiée, pas de pré-allocation. La cap table émerge de qui a apporté combien.
+Cash is labour already crystallised into monetary form. Code, data and expertise are labour in the process of crystallising. Every contribution converges on the same unit of measure and receives the same treatment.
 
-## 2. Token AUG-POC
+The AUG-POC token represents a share of the labour value accumulated in the project. No privileged category, no pre-allocation. The cap table emerges from who contributed how much.
 
-- **Standard :** ERC-20 sur Arbitrum (cible retenue 2026-05-09 ; Sepolia testnet en Phase 1, mainnet conditionné à un audit communautaire).
-- **Décimales :** 18 (standard Ethereum). Choix retenu 2026-05-09 pour la compatibilité maximale avec l'écosystème Web3 (DEX, indexeurs, wallets). L'unité de compte fonctionnelle reste le **sat** : la convention 1 sat = 1 token est imposée par construction au mint au NAV initial, indépendamment du nombre de décimales du contract ERC-20.
-- **Unité de compte :** BTC. Tous les calculs internes (NAV, taux horaires, valuations) sont en BTC ou sats.
-- **NAV initiale :** **1 sat = 1 token** (atomique, validé 2026-05-08). Aucune conversion mentale nécessaire — le nombre de tokens détenu lit directement la valeur travail apportée en sats.
-- **Convertibilité future :** mécanisme de conversion AUG-POC → ARA (DAO Aratea) inscrit dans le contract dès le départ. Ratio voté à 67 % par les holders au moment du lancement DAO.
+## 2. AUG-POC token
 
-## 3. Le mint, mécanique unifiée
+- **Standard:** ERC-20 on Arbitrum (target chosen 2026-05-09; Sepolia testnet in Phase 1, mainnet conditional on a community audit).
+- **Decimals:** 18 (Ethereum standard). Chosen 2026-05-09 for maximum compatibility with the Web3 ecosystem (DEXes, indexers, wallets). The functional unit of account remains the **sat**: the 1 sat = 1 token convention is imposed by construction at mint on the initial NAV, independently of the ERC-20 contract's decimal count.
+- **Unit of account:** BTC. All internal calculations (NAV, hourly rates, valuations) are in BTC or sats.
+- **Initial NAV:** **1 sat = 1 token** (atomic, validated 2026-05-08). No mental conversion required — the number of tokens held reads directly as the labour value contributed, in sats.
+- **Future convertibility:** an AUG-POC → ARA (Aratea DAO) conversion mechanism is written into the contract from the start. The ratio is voted at 67 % by holders at DAO launch.
 
-Le projet n'accepte qu'**un seul type d'input** au moteur de valuation : un **fait observable**.
+## 3. The mint, one unified mechanism
 
-- Pour le cash : un dépôt on-chain (BTC, ou USDC convertis au spot du jour de subscription). Envoyé à une adresse multisig "subscription pending", non automatiquement intégré à la treasury.
-- Pour le travail : un PR mergé sur le repo Aratea, ou un commit signé sur main, ou une review publique sur un PR. Ce qui n'est pas dans Git n'existe pas.
+The project accepts only **one type of input** into the valuation engine: an **observable fact**.
 
-L'agent IA produit la valuation **strictement** à partir de ces artefacts (diff, fichiers touchés, tests, description du PR, commits, reviews). **Aucune déclaration, aucune submission, aucune heure auto-rapportée.**
+- For cash: an on-chain deposit (BTC, or USDC converted at the spot rate of the subscription day). Sent to a "subscription pending" multisig address, not automatically folded into the treasury.
+- For labour: a merged PR on the Aratea repository, or a signed commit on main, or a public review on a PR. What is not in Git does not exist.
 
-Conséquences :
-- PR non-mergé, fermé, abandonné → valeur = 0.
-- Travail "invisible" (mentorat en DM, hours de support hors-thread) → non capté. Trade-off explicite et assumé.
-- Pour intégrer un travail non-code (animation communauté, RFC, dataset), l'output doit être commité dans le repo (digest signé, doc, données curées).
+The AI agent produces the valuation **strictly** from those artefacts (diff, files touched, tests, PR description, commits, reviews). **No declaration, no submission, no self-reported hours.**
 
-## 4. Refusabilité symétrique
+Consequences:
 
-Tout apport est refusable par JS (phase 1) ou le panel (phase 2+) avec motivation écrite, pendant la fenêtre de challenge :
+- Unmerged, closed or abandoned PR → value = 0.
+- "Invisible" work (mentoring over DM, support hours outside the thread) → not captured. An explicit and accepted trade-off.
+- To have non-code work counted (community management, RFC, dataset), the output must be committed to the repository (signed digest, doc, curated data).
 
-- **Refus d'un apport travail** : ne pas merger le PR → valeur = 0.
-- **Refus d'un apport cash** : renvoyer les fonds depuis l'adresse multisig "subscription pending" → 0 mint.
+## 4. Symmetric refusability
 
-Aucune contribution n'est imposée au projet. Raisons légitimes de refus : conflit d'intérêt, risque réputationnel, compliance, qualité insuffisante, cohérence stratégique.
+Any contribution can be refused by JS (phase 1) or the panel (phase 2+) with written justification, during the challenge window:
 
-## 5. Cycle mensuel
+- **Refusing a labour contribution**: do not merge the PR → value = 0.
+- **Refusing a cash contribution**: return the funds from the "subscription pending" multisig address → no mint.
 
-```
-J0   (1er du mois)  : agent run automatisé sur les artefacts du mois M-1
-J0-J1               : publication du valuation_report.md (PR sur le repo)
-J1-J7               : fenêtre de challenge publique
-J7                  : ratification (auto si non contesté ET non refusé, vote panel sinon) → mint multisig
-                      Tokens libérés sur les wallets enregistrés
-```
+No contribution is imposed on the project. Legitimate grounds for refusal: conflict of interest, reputational risk, compliance, insufficient quality, strategic coherence.
 
-## 6. Contestation et vote du panel
-
-- Tant que personne ne challenge formellement la PR de valuation, à J7 elle est mergée et le mint exécuté.
-- Une **contestation formelle** se déclare par un commentaire structuré sur la PR (label `challenge`, signé par un wallet enregistré).
-- Quand une contestation existe à J7, la décision passe au **panel des Top X holders** :
-  - X = 5 en phase 1 (≤ 20 contributeurs), 7 en phase 2 (20-50), 11 en phase 3 (>50).
-  - **Chaque membre du panel a 1 voix.** Pas de pondération par stake. Top X = ranking par solde de tokens AUG-POC à la clôture du round.
-  - Majorité simple (≥ ⌈X/2⌉+1) tranche : valider la valuation telle quelle, ou exiger une révision (avec instructions écrites, retour à l'agent).
-
-Évite la plutocratie pure tout en confiant la décision à ceux qui ont le plus à perdre/gagner.
-
-## 7. Calcul de la NAV (en BTC)
+## 5. Monthly cycle
 
 ```
-NAV_BTC = solde_BTC_treasury
-        + (positions_Kalshi_USD × USD/BTC_spot)
-        + créances_settlement_en_attente_BTC
-        - dettes_opérationnelles_BTC
-
-NAV_par_token = NAV_BTC / supply_circulant
+D0   (1st of the month) : automated agent run over the artefacts of month M-1
+D0-D1                   : publication of valuation_report.md (PR on the repository)
+D1-D7                   : public challenge window
+D7                      : ratification (automatic if uncontested AND not refused,
+                          panel vote otherwise) → multisig mint
+                          Tokens released to the registered wallets
 ```
 
-Le travail livré n'entre PAS dans la NAV (anti-circularité).
+## 6. Contest and panel vote
 
-**Conséquence — dilution des cash investors :** quand du travail est minté à la NAV courante, le supply augmente sans que le numérateur (cash + positions) ne bouge immédiatement. Le pari : le code livré crée du P&L Kalshi futur qui ramènera la NAV au-dessus.
+- As long as nobody formally challenges the valuation PR, it is merged at D7 and the mint is executed.
+- A **formal contest** is declared by a structured comment on the PR (label `challenge`, signed by a registered wallet).
+- When a contest exists at D7, the decision moves to the **Top X holder panel**:
+  - X = 5 in phase 1 (≤ 20 contributors), 7 in phase 2 (20-50), 11 in phase 3 (>50).
+  - **Each panel member has 1 vote.** No stake weighting. Top X = ranking by AUG-POC token balance at the close of the round.
+  - A simple majority (≥ ⌈X/2⌉+1) decides: approve the valuation as it stands, or require a revision (with written instructions, sent back to the agent).
 
-**Garde-fous :**
+This avoids pure plutocracy while handing the decision to those with the most to lose or gain.
 
-Le token AUG-POC n'a pas vocation à être tradé sur marché secondaire — il représente une quote-part de la NAV et un droit de gouvernance. Les caps d'émission visent traditionnellement à protéger un prix de marché ; cette logique ne s'applique pas ici. Les garde-fous ci-dessous portent sur la **qualité du processus** (validation, fraude, audit) et non sur la vélocité d'émission. Aucun plafond mensuel global ni plafond par apporteur n'est imposé : la part minteable est intégralement déterminée par la valuation pondérée des contributions effectives.
+## 7. NAV calculation (in BTC)
 
-- **Vote token-weighted automatique** : toute valuation individuelle > 0,01 BTC est soumise au vote pondéré des holders avant mint, même sans contestation (modalités au §6 et §9).
-- **Cooldown nouveaux entrants** : première contribution mergée > 30 jours avant éligibilité au mint.
-- **Slashing** : tokens claw-back-ables sur 6 mois en cas de fraude établie par vote 67 %.
-- **Audit annuel** du rubric et des rounds passés, en assemblée holder.
+```
+NAV_BTC = treasury_BTC_balance
+        + (Kalshi_positions_USD × USD/BTC_spot)
+        + pending_settlement_receivables_BTC
+        - operational_liabilities_BTC
+
+NAV_per_token = NAV_BTC / circulating_supply
+```
+
+Delivered work does NOT enter the NAV (anti-circularity).
+
+**Consequence — dilution of cash investors:** when labour is minted at the current NAV, supply increases while the numerator (cash + positions) does not move immediately. The bet: the code delivered creates future Kalshi P&L that will bring the NAV back above.
+
+**Guardrails:**
+
+The AUG-POC token is not intended to be traded on a secondary market — it represents a pro-rata share of the NAV and a governance right. Issuance caps traditionally exist to protect a market price; that logic does not apply here. The guardrails below concern **process quality** (validation, fraud, audit), not issuance velocity. No global monthly cap and no per-contributor cap is imposed: the mintable share is determined entirely by the weighted valuation of actual contributions.
+
+- **Automatic token-weighted vote**: any individual valuation above 0.01 BTC goes to a weighted holder vote before minting, even without a contest (terms in §6 and §9).
+- **Newcomer cooldown**: first merged contribution must be more than 30 days old before mint eligibility.
+- **Slashing**: tokens are clawback-able for 6 months where fraud is established by a 67 % vote.
+- **Annual audit** of the rubric and past rounds, at the holder assembly.
 
 ## 8. Subscription / Redemption
 
-- **Subscription window mensuelle** (1er du mois). Apports cash (BTC ou USDC) et apports travail (PRs mergés du mois M-1) traités dans le même round.
-- **Tout apport est refusable** (cf. §4).
-- **Redemption window trimestrielle**, notice 30 jours, gate 20 % par window, pénalité 2 % avant 12 mois.
-- **Calcul NAV** : signé multisig 2/3 (JS + 1 advisor + 1 holder représentatif). Publication mensuelle.
+- **Monthly subscription window** (1st of the month). Cash contributions (BTC or USDC) and labour contributions (PRs merged in month M-1) are handled in the same round.
+- **Every contribution is refusable** (see §4).
+- **Quarterly redemption window**, 30-day notice, 20 % gate per window, 2 % penalty before 12 months.
+- **NAV calculation**: signed by a 2-of-3 multisig (JS + 1 advisor + 1 representative holder). Published monthly.
 
-## 9. Gouvernance générale
+## 9. General governance
 
-Distincte du panel anti-contestation :
+Distinct from the anti-contest panel:
 
-- **1 token = 1 vote**, cap 25 % par wallet, sur les sujets paramétriques (rubric, taux, cap dilution, conversion DAO, slashing).
-- Seuils : 51 % courant, 67 % paramétrique majeur, quorum 15 % du supply circulant.
+- **1 token = 1 vote**, capped at 25 % per wallet, on parametric matters (rubric, rates, dilution cap, DAO conversion, slashing).
+- Thresholds: 51 % ordinary, 67 % major parametric, quorum 15 % of circulating supply.
 
-## 10. Trade-offs assumés
+## 10. Accepted trade-offs
 
-1. **Volatilité de la cap table.** Personne ne sait à quoi elle ressemblera dans 6 mois. Cohérent pour qui croit que ce qui compte est la part proportionnelle de la valeur réellement accumulée, pas un % "garanti".
-2. **Dilution potentielle des cash investors.** À inscrire en clair dans la term sheet.
-3. **Travail non-Git invisible.** Assumé. Pour intégrer ce travail, l'output doit être commité.
-4. **Volatilité BTC.** Les taux horaires sont stables en BTC mais bougent en EUR/USD. Mécanisme de recalibration par vote si dérive > 25 % en un trimestre.
-5. **Panel Top X holders peut se polariser.** Mitigation : X augmente avec la communauté ; vote du panel public et journalisé.
-6. **Pas attractif pour gros VC traditionnels.** Choix philosophique. Le projet cherche des investisseurs alignés sur la valeur-travail.
+1. **Cap table volatility.** Nobody knows what it will look like in 6 months. Coherent for anyone who believes what matters is the proportional share of value actually accumulated, not a "guaranteed" percentage.
+2. **Potential dilution of cash investors.** To be stated plainly in the term sheet.
+3. **Non-Git work is invisible.** Accepted. To have such work counted, the output must be committed.
+4. **BTC volatility.** Hourly rates are stable in BTC but move in EUR/USD. Recalibration mechanism by vote if drift exceeds 25 % in a quarter.
+5. **The Top X holder panel can polarise.** Mitigation: X grows with the community; panel votes are public and logged.
+6. **Not attractive to large traditional VCs.** A philosophical choice. The project looks for investors aligned on labour value.
 
 ## 11. Genesis
 
-Au lancement, deux choses simultanées dans la même fenêtre :
+At launch, two things happen simultaneously in the same window:
 
-1. **Valuation rétroactive du travail JS sur kalshi-poc** (intégré dans `predictor/`). L'agent passe sur tout l'historique Git, produit une valuation détaillée par phase. **Fenêtre de challenge étendue à 30 jours**, ouverte aux premiers prospects investisseurs avant qu'ils n'investissent.
-2. **Premiers investisseurs cash** (s'il y en a). Apport BTC ou USDC, mint à NAV initiale 1 sat = 1 token.
+1. **Retroactive valuation of JS's work on kalshi-poc** (folded into `predictor/`). The agent runs over the whole Git history and produces a phase-by-phase valuation. **Challenge window extended to 30 days**, open to the first prospective investors before they invest.
+2. **First cash investors** (if any). BTC or USDC contribution, minted at the initial NAV of 1 sat = 1 token.
 
-Voir le dry-run dans `rounds/archives/2026-05-genesis/` pour la première itération du moteur sur l'historique pré-open-source.
+See the dry run in `rounds/archives/2026-05-genesis/` for the engine's first iteration over the pre-open-source history.
 
-## 12. Voir aussi
+## 12. See also
 
-- Architecture générale du projet → [`architecture.md`](architecture.md)
-- Moteur de valuation → [`value_engine.md`](value_engine.md)
-- **Projet de statuts FR** (art. 4 bis « Limite des engagements de couverture et principe de transparence radicale » + art. 32 « Moteur de valuation et émission de tokens » + art. 31 *Slashing*) → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
+- Overall project architecture → [`architecture.md`](architecture.md)
+- Valuation engine → [`value_engine.md`](value_engine.md)
+- **Draft articles of association, FR** (art. 4 bis "Limite des engagements de couverture et principe de transparence radicale" + art. 32 "Moteur de valuation et émission de tokens" + art. 31 *Slashing*) → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
 - **Draft Articles of Association EN** → [`../../statuts-aratea-v0-projet-2026-05-16-EN.md`](../../statuts-aratea-v0-projet-2026-05-16-EN.md)
