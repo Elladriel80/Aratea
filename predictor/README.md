@@ -78,23 +78,59 @@ python scripts/simulate.py
 python scripts/score_forward.py
 ```
 
+### Entrypoints de production vs ad-hoc / Production vs ad-hoc entrypoints
+
+*FR : La séquence ci-dessus est la marche à suivre pour une exploration manuelle
+(POC jour 0). En production, la boucle tourne de façon autonome via le cron
+GitHub Actions `.github/workflows/daily-trading.yml`, tous les jours à 18:00 UTC.*
+
+*EN : The sequence above is the manual, day-0 POC walkthrough. In production,
+the loop runs autonomously via the `.github/workflows/daily-trading.yml`
+GitHub Actions cron, daily at 18:00 UTC.*
+
+**Entrypoints quotidiens (production) / Daily entrypoints (production) :**
+
+| Script | Rôle FR | Role EN |
+|---|---|---|
+| `scripts/daily_run.py` | Capture d'apprentissage : `fetch_markets --all-weather` → `forward_predict` → `score_forward`. Alimente le dataset d'entraînement (`data/predictions/`, `data/scores/`). | Learning capture: `fetch_markets --all-weather` → `forward_predict` → `score_forward`. Feeds the training dataset (`data/predictions/`, `data/scores/`). |
+| `scripts/daily_auto.py` | Paper-trading autonome : finalise les runs résolus, capture de nouveaux runs selon les seuils edge/spread configurés, reconstruit le manifeste du dashboard, commit + push. | Autonomous paper-trading: finalizes settled runs, captures new runs against the configured edge/spread thresholds, rebuilds the dashboard manifest, commits + pushes. |
+
+Les deux scripts sont orchestrés dans cet ordre par le même job cron.
+*Both scripts are orchestrated in that order by the same cron job.*
+
+**Entrypoints ad-hoc / debug (usage manuel) / Ad-hoc, debug entrypoints (manual use) :**
+
+- `scripts/live_run.py` — capture manuelle d'un snapshot multi-modèle sur un marché donné. / manual multi-model snapshot capture for a single market.
+- `scripts/forward_predict.py` — appelé en interne par `daily_run.py` ; peut aussi être lancé isolément pour du debug. / called internally by `daily_run.py`; can also be run standalone for debugging.
+- `scripts/finalize_run.py` — clôture manuelle d'un run une fois l'event résolu par Kalshi. / manual finalization of a run once Kalshi has settled the event.
+- `scripts/backtest.py` — backtest historique sur des events déjà résolus (pas de trading live). / historical backtest against already-settled events (no live trading).
+
 ## Structure
 
 ```
-kalshi-poc/
+predictor/
 ├── README.md
-├── requirements.txt
+├── requirements.txt / requirements.lock
 ├── src/
-│   ├── kalshi/         # Client API Kalshi
-│   ├── weather/        # Open-Meteo, NOAA
-│   ├── predictors/     # climatology, ensemble, hybrid
-│   └── simulation/     # paper trading + scoring
-├── scripts/            # Entrypoints CLI
+│   ├── kalshi/          # Client API Kalshi
+│   ├── forecast/        # Open-Meteo, NWS/NDFD
+│   ├── predictors/      # climatology, ensemble, forecast_blend
+│   ├── learning/        # feature engineering, dataset, modèle appris (v3)
+│   └── microstructure/  # biais et distribution des marchés Kalshi
+├── scripts/             # Entrypoints CLI (production + ad-hoc, cf. section suivante)
 ├── data/
-│   ├── markets/        # Snapshots des marchés (JSON)
-│   ├── forecasts/      # Prévisions cachées
-│   └── ledger/         # Paris simulés (CSV)
-└── notebooks/          # Exploration ad-hoc
+│   ├── backfill/        # Données historiques rétro-collectées
+│   ├── forecasts/       # Prévisions cachées
+│   ├── predictions/     # Sorties forward_predict.py (training fuel)
+│   ├── scores/          # Résolutions scorées
+│   ├── geographic/      # Features géo statiques (OSM, USGS)
+│   ├── audits/          # Journaux d'audit de résolution
+│   └── ledger/          # Paris simulés (CSV)
+├── runs/                # Runs live individuels (report.json par run)
+├── runs_backtest/       # Sorties de backtest.py (schema v2-backtest)
+├── runs_learning/       # Boucle champion/challenger + CHAMPION.json
+├── tests/                # Suite de tests (pytest)
+└── docs/                 # Notes de décision, rapports ponctuels
 ```
 
 ## Learned model — feature engineering / Modèle appris
