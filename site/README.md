@@ -1,6 +1,8 @@
 # Aratea — site (landing)
 
-Public landing for Aratea, rebuilt as a **Next.js (App Router)** app so the page
+> [Lire en français](README.fr.md)
+
+Public landing for Aratea
 can do real dynamic things instead of shipping a frozen HTML snapshot. Same
 stack as `../dashboard` (Next 15 · React 19 · TypeScript · Tailwind · viem) so
 patterns and versions stay aligned.
