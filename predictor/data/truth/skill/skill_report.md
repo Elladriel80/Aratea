@@ -1,6 +1,6 @@
 # Skill station vs vérité CLI / Station skill vs CLI truth
 
-Généré / generated : 2026-09-09T06:30:43Z. Cibles / targets : 2026-05-12 → 2026-09-07. Leads : [1, 2, 3, 4, 5, 6, 7]. Modèles / models : ecmwf_ifs025, ecmwf_aifs025_single, gfs_graphcast025, gfs_global, jma_gsm.
+Généré / generated : 2026-09-09T09:37:31Z. Cibles / targets : 2026-05-12 → 2026-09-07. Leads : [1, 2, 3, 4, 5, 6, 7]. Modèles / models : ecmwf_ifs025, ecmwf_aifs025_single, gfs_graphcast025, gfs_global, jma_gsm.
 Split : TRAIN < 2026-08-03, HOLDOUT ≥ 2026-08-03. Bins synthétiques 2 °F centrés sur la moyenne des modèles ; seuls les bins centraux sont scorés (même filtre que le live).
 
 FR : `raw` = politique de production (moyenne des modèles, sigma inter-modèles, plancher 1 °F). `station_bias` = même moyenne + biais station appris sur TRAIN, sigma résiduel TRAIN. `climato` = observations CLI des années précédentes (±7 jours). Le HOLDOUT est lu une seule fois.
@@ -10,33 +10,33 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 
 | groupe | n bins | n dates | base rate | Brier raw | Brier station_bias | Brier climato | Δ station − raw |
 |---|---|---|---|---|---|---|---|
-| all | 50904 | 36 | 0.153 | 0.1258 | 0.1151 | 0.1273 | -0.0107 |
+| all | 53928 | 36 | 0.154 | 0.1250 | 0.1154 | 0.1276 | -0.0096 |
 
 ### Par lead / by lead (HOLDOUT)
 
 | lead (jours) | n bins | n dates | base rate | Brier raw | Brier station_bias | Brier climato | Δ station − raw |
 |---|---|---|---|---|---|---|---|
-| 1 | 7272 | 36 | 0.160 | 0.1265 | 0.1124 | 0.1326 | -0.0141 |
-| 2 | 7272 | 36 | 0.157 | 0.1267 | 0.1148 | 0.1309 | -0.0120 |
-| 3 | 7272 | 36 | 0.153 | 0.1247 | 0.1142 | 0.1275 | -0.0105 |
-| 4 | 7272 | 36 | 0.153 | 0.1265 | 0.1157 | 0.1268 | -0.0108 |
-| 5 | 7272 | 36 | 0.151 | 0.1242 | 0.1156 | 0.1257 | -0.0086 |
-| 6 | 7272 | 36 | 0.150 | 0.1266 | 0.1163 | 0.1249 | -0.0103 |
-| 7 | 7272 | 36 | 0.148 | 0.1252 | 0.1165 | 0.1230 | -0.0087 |
+| 1 | 7704 | 36 | 0.160 | 0.1259 | 0.1125 | 0.1324 | -0.0134 |
+| 2 | 7704 | 36 | 0.158 | 0.1262 | 0.1150 | 0.1309 | -0.0111 |
+| 3 | 7704 | 36 | 0.154 | 0.1237 | 0.1143 | 0.1274 | -0.0094 |
+| 4 | 7704 | 36 | 0.154 | 0.1256 | 0.1162 | 0.1273 | -0.0094 |
+| 5 | 7704 | 36 | 0.152 | 0.1238 | 0.1161 | 0.1261 | -0.0077 |
+| 6 | 7704 | 36 | 0.151 | 0.1256 | 0.1165 | 0.1252 | -0.0091 |
+| 7 | 7704 | 36 | 0.149 | 0.1242 | 0.1171 | 0.1235 | -0.0072 |
 
 ### Par variable / by variable (HOLDOUT)
 
 | variable | n bins | n dates | base rate | Brier raw | Brier station_bias | Brier climato | Δ station − raw |
 |---|---|---|---|---|---|---|---|
-| temp_max | 25452 | 36 | 0.147 | 0.1243 | 0.1105 | 0.1246 | -0.0138 |
-| temp_min | 25452 | 36 | 0.159 | 0.1273 | 0.1196 | 0.1300 | -0.0076 |
+| temp_max | 26964 | 36 | 0.148 | 0.1240 | 0.1120 | 0.1256 | -0.0120 |
+| temp_min | 26964 | 36 | 0.160 | 0.1260 | 0.1188 | 0.1296 | -0.0073 |
 
 ### Par station / by station (HOLDOUT)
 
 | station/variable | n bins | n dates | base rate | Brier raw | Brier station_bias | Brier climato | Δ station − raw |
 |---|---|---|---|---|---|---|---|
-| KATL/temp_max | 1512 | 36 | 0.146 | 0.1180 | 0.1077 | 0.1296 | -0.0103 |
-| KATL/temp_min | 1512 | 36 | 0.163 | 0.1168 | 0.1190 | 0.1277 | +0.0022 |
+| KATL/temp_max | 1512 | 36 | 0.146 | 0.1180 | 0.1083 | 0.1296 | -0.0096 |
+| KATL/temp_min | 1512 | 36 | 0.163 | 0.1168 | 0.1189 | 0.1277 | +0.0021 |
 | KAUS/temp_max | 1512 | 36 | 0.153 | 0.1177 | 0.1022 | 0.1302 | -0.0155 |
 | KAUS/temp_min | 1512 | 36 | 0.159 | 0.1571 | 0.1338 | 0.1258 | -0.0233 |
 | KBOS/temp_max | 1512 | 36 | 0.127 | 0.1216 | 0.1059 | 0.1136 | -0.0157 |
@@ -45,20 +45,22 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KDCA/temp_min | 1512 | 36 | 0.159 | 0.1293 | 0.1252 | 0.1329 | -0.0040 |
 | KDEN/temp_max | 1470 | 35 | 0.131 | 0.1187 | 0.1049 | 0.1167 | -0.0138 |
 | KDEN/temp_min | 1470 | 35 | 0.144 | 0.1477 | 0.1143 | 0.1197 | -0.0333 |
-| KIAH/temp_max | 1512 | 36 | 0.155 | 0.1155 | 0.1085 | 0.1272 | -0.0069 |
-| KIAH/temp_min | 1512 | 36 | 0.165 | 0.1268 | 0.1190 | 0.1351 | -0.0078 |
+| KDFW/temp_max | 1512 | 36 | 0.160 | 0.1186 | 0.1221 | 0.1423 | +0.0035 |
+| KDFW/temp_min | 1512 | 36 | 0.166 | 0.1329 | 0.1184 | 0.1417 | -0.0146 |
+| KHOU/temp_max | 1512 | 36 | 0.161 | 0.1191 | 0.1258 | 0.1271 | +0.0067 |
+| KHOU/temp_min | 1512 | 36 | 0.167 | 0.1049 | 0.1093 | 0.1151 | +0.0044 |
 | KLAS/temp_max | 1470 | 35 | 0.152 | 0.1428 | 0.1082 | 0.1367 | -0.0346 |
 | KLAS/temp_min | 1470 | 35 | 0.149 | 0.1297 | 0.1172 | 0.1392 | -0.0125 |
 | KLAX/temp_max | 1470 | 35 | 0.155 | 0.1417 | 0.1154 | 0.1281 | -0.0263 |
 | KLAX/temp_min | 1470 | 35 | 0.167 | 0.1086 | 0.0944 | 0.1401 | -0.0141 |
+| KMDW/temp_max | 1512 | 36 | 0.154 | 0.1217 | 0.1195 | 0.1305 | -0.0022 |
+| KMDW/temp_min | 1512 | 36 | 0.155 | 0.1145 | 0.1202 | 0.1311 | +0.0057 |
 | KMIA/temp_max | 1512 | 36 | 0.142 | 0.1305 | 0.0845 | 0.1050 | -0.0460 |
 | KMIA/temp_min | 1512 | 36 | 0.164 | 0.1392 | 0.1263 | 0.1293 | -0.0129 |
 | KMSP/temp_max | 1512 | 36 | 0.151 | 0.1269 | 0.1227 | 0.1306 | -0.0042 |
 | KMSP/temp_min | 1512 | 36 | 0.151 | 0.1225 | 0.1156 | 0.1315 | -0.0069 |
 | KNYC/temp_max | 1512 | 36 | 0.159 | 0.1271 | 0.1236 | 0.1322 | -0.0035 |
 | KNYC/temp_min | 1512 | 36 | 0.163 | 0.1365 | 0.1233 | 0.1317 | -0.0132 |
-| KORD/temp_max | 1512 | 36 | 0.157 | 0.1255 | 0.1225 | 0.1315 | -0.0030 |
-| KORD/temp_min | 1512 | 36 | 0.153 | 0.1204 | 0.1244 | 0.1313 | +0.0040 |
 | KPHL/temp_max | 1512 | 36 | 0.146 | 0.1270 | 0.1114 | 0.1234 | -0.0157 |
 | KPHL/temp_min | 1512 | 36 | 0.159 | 0.1320 | 0.1225 | 0.1356 | -0.0095 |
 | KPHX/temp_max | 1470 | 35 | 0.124 | 0.1172 | 0.0915 | 0.1092 | -0.0258 |
@@ -74,28 +76,28 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 
 | comparaison | dates | victoires a | p unilatéral |
 |---|---|---|---|
-| station_vs_raw (p_station < p_raw) | 36 | 35 | 0.0000 |
-| raw_vs_climo (p_raw < p_climo) | 36 | 22 | 0.1215 |
+| station_vs_raw (p_station < p_raw) | 36 | 34 | 0.0000 |
+| raw_vs_climo (p_raw < p_climo) | 36 | 23 | 0.0662 |
 | station_vs_climo (p_station < p_climo) | 36 | 35 | 0.0000 |
 
 ### Biais station appris sur TRAIN / TRAIN-learned station bias
 
 | station | variable | lead | biais obs − modèle (°F) | sigma résiduel (°F) | n |
 |---|---|---|---|---|---|
-| KATL | temp_max | 1 | +2.62 | 2.30 | 83 |
-| KATL | temp_max | 2 | +2.56 | 2.60 | 83 |
-| KATL | temp_max | 3 | +2.39 | 2.69 | 83 |
-| KATL | temp_max | 4 | +2.21 | 2.57 | 83 |
-| KATL | temp_max | 5 | +1.97 | 2.89 | 83 |
-| KATL | temp_max | 6 | +1.75 | 3.08 | 83 |
-| KATL | temp_max | 7 | +1.85 | 3.62 | 83 |
-| KATL | temp_min | 1 | +0.93 | 1.71 | 83 |
-| KATL | temp_min | 2 | +0.87 | 1.65 | 83 |
-| KATL | temp_min | 3 | +0.71 | 1.85 | 83 |
-| KATL | temp_min | 4 | +0.83 | 2.00 | 83 |
-| KATL | temp_min | 5 | +0.74 | 2.32 | 83 |
-| KATL | temp_min | 6 | +0.95 | 2.49 | 83 |
-| KATL | temp_min | 7 | +1.01 | 2.73 | 83 |
+| KATL | temp_max | 1 | +2.06 | 2.24 | 21 |
+| KATL | temp_max | 2 | +2.45 | 2.49 | 21 |
+| KATL | temp_max | 3 | +2.68 | 3.07 | 21 |
+| KATL | temp_max | 4 | +2.36 | 2.37 | 21 |
+| KATL | temp_max | 5 | +1.32 | 3.11 | 21 |
+| KATL | temp_max | 6 | +0.84 | 2.84 | 21 |
+| KATL | temp_max | 7 | +0.10 | 3.61 | 21 |
+| KATL | temp_min | 1 | +0.65 | 1.48 | 21 |
+| KATL | temp_min | 2 | +0.67 | 1.33 | 21 |
+| KATL | temp_min | 3 | +0.60 | 1.66 | 21 |
+| KATL | temp_min | 4 | +0.92 | 1.49 | 21 |
+| KATL | temp_min | 5 | +0.68 | 1.52 | 21 |
+| KATL | temp_min | 6 | +0.82 | 1.74 | 21 |
+| KATL | temp_min | 7 | +0.58 | 2.13 | 21 |
 | KAUS | temp_max | 1 | +1.68 | 1.89 | 83 |
 | KAUS | temp_max | 2 | +1.42 | 2.24 | 83 |
 | KAUS | temp_max | 3 | +1.40 | 2.40 | 83 |
@@ -152,20 +154,34 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KDEN | temp_min | 5 | -3.95 | 3.27 | 83 |
 | KDEN | temp_min | 6 | -3.50 | 3.29 | 83 |
 | KDEN | temp_min | 7 | -3.64 | 3.80 | 83 |
-| KIAH | temp_max | 1 | +1.23 | 1.65 | 83 |
-| KIAH | temp_max | 2 | +1.17 | 1.77 | 83 |
-| KIAH | temp_max | 3 | +1.01 | 2.25 | 83 |
-| KIAH | temp_max | 4 | +1.05 | 2.35 | 83 |
-| KIAH | temp_max | 5 | +0.81 | 2.72 | 83 |
-| KIAH | temp_max | 6 | +1.09 | 2.67 | 83 |
-| KIAH | temp_max | 7 | +0.73 | 3.04 | 83 |
-| KIAH | temp_min | 1 | -0.74 | 1.81 | 83 |
-| KIAH | temp_min | 2 | -0.91 | 1.94 | 83 |
-| KIAH | temp_min | 3 | -0.97 | 2.11 | 83 |
-| KIAH | temp_min | 4 | -0.98 | 2.14 | 83 |
-| KIAH | temp_min | 5 | -1.02 | 2.13 | 83 |
-| KIAH | temp_min | 6 | -0.93 | 2.28 | 83 |
-| KIAH | temp_min | 7 | -0.67 | 2.43 | 83 |
+| KDFW | temp_max | 1 | +1.70 | 2.25 | 83 |
+| KDFW | temp_max | 2 | +1.55 | 2.51 | 83 |
+| KDFW | temp_max | 3 | +1.41 | 2.75 | 83 |
+| KDFW | temp_max | 4 | +1.41 | 3.05 | 83 |
+| KDFW | temp_max | 5 | +1.57 | 3.39 | 83 |
+| KDFW | temp_max | 6 | +1.66 | 3.62 | 83 |
+| KDFW | temp_max | 7 | +1.61 | 4.17 | 83 |
+| KDFW | temp_min | 1 | -1.04 | 2.07 | 83 |
+| KDFW | temp_min | 2 | -1.21 | 2.09 | 83 |
+| KDFW | temp_min | 3 | -1.37 | 2.40 | 83 |
+| KDFW | temp_min | 4 | -1.33 | 2.66 | 83 |
+| KDFW | temp_min | 5 | -1.28 | 2.67 | 83 |
+| KDFW | temp_min | 6 | -1.11 | 3.13 | 83 |
+| KDFW | temp_min | 7 | -0.92 | 3.19 | 83 |
+| KHOU | temp_max | 1 | +1.73 | 1.67 | 83 |
+| KHOU | temp_max | 2 | +1.63 | 1.97 | 83 |
+| KHOU | temp_max | 3 | +1.58 | 2.27 | 83 |
+| KHOU | temp_max | 4 | +1.52 | 2.45 | 83 |
+| KHOU | temp_max | 5 | +1.46 | 2.70 | 83 |
+| KHOU | temp_max | 6 | +1.46 | 2.89 | 83 |
+| KHOU | temp_max | 7 | +1.16 | 3.13 | 83 |
+| KHOU | temp_min | 1 | -0.11 | 1.70 | 83 |
+| KHOU | temp_min | 2 | -0.24 | 1.82 | 83 |
+| KHOU | temp_min | 3 | -0.26 | 1.94 | 83 |
+| KHOU | temp_min | 4 | -0.34 | 2.03 | 83 |
+| KHOU | temp_min | 5 | -0.32 | 2.05 | 83 |
+| KHOU | temp_min | 6 | -0.18 | 2.21 | 83 |
+| KHOU | temp_min | 7 | +0.01 | 2.35 | 83 |
 | KLAS | temp_max | 1 | +2.08 | 1.28 | 83 |
 | KLAS | temp_max | 2 | +1.94 | 1.27 | 83 |
 | KLAS | temp_max | 3 | +1.83 | 1.70 | 83 |
@@ -194,6 +210,20 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KLAX | temp_min | 5 | -0.58 | 1.52 | 83 |
 | KLAX | temp_min | 6 | -0.52 | 1.56 | 83 |
 | KLAX | temp_min | 7 | -0.55 | 1.55 | 83 |
+| KMDW | temp_max | 1 | +0.42 | 1.95 | 83 |
+| KMDW | temp_max | 2 | +0.09 | 2.12 | 83 |
+| KMDW | temp_max | 3 | +0.19 | 2.61 | 83 |
+| KMDW | temp_max | 4 | -0.15 | 3.02 | 83 |
+| KMDW | temp_max | 5 | -0.31 | 3.54 | 83 |
+| KMDW | temp_max | 6 | -0.49 | 4.39 | 83 |
+| KMDW | temp_max | 7 | -1.25 | 4.60 | 83 |
+| KMDW | temp_min | 1 | -0.83 | 2.17 | 83 |
+| KMDW | temp_min | 2 | -1.09 | 2.20 | 83 |
+| KMDW | temp_min | 3 | -1.04 | 2.58 | 83 |
+| KMDW | temp_min | 4 | -0.98 | 2.79 | 83 |
+| KMDW | temp_min | 5 | -0.96 | 3.05 | 83 |
+| KMDW | temp_min | 6 | -0.96 | 3.38 | 83 |
+| KMDW | temp_min | 7 | -0.83 | 3.56 | 83 |
 | KMIA | temp_max | 1 | +2.92 | 1.32 | 83 |
 | KMIA | temp_max | 2 | +3.13 | 1.53 | 83 |
 | KMIA | temp_max | 3 | +3.00 | 1.60 | 83 |
@@ -236,20 +266,6 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KNYC | temp_min | 5 | -0.23 | 3.38 | 83 |
 | KNYC | temp_min | 6 | +0.12 | 3.91 | 83 |
 | KNYC | temp_min | 7 | +0.13 | 4.08 | 83 |
-| KORD | temp_max | 1 | +0.14 | 2.01 | 83 |
-| KORD | temp_max | 2 | -0.23 | 1.96 | 83 |
-| KORD | temp_max | 3 | -0.20 | 2.54 | 83 |
-| KORD | temp_max | 4 | -0.44 | 2.97 | 83 |
-| KORD | temp_max | 5 | -0.62 | 3.74 | 83 |
-| KORD | temp_max | 6 | -0.74 | 4.54 | 83 |
-| KORD | temp_max | 7 | -1.60 | 4.77 | 83 |
-| KORD | temp_min | 1 | -1.36 | 2.13 | 83 |
-| KORD | temp_min | 2 | -1.66 | 2.08 | 83 |
-| KORD | temp_min | 3 | -1.63 | 2.46 | 83 |
-| KORD | temp_min | 4 | -1.58 | 2.69 | 83 |
-| KORD | temp_min | 5 | -1.54 | 3.10 | 83 |
-| KORD | temp_min | 6 | -1.53 | 3.48 | 83 |
-| KORD | temp_min | 7 | -1.41 | 3.70 | 83 |
 | KPHL | temp_max | 1 | +2.11 | 2.31 | 83 |
 | KPHL | temp_max | 2 | +1.88 | 2.37 | 83 |
 | KPHL | temp_max | 3 | +2.21 | 2.76 | 83 |
@@ -325,41 +341,41 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 
 | station | modèle | lead | premier jour | dernier jour | n jours |
 |---|---|---|---|---|---|
-| KATL | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_ifs025 | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_ifs025 | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_ifs025 | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_ifs025 | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_aifs025_single | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_aifs025_single | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_aifs025_single | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_aifs025_single | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_aifs025_single | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_aifs025_single | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | ecmwf_aifs025_single | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | gfs_graphcast025 | 1 | 2026-05-12 | 2026-05-21 | 10 |
+| KATL | ecmwf_ifs025 | 1 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_ifs025 | 2 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_ifs025 | 3 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_ifs025 | 4 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_ifs025 | 5 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_ifs025 | 6 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_ifs025 | 7 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_aifs025_single | 1 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_aifs025_single | 2 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_aifs025_single | 3 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_aifs025_single | 4 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_aifs025_single | 5 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_aifs025_single | 6 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | ecmwf_aifs025_single | 7 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | gfs_graphcast025 | 1 | None | None | 0 |
 | KATL | gfs_graphcast025 | 2 | None | None | 0 |
-| KATL | gfs_graphcast025 | 3 | 2026-05-12 | 2026-05-21 | 10 |
-| KATL | gfs_graphcast025 | 4 | 2026-05-12 | 2026-05-21 | 10 |
-| KATL | gfs_graphcast025 | 5 | 2026-05-12 | 2026-05-21 | 10 |
-| KATL | gfs_graphcast025 | 6 | 2026-05-12 | 2026-05-21 | 10 |
-| KATL | gfs_graphcast025 | 7 | 2026-05-12 | 2026-05-21 | 10 |
-| KATL | gfs_global | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | gfs_global | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | gfs_global | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | gfs_global | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | gfs_global | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | gfs_global | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | gfs_global | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | jma_gsm | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | jma_gsm | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | jma_gsm | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | jma_gsm | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KATL | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KATL | gfs_graphcast025 | 3 | None | None | 0 |
+| KATL | gfs_graphcast025 | 4 | None | None | 0 |
+| KATL | gfs_graphcast025 | 5 | None | None | 0 |
+| KATL | gfs_graphcast025 | 6 | None | None | 0 |
+| KATL | gfs_graphcast025 | 7 | None | None | 0 |
+| KATL | gfs_global | 1 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | gfs_global | 2 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | gfs_global | 3 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | gfs_global | 4 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | gfs_global | 5 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | gfs_global | 6 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | gfs_global | 7 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | jma_gsm | 1 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | jma_gsm | 2 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | jma_gsm | 3 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | jma_gsm | 4 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | jma_gsm | 5 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | jma_gsm | 6 | 2026-07-13 | 2026-09-07 | 57 |
+| KATL | jma_gsm | 7 | 2026-07-13 | 2026-09-07 | 57 |
 | KAUS | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
 | KAUS | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
 | KAUS | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
@@ -430,41 +446,6 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KBOS | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
 | KBOS | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
 | KBOS | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_ifs025 | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_ifs025 | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_ifs025 | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_ifs025 | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_aifs025_single | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_aifs025_single | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_aifs025_single | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_aifs025_single | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_aifs025_single | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_aifs025_single | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | ecmwf_aifs025_single | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | gfs_graphcast025 | 1 | 2026-05-12 | 2026-05-21 | 10 |
-| KDAL | gfs_graphcast025 | 2 | None | None | 0 |
-| KDAL | gfs_graphcast025 | 3 | 2026-05-12 | 2026-05-21 | 10 |
-| KDAL | gfs_graphcast025 | 4 | 2026-05-12 | 2026-05-21 | 10 |
-| KDAL | gfs_graphcast025 | 5 | 2026-05-12 | 2026-05-21 | 10 |
-| KDAL | gfs_graphcast025 | 6 | 2026-05-12 | 2026-05-21 | 10 |
-| KDAL | gfs_graphcast025 | 7 | 2026-05-12 | 2026-05-21 | 10 |
-| KDAL | gfs_global | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | gfs_global | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | gfs_global | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | gfs_global | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | gfs_global | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | gfs_global | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | gfs_global | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | jma_gsm | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | jma_gsm | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | jma_gsm | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | jma_gsm | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KDAL | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
 | KDCA | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
 | KDCA | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
 | KDCA | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
@@ -535,41 +516,76 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KDEN | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
 | KDEN | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
 | KDEN | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_ifs025 | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_ifs025 | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_ifs025 | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_ifs025 | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_aifs025_single | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_aifs025_single | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_aifs025_single | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_aifs025_single | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_aifs025_single | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_aifs025_single | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | ecmwf_aifs025_single | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | gfs_graphcast025 | 1 | 2026-05-12 | 2026-05-21 | 10 |
-| KIAH | gfs_graphcast025 | 2 | None | None | 0 |
-| KIAH | gfs_graphcast025 | 3 | 2026-05-12 | 2026-05-21 | 10 |
-| KIAH | gfs_graphcast025 | 4 | 2026-05-12 | 2026-05-21 | 10 |
-| KIAH | gfs_graphcast025 | 5 | 2026-05-12 | 2026-05-21 | 10 |
-| KIAH | gfs_graphcast025 | 6 | 2026-05-12 | 2026-05-21 | 10 |
-| KIAH | gfs_graphcast025 | 7 | 2026-05-12 | 2026-05-21 | 10 |
-| KIAH | gfs_global | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | gfs_global | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | gfs_global | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | gfs_global | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | gfs_global | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | gfs_global | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | gfs_global | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | jma_gsm | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | jma_gsm | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | jma_gsm | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | jma_gsm | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KIAH | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_ifs025 | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_ifs025 | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_ifs025 | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_ifs025 | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_aifs025_single | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_aifs025_single | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_aifs025_single | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_aifs025_single | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_aifs025_single | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_aifs025_single | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | ecmwf_aifs025_single | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | gfs_graphcast025 | 1 | 2026-05-12 | 2026-05-21 | 10 |
+| KDFW | gfs_graphcast025 | 2 | None | None | 0 |
+| KDFW | gfs_graphcast025 | 3 | 2026-05-12 | 2026-05-21 | 10 |
+| KDFW | gfs_graphcast025 | 4 | 2026-05-12 | 2026-05-21 | 10 |
+| KDFW | gfs_graphcast025 | 5 | 2026-05-12 | 2026-05-21 | 10 |
+| KDFW | gfs_graphcast025 | 6 | 2026-05-12 | 2026-05-21 | 10 |
+| KDFW | gfs_graphcast025 | 7 | 2026-05-12 | 2026-05-21 | 10 |
+| KDFW | gfs_global | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | gfs_global | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | gfs_global | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | gfs_global | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | gfs_global | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | gfs_global | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | gfs_global | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | jma_gsm | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | jma_gsm | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | jma_gsm | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | jma_gsm | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KDFW | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_ifs025 | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_ifs025 | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_ifs025 | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_ifs025 | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_aifs025_single | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_aifs025_single | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_aifs025_single | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_aifs025_single | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_aifs025_single | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_aifs025_single | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | ecmwf_aifs025_single | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | gfs_graphcast025 | 1 | 2026-05-12 | 2026-05-21 | 10 |
+| KHOU | gfs_graphcast025 | 2 | None | None | 0 |
+| KHOU | gfs_graphcast025 | 3 | 2026-05-12 | 2026-05-21 | 10 |
+| KHOU | gfs_graphcast025 | 4 | 2026-05-12 | 2026-05-21 | 10 |
+| KHOU | gfs_graphcast025 | 5 | 2026-05-12 | 2026-05-21 | 10 |
+| KHOU | gfs_graphcast025 | 6 | 2026-05-12 | 2026-05-21 | 10 |
+| KHOU | gfs_graphcast025 | 7 | 2026-05-12 | 2026-05-21 | 10 |
+| KHOU | gfs_global | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | gfs_global | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | gfs_global | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | gfs_global | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | gfs_global | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | gfs_global | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | gfs_global | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | jma_gsm | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | jma_gsm | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | jma_gsm | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | jma_gsm | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KHOU | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
 | KLAS | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
 | KLAS | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
 | KLAS | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
@@ -640,6 +656,41 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KLAX | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
 | KLAX | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
 | KLAX | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_ifs025 | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_ifs025 | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_ifs025 | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_ifs025 | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_aifs025_single | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_aifs025_single | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_aifs025_single | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_aifs025_single | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_aifs025_single | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_aifs025_single | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | ecmwf_aifs025_single | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | gfs_graphcast025 | 1 | 2026-05-12 | 2026-05-21 | 10 |
+| KMDW | gfs_graphcast025 | 2 | None | None | 0 |
+| KMDW | gfs_graphcast025 | 3 | 2026-05-12 | 2026-05-21 | 10 |
+| KMDW | gfs_graphcast025 | 4 | 2026-05-12 | 2026-05-21 | 10 |
+| KMDW | gfs_graphcast025 | 5 | 2026-05-12 | 2026-05-21 | 10 |
+| KMDW | gfs_graphcast025 | 6 | 2026-05-12 | 2026-05-21 | 10 |
+| KMDW | gfs_graphcast025 | 7 | 2026-05-12 | 2026-05-21 | 10 |
+| KMDW | gfs_global | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | gfs_global | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | gfs_global | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | gfs_global | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | gfs_global | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | gfs_global | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | gfs_global | 7 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | jma_gsm | 1 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | jma_gsm | 2 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | jma_gsm | 3 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | jma_gsm | 4 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
+| KMDW | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
 | KMIA | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
 | KMIA | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
 | KMIA | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
@@ -745,41 +796,6 @@ EN : `raw` = production policy. `station_bias` = model mean + TRAIN-learned stat
 | KNYC | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
 | KNYC | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
 | KNYC | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_ifs025 | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_ifs025 | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_ifs025 | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_ifs025 | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_aifs025_single | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_aifs025_single | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_aifs025_single | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_aifs025_single | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_aifs025_single | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_aifs025_single | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | ecmwf_aifs025_single | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | gfs_graphcast025 | 1 | 2026-05-12 | 2026-05-21 | 10 |
-| KORD | gfs_graphcast025 | 2 | None | None | 0 |
-| KORD | gfs_graphcast025 | 3 | 2026-05-12 | 2026-05-21 | 10 |
-| KORD | gfs_graphcast025 | 4 | 2026-05-12 | 2026-05-21 | 10 |
-| KORD | gfs_graphcast025 | 5 | 2026-05-12 | 2026-05-21 | 10 |
-| KORD | gfs_graphcast025 | 6 | 2026-05-12 | 2026-05-21 | 10 |
-| KORD | gfs_graphcast025 | 7 | 2026-05-12 | 2026-05-21 | 10 |
-| KORD | gfs_global | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | gfs_global | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | gfs_global | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | gfs_global | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | gfs_global | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | gfs_global | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | gfs_global | 7 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | jma_gsm | 1 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | jma_gsm | 2 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | jma_gsm | 3 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | jma_gsm | 4 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | jma_gsm | 5 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | jma_gsm | 6 | 2026-05-12 | 2026-09-07 | 119 |
-| KORD | jma_gsm | 7 | 2026-05-12 | 2026-09-07 | 119 |
 | KPHL | ecmwf_ifs025 | 1 | 2026-05-12 | 2026-09-07 | 119 |
 | KPHL | ecmwf_ifs025 | 2 | 2026-05-12 | 2026-09-07 | 119 |
 | KPHL | ecmwf_ifs025 | 3 | 2026-05-12 | 2026-09-07 | 119 |

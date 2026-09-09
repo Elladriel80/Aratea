@@ -1,15 +1,15 @@
 {
   "schema": "station_skill_run/1",
-  "generated_at": "2026-09-09T06:30:43Z",
+  "generated_at": "2026-09-09T09:37:31Z",
   "params": {
     "stations": [
       "KATL",
       "KAUS",
       "KBOS",
-      "KORD",
-      "KDAL",
+      "KMDW",
+      "KDFW",
       "KDEN",
-      "KIAH",
+      "KHOU",
       "KLAS",
       "KLAX",
       "KMIA",
@@ -46,93 +46,93 @@
     "end": "2026-09-07",
     "split": "2026-08-03"
   },
-  "n_points_train": 20916,
+  "n_points_train": 20048,
   "n_points_holdout": 8988,
-  "n_bins_scored": 50904,
+  "n_bins_scored": 53928,
   "overall": {
     "all": {
-      "n_bins": 50904,
+      "n_bins": 53928,
       "n_dates": 36,
-      "base_rate": 0.15313138456702813,
-      "brier_raw": 0.1257806729820959,
-      "brier_station": 0.11507491257571187,
-      "brier_climo": 0.12733760497813035
+      "base_rate": 0.15385328586263167,
+      "brier_raw": 0.12499836832852525,
+      "brier_station": 0.11538957039606931,
+      "brier_climo": 0.12756293144613562
     }
   },
   "by_lead": {
     "1": {
-      "n_bins": 7272,
+      "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.1597909790979098,
-      "brier_raw": 0.12650935249442063,
-      "brier_station": 0.112394265680507,
-      "brier_climo": 0.1326449542255754
+      "base_rate": 0.15991692627206647,
+      "brier_raw": 0.1259024458335246,
+      "brier_station": 0.11251478199057113,
+      "brier_climo": 0.13240984526077598
     },
     "2": {
-      "n_bins": 7272,
+      "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.1573157315731573,
-      "brier_raw": 0.1267385659151486,
-      "brier_station": 0.11475094101998065,
-      "brier_climo": 0.13086961242485198
+      "base_rate": 0.15784008307372793,
+      "brier_raw": 0.12615813987856184,
+      "brier_station": 0.11504083898994968,
+      "brier_climo": 0.13094338545363357
     },
     "3": {
-      "n_bins": 7272,
+      "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.15332783278327833,
-      "brier_raw": 0.12466579432267726,
-      "brier_station": 0.11421537973913609,
-      "brier_climo": 0.12745608827217225
+      "base_rate": 0.1536863966770509,
+      "brier_raw": 0.12371510029549673,
+      "brier_station": 0.11432071014250637,
+      "brier_climo": 0.12736654216494822
     },
     "4": {
-      "n_bins": 7272,
+      "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.1525027502750275,
-      "brier_raw": 0.1265445186219217,
-      "brier_station": 0.11574173877735985,
-      "brier_climo": 0.1268129653657897
+      "base_rate": 0.15355659397715474,
+      "brier_raw": 0.12559999495313257,
+      "brier_station": 0.11616570590355035,
+      "brier_climo": 0.1273104176211461
     },
     "5": {
-      "n_bins": 7272,
+      "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.15099009900990099,
-      "brier_raw": 0.12417738458843562,
-      "brier_station": 0.11559400980049757,
-      "brier_climo": 0.12569563249461224
+      "base_rate": 0.15199896157840084,
+      "brier_raw": 0.12380444755830297,
+      "brier_station": 0.1160842113635249,
+      "brier_climo": 0.12613993366879975
     },
     "6": {
-      "n_bins": 7272,
+      "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.15002750275027502,
-      "brier_raw": 0.1266121539920528,
-      "brier_station": 0.11627821622275887,
-      "brier_climo": 0.12485104375888678
+      "base_rate": 0.15096053997923156,
+      "brier_raw": 0.12559898173538772,
+      "brier_station": 0.11654324434486463,
+      "brier_climo": 0.1252441471705067
     },
     "7": {
-      "n_bins": 7272,
+      "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.14796479647964797,
-      "brier_raw": 0.12521694094001473,
-      "brier_station": 0.11654983678974307,
-      "brier_climo": 0.12303293830502403
+      "base_rate": 0.1490134994807892,
+      "brier_raw": 0.12420946804527032,
+      "brier_station": 0.11705750003751819,
+      "brier_climo": 0.12352624878313909
     }
   },
   "by_variable": {
     "temp_max": {
-      "n_bins": 25452,
+      "n_bins": 26964,
       "n_dates": 36,
-      "base_rate": 0.14713971397139713,
-      "brier_raw": 0.12427934888757788,
-      "brier_station": 0.11050566033003868,
-      "brier_climo": 0.12463422731585565
+      "base_rate": 0.14801216436730455,
+      "brier_raw": 0.12395310230928601,
+      "brier_station": 0.1119905431845878,
+      "brier_climo": 0.12556495883727212
     },
     "temp_min": {
-      "n_bins": 25452,
+      "n_bins": 26964,
       "n_dates": 36,
-      "base_rate": 0.15912305516265912,
-      "brier_raw": 0.12728199707661392,
-      "brier_station": 0.11964416482138507,
-      "brier_climo": 0.13004098264040506
+      "base_rate": 0.15969440735795876,
+      "brier_raw": 0.1260436343477645,
+      "brier_station": 0.11878859760755084,
+      "brier_climo": 0.12956090405499915
     }
   },
   "by_station": {
@@ -141,7 +141,7 @@
       "n_dates": 36,
       "base_rate": 0.1455026455026455,
       "brier_raw": 0.11795619587927686,
-      "brier_station": 0.10767773106098508,
+      "brier_station": 0.10831738419805279,
       "brier_climo": 0.12957568592609342
     },
     "KATL/temp_min": {
@@ -149,7 +149,7 @@
       "n_dates": 36,
       "base_rate": 0.1626984126984127,
       "brier_raw": 0.11681694632468456,
-      "brier_station": 0.11903978155660774,
+      "brier_station": 0.11891306728182469,
       "brier_climo": 0.12770855584405216
     },
     "KAUS/temp_max": {
@@ -216,21 +216,37 @@
       "brier_station": 0.11432240304687818,
       "brier_climo": 0.11966953478205328
     },
-    "KIAH/temp_max": {
+    "KDFW/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.15542328042328044,
-      "brier_raw": 0.11547056798989701,
-      "brier_station": 0.1085314061141889,
-      "brier_climo": 0.12717856168634276
+      "base_rate": 0.16005291005291006,
+      "brier_raw": 0.11860848193898187,
+      "brier_station": 0.12206912558912304,
+      "brier_climo": 0.14230013724169516
     },
-    "KIAH/temp_min": {
+    "KDFW/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.16534391534391535,
-      "brier_raw": 0.12676233357066283,
-      "brier_station": 0.11895736731837361,
-      "brier_climo": 0.13508607837234368
+      "base_rate": 0.16600529100529102,
+      "brier_raw": 0.13294025854370278,
+      "brier_station": 0.11837603967812536,
+      "brier_climo": 0.14168431075176074
+    },
+    "KHOU/temp_max": {
+      "n_bins": 1512,
+      "n_dates": 36,
+      "base_rate": 0.16071428571428573,
+      "brier_raw": 0.11905461382267185,
+      "brier_station": 0.12578360393751753,
+      "brier_climo": 0.12714654086862076
+    },
+    "KHOU/temp_min": {
+      "n_bins": 1512,
+      "n_dates": 36,
+      "base_rate": 0.16666666666666666,
+      "brier_raw": 0.1049200618431261,
+      "brier_station": 0.10929816667151732,
+      "brier_climo": 0.11506800260023532
     },
     "KLAS/temp_max": {
       "n_bins": 1470,
@@ -263,6 +279,22 @@
       "brier_raw": 0.10857248665442423,
       "brier_station": 0.09444682359238485,
       "brier_climo": 0.1401178559500044
+    },
+    "KMDW/temp_max": {
+      "n_bins": 1512,
+      "n_dates": 36,
+      "base_rate": 0.1541005291005291,
+      "brier_raw": 0.12173454064847554,
+      "brier_station": 0.11949693949548702,
+      "brier_climo": 0.13045755473556872
+    },
+    "KMDW/temp_min": {
+      "n_bins": 1512,
+      "n_dates": 36,
+      "base_rate": 0.15476190476190477,
+      "brier_raw": 0.11448267326720175,
+      "brier_station": 0.12017472898805268,
+      "brier_climo": 0.1310695867259338
     },
     "KMIA/temp_max": {
       "n_bins": 1512,
@@ -311,22 +343,6 @@
       "brier_raw": 0.13649354819398232,
       "brier_station": 0.12329124262623051,
       "brier_climo": 0.1317109554743298
-    },
-    "KORD/temp_max": {
-      "n_bins": 1512,
-      "n_dates": 36,
-      "base_rate": 0.15674603174603174,
-      "brier_raw": 0.12546578351219298,
-      "brier_station": 0.12247184480884175,
-      "brier_climo": 0.13149339837842597
-    },
-    "KORD/temp_min": {
-      "n_bins": 1512,
-      "n_dates": 36,
-      "base_rate": 0.1527777777777778,
-      "brier_raw": 0.12038279833790184,
-      "brier_station": 0.12437830423653043,
-      "brier_climo": 0.13125624050491957
     },
     "KPHL/temp_max": {
       "n_bins": 1512,
@@ -414,15 +430,15 @@
       "a": "p_station",
       "b": "p_raw",
       "dates": 36,
-      "a_wins": 35,
-      "p_one_sided": 5.384208634495735e-10
+      "a_wins": 34,
+      "p_one_sided": 9.70612745732069e-09
     },
     "raw_vs_climo": {
       "a": "p_raw",
       "b": "p_climo",
       "dates": 36,
-      "a_wins": 22,
-      "p_one_sided": 0.1214924770174548
+      "a_wins": 23,
+      "p_one_sided": 0.06624908198136836
     },
     "station_vs_climo": {
       "a": "p_station",
@@ -436,98 +452,98 @@
     "KATL": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "2": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "3": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "4": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "5": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "6": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "7": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "2": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "3": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "4": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "5": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "6": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "7": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         }
       },
       "gfs_graphcast025": {
         "1": {
-          "first_day": "2026-05-12",
-          "last_day": "2026-05-21",
-          "n_days": 10,
-          "n_hours_valid": 222
+          "first_day": null,
+          "last_day": null,
+          "n_days": 0,
+          "n_hours_valid": 0
         },
         "2": {
           "first_day": null,
@@ -536,122 +552,122 @@
           "n_hours_valid": 0
         },
         "3": {
-          "first_day": "2026-05-12",
-          "last_day": "2026-05-21",
-          "n_days": 10,
-          "n_hours_valid": 222
+          "first_day": null,
+          "last_day": null,
+          "n_days": 0,
+          "n_hours_valid": 0
         },
         "4": {
-          "first_day": "2026-05-12",
-          "last_day": "2026-05-21",
-          "n_days": 10,
-          "n_hours_valid": 222
+          "first_day": null,
+          "last_day": null,
+          "n_days": 0,
+          "n_hours_valid": 0
         },
         "5": {
-          "first_day": "2026-05-12",
-          "last_day": "2026-05-21",
-          "n_days": 10,
-          "n_hours_valid": 222
+          "first_day": null,
+          "last_day": null,
+          "n_days": 0,
+          "n_hours_valid": 0
         },
         "6": {
-          "first_day": "2026-05-12",
-          "last_day": "2026-05-21",
-          "n_days": 10,
-          "n_hours_valid": 222
+          "first_day": null,
+          "last_day": null,
+          "n_days": 0,
+          "n_hours_valid": 0
         },
         "7": {
-          "first_day": "2026-05-12",
-          "last_day": "2026-05-21",
-          "n_days": 10,
-          "n_hours_valid": 222
+          "first_day": null,
+          "last_day": null,
+          "n_days": 0,
+          "n_hours_valid": 0
         }
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "2": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "3": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "4": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "5": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "6": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "7": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "2": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "3": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "4": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "5": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "6": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         },
         "7": {
-          "first_day": "2026-05-12",
+          "first_day": "2026-07-13",
           "last_day": "2026-09-07",
-          "n_days": 119,
-          "n_hours_valid": 2856
+          "n_days": 57,
+          "n_hours_valid": 1368
         }
       }
     },
@@ -1099,7 +1115,7 @@
         }
       }
     },
-    "KORD": {
+    "KMDW": {
       "ecmwf_ifs025": {
         "1": {
           "first_day": "2026-05-12",
@@ -1321,7 +1337,7 @@
         }
       }
     },
-    "KDAL": {
+    "KDFW": {
       "ecmwf_ifs025": {
         "1": {
           "first_day": "2026-05-12",
@@ -1765,7 +1781,7 @@
         }
       }
     },
-    "KIAH": {
+    "KHOU": {
       "ecmwf_ifs025": {
         "1": {
           "first_day": "2026-05-12",
