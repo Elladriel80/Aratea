@@ -230,3 +230,20 @@ def test_summarize_groups_and_reports_deltas():
     s = summarize(rows, lambda r: r.lead)
     assert s[1]["n_bins"] == 2 and s[1]["n_dates"] == 2
     assert s[1]["brier_station"] < s[1]["brier_raw"] < s[1]["brier_climo"]
+
+
+def test_kalshi_resolution_stations_match_market_rules():
+    """Revue 2026-09-09 : les règles Kalshi nomment Chicago Midway, Houston Hobby
+    et Dallas-Fort Worth (aucun CLI n'existe pour Love Field). Verrouille la
+    correction pour que personne ne remette O'Hare / Intercontinental."""
+    from src.kalshi.resolution import NWS_STATIONS, SERIES_TO_STATION
+    from src.weather.open_meteo import CITIES
+    from src.truth.iem_cli import CITY_TO_ICAO
+    assert SERIES_TO_STATION["KXLOWTCHI"] == "CLIMDW" and SERIES_TO_STATION["KXHIGHTCHI"] == "CLIMDW"
+    assert SERIES_TO_STATION["KXLOWTHOU"] == "CLIHOU" and SERIES_TO_STATION["KXHIGHTHOU"] == "CLIHOU"
+    assert SERIES_TO_STATION["KXHIGHTDAL"] == "CLIDFW"
+    assert CITY_TO_ICAO["CHICAGO"] == "KMDW" and CITY_TO_ICAO["HOUSTON"] == "KHOU" and CITY_TO_ICAO["DALLAS"] == "KDFW"
+    # les coordonnées de prévision sont celles de la station de résolution
+    for city, icao in (("CHICAGO", "KMDW"), ("HOUSTON", "KHOU"), ("DALLAS", "KDFW")):
+        st = next(s for s in NWS_STATIONS.values() if s.icao == icao)
+        assert abs(CITIES[city]["lat"] - st.lat) < 0.01 and abs(CITIES[city]["lon"] - st.lon) < 0.01

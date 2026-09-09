@@ -127,14 +127,14 @@ STATION_TZ: dict[str, str] = {
     "KSFO": "America/Los_Angeles", "KSAT": "America/Chicago", "KPHX": "America/Phoenix",
     "KOKC": "America/Chicago", "KMSP": "America/Chicago", "KIAH": "America/Chicago",
     "KSEA": "America/Los_Angeles", "KLAS": "America/Los_Angeles", "KDCA": "America/New_York",
-    "KATL": "America/New_York", "KDAL": "America/Chicago",
+    "KATL": "America/New_York", "KDAL": "America/Chicago", "KHOU": "America/Chicago", "KDFW": "America/Chicago",
 }
 
 
 # Clé ville (CITIES, open_meteo.py) → ICAO de la station de résolution.
 CITY_TO_ICAO: dict[str, str] = {
-    "ATLANTA": "KATL", "AUSTIN": "KAUS", "BOSTON": "KBOS", "CHICAGO": "KORD",
-    "DALLAS": "KDAL", "DENVER": "KDEN", "HOUSTON": "KIAH", "LASVEGAS": "KLAS",
+    "ATLANTA": "KATL", "AUSTIN": "KAUS", "BOSTON": "KBOS", "CHICAGO": "KMDW",
+    "DALLAS": "KDFW", "DENVER": "KDEN", "HOUSTON": "KHOU", "LASVEGAS": "KLAS",
     "LOSANGELES": "KLAX", "MIAMI": "KMIA", "MINNEAPOLIS": "KMSP", "NYC": "KNYC",
     "PHILADELPHIA": "KPHL", "PHOENIX": "KPHX", "SANANTONIO": "KSAT",
     "SANFRANCISCO": "KSFO", "SEATTLE": "KSEA", "WASHINGTON": "KDCA",
