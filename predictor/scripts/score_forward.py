@@ -96,8 +96,13 @@ def main() -> int:
         return 0
 
     # Détermine les predictors présents
-    sample = next(iter(unique_records))
-    predictors_in_data = list(sample.get("predictions", {}).keys())
+    # Union sur tous les records : un predictor ajouté en cours de route
+    # (ex. ensemble_members, 2026-09-09) n'apparaît pas dans les anciens.
+    seen: dict[str, None] = {}
+    for r in unique_records:
+        for k in (r.get("predictions") or {}):
+            seen.setdefault(k, None)
+    predictors_in_data = list(seen)
     if args.predictor:
         if args.predictor not in predictors_in_data:
             print(f"Predictor {args.predictor} absent. Disponibles : {predictors_in_data}")

@@ -43,6 +43,7 @@ from src.predictors.parsers import parse_market  # noqa: E402
 from src.predictors.climatology import ClimatologyPredictor  # noqa: E402
 from src.predictors.forecast_blend import ForecastBlendPredictor  # noqa: E402
 from src.predictors.ensemble import EnsemblePredictor  # noqa: E402
+from src.predictors.ensemble_members import EnsembleMembersPredictor  # noqa: E402
 from src.weather import OpenMeteoClient  # noqa: E402
 
 
@@ -50,6 +51,8 @@ PREDICTOR_FACTORIES = {
     "climatology": lambda w: ClimatologyPredictor(w),
     "forecast_blend": lambda w: ForecastBlendPredictor(w),
     "ensemble": lambda w: EnsemblePredictor(w),
+    # Challenger 2026-09-09 : vrais membres d'ensemble (IFS/AIFS/GEFS, ~130).
+    "ensemble_members": lambda w: EnsembleMembersPredictor(w),
 }
 
 
@@ -61,7 +64,7 @@ def _slim_inputs(inputs: dict) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--predictors", default="climatology,forecast_blend,ensemble",
+    parser.add_argument("--predictors", default="climatology,forecast_blend,ensemble,ensemble_members",
                         help="Liste de predictors (virgule-separee)")
     parser.add_argument("--series", default="",
                         help="Filtre par prefixes serie (vide = tous les snapshots dispo)")
