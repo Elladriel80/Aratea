@@ -33,10 +33,14 @@ CITIES: dict[str, dict] = {
     "ATLANTA":      {"lat": 33.6367, "lon":  -84.4281, "tz": "America/New_York",    "label": "Atlanta Hartsfield-Jackson"},
     "AUSTIN":       {"lat": 30.1945, "lon":  -97.6699, "tz": "America/Chicago",     "label": "Austin Bergstrom"},
     "BOSTON":       {"lat": 42.3656, "lon":  -71.0096, "tz": "America/New_York",    "label": "Boston Logan"},
-    "CHICAGO":      {"lat": 41.9803, "lon":  -87.9090, "tz": "America/Chicago",     "label": "Chicago O'Hare"},
-    "DALLAS":       {"lat": 32.8470, "lon":  -96.8517, "tz": "America/Chicago",     "label": "Dallas Love Field"},
+    # Revue stations 2026-09-09 : les règles Kalshi nomment Chicago MIDWAY (KMDW),
+    # Houston HOBBY (KHOU) et Dallas-Fort Worth (KDFW) ; le repo prévoyait à
+    # O'Hare / Intercontinental / Love Field (25 à 40 km d'écart, climats
+    # différents : lac Michigan, baie de Galveston).
+    "CHICAGO":      {"lat": 41.7868, "lon":  -87.7522, "tz": "America/Chicago",     "label": "Chicago Midway (KMDW)"},
+    "DALLAS":       {"lat": 32.8998, "lon":  -97.0403, "tz": "America/Chicago",     "label": "Dallas-Fort Worth Intl (KDFW)"},
     "DENVER":       {"lat": 39.8561, "lon": -104.6737, "tz": "America/Denver",      "label": "Denver International"},
-    "HOUSTON":      {"lat": 29.9844, "lon":  -95.3414, "tz": "America/Chicago",     "label": "Houston Intercontinental"},
+    "HOUSTON":      {"lat": 29.6454, "lon":  -95.2789, "tz": "America/Chicago",     "label": "Houston Hobby (KHOU)"},
     "LASVEGAS":     {"lat": 36.0840, "lon": -115.1537, "tz": "America/Los_Angeles", "label": "Las Vegas Harry Reid"},
     "LOSANGELES":   {"lat": 33.9416, "lon": -118.4085, "tz": "America/Los_Angeles", "label": "LAX"},
     "MIAMI":        {"lat": 25.7959, "lon":  -80.2870, "tz": "America/New_York",    "label": "Miami International"},

@@ -310,9 +310,9 @@ def build(stations: dict[str, Any] | None = None,
 LOCATION_KEY_TO_ICAO: dict[str, str] = {
     "AUSTIN":        "KAUS",
     "BOSTON":        "KBOS",
-    "CHICAGO":       "KORD",
+    "CHICAGO":       "KMDW",   # revue stations 2026-09-09 (Kalshi = Midway)
     "DENVER":        "KDEN",
-    "HOUSTON":       "KIAH",
+    "HOUSTON":       "KHOU",   # revue stations 2026-09-09 (Kalshi = Hobby)
     "LASVEGAS":      "KLAS",
     "LOSANGELES":    "KLAX",
     "MIAMI":         "KMIA",
