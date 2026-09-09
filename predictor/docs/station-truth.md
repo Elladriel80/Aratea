@@ -79,3 +79,11 @@ station bat raw 54/63 dates. À J-1 l'écart au marché passe de +0,018 à +0,00
 **Décision** : flag `ARATEA_ENS_STATION_BIAS=1` activé dans `daily-trading.yml` (PR #221). Table `station_bias.json` rafraîchie chaque lundi. Réversible en passant le flag à 0. Limite connue : biais appris sur une saison (mai-septembre), à surveiller au changement de saison via le rapport hebdo.
 
 EN: first weekly run confirms the wrong-target diagnosis (ERA5 off by a full bin 20-70 % of days), station_bias beats the raw policy 35/36 holdout dates (Brier 0.1258 → 0.1151), and on live captures replayed offline it closes the J-1 gap to kalshi_mid from +0.018 to +0.004 (J0 stays out of reach without real-time observations). Flag enabled in daily-trading.yml, reversible, table refreshed weekly; known limit: single-season bias.
+
+---
+
+## Challenger `ensemble_members` (2026-09-09) / `ensemble_members` challenger
+
+FR : Nouveau predictor `ensemble_members` (`src/predictors/ensemble_members.py`, client `src/weather/ensemble_api.py`) : P(bin) calculée sur les vrais membres d'ensemble Open-Meteo (ECMWF IFS 51, ECMWF AIFS ENS 51, GEFS 31 par défaut, réglable par `ARATEA_ENS_MEMBER_MODELS`), extrêmes journaliers dans la fenêtre LST du CLI, biais station si `ARATEA_ENS_STATION_BIAS=1`, lissage gaussien de 1 °F (`ARATEA_ENS_MEMBERS_KERNEL_F`), poids égal par modèle. Capturé chaque jour par `forward_predict` à côté de `ensemble` (défaut élargi), scoré par `score_forward`, comparé au marché sur ses propres lignes par `eval_station_bias_market.py` (tableau « Challenger ensemble_members »). Pas d'archive Previous Runs pour les ensembles : l'évaluation est forward uniquement, il faut compter 3 à 4 semaines de captures avant un verdict. Ne touche pas au champion.
+
+EN : New shadow predictor built on real ensemble members (~130), CLI LST window, optional station bias, 1 °F kernel, equal model weight. Captured daily next to `ensemble`, scored by `score_forward`, compared to the market on its own rows. No archive exists for ensemble members, so the evaluation is forward-only: expect 3-4 weeks before a verdict. Champion untouched.

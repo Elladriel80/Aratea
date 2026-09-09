@@ -192,8 +192,10 @@ def main() -> int:
             skips["no_bias_yet"] += 1
             continue
         p_station = prob_in_bin_gaussian(mu + bs[0], bs[1], b)
+        em = (r.get("predictions") or {}).get("ensemble_members") or {}
+        p_members = em.get("prob_yes") if isinstance(em.get("prob_yes"), (int, float)) else None
         rows.append({**r, "y": y, "p_raw": p_raw, "p_station": p_station, "p_mkt": r["yes_mid"],
-                     "_month": r["_target"].strftime("%Y-%m"), "_icao": icao})
+                     "p_members": p_members, "_month": r["_target"].strftime("%Y-%m"), "_icao": icao})
 
     if not rows:
         print(f"Aucune ligne évaluable. Skips : {dict(skips)}")
@@ -203,6 +205,16 @@ def main() -> int:
     by_lead = summarize(rows, lambda r: r["_lead"])
     by_month = summarize(rows, lambda r: r["_month"])
     by_station = summarize(rows, lambda r: f"{r['_icao']}/{r['variable']}")
+    # Challenger ensemble_members (capturé depuis le 2026-09-09) : comparé sur
+    # ses seules lignes, aux trois autres politiques.
+    mrows = [r for r in rows if r.get("p_members") is not None]
+    members_summ = {}
+    if mrows:
+        for k, v in summarize(mrows, lambda r: r["_lead"]).items():
+            v["brier_members"] = statistics.fmean(brier(r["p_members"], r["y"]) for r in mrows if r["_lead"] == k)
+            members_summ[k] = v
+        members_tests = {"members_vs_station": sign_test(mrows, "p_members", "p_station"),
+                         "members_vs_market": sign_test(mrows, "p_members", "p_mkt")}
     tests = {
         "station_vs_raw": sign_test(rows, "p_station", "p_raw"),
         "raw_vs_market": sign_test(rows, "p_raw", "p_mkt"),
@@ -230,6 +242,14 @@ def main() -> int:
     lines += table("Par lead / by lead (jours entre capture et cible)", by_lead, "lead")
     lines += table("Par mois de cible / by target month", by_month, "mois")
     lines += table("Par station / by station", by_station, "station/variable")
+    if members_summ:
+        lines += ["### Challenger ensemble_members (lignes où il est capturé)", "",
+                  "| lead | n bins | n dates | Brier raw | Brier station | Brier members | Brier kalshi_mid |", "|---|---|---|---|---|---|---|"]
+        for k, v in members_summ.items():
+            lines.append(f"| {k} | {v['n_bins']} | {v['n_dates']} | {v['brier_raw']:.4f} | {v['brier_station']:.4f} | "
+                         f"{v['brier_members']:.4f} | {v['brier_market']:.4f} |")
+        lines.append("")
+        tests.update(members_tests)
     lines += ["### Sign tests par date", "", "| comparaison | dates | victoires a | p unilatéral |", "|---|---|---|---|"]
     for k, t in tests.items():
         lines.append(f"| {k} ({t['a']} < {t['b']}) | {t['dates']} | {t['a_wins']} | {fmt(t['p_one_sided'])} |")
@@ -240,7 +260,8 @@ def main() -> int:
         "schema": "station_bias_market_backtest/1", "generated_at": now,
         "params": {"min_date": args.min_date or None, "leads": sorted(leads) if leads else None},
         "n_rows": len(rows), "skips": dict(skips), "overall": overall, "by_lead": by_lead,
-        "by_month": by_month, "by_station": by_station, "sign_tests": tests}, indent=2), encoding="utf-8")
+        "by_month": by_month, "by_station": by_station, "sign_tests": tests,
+        "ensemble_members_by_lead": members_summ}, indent=2), encoding="utf-8")
     print("\n".join(lines))
     return 0
 
