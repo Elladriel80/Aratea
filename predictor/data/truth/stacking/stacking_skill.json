@@ -1,0 +1,281 @@
+{
+  "schema": "market_residual_stack/1",
+  "generated_at": "2026-09-12T14:53:39Z",
+  "params": {
+    "split_date": "2026-08-03",
+    "end": "2026-09-07",
+    "leads": [
+      1
+    ],
+    "stations": [
+      "KATL",
+      "KAUS",
+      "KBOS",
+      "KMDW",
+      "KDFW",
+      "KDEN",
+      "KHOU",
+      "KLAS",
+      "KLAX",
+      "KMIA",
+      "KMSP",
+      "KNYC",
+      "KPHL",
+      "KPHX",
+      "KSAT",
+      "KSFO",
+      "KSEA",
+      "KDCA"
+    ],
+    "min_train_stack": 50,
+    "min_market_days": 30,
+    "model": "city-corrected mix (station bias, TRAIN < split)",
+    "prior": "kalshi_mid yes_mid from forward captures",
+    "fit": "OLS residual, no intercept: y-market ~ w*(model-market)"
+  },
+  "weight": 0.25529205737453564,
+  "n_rows_market": 4948,
+  "n_rows_train": 3860,
+  "n_rows_holdout": 1016,
+  "n_rows_holdout_nbm": 1016,
+  "n_dates_train": 48,
+  "n_dates_holdout": 13,
+  "train_dates": [
+    "2026-06-06",
+    "2026-06-09",
+    "2026-06-16",
+    "2026-06-17",
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-20",
+    "2026-06-21",
+    "2026-06-22",
+    "2026-06-23",
+    "2026-06-24",
+    "2026-06-25",
+    "2026-06-26",
+    "2026-06-27",
+    "2026-06-29",
+    "2026-06-30",
+    "2026-07-01",
+    "2026-07-02",
+    "2026-07-03",
+    "2026-07-04",
+    "2026-07-05",
+    "2026-07-06",
+    "2026-07-07",
+    "2026-07-08",
+    "2026-07-09",
+    "2026-07-10",
+    "2026-07-11",
+    "2026-07-12",
+    "2026-07-13",
+    "2026-07-14",
+    "2026-07-15",
+    "2026-07-16",
+    "2026-07-17",
+    "2026-07-18",
+    "2026-07-19",
+    "2026-07-20",
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23",
+    "2026-07-24",
+    "2026-07-25",
+    "2026-07-26",
+    "2026-07-28",
+    "2026-07-29",
+    "2026-07-30",
+    "2026-07-31",
+    "2026-08-01",
+    "2026-08-02"
+  ],
+  "holdout_dates": [
+    "2026-08-03",
+    "2026-08-04",
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-07",
+    "2026-08-08",
+    "2026-08-09",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-12"
+  ],
+  "market_skips": {
+    "emos_pre_split": 3860,
+    "no_cli_truth": 60
+  },
+  "nbm_note": "34020 pr\u00e9visions NBM d\u00e9j\u00e0 l\u00e0 (A2).",
+  "ledger": {
+    "path": "/workspace/predictor/data/ledger/paper_bets.csv",
+    "n_rows": 780,
+    "n_resolved": 751,
+    "n_with_price": 780,
+    "n_dates": 61,
+    "date_min": "2026-05-11",
+    "date_max": "2026-09-11",
+    "present": true
+  },
+  "calibration_train": {
+    "ece_station": 0.006201322601283507,
+    "ece_market": 0.013147668393782405,
+    "mae_station": 0.26503545196866346,
+    "mae_market": 0.25587305699481866
+  },
+  "disagreement": {
+    "train": {
+      "threshold": 0.006201322601283507,
+      "n_rows": 3860,
+      "n_real": 3624,
+      "share_real": 0.938860103626943,
+      "n_dates_real": 48,
+      "brier_station_real": 0.1351019477345399,
+      "brier_market_real": 0.12917932533112583,
+      "brier_stack_real": 0.1283934506803003,
+      "brier_nbm_real": 0.138518589706739
+    },
+    "holdout": {
+      "threshold": 0.006201322601283507,
+      "n_rows": 1016,
+      "n_real": 962,
+      "share_real": 0.9468503937007874,
+      "n_dates_real": 13,
+      "brier_station_real": 0.14293031326061012,
+      "brier_market_real": 0.12330376819126819,
+      "brier_stack_real": 0.12545368401367493,
+      "brier_nbm_real": 0.13804275236406932
+    }
+  },
+  "market": {
+    "train": {
+      "all": {
+        "n_bins": 3860,
+        "n_dates": 48,
+        "base_rate": 0.188860103626943,
+        "brier_stack": 0.12559791564588188,
+        "n_p_stack": 3860,
+        "brier_station": 0.13189164261618497,
+        "n_p_station": 3860,
+        "brier_market": 0.12633753886010363,
+        "n_p_market": 3860,
+        "brier_nbm": 0.13536064519466035,
+        "n_p_nbm": 3860,
+        "brier_raw": 0.14339163099292668,
+        "n_p_raw": 3860
+      }
+    },
+    "holdout": {
+      "all": {
+        "n_bins": 1016,
+        "n_dates": 13,
+        "base_rate": 0.19586614173228348,
+        "brier_stack": 0.12247970169394008,
+        "n_p_stack": 1016,
+        "brier_station": 0.1390265628029674,
+        "n_p_station": 1016,
+        "brier_market": 0.1204445374015748,
+        "n_p_market": 1016,
+        "brier_nbm": 0.13395422476138585,
+        "n_p_nbm": 1016,
+        "brier_raw": 0.14777422238648147,
+        "n_p_raw": 1016
+      }
+    },
+    "holdout_by_variable": {
+      "temp_max": {
+        "n_bins": 456,
+        "n_dates": 13,
+        "base_rate": 0.21052631578947367,
+        "brier_stack": 0.13400726505586968,
+        "n_p_stack": 456,
+        "brier_station": 0.16013085172133049,
+        "n_p_station": 456,
+        "brier_market": 0.13057922149122808,
+        "n_p_market": 456,
+        "brier_nbm": 0.14413419300514432,
+        "n_p_nbm": 456,
+        "brier_raw": 0.16617359111778537,
+        "n_p_raw": 456
+      },
+      "temp_min": {
+        "n_bins": 560,
+        "n_dates": 12,
+        "base_rate": 0.18392857142857144,
+        "brier_stack": 0.11309297152779738,
+        "n_p_stack": 560,
+        "brier_station": 0.12184164182658604,
+        "n_p_station": 560,
+        "brier_market": 0.11219200892857144,
+        "n_p_market": 560,
+        "brier_nbm": 0.1256648220486111,
+        "n_p_nbm": 560,
+        "brier_raw": 0.13279187927670544,
+        "n_p_raw": 560
+      }
+    },
+    "holdout_nbm": {
+      "all": {
+        "n_bins": 1016,
+        "n_dates": 13,
+        "base_rate": 0.19586614173228348,
+        "brier_stack": 0.12247970169394008,
+        "n_p_stack": 1016,
+        "brier_station": 0.1390265628029674,
+        "n_p_station": 1016,
+        "brier_market": 0.1204445374015748,
+        "n_p_market": 1016,
+        "brier_nbm": 0.13395422476138585,
+        "n_p_nbm": 1016,
+        "brier_raw": 0.14777422238648147,
+        "n_p_raw": 1016
+      }
+    }
+  },
+  "sign_tests": {
+    "stack_vs_market": {
+      "a": "p_stack",
+      "b": "p_market",
+      "dates": 13,
+      "a_wins": 2,
+      "p_one_sided": 0.998291015625
+    },
+    "stack_vs_station": {
+      "a": "p_stack",
+      "b": "p_station",
+      "dates": 13,
+      "a_wins": 12,
+      "p_one_sided": 0.001708984375
+    },
+    "station_vs_market": {
+      "a": "p_station",
+      "b": "p_market",
+      "dates": 13,
+      "a_wins": 1,
+      "p_one_sided": 0.9998779296875
+    },
+    "stack_vs_nbm": {
+      "a": "p_stack",
+      "b": "p_nbm",
+      "dates": 13,
+      "a_wins": 10,
+      "p_one_sided": 0.046142578125
+    },
+    "nbm_vs_market": {
+      "a": "p_nbm",
+      "b": "p_market",
+      "dates": 13,
+      "a_wins": 3,
+      "p_one_sided": 0.98876953125
+    }
+  },
+  "promote": false,
+  "promote_reason": "Pas de promotion : 13 jours de test avec un prix, il en faut 30.",
+  "learning_reuse": {
+    "yes_mid": "src/learning/dataset.py keeps the earliest capture with yes_mid",
+    "not_used": "old LogisticRegression feature sets (they fight the market)"
+  }
+}
