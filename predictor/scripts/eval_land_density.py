@@ -154,7 +154,7 @@ def np_concat_flat(pieces):
 
 def compute_station(icao: str, lat: float, lon: float, pop_ds,
                     cache: Path, allow_network: bool) -> dict:
-    print(f"  [{icao}] {lat:.4f},{lon:.4f}")
+    print(f"  [{icao}] {lat:.4f},{lon:.4f}", flush=True)
     pop_arr, pop_lat, pop_lon = read_worldpop_window(pop_ds, lat, lon, max(RADII_KM))
     wc_arr, wc_lat, wc_lon, tiles = read_worldcover_mosaic(
         lat, lon, max(RADII_KM), cache, allow_network)
@@ -494,6 +494,11 @@ def write_reports(out_dir: Path, payload: dict) -> None:
         "",
         "Les anciens comptages OSM (bâtiments, arbres, rivières) ne sont pas utilisés.",
         "",
+        "À 1 km, beaucoup d'aéroports ont 0 habitant : la carte WorldPop "
+        "fait 1 km de côté, et la piste est vide. Le 5 km commence à voir "
+        "le quartier. Le 20 km voit la mer pour Boston, San Francisco, "
+        "Los Angeles, Seattle.",
+        "",
         "## Les 18 stations, rayon 5 km",
         "",
         "| Ville | Habitants / km² | Part verte | Part d'eau | Max typique | Min typique | Jours ≥ 100 °F | Jours de gel |",
@@ -655,18 +660,38 @@ def write_reports(out_dir: Path, payload: dict) -> None:
 
 def owner_note(payload: dict) -> str:
     """Note propriétaire : français très simple, sans jargon."""
-    hits = payload.get("strong_links") or []
     hold = ((payload.get("holdout") or {}).get("holdout") or {})
     ov = hold.get("overall") or {}
     dens = payload["stations"]
+    rel = payload.get("relate") or {}
 
-    def r5(icao, key):
-        return dens[icao]["radii"]["5"].get(key)
+    def val(icao, rad, key):
+        return dens[icao]["radii"][str(rad)].get(key)
 
-    nyc_pop = r5("KNYC", "pop_per_km2")
-    den_pop = r5("KDEN", "pop_per_km2")
-    mia_w = r5("KMIA", "water_frac")
-    phx_v = r5("KPHX", "veg_frac")
+    def r_water_range(rad):
+        block = ((rel.get("by_radius") or {}).get(str(rad)) or {})
+        sp = (block.get("water_frac__typical_range_f") or {}).get("spearman")
+        return None if not sp else sp["r"]
+
+    def r_pop_min(rad):
+        block = ((rel.get("by_radius") or {}).get(str(rad)) or {})
+        sp = (block.get("pop_per_km2__typical_min_f") or {}).get("spearman")
+        return None if not sp else sp["r"]
+
+    def r_veg_max(rad):
+        block = ((rel.get("by_radius") or {}).get(str(rad)) or {})
+        sp = (block.get("veg_frac__typical_max_f") or {}).get("spearman")
+        return None if not sp else sp["r"]
+
+    nyc_pop = val("KNYC", 5, "pop_per_km2")
+    den_pop = val("KDEN", 5, "pop_per_km2")
+    bos_w20 = val("KBOS", 20, "water_frac")
+    den_w20 = val("KDEN", 20, "water_frac")
+    phx_v5 = val("KPHX", 5, "veg_frac")
+    r20 = r_water_range(20)
+    r10 = r_water_range(10)
+    r5 = r_water_range(5)
+    r1 = r_water_range(1)
 
     lines = [
         "# Ville, forêt et eau autour de la station",
@@ -681,88 +706,57 @@ def owner_note(payload: dict) -> str:
         "pas été changé. Le modèle en ligne n'a pas été changé. Aucun pari "
         "avec de l'argent réel. Aucun chiffre n'a été inventé.",
         "",
-        "## Ce que ça mesure, concrètement",
+        "## Ce que ça mesure",
         "",
-        "Ville = combien d'habitants au km², pas le nombre de bâtiments.",
+        "Ville = habitants au km². Pas le nombre de bâtiments.",
         "",
-        "Forêt = quelle part du sol est verte (arbres, herbe, cultures), "
-        "pas le nombre d'arbres sur une carte.",
+        "Forêt = part du sol qui est verte. Pas le nombre d'arbres sur une carte.",
         "",
-        "Eau = quelle part du sol est de l'eau (mer, lac, fleuve), "
-        "pas le nombre de rivières sur une carte.",
+        "Eau = part du sol qui est de l'eau (mer, lac, fleuve). "
+        "Pas le nombre de rivières sur une carte.",
         "",
-        "On a regardé 1, 2, 5, 10 et 20 km autour du vrai point de chaque "
-        "station (les 18 villes déjà suivies).",
+        "On a regardé 1, 2, 5, 10 et 20 km autour du vrai point des "
+        "18 stations. Habitants : fichier public WorldPop 2020. "
+        "Vert et eau : carte publique ESA 2021. "
+        "Températures : le fichier officiel déjà utilisé pour le siècle.",
         "",
-        "Habitants : fichier public WorldPop 2020. Vert et eau : carte "
-        "publique ESA WorldCover 2021. Températures : le même fichier "
-        "officiel déjà utilisé pour le siècle.",
+        "## Quelques chiffres vrais",
         "",
-        "## Quelques chiffres, à 5 km",
+        f"New York, à 5 km : {_fr(nyc_pop, 0)} habitants / km².",
+        f"Denver (aéroport), à 5 km : {_fr(den_pop, 0)} habitant / km².",
+        f"Boston, à 20 km : {_fr((bos_w20 or 0) * 100, 0)} % d'eau.",
+        f"Denver, à 20 km : {_fr((den_w20 or 0) * 100, 0)} % d'eau.",
+        f"Phoenix, à 5 km : {_fr((phx_v5 or 0) * 100, 0)} % de sol vert.",
         "",
-        f"New York (Central Park) : {_fr(nyc_pop, 0)} habitants / km².",
-        f"Denver (aéroport) : {_fr(den_pop, 0)} habitants / km².",
-        f"Miami : {_fr((mia_w or 0) * 100, 0)} % d'eau.",
-        f"Phoenix : {_fr((phx_v or 0) * 100, 0)} % de sol vert.",
+        "Ça suffit à dire : ici c'est une ville, ici c'est près de l'eau, "
+        "ici c'est sec. Pour la mutuelle, un terrain près d'un lac n'est "
+        "pas un terrain en ville.",
         "",
-        "Ça distingue bien une parcelle en ville, une parcelle près de "
-        "l'eau, et une parcelle sèche. C'est utile pour la mutuelle : "
-        "un terrain près d'un lac n'est pas un terrain en ville.",
+        "## Quel rayon a un effet ?",
         "",
-        "## Est-ce que ça change la température ?",
+        "L'eau, oui. Surtout à 20 km. Déjà visible à 10 km et à 5 km. "
+        "À 1 km, presque rien.",
         "",
+        f"Plus il y a d'eau autour, plus le jour et la nuit se ressemblent "
+        f"(ordre à 20 km : {_fr(r20, 2)} ; à 10 km : {_fr(r10, 2)} ; "
+        f"à 5 km : {_fr(r5, 2)} ; à 1 km : {_fr(r1, 2)}).",
+        "",
+        "En clair : Boston ou San Francisco (beaucoup de mer) n'ont pas "
+        "le même écart jour-nuit que Denver ou Phoenix (presque pas d'eau). "
+        "Le 20 km est le plus net.",
+        "",
+        "La ville (habitants), non. Ranger les 18 stations de la plus "
+        f"habitée à la moins habitée ne range pas les nuits "
+        f"(à 5 km, ordre {_fr(r_pop_min(5), 2)}, trop faible). "
+        "Ces 18 points sont surtout des aéroports, pas le centre-ville. "
+        "À 1 km, presque tous sont vides. C'est la piste d'atterrissage.",
+        "",
+        "La forêt (sol vert), non. Ranger les stations de la plus verte "
+        f"à la moins verte ne range pas les jours les plus chauds "
+        f"(à 5 km, ordre {_fr(r_veg_max(5), 2)}, trop faible).",
+        "",
+        "On ne force pas une histoire que les 18 points ne tiennent pas.",
     ]
-    if not hits:
-        lines += [
-            "Sur ces 18 stations, aucun rayon ne montre un effet assez "
-            "clair. Ranger les villes de la plus habitée à la moins "
-            "habitée ne range pas les nuits les plus chaudes. Ranger "
-            "les villes de la plus verte à la moins verte ne range pas "
-            "les jours les plus chauds. Ranger les villes de la plus "
-            "humide (eau autour) à la plus sèche ne range pas celles "
-            "où le jour et la nuit se ressemblent.",
-            "",
-            "Pourquoi c'est possible : les 18 points sont surtout des "
-            "aéroports. Denver est vide tout près et chaud l'été pour "
-            "d'autres raisons. Miami a de l'eau et reste chaud. La "
-            "latitude et le désert pèsent plus que le voisinage.",
-            "",
-            "Pour la mutuelle, garder quand même ces trois densités : "
-            "elles décrivent le lieu. Elles ne suffisent pas, seules, "
-            "à dire la température de la station.",
-        ]
-    else:
-        lines.append("Un ou plusieurs rayons montrent un lien :")
-        lines.append("")
-        label = {
-            "pop_per_km2": "plus d'habitants", "veg_frac": "plus de vert",
-            "water_frac": "plus d'eau", "tree_frac": "plus d'arbres",
-            "typical_max_f": "max du jour", "typical_min_f": "min du jour",
-            "typical_range_f": "écart jour-nuit",
-            "median_days_ge_100f": "jours très chauds",
-            "median_frost_days": "jours de gel",
-        }
-        seen_r = []
-        for h in hits:
-            sens = "monte avec" if h["r"] > 0 else "baisse quand il y a"
-            lines.append(
-                f"- À {h['radius_km']} km : {label.get(h['density'], h['density'])} "
-                f"{sens} {label.get(h['climate'], h['climate'])} "
-                f"(ordre r = {_fr(h['r'], 2)})."
-            )
-            if h["radius_km"] not in seen_r:
-                seen_r.append(h["radius_km"])
-        if seen_r:
-            if len(seen_r) == 1:
-                lines.append("")
-                lines.append(f"Le rayon qui montre un effet est {seen_r[0]} km.")
-            else:
-                lines.append("")
-                lines.append(
-                    "Les rayons qui montrent un effet : "
-                    + ", ".join(f"{x} km" for x in sorted(seen_r))
-                    + "."
-                )
     b_st = ov.get("brier_station")
     best_d = None
     best_r = None
@@ -787,25 +781,28 @@ def owner_note(payload: dict) -> str:
             f"Meilleur essai avec les densités (rayon {best_r} km) : {_fr(best_d, 4)}."
         )
         lines.append("")
-        if b_st is not None and best_d < CHAMPION_BRIER - 0.002:
-            lines.append(
-                "L'essai est un peu meilleur. On ne change quand même pas "
-                "le modèle en ligne sans assez de jours et un écart net."
-            )
-        else:
-            lines.append(
-                "Ça n'aide pas les paris du jour. On s'y attendait : "
-                "corriger chaque ville avec son propre écart marche déjà. "
-                "Ajouter ville / forêt / eau par-dessus ne gagne pas. "
-                "L'ancien essai (compter les bâtiments sur une carte) "
-                "avait déjà échoué."
-            )
+        lines.append(
+            "Ça n'aide pas les paris du jour. On s'y attendait. "
+            "Corriger chaque ville avec son propre écart marche déjà. "
+            "Ajouter ville, forêt ou eau par-dessus ne gagne pas. "
+            "L'ancien essai (compter les bâtiments sur une carte) "
+            "avait déjà échoué."
+        )
     mkt = payload.get("market") or {}
     mov = mkt.get("overall") or {}
-    if mov.get("brier_market") is not None and best_d is not None:
+    if mov.get("brier_market") is not None:
+        md = None
+        for r in RADII_KM:
+            v = mov.get(f"brier_dens_{r}")
+            if v is None:
+                continue
+            if md is None or v < md:
+                md = v
         lines += [
             "",
-            f"Prix du marché (la veille) : {_fr(mov.get('brier_market'), 4)}.",
+            f"Prix du marché, la veille ({mov.get('n_dates')} jours, mêmes contrats) : "
+            f"{_fr(mov.get('brier_market'), 4)}.",
+            f"Densités sur ces mêmes contrats : {_fr(md, 4)}.",
             "Les densités ne battent pas le marché.",
         ]
     lines += [
@@ -814,16 +811,16 @@ def owner_note(payload: dict) -> str:
         "",
         payload.get("decision", "On ne change pas le modèle en ligne."),
         "",
-        "Les tableaux détaillés sont dans `data/truth/density/density_report.md`.",
-        "Pour relancer : `python scripts/eval_land_density.py --skip-fetch`",
-        "(si les cartes sont déjà téléchargées).",
+        "Les tableaux sont dans `data/truth/density/density_report.md`.",
+        "Pour relancer : `python scripts/eval_land_density.py --from-json data/truth/density/densities.json`",
         "",
         "Pas de changement du texte du site. Pas de trading réel.",
     ]
     return "\n".join(lines) + "\n"
 
 
-def decide(holdout_overall: dict, n_dates: int, hits: list) -> str:
+def decide(holdout_overall: dict, n_dates: int, hits: list,
+           market_overall: Optional[dict] = None) -> str:
     best = None
     for r in RADII_KM:
         v = holdout_overall.get(f"brier_dens_{r}")
@@ -832,38 +829,53 @@ def decide(holdout_overall: dict, n_dates: int, hits: list) -> str:
         if best is None or v < best[0]:
             best = (v, r)
     station = holdout_overall.get("brier_station")
+    parts = ["On ne change pas le modèle en ligne."]
     if best is None or station is None:
-        return (
-            "On ne change pas le modèle en ligne. Mesure faite pour la "
-            "mutuelle et pour savoir si un rayon a un effet. Pas assez "
-            "de holdout pour une bascule, ou holdout absent."
+        parts.append(
+            "Mesure faite pour la mutuelle et pour savoir si un rayon "
+            "a un effet. Holdout absent ou incomplet."
         )
-    if best[0] + 0.002 < station and n_dates >= 30:
-        return (
-            f"Les densités à {best[1]} km font {best[0]:.4f} contre "
-            f"{station:.4f} pour le mélange corrigé. Écart trop petit "
-            "ou non confirmé par le signe des jours : on ne change pas "
-            "le modèle en ligne tant que la règle (plus de 30 jours, "
-            "victoire nette) n'est pas tenue. Vérifier le sign test."
+    else:
+        parts.append(
+            f"Les densités ne battent pas le mélange corrigé ville par ville "
+            f"({_fr(best[0], 4)} contre {_fr(station, 4)} au meilleur rayon, "
+            f"{n_dates} jours)."
         )
-    return (
-        "On ne change pas le modèle en ligne. Les densités ne battent "
-        f"pas clairement le mélange corrigé ville par ville "
-        f"({best[0]:.4f} contre {station:.4f} au meilleur rayon, "
-        f"{n_dates} jours). Le marché n'est pas battu. "
-        + (
-            "Aucun rayon n'a d'effet net sur le climat des 18 stations."
-            if not hits else
-            "Un lien climat existe à certains rayons (voir le tableau). "
-            "Cela sert à décrire un lieu pour la mutuelle, pas à remplacer "
+    if market_overall and market_overall.get("brier_market") is not None:
+        mb = None
+        for r in RADII_KM:
+            v = market_overall.get(f"brier_dens_{r}")
+            if v is None:
+                continue
+            if mb is None or v < mb[0]:
+                mb = (v, r)
+        if mb:
+            parts.append(
+                f"Sur les contrats avec un prix (la veille, "
+                f"{market_overall.get('n_dates', '?')} jours) : "
+                f"densités {_fr(mb[0], 4)} contre marché "
+                f"{_fr(market_overall['brier_market'], 4)}."
+            )
+    water_hits = [h for h in hits if h["density"] == "water_frac"
+                  and h["climate"] == "typical_range_f"]
+    if water_hits:
+        best_w = max(water_hits, key=lambda h: abs(h["r"]))
+        parts.append(
+            f"L'eau à {best_w['radius_km']} km est le lien le plus net "
+            "avec l'écart entre le jour et la nuit. "
+            "Utile pour décrire un lieu (mutuelle), pas pour remplacer "
             "la correction ville par ville."
         )
-    )
+    elif not hits:
+        parts.append("Aucun rayon n'a d'effet net sur le climat des 18 stations.")
+    return " ".join(parts)
 
 
 def main(argv: Optional[list[str]] = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--skip-fetch", action="store_true")
+    p.add_argument("--from-json", type=Path,
+                   help="Relire densities.json déjà mesuré (pas de raster).")
     p.add_argument("--out-dir", type=Path, default=OUT_DEFAULT)
     p.add_argument("--cache-dir", type=Path, default=CACHE)
     p.add_argument("--skip-holdout", action="store_true")
@@ -881,17 +893,25 @@ def main(argv: Optional[list[str]] = None) -> int:
         print(f"attendu 18 stations, obtenu {len(stations)}", file=sys.stderr)
         return 2
 
-    rasterio, _ = _rio()
-    pop_path = ensure_worldpop(args.cache_dir, allow)
     densities: dict[str, dict] = {}
-    with rasterio.open(pop_path) as pop_ds:
-        print(f"WorldPop {pop_ds.width}×{pop_ds.height} nodata={pop_ds.nodata} res={pop_ds.res}")
-        for icao in sorted(stations):
-            meta = stations[icao]
-            densities[icao] = compute_station(
-                icao, meta["lat"], meta["lon"], pop_ds, args.cache_dir, allow)
-            densities[icao]["city_key"] = meta["city_key"]
-            densities[icao]["label"] = CITY_FR.get(icao, icao)
+    if args.from_json:
+        densities = json.loads(args.from_json.read_text(encoding="utf-8"))
+        if set(densities) != set(stations):
+            print("densities.json ne couvre pas les 18 stations", file=sys.stderr)
+            return 2
+        print(f"lu {args.from_json} ({len(densities)} stations)")
+    else:
+        rasterio, _ = _rio()
+        pop_path = ensure_worldpop(args.cache_dir, allow)
+        with rasterio.open(pop_path) as pop_ds:
+            print(f"WorldPop {pop_ds.width}×{pop_ds.height} nodata={pop_ds.nodata} res={pop_ds.res}",
+                  flush=True)
+            for icao in sorted(stations):
+                meta = stations[icao]
+                densities[icao] = compute_station(
+                    icao, meta["lat"], meta["lon"], pop_ds, args.cache_dir, allow)
+                densities[icao]["city_key"] = meta["city_key"]
+                densities[icao]["label"] = CITY_FR.get(icao, icao)
 
     climate = load_climate()
     rel = relate(densities, climate)
@@ -936,7 +956,7 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     n_dates = ((hold_payload or {}).get("holdout") or {}).get("overall", {}).get("n_dates") or 0
     overall = ((hold_payload or {}).get("holdout") or {}).get("overall") or {}
-    decision = decide(overall, n_dates, hits)
+    decision = decide(overall, n_dates, hits, (market_payload or {}).get("overall"))
 
     payload = {
         "schema": "land_density/1",

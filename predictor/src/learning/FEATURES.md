@@ -49,6 +49,9 @@ Every feature on this list MUST have:
 | `forecast_revision` | Change in p_consensus between earliest and latest capture of the same ticker. Hypothesis: drift velocity of the consensus toward YES/NO encodes atmospheric persistence; complementary to the level (p_consensus) and the horizon decay (days_ahead). | derived via dataset.annotate_revision_drift() across multi-day forward captures (B23) | 2026-06-21 | TBD (v4, pending multi-capture pipeline) | experimental |
 | `p_consensus_x_series_bias_fa` | Interaction p_consensus × series_bias_fa. Hypothesis: bias correction should scale with confidence level — when p_consensus is high and series overestimates, the error is larger. Tested B38 2026-06-21: NO-GO (VALID p=0.912, 3/12 dates, Brier worse than incumbent). | derived from p_consensus × series_bias_fa | 2026-06-21 | +0.0002 (VALID, worse) | dropped (v3fb NO-GO, 2026-06-21) |
 | `days_ahead_x_series_bias_fa` | Interaction days_ahead × series_bias_fa. Hypothesis: per-series calibration bias scales with forecast horizon — longer horizons may amplify series-specific miscalibration. Tested B38 2026-06-21: NO-GO (VALID p=0.633, 6/12 dates, tie). | derived from days_ahead × series_bias_fa | 2026-06-21 | 0.0000 (VALID, tie) | dropped (v3fb NO-GO, 2026-06-21) |
+| `pop_per_km2` | Inhabitants / km² in a disk around the official station (WorldPop 2020 count / πr²). Not OSM building counts. Hypothesis: city heat raises overnight lows. Measured 2026-09-12 on 18 stations: Spearman vs typical min is ~0.10 at 5-20 km (no effect). Additive residual on A1 holdout does not beat 0.1154. | WorldPop `usa_ppp_2020_1km_Aggregated.tif` (doi.org/10.5258/SOTON/WP00674) | 2026-09-12 | +0.0075 vs station_bias (worse); -0.0021 vs raw at 20 km | dropped (additive, 2026-09-12; place label for the mutual only) |
+| `veg_frac` | Vegetation fraction (km² green / km²) from ESA WorldCover 2021 classes 10/20/30/40/90/95/100. Not OSM tree counts. Hypothesis: canopy lowers daytime highs. Measured 2026-09-12: Spearman vs typical max is ~-0.07 at 5 km (no effect). | ESA WorldCover 10 m 2021 v200 (doi.org/10.5281/zenodo.7254221) | 2026-09-12 | tested jointly with pop/water | dropped (additive, 2026-09-12; no temperature rank on these 18 airports) |
+| `water_frac` | Permanent-water fraction (class 80, including sea) from the same WorldCover map. Not OSM waterway counts. Hypothesis: water damps the day-night range. Measured 2026-09-12: Spearman vs typical range -0.88 at 20 km, -0.75 at 10 km, -0.70 at 5 km, -0.37 at 1 km (18 stations). Additive residual on daily bins still loses to the 0.1154 city-corrected mix (0.1229 best). | ESA WorldCover 10 m 2021 v200 | 2026-09-12 | +0.0075 vs station_bias (worse); -0.0021 vs raw at 20 km | dropped as live additive (2026-09-12); kept as a place label for the mutual |
 
 ## Feature sets
 
@@ -93,6 +96,13 @@ Every feature on this list MUST have:
   at current sample size. Re-test once HOLDOUT > 30 dates.
 
 ## Updates
+
+2026-09-12: OSM geo *counts* stay dropped. Re-measured as real densities
+(WorldPop inhabitants / km², WorldCover vegetation and water fractions)
+at 1/2/5/10/20 km. Water at 20 km ranks with a smaller day-night range
+(Spearman −0.88, n=18). Population vs overnight min and vegetation vs
+daytime max do not rank. Additive residual on the A1 holdout is 0.1229
+at best vs 0.1154 city-corrected mix. Not added to any live feature set.
 
 `predictor/scripts/train_learned.py` writes a run record to
 `predictor/runs_learning/<timestamp_utc>/run.json` and then patches the
