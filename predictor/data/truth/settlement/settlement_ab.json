@@ -1,0 +1,1043 @@
+{
+  "run_at": "2026-09-12T16:18:26Z",
+  "champion_untouched": true,
+  "min_obs": 18,
+  "stations_requested": [
+    "KATL",
+    "KAUS",
+    "KBOS",
+    "KDCA",
+    "KDEN",
+    "KDFW",
+    "KHOU",
+    "KLAS",
+    "KLAX",
+    "KMDW",
+    "KMIA",
+    "KMSP",
+    "KNYC",
+    "KPHL",
+    "KPHX",
+    "KSAT",
+    "KSEA",
+    "KSFO"
+  ],
+  "fetch_errors": [],
+  "blocked": [],
+  "fenetre_hiver": {
+    "variable": "Fenêtre d'hiver",
+    "source": "IEM ASOS/METAR horaire déjà dans data/asos/extracted.json",
+    "method": "Même lectures. Jour A = date en heure murale (DST). Jour B = date en heure standard locale (lst_window).",
+    "summary": {
+      "n_comparable_days": 2314,
+      "n_stations": 18,
+      "first": "2026-05-01",
+      "last": "2026-09-11",
+      "all": {
+        "n_days": 2314,
+        "max_value_differs": 18,
+        "min_value_differs": 185,
+        "max_int_differs": 18,
+        "min_int_differs": 185,
+        "max_bin_differs": 9,
+        "min_bin_differs": 122,
+        "either_value_differs": 197,
+        "either_int_differs": 197,
+        "either_bin_differs": 129
+      },
+      "dst_days": {
+        "n_days": 2188,
+        "max_value_differs": 18,
+        "min_value_differs": 185,
+        "max_int_differs": 18,
+        "min_int_differs": 185,
+        "max_bin_differs": 9,
+        "min_bin_differs": 122,
+        "either_value_differs": 197,
+        "either_int_differs": 197,
+        "either_bin_differs": 129
+      },
+      "standard_days": {
+        "n_days": 126,
+        "max_value_differs": 0,
+        "min_value_differs": 0,
+        "max_int_differs": 0,
+        "min_int_differs": 0,
+        "max_bin_differs": 0,
+        "min_bin_differs": 0,
+        "either_value_differs": 0,
+        "either_int_differs": 0,
+        "either_bin_differs": 0
+      },
+      "by_station": {
+        "KATL": {
+          "n_days": 130,
+          "max_value_differs": 0,
+          "min_value_differs": 10,
+          "max_int_differs": 0,
+          "min_int_differs": 10,
+          "max_bin_differs": 0,
+          "min_bin_differs": 8,
+          "either_value_differs": 10,
+          "either_int_differs": 10,
+          "either_bin_differs": 8,
+          "city_tz": "America/New_York",
+          "n_dst_days": 130
+        },
+        "KAUS": {
+          "n_days": 129,
+          "max_value_differs": 0,
+          "min_value_differs": 10,
+          "max_int_differs": 0,
+          "min_int_differs": 10,
+          "max_bin_differs": 0,
+          "min_bin_differs": 9,
+          "either_value_differs": 10,
+          "either_int_differs": 10,
+          "either_bin_differs": 9,
+          "city_tz": "America/Chicago",
+          "n_dst_days": 129
+        },
+        "KBOS": {
+          "n_days": 129,
+          "max_value_differs": 1,
+          "min_value_differs": 14,
+          "max_int_differs": 1,
+          "min_int_differs": 14,
+          "max_bin_differs": 0,
+          "min_bin_differs": 10,
+          "either_value_differs": 14,
+          "either_int_differs": 14,
+          "either_bin_differs": 10,
+          "city_tz": "America/New_York",
+          "n_dst_days": 129
+        },
+        "KDCA": {
+          "n_days": 130,
+          "max_value_differs": 2,
+          "min_value_differs": 16,
+          "max_int_differs": 2,
+          "min_int_differs": 16,
+          "max_bin_differs": 1,
+          "min_bin_differs": 12,
+          "either_value_differs": 16,
+          "either_int_differs": 16,
+          "either_bin_differs": 12,
+          "city_tz": "America/New_York",
+          "n_dst_days": 130
+        },
+        "KDEN": {
+          "n_days": 126,
+          "max_value_differs": 0,
+          "min_value_differs": 11,
+          "max_int_differs": 0,
+          "min_int_differs": 11,
+          "max_bin_differs": 0,
+          "min_bin_differs": 9,
+          "either_value_differs": 11,
+          "either_int_differs": 11,
+          "either_bin_differs": 9,
+          "city_tz": "America/Denver",
+          "n_dst_days": 126
+        },
+        "KDFW": {
+          "n_days": 130,
+          "max_value_differs": 1,
+          "min_value_differs": 6,
+          "max_int_differs": 1,
+          "min_int_differs": 6,
+          "max_bin_differs": 0,
+          "min_bin_differs": 5,
+          "either_value_differs": 7,
+          "either_int_differs": 7,
+          "either_bin_differs": 5,
+          "city_tz": "America/Chicago",
+          "n_dst_days": 130
+        },
+        "KHOU": {
+          "n_days": 130,
+          "max_value_differs": 3,
+          "min_value_differs": 3,
+          "max_int_differs": 3,
+          "min_int_differs": 3,
+          "max_bin_differs": 3,
+          "min_bin_differs": 1,
+          "either_value_differs": 6,
+          "either_int_differs": 6,
+          "either_bin_differs": 4,
+          "city_tz": "America/Chicago",
+          "n_dst_days": 130
+        },
+        "KLAS": {
+          "n_days": 126,
+          "max_value_differs": 0,
+          "min_value_differs": 6,
+          "max_int_differs": 0,
+          "min_int_differs": 6,
+          "max_bin_differs": 0,
+          "min_bin_differs": 3,
+          "either_value_differs": 6,
+          "either_int_differs": 6,
+          "either_bin_differs": 3,
+          "city_tz": "America/Los_Angeles",
+          "n_dst_days": 126
+        },
+        "KLAX": {
+          "n_days": 126,
+          "max_value_differs": 0,
+          "min_value_differs": 12,
+          "max_int_differs": 0,
+          "min_int_differs": 12,
+          "max_bin_differs": 0,
+          "min_bin_differs": 6,
+          "either_value_differs": 12,
+          "either_int_differs": 12,
+          "either_bin_differs": 6,
+          "city_tz": "America/Los_Angeles",
+          "n_dst_days": 126
+        },
+        "KMDW": {
+          "n_days": 130,
+          "max_value_differs": 4,
+          "min_value_differs": 19,
+          "max_int_differs": 4,
+          "min_int_differs": 19,
+          "max_bin_differs": 2,
+          "min_bin_differs": 12,
+          "either_value_differs": 22,
+          "either_int_differs": 22,
+          "either_bin_differs": 13,
+          "city_tz": "America/Chicago",
+          "n_dst_days": 130
+        },
+        "KMIA": {
+          "n_days": 130,
+          "max_value_differs": 0,
+          "min_value_differs": 8,
+          "max_int_differs": 0,
+          "min_int_differs": 8,
+          "max_bin_differs": 0,
+          "min_bin_differs": 4,
+          "either_value_differs": 8,
+          "either_int_differs": 8,
+          "either_bin_differs": 4,
+          "city_tz": "America/New_York",
+          "n_dst_days": 130
+        },
+        "KMSP": {
+          "n_days": 130,
+          "max_value_differs": 2,
+          "min_value_differs": 11,
+          "max_int_differs": 2,
+          "min_int_differs": 11,
+          "max_bin_differs": 1,
+          "min_bin_differs": 8,
+          "either_value_differs": 12,
+          "either_int_differs": 12,
+          "either_bin_differs": 9,
+          "city_tz": "America/Chicago",
+          "n_dst_days": 130
+        },
+        "KNYC": {
+          "n_days": 130,
+          "max_value_differs": 4,
+          "min_value_differs": 12,
+          "max_int_differs": 4,
+          "min_int_differs": 12,
+          "max_bin_differs": 1,
+          "min_bin_differs": 9,
+          "either_value_differs": 15,
+          "either_int_differs": 15,
+          "either_bin_differs": 10,
+          "city_tz": "America/New_York",
+          "n_dst_days": 130
+        },
+        "KPHL": {
+          "n_days": 130,
+          "max_value_differs": 1,
+          "min_value_differs": 16,
+          "max_int_differs": 1,
+          "min_int_differs": 16,
+          "max_bin_differs": 1,
+          "min_bin_differs": 9,
+          "either_value_differs": 17,
+          "either_int_differs": 17,
+          "either_bin_differs": 10,
+          "city_tz": "America/New_York",
+          "n_dst_days": 130
+        },
+        "KPHX": {
+          "n_days": 126,
+          "max_value_differs": 0,
+          "min_value_differs": 0,
+          "max_int_differs": 0,
+          "min_int_differs": 0,
+          "max_bin_differs": 0,
+          "min_bin_differs": 0,
+          "either_value_differs": 0,
+          "either_int_differs": 0,
+          "either_bin_differs": 0,
+          "city_tz": "America/Phoenix",
+          "n_dst_days": 0
+        },
+        "KSAT": {
+          "n_days": 130,
+          "max_value_differs": 0,
+          "min_value_differs": 5,
+          "max_int_differs": 0,
+          "min_int_differs": 5,
+          "max_bin_differs": 0,
+          "min_bin_differs": 2,
+          "either_value_differs": 5,
+          "either_int_differs": 5,
+          "either_bin_differs": 2,
+          "city_tz": "America/Chicago",
+          "n_dst_days": 130
+        },
+        "KSEA": {
+          "n_days": 126,
+          "max_value_differs": 0,
+          "min_value_differs": 15,
+          "max_int_differs": 0,
+          "min_int_differs": 15,
+          "max_bin_differs": 0,
+          "min_bin_differs": 10,
+          "either_value_differs": 15,
+          "either_int_differs": 15,
+          "either_bin_differs": 10,
+          "city_tz": "America/Los_Angeles",
+          "n_dst_days": 126
+        },
+        "KSFO": {
+          "n_days": 126,
+          "max_value_differs": 0,
+          "min_value_differs": 11,
+          "max_int_differs": 0,
+          "min_int_differs": 11,
+          "max_bin_differs": 0,
+          "min_bin_differs": 5,
+          "either_value_differs": 11,
+          "either_int_differs": 11,
+          "either_bin_differs": 5,
+          "city_tz": "America/Los_Angeles",
+          "n_dst_days": 126
+        }
+      }
+    },
+    "cli_printed_times": {
+      "n_cli_days": 44005,
+      "first": "2020-01-01",
+      "last": "2026-09-12",
+      "high_readable": 43480,
+      "low_readable": 43498,
+      "high_unreadable": 525,
+      "low_unreadable": 507,
+      "high_disputed": 366,
+      "low_disputed": 431,
+      "by_station": {
+        "KATL": {
+          "n": 2443,
+          "high_ok": 2435,
+          "low_ok": 2434,
+          "high_disputed": 22,
+          "low_disputed": 14,
+          "high_unreadable": 8,
+          "low_unreadable": 9
+        },
+        "KAUS": {
+          "n": 2447,
+          "high_ok": 2440,
+          "low_ok": 2440,
+          "high_disputed": 6,
+          "low_disputed": 37,
+          "high_unreadable": 7,
+          "low_unreadable": 7
+        },
+        "KBOS": {
+          "n": 2444,
+          "high_ok": 2385,
+          "low_ok": 2384,
+          "high_disputed": 47,
+          "low_disputed": 52,
+          "high_unreadable": 59,
+          "low_unreadable": 60
+        },
+        "KMDW": {
+          "n": 2446,
+          "high_ok": 2430,
+          "low_ok": 2423,
+          "high_disputed": 53,
+          "low_disputed": 16,
+          "high_unreadable": 16,
+          "low_unreadable": 23
+        },
+        "KDFW": {
+          "n": 2442,
+          "high_ok": 2397,
+          "low_ok": 2400,
+          "high_disputed": 27,
+          "low_disputed": 18,
+          "high_unreadable": 45,
+          "low_unreadable": 42
+        },
+        "KDEN": {
+          "n": 2447,
+          "high_ok": 2430,
+          "low_ok": 2431,
+          "high_disputed": 25,
+          "low_disputed": 52,
+          "high_unreadable": 17,
+          "low_unreadable": 16
+        },
+        "KHOU": {
+          "n": 2444,
+          "high_ok": 2386,
+          "low_ok": 2389,
+          "high_disputed": 16,
+          "low_disputed": 24,
+          "high_unreadable": 58,
+          "low_unreadable": 55
+        },
+        "KLAS": {
+          "n": 2444,
+          "high_ok": 2421,
+          "low_ok": 2420,
+          "high_disputed": 8,
+          "low_disputed": 1,
+          "high_unreadable": 23,
+          "low_unreadable": 24
+        },
+        "KLAX": {
+          "n": 2444,
+          "high_ok": 2360,
+          "low_ok": 2363,
+          "high_disputed": 0,
+          "low_disputed": 30,
+          "high_unreadable": 84,
+          "low_unreadable": 81
+        },
+        "KMIA": {
+          "n": 2443,
+          "high_ok": 2408,
+          "low_ok": 2411,
+          "high_disputed": 3,
+          "low_disputed": 39,
+          "high_unreadable": 35,
+          "low_unreadable": 32
+        },
+        "KMSP": {
+          "n": 2446,
+          "high_ok": 2401,
+          "low_ok": 2402,
+          "high_disputed": 45,
+          "low_disputed": 25,
+          "high_unreadable": 45,
+          "low_unreadable": 44
+        },
+        "KNYC": {
+          "n": 2444,
+          "high_ok": 2417,
+          "low_ok": 2421,
+          "high_disputed": 41,
+          "low_disputed": 31,
+          "high_unreadable": 27,
+          "low_unreadable": 23
+        },
+        "KPHL": {
+          "n": 2446,
+          "high_ok": 2438,
+          "low_ok": 2439,
+          "high_disputed": 30,
+          "low_disputed": 30,
+          "high_unreadable": 8,
+          "low_unreadable": 7
+        },
+        "KPHX": {
+          "n": 2446,
+          "high_ok": 2439,
+          "low_ok": 2437,
+          "high_disputed": 0,
+          "low_disputed": 0,
+          "high_unreadable": 7,
+          "low_unreadable": 9
+        },
+        "KSAT": {
+          "n": 2447,
+          "high_ok": 2439,
+          "low_ok": 2441,
+          "high_disputed": 4,
+          "low_disputed": 10,
+          "high_unreadable": 8,
+          "low_unreadable": 6
+        },
+        "KSFO": {
+          "n": 2442,
+          "high_ok": 2402,
+          "low_ok": 2411,
+          "high_disputed": 0,
+          "low_disputed": 22,
+          "high_unreadable": 40,
+          "low_unreadable": 31
+        },
+        "KSEA": {
+          "n": 2444,
+          "high_ok": 2421,
+          "low_ok": 2420,
+          "high_disputed": 11,
+          "low_disputed": 17,
+          "high_unreadable": 23,
+          "low_unreadable": 24
+        },
+        "KDCA": {
+          "n": 2446,
+          "high_ok": 2431,
+          "low_ok": 2432,
+          "high_disputed": 28,
+          "low_disputed": 13,
+          "high_unreadable": 15,
+          "low_unreadable": 14
+        }
+      },
+      "note": "Heure officielle dans 00:00-00:59 heure murale un jour d'heure d'été. Ce n'est pas le compte des valeurs qui changent."
+    }
+  },
+  "degre_entier": {
+    "variable": "Degré entier",
+    "asos_hourly": {
+      "precision": {
+        "source": "IEM ASOS/METAR horaire (data/asos/extracted.json)",
+        "n_readings": 56302,
+        "n_stations": 18,
+        "stations": [
+          "KATL",
+          "KAUS",
+          "KBOS",
+          "KDCA",
+          "KDEN",
+          "KDFW",
+          "KHOU",
+          "KLAS",
+          "KLAX",
+          "KMDW",
+          "KMIA",
+          "KMSP",
+          "KNYC",
+          "KPHL",
+          "KPHX",
+          "KSAT",
+          "KSEA",
+          "KSFO"
+        ],
+        "first": "2026-05-01",
+        "last": "2026-09-12",
+        "non_integer_readings": 44,
+        "fractional_parts": {
+          "0.2": 9,
+          "0.4": 12,
+          "0.5": 1,
+          "0.6": 11,
+          "0.8": 11
+        },
+        "n_lst_days_with_min_obs": 2314,
+        "n_lst_days_extreme_non_integer": 3
+      },
+      "daily_extremes": {
+        "n": 4628,
+        "n_stations": 18,
+        "first": "2026-05-01",
+        "last": "2026-09-11",
+        "all": {
+          "n": 4628,
+          "already_integer": 4625,
+          "exactly_half": 0,
+          "int_vs_floor": 1,
+          "int_vs_banker": 0,
+          "int_vs_half_floor": 1,
+          "bin_vs_floor": 0,
+          "bin_vs_half_floor": 0,
+          "bin_vs_half_as_int": 0
+        },
+        "by_variable": {
+          "temp_max": {
+            "n": 2314,
+            "already_integer": 2314,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "temp_min": {
+            "n": 2314,
+            "already_integer": 2311,
+            "exactly_half": 0,
+            "int_vs_floor": 1,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 1,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          }
+        },
+        "by_station": {
+          "KATL": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KAUS": {
+            "n": 258,
+            "already_integer": 258,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KBOS": {
+            "n": 258,
+            "already_integer": 258,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KDCA": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KDEN": {
+            "n": 252,
+            "already_integer": 251,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KDFW": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KHOU": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KLAS": {
+            "n": 252,
+            "already_integer": 252,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KLAX": {
+            "n": 252,
+            "already_integer": 252,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KMDW": {
+            "n": 260,
+            "already_integer": 259,
+            "exactly_half": 0,
+            "int_vs_floor": 1,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 1,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KMIA": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KMSP": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KNYC": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KPHL": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KPHX": {
+            "n": 252,
+            "already_integer": 251,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KSAT": {
+            "n": 260,
+            "already_integer": 260,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KSEA": {
+            "n": 252,
+            "already_integer": 252,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KSFO": {
+            "n": 252,
+            "already_integer": 252,
+            "exactly_half": 0,
+            "int_vs_floor": 0,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 0,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          }
+        },
+        "sources": [
+          "asos_hourly_lst"
+        ]
+      }
+    },
+    "ghcn": {
+      "meta": {
+        "source": "NCEI GHCN-Daily .dly (dixième de °C, conversion °F continue)",
+        "n_stations_loaded": 18,
+        "errors": [],
+        "hypothesis": "Les TMAX/TMIN USW sont souvent stockés depuis un °F entier. La partie fractionnaire après conversion peut être un artefact d'unité, pas un vrai demi-degré capteur."
+      },
+      "summary": {
+        "n": 1059816,
+        "n_stations": 18,
+        "first": "1869-01-01",
+        "last": "2026-09-10",
+        "all": {
+          "n": 1059816,
+          "already_integer": 116797,
+          "exactly_half": 0,
+          "int_vs_floor": 465194,
+          "int_vs_banker": 0,
+          "int_vs_half_floor": 0,
+          "bin_vs_floor": 246576,
+          "bin_vs_half_floor": 0,
+          "bin_vs_half_as_int": 263
+        },
+        "by_variable": {
+          "temp_max": {
+            "n": 529919,
+            "already_integer": 57868,
+            "exactly_half": 0,
+            "int_vs_floor": 234870,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 121114,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 49
+          },
+          "temp_min": {
+            "n": 529897,
+            "already_integer": 58929,
+            "exactly_half": 0,
+            "int_vs_floor": 230324,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 125462,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 214
+          }
+        },
+        "by_station": {
+          "KATL": {
+            "n": 70631,
+            "already_integer": 7797,
+            "exactly_half": 0,
+            "int_vs_floor": 31216,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 16905,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 3
+          },
+          "KAUS": {
+            "n": 39628,
+            "already_integer": 4298,
+            "exactly_half": 0,
+            "int_vs_floor": 17494,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 9668,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 2
+          },
+          "KBOS": {
+            "n": 66245,
+            "already_integer": 7490,
+            "exactly_half": 0,
+            "int_vs_floor": 28699,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 14611,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 19
+          },
+          "KDCA": {
+            "n": 62266,
+            "already_integer": 6802,
+            "exactly_half": 0,
+            "int_vs_floor": 27365,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 14403,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 9
+          },
+          "KDEN": {
+            "n": 22557,
+            "already_integer": 2455,
+            "exactly_half": 0,
+            "int_vs_floor": 9207,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 4776,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 50
+          },
+          "KDFW": {
+            "n": 53601,
+            "already_integer": 5998,
+            "exactly_half": 0,
+            "int_vs_floor": 23484,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 12428,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 2
+          },
+          "KHOU": {
+            "n": 67265,
+            "already_integer": 7590,
+            "exactly_half": 0,
+            "int_vs_floor": 30036,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 17799,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 1
+          },
+          "KLAS": {
+            "n": 56980,
+            "already_integer": 6464,
+            "exactly_half": 0,
+            "int_vs_floor": 24994,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 12458,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KLAX": {
+            "n": 59943,
+            "already_integer": 6444,
+            "exactly_half": 0,
+            "int_vs_floor": 26522,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 12918,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KMDW": {
+            "n": 21415,
+            "already_integer": 2173,
+            "exactly_half": 0,
+            "int_vs_floor": 8297,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 4343,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 77
+          },
+          "KMIA": {
+            "n": 57484,
+            "already_integer": 6007,
+            "exactly_half": 0,
+            "int_vs_floor": 25720,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 15025,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KMSP": {
+            "n": 64592,
+            "already_integer": 6894,
+            "exactly_half": 0,
+            "int_vs_floor": 27664,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 13885,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 86
+          },
+          "KNYC": {
+            "n": 115110,
+            "already_integer": 12767,
+            "exactly_half": 0,
+            "int_vs_floor": 50856,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 26174,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 6
+          },
+          "KPHL": {
+            "n": 62644,
+            "already_integer": 6994,
+            "exactly_half": 0,
+            "int_vs_floor": 27322,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 14004,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 6
+          },
+          "KPHX": {
+            "n": 64325,
+            "already_integer": 7038,
+            "exactly_half": 0,
+            "int_vs_floor": 28725,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 14351,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KSAT": {
+            "n": 58459,
+            "already_integer": 6558,
+            "exactly_half": 0,
+            "int_vs_floor": 26000,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 14542,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          },
+          "KSEA": {
+            "n": 57483,
+            "already_integer": 6459,
+            "exactly_half": 0,
+            "int_vs_floor": 25189,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 13585,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 2
+          },
+          "KSFO": {
+            "n": 59188,
+            "already_integer": 6569,
+            "exactly_half": 0,
+            "int_vs_floor": 26404,
+            "int_vs_banker": 0,
+            "int_vs_half_floor": 0,
+            "bin_vs_floor": 14701,
+            "bin_vs_half_floor": 0,
+            "bin_vs_half_as_int": 0
+          }
+        },
+        "sources": [
+          "ghcn_tenths_c"
+        ]
+      }
+    },
+    "nws_rounding": "apply_nws_rounding half-up (75.5 → 76, 76.5 → 77)"
+  }
+}
