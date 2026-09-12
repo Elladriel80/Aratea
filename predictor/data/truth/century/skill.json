@@ -1,0 +1,163 @@
+{
+  "a1_holdout": {
+    "n_bins": 53928,
+    "n_dates": 36,
+    "overall": {
+      "n_bins": 53928,
+      "n_dates": 36,
+      "base_rate": 0.15385328586263167,
+      "brier_raw": 0.12499836832852525,
+      "n_p_raw": 53928,
+      "brier_station": 0.11537518893264079,
+      "n_p_station": 53928,
+      "brier_century_emp": 0.13315197960034225,
+      "n_p_century_emp": 53928,
+      "brier_century_30": 0.12893753018706275,
+      "n_p_century_30": 53928,
+      "brier_century_gauss": 0.13365211707108798,
+      "n_p_century_gauss": 53928
+    },
+    "by_variable": {
+      "temp_max": {
+        "n_bins": 26964,
+        "n_dates": 36,
+        "base_rate": 0.14801216436730455,
+        "brier_raw": 0.12395310230928601,
+        "n_p_raw": 26964,
+        "brier_station": 0.1119546747843784,
+        "n_p_station": 26964,
+        "brier_century_emp": 0.12905892428927407,
+        "n_p_century_emp": 26964,
+        "brier_century_30": 0.12678016216245852,
+        "n_p_century_30": 26964,
+        "brier_century_gauss": 0.12951564391856757,
+        "n_p_century_gauss": 26964
+      },
+      "temp_min": {
+        "n_bins": 26964,
+        "n_dates": 36,
+        "base_rate": 0.15969440735795876,
+        "brier_raw": 0.1260436343477645,
+        "n_p_raw": 26964,
+        "brier_station": 0.11879570308090315,
+        "n_p_station": 26964,
+        "brier_century_emp": 0.13724503491141046,
+        "n_p_century_emp": 26964,
+        "brier_century_30": 0.13109489821166692,
+        "n_p_century_30": 26964,
+        "brier_century_gauss": 0.1377885902236084,
+        "n_p_century_gauss": 26964
+      }
+    },
+    "sign_tests": {
+      "century_emp_vs_station": {
+        "a": "p_century_emp",
+        "b": "p_station",
+        "dates": 36,
+        "a_wins": 0,
+        "p_one_sided": 1.0
+      },
+      "century_emp_vs_raw": {
+        "a": "p_century_emp",
+        "b": "p_raw",
+        "dates": 36,
+        "a_wins": 5,
+        "p_one_sided": 0.9999990292126313
+      },
+      "station_vs_century_emp": {
+        "a": "p_station",
+        "b": "p_century_emp",
+        "dates": 36,
+        "a_wins": 36,
+        "p_one_sided": 1.4551915228366852e-11
+      }
+    }
+  },
+  "market": {
+    "n_bins": 10268,
+    "n_dates": 70,
+    "n_ladders": 2567,
+    "n_ladders_market_tighter_than_history": 695,
+    "share_ladders_tighter": 0.2707440592130892,
+    "rule": "favori march\u00e9 \u2265 65% et fr\u00e9quence historique du m\u00eame contrat \u2264 40%",
+    "skips": {
+      "no_cli_truth": 64
+    },
+    "overall": {
+      "n_bins": 10268,
+      "n_dates": 70,
+      "base_rate": 0.19166342033502143,
+      "brier_market": 0.09083939179976626,
+      "n_p_market": 10268,
+      "brier_century_emp": 0.16073680299193419,
+      "n_p_century_emp": 10268,
+      "brier_fade": 0.13466462055454428,
+      "n_p_fade": 10268,
+      "brier_raw": 0.14341678011818906,
+      "n_p_raw": 10125
+    },
+    "by_lead": {
+      "0": {
+        "n_bins": 5264,
+        "n_dates": 63,
+        "base_rate": 0.192629179331307,
+        "brier_market": 0.058275489171732524,
+        "n_p_market": 5264,
+        "brier_century_emp": 0.16196451946269205,
+        "n_p_century_emp": 5264,
+        "brier_fade": 0.14330405822782827,
+        "n_p_fade": 5264,
+        "brier_raw": 0.1423005542572295,
+        "n_p_raw": 5193
+      },
+      "1": {
+        "n_bins": 5004,
+        "n_dates": 62,
+        "base_rate": 0.1906474820143885,
+        "brier_market": 0.12509526378896885,
+        "n_p_market": 5004,
+        "brier_century_emp": 0.15944529629687637,
+        "n_p_century_emp": 5004,
+        "brier_fade": 0.12557629123556607,
+        "n_p_fade": 5004,
+        "brier_raw": 0.1445920763258052,
+        "n_p_raw": 4932
+      }
+    },
+    "sign_tests": {
+      "century_vs_market": {
+        "a": "p_century_emp",
+        "b": "p_market",
+        "dates": 70,
+        "a_wins": 1,
+        "p_one_sided": 1.0
+      },
+      "fade_vs_market": {
+        "a": "p_fade",
+        "b": "p_market",
+        "dates": 63,
+        "a_wins": 0,
+        "p_one_sided": 1.0
+      },
+      "market_vs_century": {
+        "a": "p_market",
+        "b": "p_century_emp",
+        "dates": 70,
+        "a_wins": 69,
+        "p_one_sided": 6.013933925505532e-20
+      }
+    },
+    "fade_only": {
+      "n_bins": 2780,
+      "n_dates": 63,
+      "base_rate": 0.2460431654676259,
+      "brier_market": 0.04013937050359712,
+      "n_p_market": 2780,
+      "brier_century_emp": 0.202008956422324,
+      "n_p_century_emp": 2780
+    }
+  },
+  "decision": "On ne change pas le mod\u00e8le en ligne. La climatologie longue ne bat pas clairement le m\u00e9lange corrig\u00e9 ville par ville (A1 : 0.1332 contre 0.1154, 36 jours) ni le march\u00e9 (0.1607 contre 0.0908, 70 jours).",
+  "champion_switched": false,
+  "generated_at": "2026-09-12T15:01:16Z"
+}
