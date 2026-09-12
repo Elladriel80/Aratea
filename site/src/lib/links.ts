@@ -1,5 +1,5 @@
 export const LINKS = {
-  discord: "https://discord.gg/YZ2wnDM9dQ",
+  discord: "https://discord.gg/dgu6w3sbya",
   github: "https://github.com/Elladriel80/aratea",
   dashboard: "https://aratea-app.vercel.app",
   notion: {
