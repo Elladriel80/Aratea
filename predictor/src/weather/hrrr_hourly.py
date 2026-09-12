@@ -55,6 +55,7 @@ def remaining_extreme(
     target: date,
     as_of: datetime,
     kind: str,
+    source: str = "hrrr_previous_day1",
 ) -> Optional[dict]:
     """Max ou min prévu après `as_of` encore dans le jour LST `target`."""
     if as_of.tzinfo is None:
@@ -78,7 +79,7 @@ def remaining_extreme(
         "n_hours": len(picked),
         "first": picked[0][0],
         "last": picked[-1][0],
-        "source": "hrrr_previous_day1",
+        "source": source,
     }
 
 
