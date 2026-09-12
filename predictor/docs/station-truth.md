@@ -107,3 +107,11 @@ EN : Owner hypothesis measured: long official-station history vs market tightnes
 FR (mutuelle, 2026-09-12) : le même fichier sert à compter chaleur (≥ 100 °F), gel (≤ 32 °F), pluie annuelle et le saut d'une année à l'autre. Note `docs/a1-climato-siecle-mutuelle-2026-09-12.md`, comptes `data/truth/century/mutual_tails.md`. Pas de produit, pas de prix. NYC 157 ans, Midway 28, Denver 30. Une année folle (saut typique ~1 °F, gros saut 2 à 3,6 °F) pèse plus qu'une décennie de pente. Champion toujours inchangé.
 
 EN (mutual): same century files scored for heat / frost / dry-year tails and year-to-year swing. No product invented. Champion still untouched.
+
+---
+
+## Marché ouragan Kalshi (2026-09-12)
+
+FR : Inventaire public puis repli NHC. Note `docs/marche-ouragan-kalshi-2026-09-12.md`. 0 saison notable contre HURDAT2. Champion inchangé.
+
+EN : Public Kalshi hurricane inventory, then NHC a-decks / b-decks vs HURDAT2. Note above. Champion untouched.
