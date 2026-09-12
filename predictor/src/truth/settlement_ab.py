@@ -223,6 +223,23 @@ class RoundingRow:
             return False
         return even_bin(self.official_int) != even_bin(nws_int(self.half_f))
 
+    @property
+    def in_official_bin_raw(self) -> bool:
+        """Case [lo, hi] sans élargir : lo ≤ x ≤ hi."""
+        lo, hi = even_bin(self.official_int)
+        return lo <= self.continuous_f <= hi
+
+    @property
+    def in_official_bin_pm05(self) -> bool:
+        """Même fenêtre que synthetic_bins / ensemble : lo-0.5 ≤ x < hi+0.5."""
+        lo, hi = even_bin(self.official_int)
+        return (lo - 0.5) <= self.continuous_f < (hi + 0.5)
+
+    @property
+    def pm05_changes_membership(self) -> bool:
+        """L'élargissement ±0.5 °F est-il ce qui place x dans la case payée ?"""
+        return self.in_official_bin_pm05 and not self.in_official_bin_raw
+
 
 def _as_utc(dt: datetime) -> datetime:
     if dt.tzinfo is None:
@@ -342,6 +359,12 @@ def summarize_window(rows: list[DayAB]) -> dict:
             "either_bin_differs": sum(
                 1 for r in subset if r.max_bin_differs or r.min_bin_differs
             ),
+            "max_diff_lst_extreme_in_disputed": sum(
+                1 for r in subset if r.max_value_differs and r.max_lst_disputed
+            ),
+            "min_diff_lst_extreme_in_disputed": sum(
+                1 for r in subset if r.min_value_differs and r.min_lst_disputed
+            ),
         }
 
     by_station = {}
@@ -382,6 +405,10 @@ def summarize_rounding(rows: list[RoundingRow]) -> dict:
             "bin_vs_floor": sum(1 for r in subset if r.bin_vs_floor_differs),
             "bin_vs_half_floor": sum(1 for r in subset if r.bin_vs_half_floor_differs),
             "bin_vs_half_as_int": sum(1 for r in subset if r.bin_vs_half_as_int_differs),
+            "outside_raw_bin": sum(1 for r in subset if not r.in_official_bin_raw),
+            "pm05_changes_membership": sum(
+                1 for r in subset if r.pm05_changes_membership
+            ),
         }
 
     by_station = {st: _pack([r for r in rows if r.station == st]) for st in stations}

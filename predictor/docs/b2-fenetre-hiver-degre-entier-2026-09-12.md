@@ -26,8 +26,10 @@ Kalshi paie le rapport officiel de la station (CLI), par exemple Midway,
 Hobby, DFW.
 
 Le dossier sait déjà fabriquer le jour en heure d'hiver
-(`lst_window.py`). Les essais récents (vérité station, membres
-d'ensemble, thermomètre du jour) passent par là.
+(`lst_window.py`, minuit à minuit en heure standard locale).
+La mesure A utilise `lst_date` de ce fichier. Les essais récents
+(vérité station, membres d'ensemble, thermomètre du jour) passent
+par là.
 
 Hypothèse, pas une mesure : le mélange en ligne demande encore à
 Open-Meteo le max et le min du jour calendaire dans le fuseau de la
@@ -35,8 +37,11 @@ ville. Ce fuseau avance d'une heure en été. Ce n'est peut-être pas la
 même fenêtre de 24 heures que le rapport officiel.
 
 L'arrondi entier half-up du NWS est déjà dans `resolution.py`
-(75,5 devient 76 ; 76,5 devient 77, pas 76). Les cases de 2 degrés
-tiennent déjà compte de plus ou moins 0,5 degré.
+(75,5 devient 76 ; 76,5 devient 77, pas 76). `synthetic_bins.py` et
+le mélange en ligne élargissent déjà chaque case de plus ou moins
+0,5 degré (lo-0,5 ≤ x < hi+0,5). La mesure B compte combien de fois
+cet élargissement change l'appartenance à la case, sur les mêmes
+extrêmes horaires.
 
 ## Comment on a compté
 
@@ -92,6 +97,13 @@ Quand le chiffre change, l'entier officiel change aussi (18 et 185).
 La case de 2 degrés change moins souvent : 9 jours pour le max
 (0,39 %), 122 jours pour le min (5,3 %).
 
+Parmi ces écarts, l'extrême du jour LST tombe à 00:xx heure d'été
+(l'heure qui reste à la veille officielle) pour **1 max sur 18**
+et **167 min sur 185**. Le reste vient de l'autre bord : la pendule
+prend l'heure 00:xx du jour, qui appartient encore à la veille en
+heure d'hiver. Compte revérifié avec `lst_date` du fichier
+`lst_window.py`.
+
 Villes les plus touchées (jours où le max ou le min change) :
 
 | Ville | Jours | Max | Min | Case de 2° |
@@ -143,12 +155,15 @@ ci-dessus le fait.
 | Déjà un entier | 4625 |
 | Exactement un demi-degré (x,5) | 0 |
 | Entier NWS différent de la partie entière | 1 |
-| Case de 2° différente | 0 |
+| Case de 2° différente (entier vs partie entière) | 0 |
+| La case payée ne contient pas x sans ±0,5 °F | 0 / 4628 |
+| ±0,5 °F (comme synthetic_bins) change l'appartenance | 0 / 4628 |
 
 Les 3 jours dont l'extrême a un dixième : Denver 13 juillet 2026
 (min 64,4), Chicago 25 août 2026 (min 62,6), Phoenix 11 août 2026
 (min 82,4). Un seul de ces trois change l'entier (62,6 devient 63).
-Aucun ne change la case de 2 degrés.
+Aucun ne change la case de 2 degrés. L'élargissement ±0,5 °F de
+`synthetic_bins.py` ne déplace aucun de ces 4628 extrêmes.
 
 Les 44 dixièmes ressemblent surtout à une conversion depuis des °C
 entiers (64,4 ; 62,6 ; 82,4). Une seule lecture à 68,5, et ce n'était
@@ -171,11 +186,14 @@ souvent un °F entier stocké en dixième de °C.
 | Case de 2° différente si on tronque | 246576 (23,3 %) |
 | Entier NWS ≠ arrondi Python | 0 |
 | Case de 2° différente si on passe par le demi-degré | 0 |
+| ±0,5 °F (synthetic_bins) change l'appartenance | 495748 (46,8 %) |
 
 En clair : dans GHCN, on ne voit **aucun** vrai x,5. Si on oublie
 l'arrondi NWS et qu'on tronque après la conversion °C → °F, on se
-trompe de case 23 jours sur 100. Le code siècle fait déjà le bon
-arrondi. Ce n'est pas la fréquence d'un demi-degré officiel.
+trompe de case 23 jours sur 100. L'élargissement ±0,5 °F replace
+46,8 % de ces conversions dans la case de l'entier officiel. Ce
+sont des restes d'unité, pas des demi-degrés capteur. Le code
+siècle fait déjà le bon arrondi.
 
 ## Verdict
 

@@ -1,6 +1,6 @@
 # Fenêtre d'hiver et Degré entier (comptes machine)
 
-Date du run : 2026-09-12T16:18:26Z
+Date du run : 2026-09-12T16:21:38Z
 Champion en ligne : non modifié. Aucun chiffre inventé.
 
 ## Fenêtre d'hiver (ASOS horaire, LST vs heure murale)
@@ -9,6 +9,8 @@ Source : IEM ASOS/METAR horaire déjà dans data/asos/extracted.json
 Jours comparables : 2314
 Stations : 18
 Première / dernière : 2026-05-01 / 2026-09-11
+Max différent dont l'extrême LST est à 00:xx heure d'été : 1
+Min différent dont l'extrême LST est à 00:xx heure d'été : 167
 
 | Ensemble | Jours | Max différent | Min différent | Entier max | Entier min | Case 2° |
 |---|---|---|---|---|---|---|
@@ -54,6 +56,7 @@ Lectures : 56302
 Lectures non entières : 44
 Jours LST avec assez de lectures : 2314
 Jours dont le max ou le min horaire n'est pas entier : 3
+±0.5 °F change l'appartenance à la case (synthetic_bins) : 0 / 4628
 
 ### GHCN-Daily (dixième de °C → °F continu)
 
@@ -65,5 +68,6 @@ Entier NWS ≠ partie entière : 465194
 Entier NWS ≠ arrondi Python : 0
 Case 2° différente (entier vs partie entière) : 246576
 Case 2° différente (entier vs demi-degré puis partie entière) : 0
+±0.5 °F change l'appartenance à la case : 495748 / 1059816
 
 Aucun pari avec de l'argent réel. Le modèle en ligne n'est pas changé.

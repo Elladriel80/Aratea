@@ -110,6 +110,11 @@ def test_rounding_integer_vs_half_and_bins():
     assert c.is_half_degree
     assert c.int_vs_banker_differs  # Python round(76.5) → 76
     assert even_bin(77) == (76, 77) and even_bin(78) == (78, 79)
+    # ±0.5 °F (synthetic_bins / ensemble) : 77.6 n'est pas dans 78-79 sans élargir.
+    assert a.in_official_bin_pm05 and not a.in_official_bin_raw
+    assert a.pm05_changes_membership
+    assert b.in_official_bin_raw and b.in_official_bin_pm05
+    assert not b.pm05_changes_membership
 
 
 def test_cli_disputed_only_during_dst():

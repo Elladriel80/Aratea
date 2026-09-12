@@ -269,6 +269,10 @@ def render_md(report: dict) -> str:
         f"Jours comparables : {w['summary']['n_comparable_days']}",
         f"Stations : {w['summary']['n_stations']}",
         f"Première / dernière : {w['summary']['first']} / {w['summary']['last']}",
+        f"Max différent dont l'extrême LST est à 00:xx heure d'été : "
+        f"{w['summary']['all'].get('max_diff_lst_extreme_in_disputed', 0)}",
+        f"Min différent dont l'extrême LST est à 00:xx heure d'été : "
+        f"{w['summary']['all'].get('min_diff_lst_extreme_in_disputed', 0)}",
         "",
         "| Ensemble | Jours | Max différent | Min différent | Entier max | Entier min | Case 2° |",
         "|---|---|---|---|---|---|---|",
@@ -316,6 +320,9 @@ def render_md(report: dict) -> str:
         f"Jours LST avec assez de lectures : {r_asos['precision']['n_lst_days_with_min_obs']}",
         f"Jours dont le max ou le min horaire n'est pas entier : "
         f"{r_asos['precision']['n_lst_days_extreme_non_integer']}",
+        f"±0.5 °F change l'appartenance à la case (synthetic_bins) : "
+        f"{r_asos['daily_extremes']['all'].get('pm05_changes_membership', 0)} "
+        f"/ {r_asos['daily_extremes']['all'].get('n', 0)}",
     ]
     if r_ghcn and r_ghcn.get("summary"):
         g = r_ghcn["summary"]["all"]
@@ -332,6 +339,8 @@ def render_md(report: dict) -> str:
             f"Case 2° différente (entier vs partie entière) : {g['bin_vs_floor']}",
             f"Case 2° différente (entier vs demi-degré puis partie entière) : "
             f"{g['bin_vs_half_floor']}",
+            f"±0.5 °F change l'appartenance à la case : "
+            f"{g.get('pm05_changes_membership', 0)} / {g['n']}",
         ]
         if r_ghcn.get("meta", {}).get("errors"):
             lines.append("Erreurs GHCN : " + " ; ".join(r_ghcn["meta"]["errors"]))
@@ -455,8 +464,8 @@ def main() -> int:
             "variable": "Fenêtre d'hiver",
             "source": "IEM ASOS/METAR horaire déjà dans data/asos/extracted.json",
             "method": (
-                "Même lectures. Jour A = date en heure murale (DST). "
-                "Jour B = date en heure standard locale (lst_window)."
+                "Même lectures ASOS. Jour A = wall_date (fuseau IANA, heure d'été). "
+                "Jour B = lst_date de src/truth/lst_window.py (minuit-minuit LST)."
             ),
             "summary": window_summary,
             "cli_printed_times": cli_times,

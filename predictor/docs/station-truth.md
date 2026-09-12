@@ -112,6 +112,6 @@ EN (mutual): same century files scored for heat / frost / dry-year tails and yea
 
 ## Fenêtre d'hiver et Degré entier (2026-09-12) / Winter window and integer degree
 
-FR : Les deux règles de paiement pas encore chiffrées le 12 septembre. Mesure A/B dans `scripts/eval_settlement_window_rounding.py`, note `docs/b2-fenetre-hiver-degre-entier-2026-09-12.md`, comptes `data/truth/settlement/`. ASOS horaire déjà là (2314 jours, 18 villes) : se tromper d'heure change le min 185 jours, le max 18 jours, la case de 2 °F 129 jours. Phoenix (pas d'heure d'été) : 0. METAR déjà entier sauf 44 / 56302 lectures ; 0 case de 2 °F changée sur 4628 extrêmes. Champion inchangé.
+FR : Les deux règles de paiement pas encore chiffrées le 12 septembre. Mesure A/B dans `scripts/eval_settlement_window_rounding.py` (A = `lst_date` de `lst_window.py` vs jour mural ; B = entier NWS et fenêtre ±0,5 °F de `synthetic_bins.py`). Note `docs/b2-fenetre-hiver-degre-entier-2026-09-12.md`, comptes `data/truth/settlement/`. ASOS horaire déjà là (2314 jours, 18 villes) : se tromper d'heure change le min 185 jours, le max 18 jours, la case de 2 °F 129 jours. Phoenix (pas d'heure d'été) : 0. METAR déjà entier sauf 44 / 56302 lectures ; ±0,5 °F ne déplace aucun des 4628 extrêmes. Champion inchangé.
 
 EN : Settlement A/B for LST vs wall-clock day and integer vs half-degree. Hourly ASOS already in-repo. Wrong hour moves the daily min far more than the max. Official published values are already integers in this archive. Champion untouched.

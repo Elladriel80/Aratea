@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-09-12T16:18:26Z",
+  "run_at": "2026-09-12T16:21:38Z",
   "champion_untouched": true,
   "min_obs": 18,
   "stations_requested": [
@@ -27,7 +27,7 @@
   "fenetre_hiver": {
     "variable": "Fenêtre d'hiver",
     "source": "IEM ASOS/METAR horaire déjà dans data/asos/extracted.json",
-    "method": "Même lectures. Jour A = date en heure murale (DST). Jour B = date en heure standard locale (lst_window).",
+    "method": "Même lectures ASOS. Jour A = wall_date (fuseau IANA, heure d'été). Jour B = lst_date de src/truth/lst_window.py (minuit-minuit LST).",
     "summary": {
       "n_comparable_days": 2314,
       "n_stations": 18,
@@ -43,7 +43,9 @@
         "min_bin_differs": 122,
         "either_value_differs": 197,
         "either_int_differs": 197,
-        "either_bin_differs": 129
+        "either_bin_differs": 129,
+        "max_diff_lst_extreme_in_disputed": 1,
+        "min_diff_lst_extreme_in_disputed": 167
       },
       "dst_days": {
         "n_days": 2188,
@@ -55,7 +57,9 @@
         "min_bin_differs": 122,
         "either_value_differs": 197,
         "either_int_differs": 197,
-        "either_bin_differs": 129
+        "either_bin_differs": 129,
+        "max_diff_lst_extreme_in_disputed": 1,
+        "min_diff_lst_extreme_in_disputed": 167
       },
       "standard_days": {
         "n_days": 126,
@@ -67,7 +71,9 @@
         "min_bin_differs": 0,
         "either_value_differs": 0,
         "either_int_differs": 0,
-        "either_bin_differs": 0
+        "either_bin_differs": 0,
+        "max_diff_lst_extreme_in_disputed": 0,
+        "min_diff_lst_extreme_in_disputed": 0
       },
       "by_station": {
         "KATL": {
@@ -81,6 +87,8 @@
           "either_value_differs": 10,
           "either_int_differs": 10,
           "either_bin_differs": 8,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 10,
           "city_tz": "America/New_York",
           "n_dst_days": 130
         },
@@ -95,6 +103,8 @@
           "either_value_differs": 10,
           "either_int_differs": 10,
           "either_bin_differs": 9,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 9,
           "city_tz": "America/Chicago",
           "n_dst_days": 129
         },
@@ -109,6 +119,8 @@
           "either_value_differs": 14,
           "either_int_differs": 14,
           "either_bin_differs": 10,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 12,
           "city_tz": "America/New_York",
           "n_dst_days": 129
         },
@@ -123,6 +135,8 @@
           "either_value_differs": 16,
           "either_int_differs": 16,
           "either_bin_differs": 12,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 15,
           "city_tz": "America/New_York",
           "n_dst_days": 130
         },
@@ -137,6 +151,8 @@
           "either_value_differs": 11,
           "either_int_differs": 11,
           "either_bin_differs": 9,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 9,
           "city_tz": "America/Denver",
           "n_dst_days": 126
         },
@@ -151,6 +167,8 @@
           "either_value_differs": 7,
           "either_int_differs": 7,
           "either_bin_differs": 5,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 5,
           "city_tz": "America/Chicago",
           "n_dst_days": 130
         },
@@ -165,6 +183,8 @@
           "either_value_differs": 6,
           "either_int_differs": 6,
           "either_bin_differs": 4,
+          "max_diff_lst_extreme_in_disputed": 1,
+          "min_diff_lst_extreme_in_disputed": 2,
           "city_tz": "America/Chicago",
           "n_dst_days": 130
         },
@@ -179,6 +199,8 @@
           "either_value_differs": 6,
           "either_int_differs": 6,
           "either_bin_differs": 3,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 6,
           "city_tz": "America/Los_Angeles",
           "n_dst_days": 126
         },
@@ -193,6 +215,8 @@
           "either_value_differs": 12,
           "either_int_differs": 12,
           "either_bin_differs": 6,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 9,
           "city_tz": "America/Los_Angeles",
           "n_dst_days": 126
         },
@@ -207,6 +231,8 @@
           "either_value_differs": 22,
           "either_int_differs": 22,
           "either_bin_differs": 13,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 19,
           "city_tz": "America/Chicago",
           "n_dst_days": 130
         },
@@ -221,6 +247,8 @@
           "either_value_differs": 8,
           "either_int_differs": 8,
           "either_bin_differs": 4,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 4,
           "city_tz": "America/New_York",
           "n_dst_days": 130
         },
@@ -235,6 +263,8 @@
           "either_value_differs": 12,
           "either_int_differs": 12,
           "either_bin_differs": 9,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 11,
           "city_tz": "America/Chicago",
           "n_dst_days": 130
         },
@@ -249,6 +279,8 @@
           "either_value_differs": 15,
           "either_int_differs": 15,
           "either_bin_differs": 10,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 11,
           "city_tz": "America/New_York",
           "n_dst_days": 130
         },
@@ -263,6 +295,8 @@
           "either_value_differs": 17,
           "either_int_differs": 17,
           "either_bin_differs": 10,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 14,
           "city_tz": "America/New_York",
           "n_dst_days": 130
         },
@@ -277,6 +311,8 @@
           "either_value_differs": 0,
           "either_int_differs": 0,
           "either_bin_differs": 0,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 0,
           "city_tz": "America/Phoenix",
           "n_dst_days": 0
         },
@@ -291,6 +327,8 @@
           "either_value_differs": 5,
           "either_int_differs": 5,
           "either_bin_differs": 2,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 5,
           "city_tz": "America/Chicago",
           "n_dst_days": 130
         },
@@ -305,6 +343,8 @@
           "either_value_differs": 15,
           "either_int_differs": 15,
           "either_bin_differs": 10,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 15,
           "city_tz": "America/Los_Angeles",
           "n_dst_days": 126
         },
@@ -319,6 +359,8 @@
           "either_value_differs": 11,
           "either_int_differs": 11,
           "either_bin_differs": 5,
+          "max_diff_lst_extreme_in_disputed": 0,
+          "min_diff_lst_extreme_in_disputed": 11,
           "city_tz": "America/Los_Angeles",
           "n_dst_days": 126
         }
@@ -555,7 +597,9 @@
           "int_vs_half_floor": 1,
           "bin_vs_floor": 0,
           "bin_vs_half_floor": 0,
-          "bin_vs_half_as_int": 0
+          "bin_vs_half_as_int": 0,
+          "outside_raw_bin": 0,
+          "pm05_changes_membership": 0
         },
         "by_variable": {
           "temp_max": {
@@ -567,7 +611,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "temp_min": {
             "n": 2314,
@@ -578,7 +624,9 @@
             "int_vs_half_floor": 1,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           }
         },
         "by_station": {
@@ -591,7 +639,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KAUS": {
             "n": 258,
@@ -602,7 +652,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KBOS": {
             "n": 258,
@@ -613,7 +665,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KDCA": {
             "n": 260,
@@ -624,7 +678,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KDEN": {
             "n": 252,
@@ -635,7 +691,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KDFW": {
             "n": 260,
@@ -646,7 +704,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KHOU": {
             "n": 260,
@@ -657,7 +717,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KLAS": {
             "n": 252,
@@ -668,7 +730,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KLAX": {
             "n": 252,
@@ -679,7 +743,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KMDW": {
             "n": 260,
@@ -690,7 +756,9 @@
             "int_vs_half_floor": 1,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KMIA": {
             "n": 260,
@@ -701,7 +769,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KMSP": {
             "n": 260,
@@ -712,7 +782,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KNYC": {
             "n": 260,
@@ -723,7 +795,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KPHL": {
             "n": 260,
@@ -734,7 +808,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KPHX": {
             "n": 252,
@@ -745,7 +821,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KSAT": {
             "n": 260,
@@ -756,7 +834,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KSEA": {
             "n": 252,
@@ -767,7 +847,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           },
           "KSFO": {
             "n": 252,
@@ -778,7 +860,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 0,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 0,
+            "pm05_changes_membership": 0
           }
         },
         "sources": [
@@ -807,7 +891,9 @@
           "int_vs_half_floor": 0,
           "bin_vs_floor": 246576,
           "bin_vs_half_floor": 0,
-          "bin_vs_half_as_int": 263
+          "bin_vs_half_as_int": 263,
+          "outside_raw_bin": 495748,
+          "pm05_changes_membership": 495748
         },
         "by_variable": {
           "temp_max": {
@@ -819,7 +905,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 121114,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 49
+            "bin_vs_half_as_int": 49,
+            "outside_raw_bin": 241574,
+            "pm05_changes_membership": 241574
           },
           "temp_min": {
             "n": 529897,
@@ -830,7 +918,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 125462,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 214
+            "bin_vs_half_as_int": 214,
+            "outside_raw_bin": 254174,
+            "pm05_changes_membership": 254174
           }
         },
         "by_station": {
@@ -843,7 +933,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 16905,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 3
+            "bin_vs_half_as_int": 3,
+            "outside_raw_bin": 34032,
+            "pm05_changes_membership": 34032
           },
           "KAUS": {
             "n": 39628,
@@ -854,7 +946,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 9668,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 2
+            "bin_vs_half_as_int": 2,
+            "outside_raw_bin": 19279,
+            "pm05_changes_membership": 19279
           },
           "KBOS": {
             "n": 66245,
@@ -865,7 +959,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 14611,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 19
+            "bin_vs_half_as_int": 19,
+            "outside_raw_bin": 29714,
+            "pm05_changes_membership": 29714
           },
           "KDCA": {
             "n": 62266,
@@ -876,7 +972,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 14403,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 9
+            "bin_vs_half_as_int": 9,
+            "outside_raw_bin": 29300,
+            "pm05_changes_membership": 29300
           },
           "KDEN": {
             "n": 22557,
@@ -887,7 +985,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 4776,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 50
+            "bin_vs_half_as_int": 50,
+            "outside_raw_bin": 10293,
+            "pm05_changes_membership": 10293
           },
           "KDFW": {
             "n": 53601,
@@ -898,7 +998,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 12428,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 2
+            "bin_vs_half_as_int": 2,
+            "outside_raw_bin": 24749,
+            "pm05_changes_membership": 24749
           },
           "KHOU": {
             "n": 67265,
@@ -909,7 +1011,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 17799,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 1
+            "bin_vs_half_as_int": 1,
+            "outside_raw_bin": 34475,
+            "pm05_changes_membership": 34475
           },
           "KLAS": {
             "n": 56980,
@@ -920,7 +1024,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 12458,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 25214,
+            "pm05_changes_membership": 25214
           },
           "KLAX": {
             "n": 59943,
@@ -931,7 +1037,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 12918,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 25765,
+            "pm05_changes_membership": 25765
           },
           "KMDW": {
             "n": 21415,
@@ -942,7 +1050,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 4343,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 77
+            "bin_vs_half_as_int": 77,
+            "outside_raw_bin": 10194,
+            "pm05_changes_membership": 10194
           },
           "KMIA": {
             "n": 57484,
@@ -953,7 +1063,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 15025,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 29814,
+            "pm05_changes_membership": 29814
           },
           "KMSP": {
             "n": 64592,
@@ -964,7 +1076,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 13885,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 86
+            "bin_vs_half_as_int": 86,
+            "outside_raw_bin": 28595,
+            "pm05_changes_membership": 28595
           },
           "KNYC": {
             "n": 115110,
@@ -975,7 +1089,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 26174,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 6
+            "bin_vs_half_as_int": 6,
+            "outside_raw_bin": 51831,
+            "pm05_changes_membership": 51831
           },
           "KPHL": {
             "n": 62644,
@@ -986,7 +1102,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 14004,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 6
+            "bin_vs_half_as_int": 6,
+            "outside_raw_bin": 28403,
+            "pm05_changes_membership": 28403
           },
           "KPHX": {
             "n": 64325,
@@ -997,7 +1115,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 14351,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 28657,
+            "pm05_changes_membership": 28657
           },
           "KSAT": {
             "n": 58459,
@@ -1008,7 +1128,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 14542,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 28294,
+            "pm05_changes_membership": 28294
           },
           "KSEA": {
             "n": 57483,
@@ -1019,7 +1141,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 13585,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 2
+            "bin_vs_half_as_int": 2,
+            "outside_raw_bin": 27624,
+            "pm05_changes_membership": 27624
           },
           "KSFO": {
             "n": 59188,
@@ -1030,7 +1154,9 @@
             "int_vs_half_floor": 0,
             "bin_vs_floor": 14701,
             "bin_vs_half_floor": 0,
-            "bin_vs_half_as_int": 0
+            "bin_vs_half_as_int": 0,
+            "outside_raw_bin": 29515,
+            "pm05_changes_membership": 29515
           }
         },
         "sources": [
