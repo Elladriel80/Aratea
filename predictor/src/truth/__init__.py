@@ -16,3 +16,4 @@ skill can be measured without a market existing.
 from .iem_cli import CliDay, IEMCliClient, station_for_series  # noqa: F401
 from .lst_window import daily_extreme_lst, standard_utc_offset  # noqa: F401
 from .synthetic_bins import kalshi_style_bins, prob_in_bin_gaussian  # noqa: F401
+from .nowcast import prob_bin_nowcast  # noqa: F401
