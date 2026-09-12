@@ -44,10 +44,10 @@ from src.config import USER_AGENT  # noqa: E402
 from src.truth.iem_cli import TRUTH_DIR  # noqa: E402
 from src.truth.second_marche import (  # noqa: E402
     CITY_MAPS, CLOB_BASE, GAMMA_BASE, HIGHEST_TEMP_TAG_ID,
-    KALSHI_HIGH_WITHOUT_PM, attach_blends, cache_key, event_target_date,
-    fit_gap_weight, icao_for_kalshi_key, outcome_from_cli, parse_pm_bin,
-    pm_site_icao, price_at_or_before, same_bin, slice_metrics,
-    snapshot_unix, two_sided, yes_token_id,
+    KALSHI_HIGH_WITHOUT_PM, MAP_BY_KEY, attach_blends, cache_key,
+    event_target_date, fit_gap_weight, icao_for_kalshi_key,
+    outcome_from_cli, parse_pm_bin, pm_site_icao, price_at_or_before,
+    same_bin, slice_metrics, snapshot_unix, two_sided, yes_token_id,
 )
 
 A1_SPLIT = date(2026, 8, 3)
@@ -255,20 +255,34 @@ def load_or_fetch_events(allow_network: bool, extract_path: Path) -> list[dict]:
     return events
 
 
-def fetch_history(token: str, allow_network: bool) -> list[dict]:
-    path = CACHE_DIR / f"hist_{cache_key(token[:40])}.json"
+def fetch_history(
+    token: str,
+    allow_network: bool,
+    start_ts: Optional[int] = None,
+    end_ts: Optional[int] = None,
+) -> list[dict]:
+    """Historique CLOB. Sans startTs/endTs, les marchés déjà réglés
+    renvoient souvent une liste vide (constaté le 12 sept. 2026).
+    On demande donc la fenêtre autour de la capture Kalshi."""
+    key = cache_key(token[:40], str(start_ts or "na"), str(end_ts or "na"))
+    path = CACHE_DIR / f"histw_{key}.json"
     cached = load_cached(path)
     if cached is not None:
         return cached.get("history") if isinstance(cached, dict) else cached
     if not allow_network:
         return []
-    url = f"{CLOB_BASE}/prices-history?{urlencode({'market': token, 'interval': 'max', 'fidelity': 60})}"
+    params = {"market": token, "fidelity": 60}
+    if start_ts is not None:
+        params["startTs"] = int(start_ts)
+    if end_ts is not None:
+        params["endTs"] = int(end_ts)
+    url = f"{CLOB_BASE}/prices-history?{urlencode(params)}"
     time.sleep(SLEEP_S)
     data = _get_json(url)
     hist = data.get("history") if isinstance(data, dict) else []
     if not isinstance(hist, list):
         hist = []
-    cache_json(path, {"history": hist})
+    cache_json(path, {"history": hist, "params": params})
     return hist
 
 
@@ -359,7 +373,7 @@ def join_rows(
             "pm_title": match.get("title"),
             "pm_icao": ev.get("pm_icao"),
             "kalshi_icao": icao,
-            "same_station": bool(ev.get("pm_icao") and icao and ev["pm_icao"] == icao),
+            "same_station": False,  # rempli plus bas (texte d'événement ou table)
             "cli_high": high,
             "outcome": outcome_from_cli(high, kr["lower"], kr["upper"]),
             "yes_token": match["yes_token"],
@@ -368,11 +382,22 @@ def join_rows(
             "pm_price_ts": None,
         })
 
-    # Fetch only tokens that appear in an exact match with CLI.
-    tokens = sorted({r["yes_token"] for r in joined})
+    # Une fenêtre par jeton : 72 h avant la plus tôt des captures, jusqu'à
+    # la plus tardive. On ne garde ensuite que le point ≤ heure Kalshi.
+    windows: dict[str, tuple[int, int]] = {}
+    for r in joined:
+        tok, c = r["yes_token"], int(r["cutoff_ts"])
+        lo, hi = windows.get(tok, (c, c))
+        windows[tok] = (min(lo, c), max(hi, c))
+    tokens = sorted(windows)
     for i, token in enumerate(tokens):
         if token not in hist_cache:
-            hist_cache[token] = fetch_history(token, allow_network)
+            lo, hi = windows[token]
+            hist_cache[token] = fetch_history(
+                token, allow_network,
+                start_ts=lo - 72 * 3600,
+                end_ts=hi,
+            )
         if (i + 1) % 50 == 0:
             print(f"  historiques CLOB {i + 1}/{len(tokens)}", flush=True)
 
@@ -436,9 +461,11 @@ def write_reports(out_dir: Path, payload: dict) -> None:
         "## Recouvrement",
         "",
         f"- Lignes Kalshi max dans une ville mappable : {payload['n_kalshi_mapped']}.",
-        f"- Lignes gardées (même case, prix Polymarket avant la capture, CLI) : {prim['n_bins']}.",
-        f"- Villes-jours : {prim['n_city_days']}. Jours calendaires : {prim['n_dates']}.",
-        f"- Villes : {', '.join(prim['cities']) or 'aucune'}.",
+        f"- Lignes gardées tous leads (même case, prix Polymarket avant la capture, CLI) : "
+        f"{payload['slices']['tous_leads']['n_bins']}.",
+        f"- Dont la veille (lead 1) : {prim['n_bins']} lignes, "
+        f"{prim['n_city_days']} villes-jours, {prim['n_dates']} jours.",
+        f"- Villes (lead 1) : {', '.join(prim['cities']) or 'aucune'}.",
         f"- Lignes écartées : {json.dumps(payload['skips'], ensure_ascii=False)}.",
         "",
         "Villes Kalshi max sans série Polymarket quotidienne trouvée : "
@@ -490,26 +517,28 @@ def write_reports(out_dir: Path, payload: dict) -> None:
 
 
 def decide_verdict(primary: dict, skips: dict) -> str:
-    if primary["n_bins"] == 0:
+    """Trois statuts : ça aide / ça n'aide pas / blocked.
+
+    Portes habituelles : ≥ 30 jours, Brier plus bas, plus de jours
+    gagnés que perdus, sign test p < 0,05.
+    """
+    if primary["n_bins"] == 0 or (primary["n_dates"] or 0) < MIN_MARKET_DAYS:
         return "blocked"
-    if (primary["n_dates"] or 0) < MIN_MARKET_DAYS:
-        # Mesuré, mais trop peu pour les portes habituelles.
-        avg = primary.get("brier_avg")
+
+    def _clear(brier_a, wins) -> bool:
         k = primary.get("brier_kalshi")
-        if avg is not None and k is not None and avg < k and primary["avg_vs_kalshi"]["wins"] > primary["avg_vs_kalshi"]["losses"]:
-            return "testee_thin_helps"
-        return "testee_thin"
-    avg = primary.get("brier_avg")
-    stack = primary.get("brier_stack")
-    k = primary.get("brier_kalshi")
-    avg_wins = primary["avg_vs_kalshi"]
-    stack_wins = primary["stack_vs_kalshi"]
-    helps = False
-    if avg is not None and k is not None and avg < k and avg_wins["wins"] > avg_wins["losses"]:
-        helps = True
-    if stack is not None and k is not None and stack < k and stack_wins["wins"] > stack_wins["losses"]:
-        helps = True
-    return "testee_ca_aide" if helps else "testee_ca_n_aide_pas"
+        if brier_a is None or k is None or brier_a >= k:
+            return False
+        if wins["wins"] <= wins["losses"]:
+            return False
+        p = wins.get("p_one_sided")
+        return p is not None and p < 0.05
+
+    if _clear(primary.get("brier_avg"), primary["avg_vs_kalshi"]):
+        return "testee_ca_aide"
+    if _clear(primary.get("brier_stack"), primary["stack_vs_kalshi"]):
+        return "testee_ca_aide"
+    return "testee_ca_n_aide_pas"
 
 
 def main() -> int:
@@ -553,23 +582,33 @@ def main() -> int:
     print(f"  villes 12 sept. : {discovery['n_cities_sept12']}", flush=True)
 
     hist_cache: dict[str, list] = {}
+    skips_path = out_dir / "skips.json"
     if joined_path.exists() and args.skip_fetch:
         print("Reprise des lignes déjà jointes (--skip-fetch).", flush=True)
         rows = json.loads(joined_path.read_text(encoding="utf-8"))
-        skips = {"reused_joined": len(rows)}
+        skips = load_cached(skips_path) or {"reused_joined": len(rows)}
     else:
         print("Jointure cases + historiques CLOB…", flush=True)
         rows, skips = join_rows(kalshi_rows, pm_index, truth, allow_network, hist_cache)
         out_dir.mkdir(parents=True, exist_ok=True)
-        slim = [{k: v for k, v in r.items()} for r in rows]
         joined_path.parent.mkdir(parents=True, exist_ok=True)
-        joined_path.write_text(json.dumps(slim), encoding="utf-8")
+        cache_json(skips_path, skips)
         print(f"  jointes : {len(rows)}  skips={skips}", flush=True)
+
+    for r in rows:
+        cmap = MAP_BY_KEY.get(r.get("kalshi_key"))
+        if r.get("pm_icao") is None and cmap is not None:
+            r["pm_icao"] = cmap.pm_icao_note
+        icao = r.get("kalshi_icao") or icao_for_kalshi_key(r.get("kalshi_key") or "")
+        r["kalshi_icao"] = icao
+        r["same_station"] = bool(r.get("pm_icao") and icao and r["pm_icao"] == icao)
 
     train = [r for r in rows if date.fromisoformat(r["target"]) < A1_SPLIT]
     test = [r for r in rows if date.fromisoformat(r["target"]) >= A1_SPLIT]
     weight = fit_gap_weight(train)
     attach_blends(rows, weight)
+    joined_path.parent.mkdir(parents=True, exist_ok=True)
+    joined_path.write_text(json.dumps(rows), encoding="utf-8")
 
     def take(lead: Optional[int], same_station: Optional[bool] = None, after_split: Optional[bool] = None):
         out = []

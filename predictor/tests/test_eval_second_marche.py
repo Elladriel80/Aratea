@@ -114,7 +114,7 @@ def test_eval_second_marche_offline(tmp_path, monkeypatch):
     extract = tmp_path / "extracted_events.json"
     extract.write_text(json.dumps(events), encoding="utf-8")
 
-    def fake_hist(token: str, allow_network: bool):
+    def fake_hist(token: str, allow_network: bool, start_ts=None, end_ts=None):
         # Case 89-90 vraie (max=90). Polymarket 0,80 ; Kalshi 0,35.
         return [{"t": 1, "p": 0.80}]
 
@@ -163,3 +163,28 @@ def test_blend_and_metrics_helpers():
     m = slice_metrics(rows)
     assert m["n_bins"] == 2
     assert abs(m["mean_abs_gap"] - 0.6) < 1e-12
+
+
+def test_verdict_needs_sign_test_and_thirty_days():
+    empty = {"n_bins": 0, "n_dates": 0, "brier_kalshi": None, "brier_avg": None,
+             "brier_stack": None,
+             "avg_vs_kalshi": {"wins": 0, "losses": 0, "p_one_sided": None},
+             "stack_vs_kalshi": {"wins": 0, "losses": 0, "p_one_sided": None}}
+    assert ens.decide_verdict(empty, {}) == "blocked"
+    thin = dict(empty, n_bins=10, n_dates=12, brier_kalshi=0.12, brier_avg=0.10)
+    thin["avg_vs_kalshi"] = {"wins": 10, "losses": 2, "p_one_sided": 0.01}
+    assert ens.decide_verdict(thin, {}) == "blocked"
+    tie = {
+        "n_bins": 100, "n_dates": 58,
+        "brier_kalshi": 0.1397, "brier_avg": 0.1393, "brier_stack": 0.1395,
+        "avg_vs_kalshi": {"wins": 27, "losses": 31, "p_one_sided": 0.74},
+        "stack_vs_kalshi": {"wins": 30, "losses": 28, "p_one_sided": 0.45},
+    }
+    assert ens.decide_verdict(tie, {}) == "testee_ca_n_aide_pas"
+    clear = {
+        "n_bins": 100, "n_dates": 40,
+        "brier_kalshi": 0.14, "brier_avg": 0.11, "brier_stack": None,
+        "avg_vs_kalshi": {"wins": 32, "losses": 8, "p_one_sided": 0.001},
+        "stack_vs_kalshi": {"wins": 0, "losses": 0, "p_one_sided": None},
+    }
+    assert ens.decide_verdict(clear, {}) == "testee_ca_aide"
