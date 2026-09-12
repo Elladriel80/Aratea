@@ -46,6 +46,7 @@ MEMBER_MODEL_LABELS: dict[str, str] = {
     "icon_seamless": "DWD ICON EPS",
     "bom_access_global_ensemble": "BOM ACCESS-GE",
     "ukmo_global_ensemble_20km": "UKMO MOGREPS-G",
+    "google_weathernext2_ensemble": "Google WeatherNext 2 (64)",
 }
 
 _MEMBER_SUFFIX_RE = re.compile(r"^_member(\d+)$")
@@ -101,15 +102,25 @@ class EnsembleMembersClient:
         self.failures: dict[str, str] = {}
 
     def fetch(self, lat: float, lon: float, days: int = 7,
-              variable: str = "temperature_2m") -> dict[str, list[MemberSeries]]:
-        """{model: [MemberSeries]} pour les `days` prochains jours (UTC, °F)."""
-        days = max(1, min(16, int(days)))
+              variable: str = "temperature_2m", past_days: int = 0) -> dict[str, list[MemberSeries]]:
+        """{model: [MemberSeries]} pour les `days` prochains jours (UTC, °F).
+
+        `past_days` : Open-Meteo ne remplit les membres que sur ~3 jours
+        passés. Au-delà, l'axe des heures existe mais les valeurs sont
+        vides. On mesure la couverture, on n'invente rien.
+        """
+        days = max(0, min(16, int(days)))
+        past_days = max(0, min(92, int(past_days)))
         today = date.today().isoformat()
         out: dict[str, list[MemberSeries]] = {}
         for model in self.models:
             params = {"latitude": lat, "longitude": lon, "hourly": variable, "models": model,
-                      "timezone": "GMT", "temperature_unit": "fahrenheit", "forecast_days": days}
-            key = f"{lat:.4f}_{lon:.4f}_{model}_{variable}_d{days}_{today}"
+                      "timezone": "GMT", "temperature_unit": "fahrenheit",
+                      "forecast_days": max(1, days)}
+            if past_days:
+                params["past_days"] = past_days
+            key = (f"{lat:.4f}_{lon:.4f}_{model}_{variable}_d{days}"
+                   f"_p{past_days}_{today}")
 
             def fetcher(p=params) -> dict:
                 time.sleep(self.sleep_s)
@@ -125,4 +136,17 @@ class EnsembleMembersClient:
                 out[model] = members
             else:
                 self.failures[model] = "no member series in response"
+        return out
+
+    @staticmethod
+    def member_value_days(by_model: dict[str, list[MemberSeries]]) -> dict[str, list[str]]:
+        """Jours UTC où au moins un membre a une valeur, par modèle."""
+        out: dict[str, list[str]] = {}
+        for model, members in by_model.items():
+            days: set[str] = set()
+            for s in members:
+                for t, v in zip(s.times_utc, s.values):
+                    if v is not None:
+                        days.add(t[:10])
+            out[model] = sorted(days)
         return out

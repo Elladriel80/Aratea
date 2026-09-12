@@ -1,24 +1,11 @@
 """EnsembleMembersPredictor — P(bin) depuis les vrais membres d'ensemble.
 
-FR : Remplace l'approximation gaussienne sur 5 sorties déterministes par la
-distribution empirique des membres (IFS 51, AIFS ENS 51, GEFS 31 par défaut,
-~130 membres). Chaque membre est agrégé en extrême journalier dans la fenêtre
-LST du CLI, décalé du biais station si la table est active (même flag
-ARATEA_ENS_STATION_BIAS que l'ensemble déterministe), puis lissé par un noyau
-gaussien de largeur `kernel_f` (défaut 1 °F : arrondi entier du CLI + un peu
-de sous-dispersion). Les modèles pèsent autant les uns que les autres, quel
-que soit leur nombre de membres.
+FR : Part des membres dans chaque contrat de 2 °F (piste A3), pas une
+cloche sur 5 modèles. Extrême journalier dans la fenêtre LST du CLI,
+biais station si ARATEA_ENS_STATION_BIAS=1, un poids égal par modèle.
+ARATEA_ENS_MEMBERS_P=kernel remet l'ancien lissage. Challenger seulement.
 
-P(bin) = Σ_modèles (1/M) Σ_membres (1/n_m) · P_N(x_i + biais, kernel)(bin)
-
-Challenger : capturé chaque jour par forward_predict à côté de `ensemble`,
-scoré par score_forward, comparé au marché par eval_station_bias_market. Ne
-remplace pas le champion tant que le holdout ne l'a pas dit.
-
-EN : Empirical member distribution (~130 members) in place of a 5-point
-gaussian. Daily extremes in the CLI LST window per member, optional station
-bias shift, gaussian kernel smoothing (default 1 °F), equal weight per model.
-Shadow predictor captured daily and scored like the others.
+EN : Member fraction in each 2 °F bin (A3). Shadow predictor, not champion.
 """
 from __future__ import annotations
 
@@ -29,7 +16,7 @@ from datetime import date
 from typing import Optional
 
 from src.truth.lst_window import daily_extreme_lst
-from src.truth.synthetic_bins import Bin, prob_in_bin_gaussian
+from src.truth.synthetic_bins import Bin, prob_in_bin_gaussian, prob_in_bin_members_models
 from src.weather import CITIES
 from src.weather.ensemble_api import EnsembleMembersClient
 from .base import ContractSpec, Prediction, Predictor
@@ -51,6 +38,7 @@ class EnsembleMembersPredictor(Predictor):
     ):
         self.members = members_client or EnsembleMembersClient()
         self.kernel_f = float(os.environ.get("ARATEA_ENS_MEMBERS_KERNEL_F", "1.0")) if kernel_f is None else kernel_f
+        self.p_mode = os.environ.get("ARATEA_ENS_MEMBERS_P", "fraction").strip().lower()
         self.max_horizon = max_horizon_days
         self.min_members = min_members
         # Fallback climatologique quand l'API ne répond pas (même contrat que ensemble.py).
@@ -118,15 +106,22 @@ class EnsembleMembersPredictor(Predictor):
                 bias_applied = {"bias_f": sb[0], "sigma_f": sb[1], "n_train": sb[2]}
 
         b = self._bin(contract)
+        shifted = {m: [x + shift for x in vals] for m, vals in per_model_values.items()}
+        p_frac_raw = prob_in_bin_members_models(per_model_values, b)
+        p_frac_corr = prob_in_bin_members_models(shifted, b)
         n_models = len(per_model_values)
-        p_raw = p_corr = 0.0
+        p_kern_raw = p_kern_corr = 0.0
         pooled: list[float] = []
         for model, vals in per_model_values.items():
             w = 1.0 / (n_models * len(vals))
             for x in vals:
-                p_raw += w * prob_in_bin_gaussian(x, self.kernel_f, b)
-                p_corr += w * prob_in_bin_gaussian(x + shift, self.kernel_f, b)
+                p_kern_raw += w * prob_in_bin_gaussian(x, self.kernel_f, b)
+                p_kern_corr += w * prob_in_bin_gaussian(x + shift, self.kernel_f, b)
                 pooled.append(x)
+        if self.p_mode == "kernel":
+            p_raw, p_corr = p_kern_raw, p_kern_corr
+        else:
+            p_raw, p_corr = p_frac_raw, p_frac_corr
         prob = min(1.0, max(0.0, p_corr))
         pooled.sort()
 
@@ -145,7 +140,10 @@ class EnsembleMembersPredictor(Predictor):
                 "member_sd": statistics.pstdev(pooled) if len(pooled) > 1 else 0.0,
                 "member_q10": q(0.10), "member_q50": q(0.50), "member_q90": q(0.90),
                 "kernel_f": self.kernel_f,
+                "p_mode": self.p_mode,
                 "p_raw": p_raw,
+                "p_fraction": p_frac_corr,
+                "p_kernel": p_kern_corr,
                 "station_bias": bias_applied,
                 "days_ahead": days_ahead,
                 "api_failures": dict(self.members.failures),

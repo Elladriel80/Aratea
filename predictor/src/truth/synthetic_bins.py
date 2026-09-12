@@ -85,3 +85,29 @@ def prob_in_bin_gaussian(mu: float, sigma: float, b: Bin) -> float:
 
 def brier(p: float, outcome: bool) -> float:
     return (p - (1.0 if outcome else 0.0)) ** 2
+
+
+def prob_in_bin_members(values: list[float], b: Bin) -> float:
+    """P(bin) = part des membres dont le chiffre arrondi tombe dans le bin.
+
+    Même arrondi que le CLI (`Bin.contains` : entier le plus proche).
+    Aucune cloche. Liste vide → 0, rien d'inventé.
+    """
+    if not values:
+        return 0.0
+    n = 0
+    for x in values:
+        if b.contains(x):
+            n += 1
+    return n / len(values)
+
+
+def prob_in_bin_members_models(per_model: dict[str, list[float]], b: Bin) -> float:
+    """Moyenne des fractions, un poids égal par modèle (pas par membre).
+
+    IFS 51 ne noie pas GEFS 31. Un modèle sans membre est ignoré.
+    """
+    parts = [prob_in_bin_members(vs, b) for vs in per_model.values() if vs]
+    if not parts:
+        return 0.0
+    return sum(parts) / len(parts)
