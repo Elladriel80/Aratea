@@ -520,17 +520,18 @@ def main(argv: list[str] | None = None) -> int:
         client = KalshiClient()
         universe: list[dict] = []
         for series in series_list:
-            print(f">> list {series} {start}..{end}")
+            print(f">> list {series} {start}..{end}", flush=True)
             universe.extend(iter_historical_between(client, series, start, end))
-        print(f">> universe resolved between-bins: {len(universe)}")
+        print(f">> universe resolved between-bins: {len(universe)}", flush=True)
         verdicts = []
         for i, row in enumerate(universe, 1):
             try:
                 verdicts.append(classify_row(client, cache_dir, row, args.lead))
             except Exception as e:
-                print(f"   [err] {row.get('ticker')}: {type(e).__name__}: {e}")
+                print(f"   [err] {row.get('ticker')}: {type(e).__name__}: {e}",
+                      flush=True)
             if i % 50 == 0:
-                print(f"   ... {i}/{len(universe)}")
+                print(f"   ... {i}/{len(universe)}", flush=True)
         ab = summarize_ab(verdicts, X, meta, y)
         fetch_note = "fetched"
     elif args.offline_only:

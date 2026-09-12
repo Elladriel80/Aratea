@@ -1,0 +1,294 @@
+{
+  "schema": "candle_recovery/1",
+  "generated_at": "2026-09-12T17:22:18Z",
+  "params": {
+    "backfill": "/workspace/predictor/data/backfill/backfill_dataset_v3fb.json",
+    "series": [
+      "KXHIGHTSFO",
+      "KXLOWTBOS",
+      "KXLOWTCHI",
+      "KXLOWTLAX",
+      "KXLOWTMIA",
+      "KXLOWTNYC"
+    ],
+    "start": "2026-04-11",
+    "end": "2026-06-13",
+    "lead": 1,
+    "fetch": true,
+    "offline_only": false,
+    "fetch_note": "fetched"
+  },
+  "inrepo_backfill": {
+    "n_rows": 1467,
+    "n_tickers": 1467,
+    "n_dates": 62,
+    "date_min": "2026-04-11",
+    "date_max": "2026-06-13",
+    "series": [
+      "KXHIGHTSFO",
+      "KXLOWTBOS",
+      "KXLOWTCHI",
+      "KXLOWTLAX",
+      "KXLOWTMIA",
+      "KXLOWTNYC"
+    ],
+    "leads": [
+      1
+    ],
+    "capture_hour_tokens": {
+      "180000": 1467
+    }
+  },
+  "score_inrepo_backfill": {
+    "label": "inrepo_backfill",
+    "n_rows": 1467,
+    "n_dates": 62,
+    "brier_kalshi_mid": 0.12432960122699387,
+    "brier_champion_ensemble": 0.1299862106782717,
+    "brier_p_consensus": 0.13643951326403245,
+    "dates_ensemble_beats_mid": {
+      "wins": 25,
+      "dates": 62
+    },
+    "dates_consensus_beats_mid": {
+      "wins": 14,
+      "dates": 62
+    },
+    "n_scored_mid": 1467,
+    "n_scored_ensemble": 1467,
+    "n_scored_consensus": 1467,
+    "enough_dates_for_market_gate": true
+  },
+  "live_snapshots": {
+    "n_files": 70,
+    "n_records": 16158,
+    "n_with_yes_mid": 16038,
+    "n_between_like": 10772,
+    "n_tickers": 9528,
+    "n_target_dates": 70,
+    "n_exact_180000Z": 0,
+    "records_by_utc_hour": {
+      "09": 60,
+      "10": 240,
+      "12": 168,
+      "17": 486,
+      "18": 1224,
+      "19": 10668,
+      "20": 3060,
+      "23": 252
+    },
+    "note": "Captures live : horodatage du fichier, pas une bougie horaire."
+  },
+  "ab_same_universe": {
+    "n_resolved_between": 1535,
+    "n_policy_a_exact_hour": 1496,
+    "n_policy_b_last_24h": 1535,
+    "n_dropped_by_exact_hour": 39,
+    "n_recovered_by_last_24h": 39,
+    "pct_dropped_by_exact_hour": 0.025407166123778503,
+    "pct_recovered_of_dropped": 1.0,
+    "pct_recovered_of_universe": 0.025407166123778503,
+    "multiplier_b_over_a": 1.0260695187165776,
+    "n_in_backfill": 1467,
+    "n_dates_a": 64,
+    "n_dates_b": 64,
+    "age_hours_b": {
+      "n": 1535,
+      "n_exact_zero": 1496,
+      "n_positive": 39
+    },
+    "score_exact_hour_set": {
+      "label": "exact_hour",
+      "n_rows": 1496,
+      "n_dates": 64,
+      "brier_kalshi_mid": 0.12630417780748665,
+      "brier_champion_ensemble": 0.132976152566971,
+      "brier_p_consensus": 0.13951624155375,
+      "dates_ensemble_beats_mid": {
+        "wins": 24,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 15,
+        "dates": 62
+      },
+      "n_scored_mid": 1496,
+      "n_scored_ensemble": 1428,
+      "n_scored_consensus": 1428,
+      "enough_dates_for_market_gate": true
+    },
+    "score_last_24h_set": {
+      "label": "last_24h",
+      "n_rows": 1535,
+      "n_dates": 64,
+      "brier_kalshi_mid": 0.12365237785016286,
+      "brier_champion_ensemble": 0.1299862106782717,
+      "brier_p_consensus": 0.13643951326403245,
+      "dates_ensemble_beats_mid": {
+        "wins": 25,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 14,
+        "dates": 62
+      },
+      "n_scored_mid": 1535,
+      "n_scored_ensemble": 1467,
+      "n_scored_consensus": 1467,
+      "enough_dates_for_market_gate": true
+    },
+    "score_exact_hour_with_champion": {
+      "label": "exact_hour_with_champion",
+      "n_rows": 1428,
+      "n_dates": 62,
+      "brier_kalshi_mid": 0.12712617296918766,
+      "brier_champion_ensemble": 0.132976152566971,
+      "brier_p_consensus": 0.13951624155375,
+      "dates_ensemble_beats_mid": {
+        "wins": 24,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 15,
+        "dates": 62
+      },
+      "n_scored_mid": 1428,
+      "n_scored_ensemble": 1428,
+      "n_scored_consensus": 1428,
+      "enough_dates_for_market_gate": true
+    },
+    "score_last_24h_with_champion": {
+      "label": "last_24h_with_champion",
+      "n_rows": 1467,
+      "n_dates": 62,
+      "brier_kalshi_mid": 0.12432960122699387,
+      "brier_champion_ensemble": 0.1299862106782717,
+      "brier_p_consensus": 0.13643951326403245,
+      "dates_ensemble_beats_mid": {
+        "wins": 25,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 14,
+        "dates": 62
+      },
+      "n_scored_mid": 1467,
+      "n_scored_ensemble": 1467,
+      "n_scored_consensus": 1467,
+      "enough_dates_for_market_gate": true
+    }
+  },
+  "promotion_gates": {
+    "min_market_dates": 30,
+    "champion": "vendor_ensemble",
+    "champion_changed": false
+  },
+  "catalogue_variables_renamed": false,
+  "verdict_fr": "R\u00e8gle B garde 1535 lignes contre 1496 pour la r\u00e8gle A (39 r\u00e9cup\u00e9r\u00e9es). Jours sous B : 64 (il en faut 30 pour parler du march\u00e9). L\u00e0 o\u00f9 le champion est not\u00e9, son score reste 0.1300 contre 0.1243 pour le prix (62 jours). Le m\u00e9lange bat le prix 25 jours sur 62. On ne change pas le champion.",
+  "ab_catalogue_29series": {
+    "n_resolved_between": 7419,
+    "n_policy_a_exact_hour": 7198,
+    "n_policy_b_last_24h": 7419,
+    "n_dropped_by_exact_hour": 221,
+    "n_recovered_by_last_24h": 221,
+    "pct_dropped_by_exact_hour": 0.029788381183447905,
+    "pct_recovered_of_dropped": 1.0,
+    "pct_recovered_of_universe": 0.029788381183447905,
+    "multiplier_b_over_a": 1.030702973048069,
+    "n_in_backfill": 1467,
+    "n_dates_a": 64,
+    "n_dates_b": 64,
+    "age_hours_b": {
+      "n": 7419,
+      "n_exact_zero": 7198,
+      "n_positive": 221
+    },
+    "score_exact_hour_set": {
+      "label": "exact_hour",
+      "n_rows": 7198,
+      "n_dates": 64,
+      "brier_kalshi_mid": 0.13203719088635732,
+      "brier_champion_ensemble": 0.132976152566971,
+      "brier_p_consensus": 0.13951624155375,
+      "dates_ensemble_beats_mid": {
+        "wins": 24,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 15,
+        "dates": 62
+      },
+      "n_scored_mid": 7198,
+      "n_scored_ensemble": 1428,
+      "n_scored_consensus": 1428,
+      "enough_dates_for_market_gate": true
+    },
+    "score_last_24h_set": {
+      "label": "last_24h",
+      "n_rows": 7419,
+      "n_dates": 64,
+      "brier_kalshi_mid": 0.13026021364065238,
+      "brier_champion_ensemble": 0.1299862106782717,
+      "brier_p_consensus": 0.13643951326403245,
+      "dates_ensemble_beats_mid": {
+        "wins": 25,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 14,
+        "dates": 62
+      },
+      "n_scored_mid": 7419,
+      "n_scored_ensemble": 1467,
+      "n_scored_consensus": 1467,
+      "enough_dates_for_market_gate": true
+    },
+    "score_exact_hour_with_champion": {
+      "label": "exact_hour_with_champion",
+      "n_rows": 1428,
+      "n_dates": 62,
+      "brier_kalshi_mid": 0.12712617296918766,
+      "brier_champion_ensemble": 0.132976152566971,
+      "brier_p_consensus": 0.13951624155375,
+      "dates_ensemble_beats_mid": {
+        "wins": 24,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 15,
+        "dates": 62
+      },
+      "n_scored_mid": 1428,
+      "n_scored_ensemble": 1428,
+      "n_scored_consensus": 1428,
+      "enough_dates_for_market_gate": true
+    },
+    "score_last_24h_with_champion": {
+      "label": "last_24h_with_champion",
+      "n_rows": 1467,
+      "n_dates": 62,
+      "brier_kalshi_mid": 0.12432960122699387,
+      "brier_champion_ensemble": 0.1299862106782717,
+      "brier_p_consensus": 0.13643951326403245,
+      "dates_ensemble_beats_mid": {
+        "wins": 25,
+        "dates": 62
+      },
+      "dates_consensus_beats_mid": {
+        "wins": 14,
+        "dates": 62
+      },
+      "n_scored_mid": 1467,
+      "n_scored_ensemble": 1467,
+      "n_scored_consensus": 1467,
+      "enough_dates_for_market_gate": true
+    }
+  },
+  "ab_catalogue_29series_params": {
+    "n_series": 29,
+    "start": "2026-04-11",
+    "end": "2026-06-13",
+    "lead": 1,
+    "generated_at": "2026-09-12T17:48:16Z"
+  }
+}

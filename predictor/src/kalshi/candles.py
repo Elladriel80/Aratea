@@ -34,6 +34,30 @@ CANDLE_SLEEP = 0.12
 
 LIVE_CANDLES = "/series/{series}/markets/{ticker}/candlesticks"
 HIST_CANDLES = "/historical/markets/{ticker}/candlesticks"
+HIST_CUTOFF_PATH = "/historical/cutoff"
+
+# Cached after the first GET /historical/cutoff in this process.
+_MARKET_SETTLED_CUTOFF_TS: Optional[int] = None
+
+
+def market_settled_cutoff_ts(client) -> Optional[int]:
+    """Unix ts of Kalshi's live/historical market split. None if unknown."""
+    global _MARKET_SETTLED_CUTOFF_TS
+    if _MARKET_SETTLED_CUTOFF_TS is not None:
+        return _MARKET_SETTLED_CUTOFF_TS
+    try:
+        data = client._get(HIST_CUTOFF_PATH)
+    except Exception:
+        return None
+    raw = data.get("market_settled_ts") if isinstance(data, dict) else None
+    if not raw:
+        return None
+    try:
+        dt = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    _MARKET_SETTLED_CUTOFF_TS = int(dt.timestamp())
+    return _MARKET_SETTLED_CUTOFF_TS
 
 
 def capture_cutoff_utc(as_of) -> datetime:
@@ -189,24 +213,26 @@ def fetch_candles(client, series_ticker: str, market_ticker: str,
               "end_ts": cutoff_ts, "period_interval": 60}
     live = LIVE_CANDLES.format(series=series_ticker, ticker=market_ticker)
     hist = HIST_CANDLES.format(ticker=market_ticker)
+    settled_cut = market_settled_cutoff_ts(client)
+    # Capture is the day before resolution; if that instant is older than
+    # the live/historical split, the live path 404s. Skip it.
+    prefer_hist = settled_cut is not None and cutoff_ts < settled_cut
+    paths = [hist, live] if prefer_hist else [live, hist]
     data: dict = {}
     last_err: Optional[BaseException] = None
-    time.sleep(CANDLE_SLEEP)
-    try:
-        data = client._get(live, params=params)
-    except requests.HTTPError as e:
-        last_err = e
-        status = getattr(getattr(e, "response", None), "status_code", None)
-        if status == 404:
-            time.sleep(CANDLE_SLEEP)
-            try:
-                data = client._get(hist, params=params)
-                last_err = None
-            except requests.HTTPError as e2:
-                last_err = e2
-                data = {}
-        else:
+    for i, url in enumerate(paths):
+        time.sleep(CANDLE_SLEEP)
+        try:
+            data = client._get(url, params=params)
+            last_err = None
+            break
+        except requests.HTTPError as e:
+            last_err = e
+            status = getattr(getattr(e, "response", None), "status_code", None)
+            if status == 404 and i + 1 < len(paths):
+                continue
             data = {}
+            break
     if last_err is not None and not (isinstance(data, dict) and "candlesticks" in data):
         raise last_err
     if isinstance(data, dict) and "candlesticks" in data:
