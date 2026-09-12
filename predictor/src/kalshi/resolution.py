@@ -121,10 +121,12 @@ SERIES_TO_STATION: dict[str, str] = {
     "KXHIGHTMIN": "CLIMSP",
     "KXLOWTMIN":  "CLIMSP",
     "KXLOWTSEA":  "CLISEA",
+    "KXHIGHTSEA": "CLISEA",
     "KXHIGHTLV":  "CLILAS",     # Kalshi 'TLV' = Las Vegas (cf. rules_primary)
     "KXLOWTLV":   "CLILAS",
     "KXLOWTDC":   "CLIDCA",
     "KXHIGHDC":   "CLIDCA",
+    "KXHIGHTDC":  "CLIDCA",
     "KXRAINNYC":  "CLINYC",
     "KXRAINNYCM": "CLINYC",
     "KXRAINCHI":  "CLIORD",

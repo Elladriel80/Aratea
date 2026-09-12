@@ -156,7 +156,8 @@ def kalshi_stations() -> dict[str, dict]:
 
 def station_for_series(series_ticker: str) -> Optional[str]:
     """Série Kalshi → ICAO de la station de résolution (via resolution.py)."""
-    cli = SERIES_TO_STATION.get(series_ticker)
+    prefix = (series_ticker or "").split("-")[0]
+    cli = SERIES_TO_STATION.get(prefix)
     if cli is None:
         return None
     st = NWS_STATIONS.get(cli)
