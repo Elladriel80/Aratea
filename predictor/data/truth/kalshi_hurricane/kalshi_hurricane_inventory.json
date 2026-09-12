@@ -1,6 +1,6 @@
 {
   "catalogue": "March\u00e9 ouragan Kalshi",
-  "as_of": "2026-09-12T19:07:04Z",
+  "as_of": "2026-09-12T19:10:30Z",
   "champion_switched": false,
   "real_money": false,
   "playability": {
@@ -11557,17 +11557,227 @@
     "n_seasons_full": 175,
     "n_seasons_dec1": 175
   },
-  "decks": null,
+  "decks": {
+    "catalogue": "NHC a-decks / b-decks",
+    "intensity": {
+      "n": 25878,
+      "n_storms": 307,
+      "n_seasons": 18,
+      "first_year": 2008,
+      "last_year": 2025,
+      "overall": {
+        "n": 25878,
+        "n_storms": 307,
+        "n_seasons": 18,
+        "ofcl_mae_kt": 10.069750367107195,
+        "ocd5_mae_kt": 14.229306747043822,
+        "ofcl_bias_kt": -0.08134322590617513,
+        "ocd5_bias_kt": -2.6764046680578097,
+        "n_ofcl_closer": 16062,
+        "n_tie": 1352,
+        "n_ocd5_closer": 8464,
+        "ofcl_beats_ocd5": true
+      },
+      "by_lead": {
+        "12": {
+          "n": 5525,
+          "n_storms": 307,
+          "n_seasons": 18,
+          "ofcl_mae_kt": 5.515837104072398,
+          "ocd5_mae_kt": 7.154389140271493,
+          "ofcl_bias_kt": 0.09321266968325792,
+          "ocd5_bias_kt": -0.8908597285067873,
+          "n_ofcl_closer": 3319,
+          "n_tie": 523,
+          "n_ocd5_closer": 1683,
+          "ofcl_beats_ocd5": true
+        },
+        "24": {
+          "n": 4953,
+          "n_storms": 288,
+          "n_seasons": 18,
+          "ofcl_mae_kt": 8.289925297799314,
+          "ocd5_mae_kt": 11.004441752473248,
+          "ofcl_bias_kt": 0.22410660205935795,
+          "ocd5_bias_kt": -1.1704017767009893,
+          "n_ofcl_closer": 3006,
+          "n_tie": 310,
+          "n_ocd5_closer": 1637,
+          "ofcl_beats_ocd5": true
+        },
+        "36": {
+          "n": 4395,
+          "n_storms": 261,
+          "n_seasons": 18,
+          "ofcl_mae_kt": 10.045506257110352,
+          "ocd5_mae_kt": 14.0773606370876,
+          "ofcl_bias_kt": 0.15927189988623436,
+          "ocd5_bias_kt": -1.7374288964732651,
+          "n_ofcl_closer": 2744,
+          "n_tie": 192,
+          "n_ocd5_closer": 1459,
+          "ofcl_beats_ocd5": true
+        },
+        "48": {
+          "n": 3888,
+          "n_storms": 238,
+          "n_seasons": 18,
+          "ofcl_mae_kt": 11.511059670781894,
+          "ocd5_mae_kt": 16.583847736625515,
+          "ofcl_bias_kt": 0.11959876543209877,
+          "ocd5_bias_kt": -2.611111111111111,
+          "n_ofcl_closer": 2450,
+          "n_tie": 142,
+          "n_ocd5_closer": 1296,
+          "ofcl_beats_ocd5": true
+        },
+        "72": {
+          "n": 3016,
+          "n_storms": 198,
+          "n_seasons": 18,
+          "ofcl_mae_kt": 13.090185676392572,
+          "ocd5_mae_kt": 19.698275862068964,
+          "ofcl_bias_kt": -0.0033156498673740055,
+          "ocd5_bias_kt": -4.515915119363395,
+          "n_ofcl_closer": 1956,
+          "n_tie": 88,
+          "n_ocd5_closer": 972,
+          "ofcl_beats_ocd5": true
+        },
+        "96": {
+          "n": 2311,
+          "n_storms": 155,
+          "n_seasons": 18,
+          "ofcl_mae_kt": 14.184335785374296,
+          "ocd5_mae_kt": 21.4582431847685,
+          "ofcl_bias_kt": -0.6057983556901774,
+          "ocd5_bias_kt": -5.915188230203375,
+          "n_ofcl_closer": 1481,
+          "n_tie": 53,
+          "n_ocd5_closer": 777,
+          "ofcl_beats_ocd5": true
+        },
+        "120": {
+          "n": 1790,
+          "n_storms": 117,
+          "n_seasons": 18,
+          "ofcl_mae_kt": 15.578212290502794,
+          "ocd5_mae_kt": 21.701117318435752,
+          "ofcl_bias_kt": -1.946927374301676,
+          "ocd5_bias_kt": -7.52122905027933,
+          "n_ofcl_closer": 1106,
+          "n_tie": 44,
+          "n_ocd5_closer": 640,
+          "ofcl_beats_ocd5": true
+        }
+      },
+      "skipped": {
+        "not_homogeneous": 23544,
+        "not_tropical_or_sub": 7089,
+        "no_exact_hurdat2_time": 5012,
+        "vmax_missing_or_zero": 3,
+        "no_hurdat2": 4
+      }
+    },
+    "bdeck_vs_hurdat2": {
+      "n_points": 11936,
+      "n_storms": 313,
+      "mae_kt": 0.0012567024128686327,
+      "skipped": {
+        "not_tropical_or_sub": 3334,
+        "no_exact_or_missing_wind": 263,
+        "no_hurdat2": 4
+      },
+      "note": "b-deck BEST contre HURDAT2 au m\u00eame instant. Ce n'est pas une pr\u00e9vision. C'est l'\u00e9cart entre le best-track op\u00e9rationnel et le fichier final."
+    },
+    "first_hu_timing": {
+      "n_hurdat2_reached_hu": 136,
+      "n_with_adeck_compared": 135,
+      "n_ofcl_hu_forecast_before_first_hu": 126,
+      "n_ofcl_hu_forecast_at_or_after_first_hu": 2,
+      "n_no_ofcl_hu_forecast": 8,
+      "n_adeck_starts_after_first_hurdat2_point": 90,
+      "genesis_scored": false,
+      "genesis_block_reason": "Les a-decks commencent quand le syst\u00e8me est d\u00e9j\u00e0 num\u00e9rot\u00e9. Ce n'est pas une pr\u00e9vision de formation. On ne l'invente pas."
+    },
+    "landfall": {
+      "binary_landfall_scored": false,
+      "binary_block_reason": "Oui/non landfall demanderait une c\u00f4te. Le PDF HURDAT2 dit que le drapeau L est incomplet sur certaines ann\u00e9es. On ne redessine pas la carte. On mesure seulement l'\u00e9cart de trajectoire au point L, quand un OFCL tombe pile \u00e0 cette heure.",
+      "n_ofcl_at_exact_L_time": 227,
+      "n_storms": 15,
+      "mae_km": 109.82950927737605,
+      "by_lead": {
+        "12": {
+          "n": 52,
+          "mae_km": 39.4562630368813
+        },
+        "24": {
+          "n": 51,
+          "mae_km": 55.743923449170616
+        },
+        "36": {
+          "n": 45,
+          "mae_km": 92.23229219176119
+        },
+        "48": {
+          "n": 32,
+          "mae_km": 123.73549639541729
+        },
+        "72": {
+          "n": 27,
+          "mae_km": 209.7392621372102
+        },
+        "96": {
+          "n": 12,
+          "mae_km": 328.6887008417314
+        },
+        "120": {
+          "n": 8,
+          "mae_km": 289.9274138813469
+        }
+      },
+      "skipped": {
+        "no_ofcl_at_L_time": 105,
+        "no_adeck": 1
+      }
+    },
+    "n_adeck_storms": 317,
+    "n_bdeck_storms": 317,
+    "n_hurdat2_overlap": 313,
+    "years_with_adeck_listing": [
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "missing_a_n": 0,
+    "missing_b_n": 0,
+    "archive": "https://ftp.nhc.noaa.gov/atcf/archive"
+  },
   "deck_years": [
     2008,
     2025
   ],
   "verdicts": {
     "March\u00e9 ouragan Kalshi": "bloqu\u00e9e",
-    "NHC a-decks / b-decks": "pas encore test\u00e9e",
-    "Ouragan formation": "cible Tier 1 (pas encore test\u00e9e)",
-    "Ouragan intensit\u00e9": "cible Tier 1 (pas encore test\u00e9e)",
-    "Ouragan landfall": "cible Tier 1 (pas encore test\u00e9e)",
+    "NHC a-decks / b-decks": "test\u00e9e, \u00e7a aide",
+    "Ouragan formation": "bloqu\u00e9e",
+    "Ouragan intensit\u00e9": "test\u00e9e, \u00e7a aide",
+    "Ouragan landfall": "bloqu\u00e9e",
     "HURDAT2 / IBTrACS": "test\u00e9e, \u00e7a aide",
     "S\u00e9cheresse M\u00e9diterran\u00e9e": "cible Tier 1 (pas encore test\u00e9e)",
     "S\u00e9cheresse Inde": "cible Tier 1 (pas encore test\u00e9e)"

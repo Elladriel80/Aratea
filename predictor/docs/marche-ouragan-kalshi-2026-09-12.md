@@ -118,36 +118,56 @@ mêmes chances. L'écart est écrit dans
 
 ## 4. Donc on passe au repli : NHC a-decks / b-decks
 
-Le marché ne se note pas (0 saison). On mesure alors les prévisions
+Le marché ne se note pas (0 saison). On a mesuré les prévisions
 officielles NHC (a-decks) et le best-track opérationnel (b-decks)
 contre le même HURDAT2.
 
 Archives publiques : https://ftp.nhc.noaa.gov/atcf/archive/
+Années : 2008 a 2025. 317 a-decks, 317 b-decks, 313 tempêtes
+aussi dans HURDAT2. 4 a-decks sans fiche HURDAT2 (on n'invente
+pas l'identifiant). 0 fichier manquant sur l'archive.
+
 On garde seulement OFCL (prévision officielle) et OCD5 (la
-climatologie-persistance déjà dans le fichier). On n'invente pas
-d'autre modèle.
+climatologie-persistance déjà dans le fichier). Même instant,
+sans interpoler. Vent manquant : on saute, on n'invente pas.
+
+**Ouragan intensité :** testée, ça aide.
+
+25 878 paires, 307 tempêtes, 18 saisons.
+
+Erreur moyenne (nœuds) : OFCL 10,07. OCD5 14,23.
+OFCL plus proche : 16 062. Égalité : 1 352. OCD5 plus proche : 8 464.
+OFCL bat OCD5 à toutes les échéances (12, 24, 36, 48, 72, 96, 120 h).
+
+À 12 h : 5,52 contre 7,15. À 72 h : 13,09 contre 19,70.
+À 120 h : 15,58 contre 21,70.
+
+Le b-deck opérationnel colle au HURDAT2 final : 11 936 points,
+erreur 0,001 nœud. Ce n'est pas une prévision. Ça dit juste que
+la vérité opérationnelle et le fichier final sont les mêmes ici.
 
 **Ouragan formation :** bloquée. Un a-deck commence quand le
 système est déjà numéroté. Ce n'est pas une prévision de naissance.
+Dans 2008-2025 : 136 ouragans HURDAT2, 135 avec un a-deck. Pour
+90 d'entre eux, l'a-deck commence après le premier point HURDAT2.
 
 **Ouragan landfall oui/non :** bloquée. Il faudrait dessiner une
 côte. Le PDF HURDAT2 dit déjà que le drapeau L est incomplet sur
-certaines années. On ne redessine pas la carte. On peut seulement
-mesurer l'écart de trajectoire au point L, si une prévision tombe
-pile à cette heure.
+certaines années. On ne redessine pas la carte.
 
-**Ouragan intensité :** mesurée (OFCL contre OCD5 contre HURDAT2,
-même instant, sans interpoler). Les comptes sont dans
-`data/truth/nhc_decks/nhc_decks_report.md`.
+Écart de trajectoire au point L, seulement si OFCL tombe pile à
+cette heure : 227 prévisions, 15 tempêtes, 109,8 km en moyenne.
+À 12 h : 39,5 km (52 cas). À 48 h : 123,7 km (32 cas).
+Ce n'est pas un oui/non landfall. Pas de BSS.
 
 ## Verdicts (noms du catalogue, non renommés)
 
 | Nom | Verdict |
 |---|---|
 | Marché ouragan Kalshi | bloquée |
-| NHC a-decks / b-decks | (voir le rapport decks après le run) |
+| NHC a-decks / b-decks | testée, ça aide |
 | Ouragan formation | bloquée |
-| Ouragan intensité | (voir le rapport decks) |
+| Ouragan intensité | testée, ça aide |
 | Ouragan landfall | bloquée |
 | HURDAT2 / IBTrACS | testée, ça aide |
 | Sécheresse Méditerranée | cible Tier 1 (pas encore testée) |
@@ -159,7 +179,9 @@ On ne change pas le modèle Kalshi en ligne.
 
 Pourquoi : ce n'est pas un test de température. Le livre ouragan
 n'a aucune saison notable contre HURDAT2. La gate (10 saisons,
-BSS > 0,05) n'est pas jouable ici. On n'invente pas de BSS.
+BSS > 0,05) n'est pas jouable sur Kalshi. OFCL bat déjà OCD5
+sur l'intensité, mais on ne touche pas au champion température.
+On n'invente pas de BSS.
 
 ## Comment relancer
 

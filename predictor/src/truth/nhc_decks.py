@@ -16,6 +16,7 @@ import re
 import statistics
 import time
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -194,14 +195,12 @@ class NhcDeckClient:
     def __init__(self, cache_dir: Path = NHC_DECKS_CACHE, timeout: int = 90):
         self.cache_dir = cache_dir
         self.timeout = timeout
-        self.session = requests.Session()
-        self.session.headers.update({"User-Agent": USER_AGENT})
-
     def _get(self, url: str) -> requests.Response:
         last: Optional[Exception] = None
+        headers = {"User-Agent": USER_AGENT}
         for attempt in range(4):
             try:
-                r = self.session.get(url, timeout=self.timeout)
+                r = requests.get(url, timeout=self.timeout, headers=headers)
                 r.raise_for_status()
                 return r
             except requests.RequestException as exc:
@@ -268,30 +267,50 @@ class NhcDeckClient:
                 f"  NHC {year}: {len(a_files)} a-decks, {len(b_files)} b-decks",
                 flush=True,
             )
-            for num, name, url in a_files:
-                try:
-                    text = self.fetch_extracted(
-                        year, name, url, A_DECK_TECHS, allow_network=allow_network
-                    )
-                except (FileNotFoundError, requests.RequestException) as exc:
-                    missing_a.append(f"{name}: {exc}")
+            jobs = (
+                [(name, url, A_DECK_TECHS, "a") for _num, name, url in a_files]
+                + [(name, url, ("BEST",), "b") for _num, name, url in b_files]
+            )
+
+            def _one(job: tuple[str, str, tuple[str, ...], str]) -> tuple[str, str, str]:
+                name, url, techs, kind = job
+                text = self.fetch_extracted(
+                    year, name, url, techs, allow_network=allow_network
+                )
+                return kind, name, text
+
+            if allow_network and len(jobs) > 1:
+                with ThreadPoolExecutor(max_workers=4) as pool:
+                    futs = [pool.submit(_one, job) for job in jobs]
+                    results = []
+                    for fut in as_completed(futs):
+                        try:
+                            results.append(fut.result())
+                        except (FileNotFoundError, requests.RequestException) as exc:
+                            results.append(("err", str(exc), ""))
+            else:
+                results = []
+                for job in jobs:
+                    try:
+                        results.append(_one(job))
+                    except (FileNotFoundError, requests.RequestException) as exc:
+                        results.append(("err", str(exc), ""))
+            for kind, name, text in results:
+                if kind == "err":
+                    missing_a.append(name)
                     continue
-                lines = parse_adeck_text(text)
-                if lines:
-                    adecks[lines[0].storm_id] = lines
+                if kind == "a":
+                    lines = parse_adeck_text(text)
+                    if lines:
+                        adecks[lines[0].storm_id] = lines
+                    else:
+                        missing_a.append(f"{name}: no OFCL/OCD5 lines")
                 else:
-                    missing_a.append(f"{name}: no OFCL/OCD5 lines")
-            for num, name, url in b_files:
-                try:
-                    text = self.fetch_extracted(
-                        year, name, url, ("BEST",), allow_network=allow_network
-                    )
-                except (FileNotFoundError, requests.RequestException) as exc:
-                    missing_b.append(f"{name}: {exc}")
-                    continue
-                lines = parse_bdeck_text(text)
-                if lines:
-                    bdecks[lines[0].storm_id] = lines
+                    lines = parse_bdeck_text(text)
+                    if lines:
+                        bdecks[lines[0].storm_id] = lines
+                    else:
+                        missing_b.append(f"{name}: empty BEST")
         return {
             "first_year": first_year,
             "last_year": last_year,
@@ -473,7 +492,10 @@ def first_hu_timing(
     n_no_ofcl_hu = 0
     n_adeck_starts_after_first_point = 0
     n_compared = 0
+    adeck_years = {int(sid[-4:]) for sid in adecks}
     for storm_id, storm in storms.items():
+        if adeck_years and storm.year not in adeck_years:
+            continue
         first_hu = storm.first_status_dt("HU")
         if first_hu is None:
             continue
@@ -523,7 +545,10 @@ def landfall_track_error(
     """OFCL position vs HURDAT2 L point at the exact L time. No coastline."""
     errors = []
     skipped = CounterLike()
+    adeck_years = {int(sid[-4:]) for sid in adecks}
     for storm in storms.values():
+        if adeck_years and storm.year not in adeck_years:
+            continue
         lpts = [p for p in storm.landfall_points if p.status == "HU"]
         if not lpts:
             continue

@@ -29,8 +29,8 @@ Années lues dans les titres des comptes saisonniers : 2022, 2023, 2024, 2025, 2
 
 Fichier : `hurdat2-1851-2025-02272026.txt`.
 URL : https://www.nhc.noaa.gov/data/hurdat/hurdat2-1851-2025-02272026.txt.
-Comptes PR 241 : 2004 systèmes, 978 HU, 342 majeurs, 376 landfalls HU, 1851–2025.
-Relu ici : 2004 systèmes, 978 HU, 342 majeurs, 376 landfalls HU, 1851–2025. Identique PR 241 : oui.
+Comptes PR 241 : 2004 systèmes, 978 HU, 342 majeurs, 376 landfalls HU, 1851 a 2025.
+Relu ici : 2004 systèmes, 978 HU, 342 majeurs, 376 landfalls HU, 1851 a 2025. Identique PR 241 : oui.
 
 ## Prix 2026 contre P(count > K) HURDAT2
 
@@ -59,10 +59,10 @@ Fenêtre Kalshi : 1er janvier au 1er décembre. On compte aussi l'année civile 
 ## Verdicts (noms du catalogue, non renommés)
 
 - Marché ouragan Kalshi : bloquée
-- NHC a-decks / b-decks : pas encore testée
-- Ouragan formation : cible Tier 1 (pas encore testée)
-- Ouragan intensité : cible Tier 1 (pas encore testée)
-- Ouragan landfall : cible Tier 1 (pas encore testée)
+- NHC a-decks / b-decks : testée, ça aide
+- Ouragan formation : bloquée
+- Ouragan intensité : testée, ça aide
+- Ouragan landfall : bloquée
 - HURDAT2 / IBTrACS : testée, ça aide
 - Sécheresse Méditerranée : cible Tier 1 (pas encore testée)
 - Sécheresse Inde : cible Tier 1 (pas encore testée)

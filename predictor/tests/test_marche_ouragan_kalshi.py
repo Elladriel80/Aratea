@@ -175,6 +175,7 @@ def test_intensity_ofcl_vs_ocd5_exact_time_only():
     assert row_lead["ocd5_mae_kt"] == 20  # 50 vs 70
     assert row_lead["ofcl_beats_ocd5"] is True
     assert scored["first_hu_timing"]["genesis_scored"] is False
+    assert scored["first_hu_timing"]["n_hurdat2_reached_hu"] == 1
     assert scored["landfall"]["binary_landfall_scored"] is False
     # L at 20210827 1800 matches OFCL valid time, tau 24
     assert scored["landfall"]["n_ofcl_at_exact_L_time"] == 1

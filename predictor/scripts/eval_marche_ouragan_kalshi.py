@@ -1,4 +1,4 @@
-"""eval_marche_ouragan_kalshi.py — Marché ouragan Kalshi, puis NHC decks.
+"""eval_marche_ouragan_kalshi.py : Marché ouragan Kalshi, puis NHC decks.
 
 FR : 1) Inventaire public Kalshi (lecture seule). 2) Prix 2026 contre la
 climato HURDAT2 déjà comptée (PR 241). 3) Si le livre est trop mince pour
@@ -134,10 +134,10 @@ def write_kalshi_report(path: Path, payload: dict[str, Any]) -> None:
         f"URL : {payload['hurdat2']['source']['url']}.",
         f"Comptes PR 241 : {PR241_SYSTEMS} systèmes, {PR241_HU} HU, "
         f"{PR241_MAJOR} majeurs, {PR241_HU_LANDFALL_L} landfalls HU, "
-        f"{PR241_YEARS[0]}–{PR241_YEARS[1]}.",
+        f"{PR241_YEARS[0]} a {PR241_YEARS[1]}.",
         f"Relu ici : {cov['n_systems']} systèmes, {cov['n_hurricanes_HU']} HU, "
         f"{cov['n_major_sshws']} majeurs, {cov['n_hu_landfall_L']} landfalls HU, "
-        f"{cov['first_year']}–{cov['last_year']}. "
+        f"{cov['first_year']} a {cov['last_year']}. "
         f"Identique PR 241 : {'oui' if cov.get('matches_pr241') else 'non'}.",
         "",
         "## Prix 2026 contre P(count > K) HURDAT2",
@@ -172,6 +172,12 @@ def write_kalshi_report(path: Path, payload: dict[str, Any]) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def _fmt(value: Any, digits: int = 3) -> str:
+    if value is None:
+        return ""
+    return f"{float(value):.{digits}f}"
+
+
 def write_deck_report(path: Path, payload: dict[str, Any]) -> None:
     d = payload["decks"]
     inten = d["intensity"]
@@ -187,20 +193,21 @@ def write_deck_report(path: Path, payload: dict[str, Any]) -> None:
         "",
         "| Mesure | Valeur |",
         "|---|---:|",
-        f"| Années demandées | {payload['deck_years'][0]}–{payload['deck_years'][1]} |",
+        f"| Années demandées | {payload['deck_years'][0]} a {payload['deck_years'][1]} |",
         f"| Tempêtes a-deck | {d['n_adeck_storms']} |",
         f"| Tempêtes b-deck | {d['n_bdeck_storms']} |",
         f"| Recouvrement HURDAT2 | {d['n_hurdat2_overlap']} |",
         f"| Paires intensité (OFCL+OCD5+HURDAT2) | {inten.get('n', 0)} |",
         f"| Saisons intensité | {inten.get('n_seasons', 0)} |",
-        f"| MAE OFCL (kt) | {overall.get('ofcl_mae_kt')} |",
-        f"| MAE OCD5 (kt) | {overall.get('ocd5_mae_kt')} |",
+        f"| MAE OFCL (kt) | {_fmt(overall.get('ofcl_mae_kt'))} |",
+        f"| MAE OCD5 (kt) | {_fmt(overall.get('ocd5_mae_kt'))} |",
         f"| OFCL plus proche que OCD5 | {overall.get('n_ofcl_closer')} |",
         f"| Égalité | {overall.get('n_tie')} |",
         f"| OCD5 plus proche | {overall.get('n_ocd5_closer')} |",
-        f"| MAE b-deck vs HURDAT2 (kt) | {btk.get('mae_kt')} |",
+        f"| MAE b-deck vs HURDAT2 (kt) | {_fmt(btk.get('mae_kt'))} |",
+        f"| Points b-deck vs HURDAT2 | {btk.get('n_points')} |",
         f"| Points L avec OFCL à la même heure | {land.get('n_ofcl_at_exact_L_time')} |",
-        f"| Écart trajectoire au L (km) | {land.get('mae_km')} |",
+        f"| Écart trajectoire au L (km) | {_fmt(land.get('mae_km'))} |",
         "",
         "Par échéance (heures) :",
         "",
@@ -218,7 +225,8 @@ def write_deck_report(path: Path, payload: dict[str, Any]) -> None:
         "## Formation",
         "",
         hu["genesis_block_reason"],
-        f"Ouragans HURDAT2 dans la fenêtre : {hu['n_hurdat2_reached_hu']}. "
+        f"Ouragans HURDAT2 dans les années a-deck : {hu['n_hurdat2_reached_hu']}. "
+        f"Dont un a-deck comparé : {hu['n_with_adeck_compared']}. "
         f"A-deck qui commence après le premier point HURDAT2 : "
         f"{hu['n_adeck_starts_after_first_hurdat2_point']}.",
         "",
