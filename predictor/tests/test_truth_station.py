@@ -64,6 +64,8 @@ def test_station_mapping_covers_all_kalshi_cities():
     assert st["KPHX"]["tz"] == "America/Phoenix"
     assert station_for_series("KXLOWTNYC") == "KNYC"
     assert station_for_series("KXHIGHTSFO") == "KSFO"
+    assert station_for_series("KXHIGHTDC") == "KDCA"
+    assert station_for_series("KXHIGHTSEA-26JUN03") == "KSEA"
 
 
 # --------------------------------------------------------------- LST window
@@ -242,6 +244,8 @@ def test_kalshi_resolution_stations_match_market_rules():
     assert SERIES_TO_STATION["KXLOWTCHI"] == "CLIMDW" and SERIES_TO_STATION["KXHIGHTCHI"] == "CLIMDW"
     assert SERIES_TO_STATION["KXLOWTHOU"] == "CLIHOU" and SERIES_TO_STATION["KXHIGHTHOU"] == "CLIHOU"
     assert SERIES_TO_STATION["KXHIGHTDAL"] == "CLIDFW"
+    assert SERIES_TO_STATION["KXHIGHTDC"] == "CLIDCA"
+    assert SERIES_TO_STATION["KXHIGHTSEA"] == "CLISEA"
     assert CITY_TO_ICAO["CHICAGO"] == "KMDW" and CITY_TO_ICAO["HOUSTON"] == "KHOU" and CITY_TO_ICAO["DALLAS"] == "KDFW"
     # les coordonnées de prévision sont celles de la station de résolution
     for city, icao in (("CHICAGO", "KMDW"), ("HOUSTON", "KHOU"), ("DALLAS", "KDFW")):
