@@ -64,28 +64,112 @@ Le jour même, le mélange avec le passé pèse zéro. A et H1
 sont encore la même chose. Seul H2 peut changer le score.
 La veille, A et H1 peuvent différer.
 
-## Le résultat
+La vérité est le chiffre officiel de la station.
+228 contrats sans correction ville encore apprise, 96 sans
+chiffre officiel : absents, pas remplacés.
 
-Les comptes machine sont dans `data/truth/curve/curve_skill.json`.
-Le tableau détaillé est dans `data/truth/curve/curve_skill.md`.
-Les chiffres ci-dessous viennent de ce script, rien d'autre.
+## Le résultat
 
 Plus le score d'erreur est petit, mieux c'est.
 
 ### Hors marché, mêmes 36 jours que A1 (3 août au 7 septembre 2026)
 
-À remplir après l'exécution du script. Ne pas inventer.
+53928 contrats.
 
-### Contre le prix, jour même et veille, séparés
+| Méthode | Score d'erreur |
+|---|---|
+| Champion (= H1 hors marché) | 0,1154 |
+| H1, une cloche | 0,1154 |
+| H2, mélange des vendeurs | 0,1194 |
 
-À remplir après l'exécution du script. Ne pas inventer.
+H2 perd contre H1 : **4 jours sur 36**.
+
+C'est le même 0,1154 que la correction ville déjà mesurée.
+Hors marché, "une seule courbe" est déjà ce qu'on fait.
+
+À un jour d'avance : H1 0,1126, H2 0,1183.
+Sur le maximum : H1 0,1120, H2 0,1170.
+Sur le minimum : H1 0,1188, H2 0,1218.
+
+### Contre le prix, 67 jours, 9973 contrats (cases du milieu)
+
+Jour même et veille ensemble.
+
+| Méthode | Score d'erreur |
+|---|---|
+| Prix du marché | 0,0907 |
+| H1, une cloche | 0,1335 |
+| Champion (cloche + passé) | 0,1336 |
+| H2, mélange des vendeurs | 0,1383 |
+
+H1 bat le champion : **32 jours sur 61** (p = 0,40). Pile ou face.
+H1 bat le prix : **2 jours sur 67**.
+H2 bat le prix : **2 jours sur 67**.
+Le champion bat le prix : **2 jours sur 67**.
+
+### Jour même (lead 0), 61 jours, 5097 contrats
+
+| Méthode | Score d'erreur |
+|---|---|
+| Prix du marché | 0,0578 |
+| Champion | 0,1314 |
+| H1, une cloche | 0,1314 |
+| H2, mélange des vendeurs | 0,1363 |
+
+H1 et le champion sont identiques (0 jour d'écart).
+H1 bat le prix : **0 jour sur 61**.
+H2 bat le prix : **0 jour sur 61**.
+
+### La veille (lead 1), 61 jours, 4876 contrats
+
+| Méthode | Score d'erreur |
+|---|---|
+| Prix du marché | 0,1251 |
+| H1, une cloche | 0,1357 |
+| Champion | 0,1359 |
+| H2, mélange des vendeurs | 0,1404 |
+
+H1 bat le champion : **32 jours sur 61** (p = 0,40).
+H1 bat le prix : **12 jours sur 61**.
+H2 bat le prix : **9 jours sur 61**.
+Le champion bat le prix : **13 jours sur 61**.
+
+61 jours, c'est assez pour parler du marché.
+Aucun des deux essais ne bat le prix.
+
+### Les chances d'un même jour s'ajoutent-elles à 1 ?
+
+2494 échelles ville-jour (1275 le jour même, 1219 la veille).
+2493 ont les deux queues.
+
+La veille, la cloche seule (H1) s'ajoute à **1,0000**.
+Le champion (cloche + passé) s'ajoute à **1,0505**.
+Sur 1219 échelles de la veille, 263 dépassent 1 de plus de 0,05,
+et 249 de plus de 0,20.
+
+Le jour même, champion et H1 sont la même cloche
+(somme moyenne 0,9992).
+
+Le prix s'ajoute à 1,0171 (2494 échelles). 590 fois l'écart
+à 1 dépasse 0,05.
+
+En clair : enlever le mélange avec le passé remet l'échelle
+à 1. Ça ne suffit pas à battre le prix, ni vraiment le
+champion (32 jours sur 61, p = 0,40).
 
 ## Décision
 
-À remplir après l'exécution du script.
+On ne change pas le modèle en ligne.
 
-Règle inchangée : on ne parle de promotion que si on bat le prix
-de façon claire, sur au moins 30 jours distincts.
+**Verdict : testée, ça n'aide pas.**
+
+Pourquoi : le cœur du champion est déjà une seule courbe.
+Enlever le mélange avec le passé (H1) change très peu
+(0,1335 contre 0,1336, 32 jours sur 61). Le mélange des
+vendeurs (H2) est moins bon (0,1383). Ni H1 ni H2 ne battent
+le prix (2 jours sur 67). La règle du projet demande de
+battre le marché de façon claire, sur au moins 30 jours.
+Ce n'est pas le cas.
 
 ## Comment relancer le script
 
