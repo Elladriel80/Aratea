@@ -34,7 +34,7 @@ export default async function RoadmapPage() {
         <section className="sec" style={{ paddingTop: 0 }}>
           <div className="rm-list">
             {t.phases.map((p, i) => {
-              const current = p.tag === "en cours" || p.tag === "current";
+              const current = ["en cours", "current", "preuve ouverte", "proof open", "avancée", "advanced"].includes(p.tag);
               return (
                 <Reveal key={i}>
                   <div className="rm-phase">

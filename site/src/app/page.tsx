@@ -261,7 +261,7 @@ export default async function Home() {
             <h2 className="sec-title">{dict.roadmap.title}</h2>
             <div className="timeline">
               <div className="phase is-current"><div className="when">Phase 1</div><div className="what"><h4>{dict.roadmap.p1H}<span className="pill">{dict.roadmap.current}</span></h4><p>{dict.roadmap.p1P}</p></div></div>
-              <div className="phase"><div className="when">Phase 2</div><div className="what"><h4>{dict.roadmap.p2H}</h4><p>{dict.roadmap.p2P}</p></div></div>
+              <div className="phase is-current"><div className="when">Phase 2</div><div className="what"><h4>{dict.roadmap.p2H}<span className="pill">{dict.roadmap.parallel}</span></h4><p>{dict.roadmap.p2P}</p></div></div>
               <div className="phase"><div className="when">Phase 3</div><div className="what"><h4>{dict.roadmap.p3H}</h4><p>{dict.roadmap.p3P}</p></div></div>
               <div className="phase"><div className="when">Phase 4</div><div className="what"><h4>{dict.roadmap.p4H}</h4><p>{dict.roadmap.p4P}</p></div></div>
             </div>
@@ -324,7 +324,7 @@ export default async function Home() {
             <div className="foot-meta">
               <div>© 2026 Aratea</div>
               <div>{dict.footer.meta}</div>
-              <div>{dict.footer.updated} 2026-06-04</div>
+              <div>{dict.footer.updated} 2026-09-12</div>
             </div>
           </div>
         </footer>

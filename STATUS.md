@@ -1,8 +1,78 @@
 # Status
 
-*Last updated: 2026-07-02 (B77)*
+## Vérité unique — 12 septembre 2026
 
-Snapshot of where Aratea actually stands across its three live tracks
+Aratea cherche encore à établir des probabilités d'événements climatiques
+meilleures que celles d'un marché prédictif. Pas trouvé à ce jour.
+Pas d'argent réel tant que cet edge de probabilités n'est pas prouvé.
+
+Kalshi est un terrain d'entraînement, pas le but. Le but : acquérir
+l'expérience pour un edge **prouvable** sur la probabilité d'événements
+climatiques, au service de la mutuelle future. Battre ce marché n'est
+pas le même exercice que tarifer des probabilités climatiques, mais
+c'est une expérience utile et une crédibilité publique, parce que c'est
+auditable.
+
+On juge les progrès à la qualité des probabilités (score de Brier),
+pas au P&L papier. 680 paris papier résolus. P&L papier +3 225 $ —
+ce n'est pas le score. Les prévisions du marché restent un peu
+meilleures que les nôtres (Brier modèle 0,197 vs marché 0,178 sur
+ces 680 paris).
+
+La machine quotidienne a été silencieuse 29 jours (10 août – 7 septembre 2026).
+Elle a repris.
+
+La Phase 2 (tokens, règles) a avancé exprès pendant que les données
+s'accumulent. Ce n'est pas la preuve. La mutuelle (phase 3) n'est pas lancée.
+
+White paper : Notion (liens en pied de site). Discord : https://discord.gg/dgu6w3sbya
+
+Continuer à chercher (pas de gel). Revoir ville par ville. Reprendre le
+signal continental mis de côté en août, avec une règle d'arrêt.
+
+Le pari sélectif (seulement quand les modèles divergent clairement du
+marché) est une piste d'argent **optionnelle et séparée**, si quelqu'un
+veut essayer de gagner de l'argent. Ce n'est pas le but du projet.
+
+## Current truth — 12 September 2026
+
+Aratea is still trying to establish better probabilities for climate
+events than a prediction market. Not found yet. No real money until
+that probability edge is proven.
+
+Kalshi is a training ground, not the goal. The goal: gain the experience
+to establish a **provable** edge on the probability of climate events,
+for the future mutual. Beating that market is not the same exercise as
+pricing climate-event probabilities, but it is useful experience and
+public credibility, because it is auditable.
+
+Progress is judged by whether our probabilities beat the market in a
+stable, provable way (Brier) — not by paper P&L. 680 paper bets resolved.
+Paper P&L +$3,225. That is not the score. Market forecasts are still a
+bit better than ours (model Brier 0.197 vs market 0.178 on those 680 bets).
+
+The daily machine was silent 29 days (10 August to 7 September 2026).
+It has resumed.
+
+Phase 2 (tokens, rules) moved forward on purpose while data is collected.
+That is not the proof. The mutual (phase 3) is not launched.
+
+White paper lives on Notion (site footer links). Discord: https://discord.gg/dgu6w3sbya
+
+Keep searching (no freeze). Look city by city. Revisit the continental
+signal parked in August, with a stop rule.
+
+Selective betting (only when models clearly disagree with the market) is
+an optional, separate money track if someone wants to try to make money.
+It is not the project goal.
+
+---
+
+## Historical snapshot — 2 July 2026 (B77)
+
+*The July snapshot below is kept as historical detail. It is not the current truth.*
+
+Snapshot of where Aratea stood across its three live tracks
 (predictor, contracts, dashboard) and the infrastructure around them.
 Every numeric claim below has a source file in this repo — paths are
 quoted inline so anything can be verified without trusting this page.
