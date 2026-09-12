@@ -16,38 +16,85 @@ de l'argent réel.
 Le robot ne parie pas sur aujourd'hui. Il vise seulement demain.
 On n'a pas changé ça.
 
-Le site météo américain ne garde que les 7 derniers jours de lectures.
-On ne peut pas s'en servir pour l'été 2026. On l'écrit ici.
+Le site météo américain ne garde que les tout derniers jours.
+Le 12 septembre, pour Atlanta, il n'avait des lectures que depuis
+le 11 septembre. Pas l'été 2026. On ne s'en est pas servi pour
+noter. On l'écrit ici.
 
 L'archive de l'Iowa a les lectures heure par heure des 18 villes.
-C'est ça qu'on a utilisé. Aucune lecture manquante n'a été inventée.
+Du 1er mai au 11 septembre 2026 : 56 302 lectures. Les 18 villes
+ont répondu. Aucune lecture manquante n'a été inventée.
 
-Pour le reste de la journée (ce qui peut encore monter ou descendre),
-on a pris une prévision heure par heure de la veille, quand elle
-existait. Le run du matin même existe ailleurs, mais on n'avait pas
-l'outil pour le lire. Si cette prévision manquait, on a utilisé une
-largeur simple selon les heures encore ouvertes, ou les jours passés
-à la même heure. Ce n'est pas une lecture. On le dit.
+Sur 5 197 contrats déjà capturés le jour même, 184 n'avaient pas
+assez de lectures à l'heure de la capture, 4 n'avaient pas le
+chiffre officiel, 88 n'avaient pas encore la correction ville.
+On ne les a pas inventés. On a noté les 4 921 autres, sur 59 jours.
 
-## Ce qui a été fait
+## Comment on a noté
 
-1. Télécharger les lectures heure par heure des 18 villes, du 1er mai
-   au 11 septembre 2026.
-2. À l'heure de chaque capture déjà enregistrée le jour même, prendre
-   le max (ou le min) déjà vu, plus le risque du reste de la journée.
+À l'heure de chaque capture déjà enregistrée le jour même :
+
+1. Prendre le max (ou le min) déjà mesuré ce jour-là.
+2. Ajouter un risque simple pour les heures encore ouvertes :
+   ce qui restait à monter ou descendre les jours passés, à la
+   même heure, avant le 3 août. Si ce n'était pas assez, une
+   largeur qui rétrécit quand la journée se termine. Ce n'est
+   pas une lecture.
 3. Comparer au chiffre officiel de la station (même fichier que
-   l'étape A1).
-4. Comparer aussi au mélange avec la correction ville, et au prix
-   du marché quand un prix du jour même existait.
+   l'étape A1), au mélange avec la correction ville, et au prix
+   du marché.
 
-Les comptes détaillés sont dans `data/truth/nowcast/nowcast_skill.md`.
-Ils sont remplis par le script, pas à la main.
+On a aussi essayé une prévision heure par heure de la veille
+pour le reste de la journée. Elle existait pour les 18 villes.
+Ça a empiré le score. On le dit plus bas. On n'a pas le run
+du matin même dans cet environnement.
 
-## Décision (à relire après le script)
+## Le résultat, 59 jours avec un prix le jour même
 
-On ne change pas le modèle en ligne tant que le script n'a pas assez
-de jours. La règle du projet demande 30 jours pour parler du marché.
-On ne promeut pas sans ça.
+Plus le score d'erreur est petit, mieux c'est.
+4 921 contrats. 18 villes. 1er mai au 11 septembre 2026.
+
+| Méthode | Score d'erreur |
+|---|---|
+| Thermomètre + risque simple | 0,1055 |
+| Thermomètre + prévision de la veille | 0,1263 |
+| Notre mélange avec la correction ville | 0,1317 |
+| Notre mélange actuel | 0,1423 |
+| Prix du marché | 0,0585 |
+
+Le thermomètre avec le risque simple bat la correction ville :
+**56 jours sur 59**.
+
+Il perd contre le prix : **0 jour sur 59**.
+
+La prévision de la veille pour le reste de la journée bat la
+correction ville seulement 36 jours sur 59. Elle est moins
+bonne que le risque simple (0,1263 contre 0,1055). On ne
+la garde pas.
+
+Sur le minimum du jour, le thermomètre aide plus
+(0,0839 contre 0,1141 pour la correction ville).
+Sur le maximum, l'écart est plus petit
+(0,1294 contre 0,1511). Le prix reste devant partout
+(0,0288 pour le min, 0,0914 pour le max).
+
+À partir du 3 août seulement : 12 jours, 1 037 contrats.
+Même sens (thermomètre 0,1089, correction ville 0,1313,
+prix 0,0540). 12 jours, c'est trop peu tout seul.
+Les 59 jours ci-dessus suffisent pour parler du marché.
+
+## Décision
+
+On ne change pas le modèle en ligne.
+
+Pourquoi : regarder le thermomètre bat notre mélange déjà
+corrigé ville par ville (0,1055 contre 0,1317, 56 jours
+sur 59). Ça ne bat pas le prix (0,0585 contre 0,1055,
+0 jour sur 59). On a 59 jours, donc plus que les 30
+demandés. Le marché gagne. On ne promeut pas.
+
+Le robot continue de viser demain, pas aujourd'hui.
+Le prix du jour même a déjà vu le thermomètre.
 
 ## Comment relancer le script
 

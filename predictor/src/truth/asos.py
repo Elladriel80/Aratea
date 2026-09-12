@@ -220,6 +220,23 @@ class IemAsosClient:
     def _cache_path(self, icao: str, year: int, month: int) -> Path:
         return self.cache_dir / f"iem_{icao}_{year}{month:02d}.csv"
 
+    def _get_with_retry(self, params) -> str:
+        """GET IEM. 429/503 : on attend et on réessaie. On n'invente rien."""
+        last: Optional[BaseException] = None
+        for attempt in range(6):
+            try:
+                time.sleep(self.sleep_s if attempt == 0 else min(32.0, 2.0 ** attempt))
+                resp = self.session.get(IEM_ASOS, params=params, timeout=self.timeout_s)
+                if resp.status_code in (429, 503):
+                    last = requests.HTTPError(f"{resp.status_code} {resp.reason}")
+                    continue
+                resp.raise_for_status()
+                return resp.text
+            except requests.RequestException as e:
+                last = e
+                time.sleep(min(32.0, 2.0 ** attempt))
+        raise RuntimeError(f"IEM ASOS fetch failed: {last}")
+
     def fetch_month(self, icao: str, year: int, month: int, use_cache: bool = True) -> list[StationObs]:
         icao = icao.upper()
         path = self._cache_path(icao, year, month)
@@ -244,23 +261,96 @@ class IemAsosClient:
             "direct": "no",
             "report_type": "3",
         }
-        time.sleep(self.sleep_s)
-        resp = self.session.get(IEM_ASOS, params=params, timeout=self.timeout_s)
-        resp.raise_for_status()
-        text = resp.text
+        text = self._get_with_retry(params)
         path.write_text(text, encoding="utf-8")
         return parse_iem_csv(text, station_hint=icao)
 
-    def fetch_range(self, icao: str, start: date, end: date, use_cache: bool = True) -> list[StationObs]:
+    def fetch_range(self, icao: str, start: date, end: date, use_cache: bool = True
+                    ) -> tuple[list[StationObs], list[str]]:
+        """Renvoie (lectures, mois en échec). Un mois manquant n'est pas inventé."""
         rows: list[StationObs] = []
+        failed: list[str] = []
         y, m = start.year, start.month
         while date(y, m, 1) <= end:
-            rows.extend(self.fetch_month(icao, y, m, use_cache=use_cache))
+            try:
+                rows.extend(self.fetch_month(icao, y, m, use_cache=use_cache))
+            except Exception as e:  # noqa: BLE001
+                failed.append(f"{icao} {y}-{m:02d}: {e}")
             if m == 12:
                 y, m = y + 1, 1
             else:
                 m += 1
-        return [o for o in rows if start <= o.valid.date() <= end + timedelta(days=1)]
+        kept = [o for o in rows if start <= o.valid.date() <= end + timedelta(days=1)]
+        return kept, failed
+
+    def fetch_month_many(
+        self,
+        icaos: Iterable[str],
+        year: int,
+        month: int,
+        use_cache: bool = True,
+    ) -> tuple[list[StationObs], list[str]]:
+        """Un mois, plusieurs stations. Les caches déjà là ne sont pas retéléchargés."""
+        wanted = [s.upper() for s in icaos]
+        rows: list[StationObs] = []
+        need: list[str] = []
+        for icao in wanted:
+            path = self._cache_path(icao, year, month)
+            if use_cache and path.exists() and path.stat().st_size > 20:
+                rows.extend(parse_iem_csv(
+                    path.read_text(encoding="utf-8", errors="replace"), station_hint=icao))
+            else:
+                need.append(icao)
+        if not need:
+            return rows, []
+        start = date(year, month, 1)
+        if month == 12:
+            end = date(year, 12, 31)
+        else:
+            end = date(year, month + 1, 1) - timedelta(days=1)
+        params = [
+            ("data", "tmpf"),
+            ("year1", str(start.year)), ("month1", str(start.month)), ("day1", str(start.day)),
+            ("year2", str(end.year)), ("month2", str(end.month)), ("day2", str(end.day)),
+            ("tz", "UTC"), ("format", "onlycomma"), ("latlon", "no"), ("elev", "no"),
+            ("missing", "M"), ("trace", "T"), ("direct", "no"), ("report_type", "3"),
+        ]
+        for icao in need:
+            params.append(("station", iem_station_id(icao)))
+        try:
+            text = self._get_with_retry(params)
+        except Exception as e:  # noqa: BLE001
+            return rows, [f"{','.join(need)} {year}-{month:02d}: {e}"]
+        # Découpe le CSV commun en fichiers par station, sans inventer.
+        by_st: dict[str, list[str]] = {icao: ["station,valid,tmpf"] for icao in need}
+        reader = csv.DictReader(io.StringIO(text))
+        n_kept = 0
+        for rec in reader or []:
+            icao = icao_from_iem(rec.get("station") or "")
+            # Si IEM a renvoyé NYC, ça matche KNYC.
+            match = None
+            for want in need:
+                if icao == want or iem_station_id(want) == (rec.get("station") or "").upper():
+                    match = want
+                    break
+            if match is None:
+                continue
+            valid = rec.get("valid") or ""
+            tmpf = rec.get("tmpf") or "M"
+            by_st[match].append(f"{iem_station_id(match)},{valid},{tmpf}")
+            n_kept += 1
+        failed: list[str] = []
+        if n_kept == 0:
+            failed.append(f"{','.join(need)} {year}-{month:02d}: réponse vide")
+            return rows, failed
+        for icao, lines in by_st.items():
+            if len(lines) <= 1:
+                failed.append(f"{icao} {year}-{month:02d}: aucune ligne")
+                continue
+            path = self._cache_path(icao, year, month)
+            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            rows.extend(parse_iem_csv("\n".join(lines), station_hint=icao))
+        return rows, failed
 
     def persist_extracted(self, rows: list[StationObs]) -> Path:
         compact = [o.to_compact() for o in rows]

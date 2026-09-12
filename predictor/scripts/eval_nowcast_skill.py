@@ -302,16 +302,27 @@ def main() -> int:
             return 1
     else:
         obs_rows = []
-        for icao in wanted:
-            print(f"[{icao}] lectures IEM {start} → {end} ...", flush=True)
+        y, m = start.year, start.month
+        while date(y, m, 1) <= end:
+            print(f"[IEM] {y}-{m:02d} ({len(wanted)} stations) ...", flush=True)
             try:
-                rows = asos.fetch_range(icao, start, end)
+                rows, month_fails = asos.fetch_month_many(wanted, y, m)
             except Exception as e:  # noqa: BLE001
-                fetch_errors.append({"source": "iem", "station": icao, "error": str(e)})
+                fetch_errors.append({"source": "iem", "month": f"{y}-{m:02d}", "error": str(e)})
                 print(f"   échec IEM : {e}", flush=True)
-                continue
-            print(f"   {len(rows)} lectures", flush=True)
+                rows, month_fails = [], [str(e)]
+            print(f"   {len(rows)} lectures"
+                  + (f", manques : {month_fails}" if month_fails else ""),
+                  flush=True)
             obs_rows.extend(rows)
+            for msg in month_fails:
+                fetch_errors.append({"source": "iem", "error": msg})
+            if m == 12:
+                y, m = y + 1, 1
+            else:
+                m += 1
+        # Garde seulement la fenêtre demandée.
+        obs_rows = [o for o in obs_rows if start <= o.valid.date() <= end + timedelta(days=1)]
         if obs_rows:
             asos.persist_extracted(obs_rows)
         hrrr_by = {}
