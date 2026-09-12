@@ -56,6 +56,21 @@ def test_aggregate_needs_enough_windows():
     assert aggregate_from_records(samples[:2], stations, [1], min_windows=3) == []
 
 
+def test_grouped_extract_roundtrip():
+    from src.forecast.gefs_s3 import GefsDaily, GefsS3Client
+    issued = datetime(2026, 8, 2, 0, tzinfo=timezone.utc)
+    rows = [
+        GefsDaily("KNYC", "temp_max", date(2026, 8, 3), 1, issued, 0, 80.1, 4),
+        GefsDaily("KNYC", "temp_max", date(2026, 8, 3), 1, issued, 1, 81.2, 4),
+    ]
+    client = GefsS3Client(cache_dir=__import__("pathlib").Path("/tmp/gefs-test-cache"),
+                          extracted_path=__import__("pathlib").Path("/tmp/gefs-test-extract.json"))
+    client.extracted_path.write_text("[]", encoding="utf-8")
+    client.persist_extracted(rows)
+    back = client.load_extracted()
+    assert {(r.member, r.value_f) for r in back} == {(0, 80.1), (1, 81.2)}
+
+
 def test_member_ids_and_needed_fhrs():
     assert member_number("gec00") == 0
     assert member_number("gep07") == 7

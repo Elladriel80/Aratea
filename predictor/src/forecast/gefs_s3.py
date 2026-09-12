@@ -225,27 +225,28 @@ class GefsS3Client:
         return out, None
 
     def persist_extracted(self, rows: list[GefsDaily]) -> Path:
+        """Regroupe les membres d'un même (station, jour, lead) pour rester compact."""
         existing: dict[str, dict] = {}
         if self.extracted_path.exists():
             try:
-                for r in json.loads(self.extracted_path.read_text(encoding="utf-8")):
+                for r in _expand_stored(json.loads(self.extracted_path.read_text(encoding="utf-8"))):
                     existing[_row_key(r)] = r
             except (json.JSONDecodeError, TypeError, KeyError):
                 existing = {}
         for f in rows:
             row = f.to_compact()
             existing[_row_key(row)] = row
-        payload = sorted(existing.values(), key=lambda r: (
-            r["station"], r["target"], r["variable"], r["lead"], r["member"]))
+        grouped = _group_stored(existing.values())
         self.extracted_path.write_text(
-            json.dumps(payload, separators=(",", ":")), encoding="utf-8"
+            json.dumps(grouped, separators=(",", ":")), encoding="utf-8"
         )
         return self.extracted_path
 
     def load_extracted(self) -> list[GefsDaily]:
         if not self.extracted_path.exists():
             return []
-        return [from_compact(r) for r in json.loads(self.extracted_path.read_text(encoding="utf-8"))]
+        raw = json.loads(self.extracted_path.read_text(encoding="utf-8"))
+        return [from_compact(r) for r in _expand_stored(raw)]
 
 
 def _row_key(r: dict) -> str:
@@ -253,6 +254,40 @@ def _row_key(r: dict) -> str:
         r["station"], r["variable"], r["target"], str(r["lead"]),
         r["issued"], str(r["member"]),
     ])
+
+
+def _group_stored(rows) -> list[dict]:
+    buckets: dict[tuple, dict] = {}
+    for r in rows:
+        key = (r["station"], r["variable"], r["target"], str(r["lead"]), r["issued"])
+        g = buckets.get(key)
+        if g is None:
+            g = {
+                "station": r["station"], "variable": r["variable"],
+                "target": r["target"], "lead": r["lead"], "issued": r["issued"],
+                "values": {}, "n_windows": r.get("n_windows"),
+            }
+            buckets[key] = g
+        g["values"][str(r["member"])] = r["value_f"]
+    return sorted(buckets.values(), key=lambda r: (
+        r["station"], r["target"], r["variable"], r["lead"]))
+
+
+def _expand_stored(raw) -> list[dict]:
+    """Accepte l'ancien format (une ligne par membre) et le format groupé."""
+    out = []
+    for r in raw or []:
+        if "values" in r and isinstance(r["values"], dict):
+            for mid, val in r["values"].items():
+                out.append({
+                    "station": r["station"], "variable": r["variable"],
+                    "target": r["target"], "lead": r["lead"],
+                    "issued": r["issued"], "member": int(mid),
+                    "value_f": val, "n_windows": r.get("n_windows") or 0,
+                })
+        else:
+            out.append(r)
+    return out
 
 
 @dataclass
