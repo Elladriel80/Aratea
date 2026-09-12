@@ -201,6 +201,27 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
             f"| Mois-cellules à 0 mm (valeur réelle, pas un trou) | {row.get('n_zero_rain_cell_months')} |",
             "",
         ]
+    ucsb = payload.get("ucsb_2026_check") or {}
+    if ucsb.get("regions"):
+        lines += [
+            "## Contrôle UCSB 2026 (fichier officiel par année, autre grille)",
+            "",
+            f"Fichier : `{ucsb.get('path')}` ({ucsb.get('n_bytes')} octets).",
+            "Ce n'est pas mélangé avec les totaux IRI. Grilles un peu différentes.",
+            "",
+        ]
+        for name in TARGETS:
+            row = (ucsb.get("regions") or {}).get(name) or {}
+            if not row:
+                continue
+            lines += [
+                f"{name} : {row.get('n_times')} mois ({row.get('first_month')} à "
+                f"{row.get('last_month')}), "
+                f"{row.get('n_cells_in_published_cut')} cases, "
+                f"{row.get('n_cells_usable_any_month')} utilisables, "
+                f"mois absents d'IRI {row.get('months_not_in_iri')}.",
+            ]
+        lines.append("")
     lines += [
         "## Verdicts (noms du catalogue, non renommés)",
         "",
@@ -315,6 +336,11 @@ def _open_pixels(
             label = TARGET_MED if key == "med" else TARGET_INDE if key == "inde" else ""
             if not label or label not in regions:
                 continue
+            if not (regions[label].get("rings") or []):
+                download_notes.append(
+                    f"{label} : dalle {path.name} ignorée, polygone absent"
+                )
+                continue
             _add_slab(accs, label, slab, regions[label]["rings"], download_notes, path)
     else:
         for year in years:
@@ -412,6 +438,10 @@ def main() -> int:
     year_html = ""
     prelim_html = ""
     download_notes: list[str] = []
+    cuts_dir = client.cache_dir
+    cuts_dir.mkdir(parents=True, exist_ok=True)
+    ipcc_cache = cuts_dir / "ipcc_regions.csv"
+    ne_cache = cuts_dir / "ne_admin1.geojson"
     if not args.skip_fetch:
         print("sondes HTTP ...", flush=True)
         probes = client.probe_all()
@@ -425,12 +455,18 @@ def main() -> int:
             })
         try:
             ipcc_csv = client.fetch_text(IPCC_REGIONS_CSV)
+            ipcc_cache.write_text(ipcc_csv, encoding="utf-8")
         except Exception:
-            ipcc_csv = None
+            ipcc_csv = ipcc_cache.read_text(encoding="utf-8") if ipcc_cache.exists() else None
         try:
             ne_geo = client.fetch_json(NE_ADMIN1_URL)
+            ne_cache.write_text(json.dumps(ne_geo), encoding="utf-8")
         except Exception:
-            ne_geo = None
+            ne_geo = (
+                json.loads(ne_cache.read_text(encoding="utf-8"))
+                if ne_cache.exists()
+                else None
+            )
         try:
             tif_html = client.fetch_text(CHIRPS_TIFS)
         except Exception as exc:
@@ -447,6 +483,10 @@ def main() -> int:
             download_notes.append(f"index prelim : {type(exc).__name__}")
     else:
         print("sondes HTTP ignorées (--skip-fetch)", flush=True)
+        if ipcc_cache.exists():
+            ipcc_csv = ipcc_cache.read_text(encoding="utf-8")
+        if ne_cache.exists():
+            ne_geo = json.loads(ne_cache.read_text(encoding="utf-8"))
 
     gee = gee_catalog_excerpt(gee_raw) if gee_raw else {}
     regions = regions_from_sources(ipcc_csv, ne_geo)

@@ -63,6 +63,9 @@ https://iridl.ldeo.columbia.edu/SOURCES/.UCSB/.CHIRPS/.v2p0/.monthly/.global/.pr
 NOAA ERDDAP copie la même série, mais cette machine est sur leur
 liste noire (HTTP 403). On ne l'a pas utilisée pour les pixels.
 
+Le gros fichier unique UCSB `chirps-v2.0.monthly.nc` fait
+7 740 912 923 octets. On n'a lu que l'en-tête.
+
 ## Index officiel UCSB (noms de fichiers)
 
 Lu sur l'index GeoTIFF mensuel final, le 12 septembre 2026 :
@@ -72,34 +75,61 @@ Lu sur l'index GeoTIFF mensuel final, le 12 septembre 2026 :
 - dernier mois : août 2026
 - **zéro mois manquant** dans cet intervalle
 - 46 années civiles (1981 à 2026)
-- 2026 n'a que janvier à août (le produit final d'août a été
-  déposé le 11 septembre 2026)
+- 2026 n'a que janvier à août (déposé le 11 septembre 2026)
 
-Index NetCDF par année : 1981 à 2026, **zéro année manquante**.
-Le fichier 2026 pèse moins (109,2 Mo contre ~163 Mo) : année
-encore incomplète.
+Index NetCDF par année : 46 fichiers, 1981 à 2026, **zéro année
+manquante**. Le fichier 2026 pèse 114 544 358 octets (moins que
+~163 Mo les autres années) : année encore incomplète.
 
-Prelim mensuel (non compté) : va aussi jusqu'à août 2026. Pas de
-septembre 2026 sur cet index.
-
-Le gros fichier unique `chirps-v2.0.monthly.nc` fait 7,2 Gio
-(déposé le 14 août 2026). On ne l'a pas téléchargé.
+Prelim mensuel (non compté) : 140 fichiers, janvier 2015 à
+août 2026. Pas de septembre 2026 sur cet index.
 
 ## Les deux découpages (publiés, pas redessinés)
 
 Même méthode que SPEI (PR 243).
 
-Méditerranée : boîte IPCC AR6 WGI **MED** (Iturbide 2020), sommets
-(-10, 30), (-10, 45), (40, 45), (40, 30). Libellé publié : terre
-et mer.
-https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv
+Méditerranée : boîte IPCC AR6 WGI **MED**, sommets lus sur le CSV
+vivant : (-10, 30), (-10, 45), (40, 45), (40, 30). 1 polygone.
+Libellé publié : terre et mer.
 
 Inde : Maharashtra et Karnataka seulement (pas toute l'Inde).
-Polygones Natural Earth 50 m.
+2 anneaux Natural Earth 50 m. Aucun État manquant.
 
-Ces anneaux ne sont pas un compte CHIRPS. Le compte des cases
-est dans `data/truth/chirps/chirps_report.md` après le run
-`python scripts/eval_chirps.py`.
+Ces anneaux ne sont pas un compte CHIRPS. Le compte est plus bas.
+
+## Cellules mesurées (IRI, janvier 1981 à juillet 2026)
+
+Même série partout. **46 années** (1981 à 2026). **Zéro année
+vide**. **547 mois** ouverts, tous avec au moins une case finie.
+**Zéro mois vide**. Dernier mois IRI : juillet 2026.
+
+| Zone | Cases du découpage | Cases utilisables | Cases jamais valides | Mois-cellules finis | Mois-cellules à 0 mm |
+|---|---:|---:|---:|---:|---:|
+| Sécheresse Méditerranée | 299 700 | 176 612 | 123 088 | 96 606 764 | 6 753 |
+| Sécheresse Inde | 16 983 | 16 983 | 0 | 9 289 701 | 0 |
+
+Méditerranée : la boîte publiée contient la mer. 123 088 cases
+n'ont jamais de nombre (CHIRPS est sur la terre). On ne les
+invente pas. On ne les remplace pas. 6 753 mois-cellules à 0 mm
+sont de la vraie pluie nulle, pas un trou.
+
+Inde : toutes les cases du découpage ont une valeur chaque mois.
+
+## Août 2026 (fichier UCSB, pas mélangé)
+
+IRI n'a pas donné août 2026. Le fichier officiel
+`chirps-v2.0.2026.monthly.nc` (114 544 358 octets) a 8 mois,
+janvier à août 2026. Autre grille, donc autre nombre de cases.
+On ne mélange pas les deux totaux.
+
+| Zone | Cases UCSB 2026 | Utilisables | Mois absents d'IRI |
+|---|---:|---:|---|
+| Sécheresse Méditerranée | 300 000 | 176 612 | 2026-08 |
+| Sécheresse Inde | 16 978 | 16 978 | 2026-08 |
+
+Les 176 612 cases utilisables Méditerranée sont les mêmes sur
+les deux grilles. L'Inde change de 5 cases (bord du polygone).
+On n'arrondit pas. On n'invente pas août dans le total IRI.
 
 ## On n'a pas noté de prévision
 
@@ -112,11 +142,23 @@ pluie datée, comparée aux mois CHIRPS déjà comptés. Pas avant.
 
 ## Verdicts (noms du catalogue, non renommés)
 
-Les verdicts mesurés sont dans `data/truth/chirps/chirps_report.md`.
-Tant que les cases n'ont pas été lues, **CHIRPS pluie** reste
-bloquée. Les cibles Sécheresse Méditerranée et Sécheresse Inde
-restent « pas encore testée » : compter la pluie n'est pas
-scorer une prévision.
+| Nom | Verdict |
+|---|---|
+| CHIRPS pluie | testée, ça aide |
+| Sécheresse Méditerranée | cible Tier 1 (pas encore testée) |
+| Sécheresse Inde | cible Tier 1 (pas encore testée) |
+| Sécheresse US | bloquée |
+| SPEI | testée, ça aide |
+| US Drought Monitor | testée, ça aide |
+| SEAS5 | pas encore testée |
+| C3S multi-modèle | pas encore testée |
+| NMME | bloquée |
+| Open-Meteo Seasonal | bloquée |
+| HURDAT2 / IBTrACS | testée, ça aide |
+
+CHIRPS pluie aide : on a le vrai compte, région par région, de
+1981 à 2026, sans chiffre inventé. Les deux cibles sécheresse
+restent sans prévision notée.
 
 ## Décision
 
