@@ -240,6 +240,11 @@ def trend_report(days: list[GhcnDay], variable: str) -> dict:
     return out
 
 
+# Seuils descriptifs pour les queues (mutuelle). Ce ne sont pas des produits.
+HEAT_F = 100
+HEAT_NEAR_F = 95
+FROST_F = 32
+
 # Seuil simple pour « le marché est bien plus sûr que l'histoire ».
 # Favori marché ≥ 65 % alors que l'histoire met ce contrat à ≤ 40 %.
 FADE_MARKET_MIN = 0.65
@@ -250,3 +255,104 @@ def fade_trigger(market_p: float, hist_p: Optional[float]) -> bool:
     if hist_p is None:
         return False
     return market_p >= FADE_MARKET_MIN and hist_p <= FADE_HIST_MAX
+
+
+def year_to_year_swing(series: list[tuple[int, float, int]]) -> Optional[dict]:
+    """Écart d'une année à la suivante, seulement si les années se suivent.
+
+    Compare cet écart à la pente lente (si assez d'années). Rien n'est inventé.
+    """
+    if len(series) < 3:
+        return None
+    jumps: list[float] = []
+    for i in range(1, len(series)):
+        y0, m0, _ = series[i - 1]
+        y1, m1, _ = series[i]
+        if y1 == y0 + 1:
+            jumps.append(m1 - m0)
+    if len(jumps) < 2:
+        return None
+    absj = [abs(x) for x in jumps]
+    slope = linear_slope([(y, m) for y, m, _ in series])
+    return {
+        "n_consecutive_jumps": len(jumps),
+        "median_abs_jump_f": statistics.median(absj),
+        "p90_abs_jump_f": sorted(absj)[int(round(0.9 * (len(absj) - 1)))],
+        "max_abs_jump_f": max(absj),
+        "slope_f_per_decade": None if slope is None else slope["slope_f_per_decade"],
+    }
+
+
+def _complete_years(days: list[GhcnDay], attr: str,
+                    min_days: int = COMPLETE_YEAR_DAYS) -> dict[int, list]:
+    by: dict[int, list] = defaultdict(list)
+    for d in days:
+        v = getattr(d, attr)
+        if v is not None:
+            by[d.valid.year].append((d.valid, v))
+    return {y: rows for y, rows in by.items() if len(rows) >= min_days}
+
+
+def mutual_station_tails(days: list[GhcnDay]) -> dict:
+    """Queues chaleur / gel / pluie et écart année à année. Pas un produit."""
+    heat_years = _complete_years(days, "high_f")
+    frost_years = _complete_years(days, "low_f")
+    rain_years = _complete_years(days, "precip_in")
+
+    def _heat(years: dict[int, list]) -> dict:
+        if not years:
+            return {"n_complete_years": 0}
+        hot100 = [sum(1 for _, v in rows if v >= HEAT_F) for rows in years.values()]
+        hot95 = [sum(1 for _, v in rows if v >= HEAT_NEAR_F) for rows in years.values()]
+        hottest = max(v for rows in years.values() for _, v in rows)
+        return {
+            "n_complete_years": len(years),
+            "first_year": min(years),
+            "last_year": max(years),
+            "hottest_f": hottest,
+            "median_days_ge_100f": statistics.median(hot100),
+            "p90_days_ge_100f": sorted(hot100)[int(round(0.9 * (len(hot100) - 1)))],
+            "years_with_any_100f": sum(1 for n in hot100 if n > 0),
+            "median_days_ge_95f": statistics.median(hot95),
+            "total_days_ge_100f": sum(hot100),
+        }
+
+    def _frost(years: dict[int, list]) -> dict:
+        if not years:
+            return {"n_complete_years": 0}
+        frost = [sum(1 for _, v in rows if v <= FROST_F) for rows in years.values()]
+        coldest = min(v for rows in years.values() for _, v in rows)
+        return {
+            "n_complete_years": len(years),
+            "first_year": min(years),
+            "last_year": max(years),
+            "coldest_f": coldest,
+            "median_frost_days": statistics.median(frost),
+            "p90_frost_days": sorted(frost)[int(round(0.9 * (len(frost) - 1)))],
+            "years_with_any_frost": sum(1 for n in frost if n > 0),
+            "total_frost_days": sum(frost),
+        }
+
+    def _rain(years: dict[int, list]) -> dict:
+        if not years:
+            return {"n_complete_years": 0}
+        totals = [sum(v for _, v in rows) for rows in years.values()]
+        dry_days = [sum(1 for _, v in rows if v <= 0.0) for rows in years.values()]
+        return {
+            "n_complete_years": len(years),
+            "first_year": min(years),
+            "last_year": max(years),
+            "median_year_inches": statistics.median(totals),
+            "p10_year_inches": sorted(totals)[int(round(0.1 * (len(totals) - 1)))],
+            "driest_year_inches": min(totals),
+            "wettest_year_inches": max(totals),
+            "median_dry_days": statistics.median(dry_days),
+        }
+
+    swing = year_to_year_swing(annual_means(days, "temp_max"))
+    return {
+        "heat": _heat(heat_years),
+        "frost": _frost(frost_years),
+        "rain": _rain(rain_years),
+        "year_to_year_max": swing,
+    }

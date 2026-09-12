@@ -8,11 +8,12 @@ from pathlib import Path
 import pytest
 
 from src.truth.century import (
-    empirical_prob, fade_trigger, index_by_date, linear_slope, trend_report,
-    values_for_window,
+    empirical_prob, fade_trigger, index_by_date, linear_slope, mutual_station_tails,
+    trend_report, values_for_window, year_to_year_swing,
 )
 from src.truth.ghcn_daily import (
     ICAO_TO_GHCN, GhcnDay, coverage_from_days, parse_dly, tenths_c_to_f,
+    tenths_mm_to_inches,
 )
 from src.truth.iem_cli import kalshi_stations
 from src.truth.synthetic_bins import Bin
@@ -115,6 +116,47 @@ def test_trend_slope_and_short_record():
             for i in range(20)]
     tr = trend_report(days, "temp_max")
     assert tr["n_complete_years"] == 0 and tr["slope"] is None
+
+
+def test_precip_parse_and_mutual_tails():
+    assert abs(tenths_mm_to_inches(254) - 1.0) < 1e-9
+    gid = "USW00000000"
+    # janvier 2020 : 31 jours, 3 jours ≥ 100 °F, 2 gel, pluie 0.1 in le jour 1
+    tmax = [(400, " ")] * 3 + [(200, " ")] * 28          # 104 °F puis 68 °F
+    tmin = [(-50, " ")] * 2 + [(100, " ")] * 29          # 23 °F puis 50 °F
+    prcp = [(254, " ")] + [(0, " ")] * 30
+    text = "\n".join([
+        _dly_line(gid, 2020, 1, "TMAX", tmax),
+        _dly_line(gid, 2020, 1, "TMIN", tmin),
+        _dly_line(gid, 2020, 1, "PRCP", prcp),
+    ])
+    days = parse_dly(text, "KTST", gid)
+    assert days[0].precip_in is not None and abs(days[0].precip_in - 1.0) < 1e-9
+    # pas assez d'année complète (31 < 300) → queues vides
+    empty = mutual_station_tails(days)
+    assert empty["heat"]["n_complete_years"] == 0
+
+    long_days = []
+    for i in range(310):
+        d = date(2020, 1, 1) + timedelta(days=i)
+        if d.year != 2020:
+            break
+        hi = 104 if i < 5 else 80
+        lo = 20 if i < 10 else 50
+        long_days.append(GhcnDay("KTST", gid, d, hi, lo, 0.0 if i > 0 else 1.0))
+    tails = mutual_station_tails(long_days)
+    assert tails["heat"]["n_complete_years"] == 1
+    assert tails["heat"]["hottest_f"] == 104
+    assert tails["heat"]["median_days_ge_100f"] == 5
+    assert tails["frost"]["coldest_f"] == 20
+    assert tails["frost"]["median_frost_days"] == 10
+    assert abs(tails["rain"]["median_year_inches"] - 1.0) < 1e-9
+
+    series = [(2000, 70.0, 365), (2001, 72.0, 365), (2002, 71.0, 365),
+              (2004, 80.0, 365)]   # 2003 manquant : pas de saut 2002→2004
+    sw = year_to_year_swing(series)
+    assert sw is not None and sw["n_consecutive_jumps"] == 2
+    assert abs(sw["median_abs_jump_f"] - 1.5) < 1e-9
 
 
 def test_eval_script_offline(tmp_path, monkeypatch):

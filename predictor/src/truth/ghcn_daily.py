@@ -63,6 +63,11 @@ def tenths_c_to_f(tenths: int) -> int:
     return int(apply_nws_rounding(f, "nearest_int"))
 
 
+def tenths_mm_to_inches(tenths: int) -> float:
+    """Dixièmes de mm GHCN → pouces. Trace et manquant sont exclus en amont."""
+    return (tenths / 10.0) / 25.4
+
+
 @dataclass(frozen=True)
 class GhcnDay:
     """Un jour GHCN-Daily / One GHCN-Daily day."""
@@ -71,10 +76,11 @@ class GhcnDay:
     valid: date
     high_f: Optional[int]
     low_f: Optional[int]
+    precip_in: Optional[float] = None
 
 
 def parse_dly(text: str, station: str, ghcn_id: str,
-              elements: tuple[str, ...] = ("TMAX", "TMIN")) -> list[GhcnDay]:
+              elements: tuple[str, ...] = ("TMAX", "TMIN", "PRCP")) -> list[GhcnDay]:
     """Parse un fichier .dly. Ignore QFLAG non vide et les jours calendaires impossibles."""
     wanted = set(elements)
     by_date: dict[date, dict[str, int]] = {}
@@ -110,10 +116,12 @@ def parse_dly(text: str, station: str, ghcn_id: str,
         rec = by_date[valid]
         tmax = rec.get("TMAX")
         tmin = rec.get("TMIN")
+        prcp = rec.get("PRCP")
         out.append(GhcnDay(
             station=station, ghcn_id=ghcn_id, valid=valid,
             high_f=None if tmax is None else tenths_c_to_f(tmax),
             low_f=None if tmin is None else tenths_c_to_f(tmin),
+            precip_in=None if prcp is None else tenths_mm_to_inches(prcp),
         ))
     return out
 

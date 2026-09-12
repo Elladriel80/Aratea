@@ -152,6 +152,10 @@ Ce qui reste utile : on a enfin la vraie longueur de chaque station,
 l'écart d'un jour de calendrier, et la pente. Pour une moyenne du
 passé, 30 ans récents valent mieux que tout le siècle.
 
+Le même fichier compte aussi pour la mutuelle (chaleur, gel, année
+sèche). Voir `a1-climato-siecle-mutuelle-2026-09-12.md`. Pas de produit
+inventé. Pas de prix. Le champion Kalshi n'a pas bougé.
+
 ## Comment relancer
 
 Dans le dossier `predictor`, avec internet la première fois :
