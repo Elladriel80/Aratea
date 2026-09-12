@@ -111,3 +111,29 @@ def prob_in_bin_members_models(per_model: dict[str, list[float]], b: Bin) -> flo
     if not parts:
         return 0.0
     return sum(parts) / len(parts)
+
+
+def prob_in_bin_mixture(values: list[float], sigma: float, b: Bin) -> float:
+    """P(bin) sous un mélange équipondéré de N(v_i, sigma²).
+
+    Une seule densité continue (somme des cloches), puis découpe du bin.
+    Liste vide → 0, rien d'inventé. Même correction d'arrondi que
+    `prob_in_bin_gaussian`.
+    """
+    if not values:
+        return 0.0
+    return sum(prob_in_bin_gaussian(v, sigma, b) for v in values) / len(values)
+
+
+BLEND_HORIZON_DAYS = 8.0
+
+
+def horizon_blend(p_forecast: float, p_climato: float, days_ahead: int,
+                  tau: float = BLEND_HORIZON_DAYS) -> float:
+    """Mélange par horizon : même formule que `EnsemblePredictor.predict`.
+
+    w = exp(-days_ahead / 8). À J+0, w = 1 (courbe seule). À J+8, w ≈ 0,37.
+    Le climat ici est une fréquence par bin, pas une courbe.
+    """
+    w = math.exp(-float(days_ahead) / tau)
+    return w * p_forecast + (1.0 - w) * p_climato
