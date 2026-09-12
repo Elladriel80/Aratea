@@ -25,11 +25,11 @@ elle pointe le mauvais contrat.
 
 Lecture du tableau : « écart » = grille moins station. Un écart négatif veut
 dire que la grille est plus froide que la station. « Juste » = le degré arrondi
-est le même. « Au moins 2 deg » = écart d'au moins 2 degrés.
+est le même. « 2° ou plus » = écart d'au moins 2 degrés.
 
 ### Maximum du jour
 
-| Ville | Jours | Écart moyen | Juste | Au moins 2 deg |
+| Ville | Jours | Écart moyen | Juste | 2° ou plus |
 |---|---|---|---|---|
 | Atlanta | 2440 | -2,35 ° | 8 % | 67 % |
 | Austin | 2443 | -1,63 ° | 10 % | 57 % |
@@ -52,7 +52,7 @@ est le même. « Au moins 2 deg » = écart d'au moins 2 degrés.
 
 ### Minimum du jour (les écarts les plus nets)
 
-| Ville | Jours | Écart moyen | Juste | Au moins 2 deg |
+| Ville | Jours | Écart moyen | Juste | 2° ou plus |
 |---|---|---|---|---|
 | Austin | 2443 | +4,05 ° | 8 % | 70 % |
 | Denver | 2443 | +2,65 ° | 10 % | 64 % |
