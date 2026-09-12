@@ -3,9 +3,28 @@ import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import { getLocale } from "@/lib/i18n";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", weight: ["400", "500", "600"] });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap", weight: ["400", "500"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  // The size-adjusted Arial fallback can ghost-paint next to Inter and
+  // make the last letter of a word look doubled (discordd, statusus).
+  adjustFontFallback: false,
+});
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  weight: ["400", "500", "600"],
+  adjustFontFallback: false,
+});
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500"],
+  adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
   title: "Aratea — Marchés prédictifs météo & mutuelle paramétrique décentralisée",
@@ -28,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale();
   return (
     <html lang={locale} className={`${inter.variable} ${fraunces.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

@@ -23,12 +23,30 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+/*
+ * Word spaces were collapsing on the live homepage (EN/FR): "Predictthe
+ * weather", "themission", footer labels like "discordd". Three causes:
+ * 1) Tailwind Preflight sets font-variation-settings:normal, which pins
+ *    variable axes to defaults (Fraunces default wght is 900) and, with
+ *    the next/font size-adjusted fallback, ghost-paints a second copy of
+ *    the last letter.
+ * 2) Fraunces at display size has a narrow space plus a wide "t" bar;
+ *    negative letter-spacing then optically eats the gap before "the".
+ * 3) .lv::after used U+2197 (↗), which is outside the Inter latin
+ *    subset, so the space before the arrow vanished and the fallback
+ *    glyph sat on the last letter.
+ */
+html, body {
+  font-variation-settings: unset;
+  font-feature-settings: "kern" 1, "liga" 0, "calt" 0;
+}
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
+  word-spacing: 0.08em;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -62,7 +80,7 @@ body {
 .brand .name { font-family: var(--font-fraunces), serif; font-weight: 600; font-size: 19px; letter-spacing: -0.2px; }
 .nav-right { display: flex; align-items: center; gap: 12px; }
 .nav-links { display: flex; gap: 22px; }
-.nav-links a { color: var(--fg-dim); text-decoration: none; font-size: 14px; transition: color 0.15s; }
+.nav-links a { color: var(--fg-dim); text-decoration: none; font-size: 14px; transition: color 0.15s; word-spacing: 0.1em; }
 .nav-links a:hover { color: var(--fg); }
 .lang-toggle { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
 .lang-toggle button { background: transparent; border: 0; color: var(--fg-faint); font-family: var(--font-mono), monospace;
@@ -87,15 +105,15 @@ body {
   padding: 6px 13px; background: rgba(94, 234, 212, 0.05); }
 .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); animation: pulse 2.4s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-.h1 { font-family: var(--font-fraunces), serif; font-weight: 500; font-size: clamp(40px, 7vw, 76px); line-height: 1.02;
-  letter-spacing: -1.5px; margin-bottom: 22px; max-width: 16ch; }
+.h1 { font-family: var(--font-fraunces), Georgia, "Times New Roman", serif; font-weight: 500; font-size: clamp(40px, 7vw, 76px); line-height: 1.02;
+  letter-spacing: -0.02em; word-spacing: 0.18em; font-kerning: none; margin-bottom: 22px; max-width: 18ch; }
 .h1 .grad { background: linear-gradient(110deg, var(--teal), var(--sky) 55%, var(--violet));
   -webkit-background-clip: text; background-clip: text; color: transparent; }
-.lede { font-size: clamp(17px, 2.2vw, 20px); color: var(--fg-dim); max-width: 60ch; margin-bottom: 34px; }
+.lede { font-size: clamp(17px, 2.2vw, 20px); color: var(--fg-dim); max-width: 60ch; margin-bottom: 34px; word-spacing: 0.08em; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 15px; font-weight: 500;
   padding: 12px 20px; border-radius: 999px; cursor: pointer; border: 1px solid transparent;
-  transition: transform 0.15s var(--ease), box-shadow 0.2s, border-color 0.2s; font-family: inherit; }
+  transition: transform 0.15s var(--ease), box-shadow 0.2s, border-color 0.2s; font-family: inherit; word-spacing: 0.1em; }
 .btn-primary { background: linear-gradient(135deg, var(--teal), var(--sky)); color: #042521; font-weight: 600; }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(86, 182, 247, 0.25); }
 .btn-primary:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
@@ -118,8 +136,8 @@ svg .draw { stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-
 .sec { padding: 56px 0; scroll-margin-top: 80px; }
 .sec-label { font-family: var(--font-mono), monospace; font-size: 12.5px; color: var(--teal); letter-spacing: 1.5px;
   text-transform: uppercase; margin-bottom: 16px; }
-.sec-title { font-family: var(--font-fraunces), serif; font-weight: 500; font-size: clamp(26px, 4vw, 40px);
-  letter-spacing: -0.8px; line-height: 1.1; margin-bottom: 18px; max-width: 22ch; }
+.sec-title { font-family: var(--font-fraunces), Georgia, "Times New Roman", serif; font-weight: 500; font-size: clamp(26px, 4vw, 40px);
+  letter-spacing: -0.02em; word-spacing: 0.14em; font-kerning: none; line-height: 1.1; margin-bottom: 18px; max-width: 22ch; }
 .sec-intro { color: var(--fg-dim); max-width: 64ch; font-size: 17px; }
 
 /* mission prose + principles */
@@ -231,7 +249,14 @@ svg .draw { stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-
 .link-card:hover { transform: translateY(-2px); border-color: var(--teal); }
 .link-card .lk { font-family: var(--font-mono), monospace; font-size: 11px; color: var(--fg-faint); text-transform: uppercase; letter-spacing: 1px; }
 .link-card .lv { font-size: 17px; font-weight: 500; color: var(--teal); }
-.link-card .lv::after { content: " ↗"; font-size: 13px; opacity: 0.7; }
+.link-card .lv::after {
+  content: "↗";
+  margin-left: 0.4em;
+  font-size: 13px;
+  opacity: 0.7;
+  font-family: system-ui, "Segoe UI Symbol", sans-serif;
+  word-spacing: 0;
+}
 
 /* contribute band + form */
 .band { margin-top: 8px; padding: 44px; border-radius: var(--radius);
