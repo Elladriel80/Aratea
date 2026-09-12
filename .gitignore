@@ -52,6 +52,9 @@ contracts/.env.local
 mailmap.txt
 replace-text.txt
 
+# Kalshi candle cache (thousands of JSON files; regenerate with --fetch)
+predictor/data/backfill_cache/
+
 # Predictor exploratory scratch: ad-hoc analysis scripts and session briefs.
 # Keep _aggregate_sfo_high.py (used by the Phase B gate).
 predictor/scripts/_*.py
