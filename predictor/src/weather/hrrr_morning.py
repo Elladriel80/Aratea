@@ -57,7 +57,7 @@ class HrrrMorningClient:
         self,
         cache_dir: Path = CACHE_DIR,
         extracted_path: Path = EXTRACTED_PATH,
-        sleep_s: float = 0.25,
+        sleep_s: float = 1.0,
         timeout_s: float = 90.0,
     ):
         self.cache_dir = Path(cache_dir)
@@ -71,6 +71,43 @@ class HrrrMorningClient:
 
     def _cache_path(self, day: date) -> Path:
         return self.cache_dir / f"hrrr12z_{day.isoformat()}.json"
+
+    def _get(self, params: dict) -> tuple[Optional[object], Optional[str]]:
+        """GET Single Runs. 429 = attendre et réessayer. Rien n'est inventé."""
+        last = None
+        for attempt in range(6):
+            time.sleep(self.sleep_s if attempt == 0 else 0)
+            try:
+                resp = self.session.get(SINGLE_RUNS_BASE, params=params, timeout=self.timeout_s)
+            except requests.RequestException as e:
+                last = f"réseau : {e}"
+                time.sleep(2 + attempt)
+                continue
+            if resp.status_code == 429:
+                wait = 8 * (2 ** attempt)
+                hdr = resp.headers.get("Retry-After")
+                if hdr:
+                    try:
+                        wait = max(wait, min(90, float(hdr)))
+                    except ValueError:
+                        pass
+                print(f"   429, pause {wait:.0f}s (essai {attempt + 1}/6)", flush=True)
+                time.sleep(wait)
+                last = "429 trop de requêtes"
+                continue
+            if resp.status_code == 400:
+                try:
+                    reason = (resp.json() or {}).get("reason") or resp.text[:200]
+                except ValueError:
+                    reason = resp.text[:200]
+                return None, f"400:{reason}"
+            try:
+                resp.raise_for_status()
+                return resp.json(), None
+            except (requests.RequestException, ValueError) as e:
+                last = str(e)
+                time.sleep(2 + attempt)
+        return None, last
 
     def fetch_day(
         self,
@@ -112,25 +149,15 @@ class HrrrMorningClient:
             "models": HRRR_MODEL,
             "run": f"{day.isoformat()}T{CYCLE_HOUR:02d}:00",
         }
-        time.sleep(self.sleep_s)
-        try:
-            resp = self.session.get(SINGLE_RUNS_BASE, params=params, timeout=self.timeout_s)
-        except requests.RequestException as e:
-            return {}, f"réseau : {e}"
-        if resp.status_code == 400:
-            try:
-                reason = (resp.json() or {}).get("reason") or resp.text[:200]
-            except ValueError:
-                reason = resp.text[:200]
-            path.write_text(json.dumps({
-                "day": day.isoformat(), "error": reason, "stations": [],
-            }), encoding="utf-8")
-            return {}, reason
-        try:
-            resp.raise_for_status()
-            payload = resp.json()
-        except (requests.RequestException, ValueError) as e:
-            return {}, str(e)
+        payload, err = self._get(params)
+        if err:
+            if err.startswith("400:"):
+                reason = err[4:]
+                path.write_text(json.dumps({
+                    "day": day.isoformat(), "error": reason, "stations": [],
+                }), encoding="utf-8")
+                return {}, reason
+            return {}, err
 
         blocks = payload if isinstance(payload, list) else [payload]
         issued = issued_12z(day).strftime("%Y-%m-%dT%H:%M:%SZ")
