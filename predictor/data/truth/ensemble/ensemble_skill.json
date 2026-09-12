@@ -1,0 +1,2342 @@
+{
+  "schema": "ensemble_members_skill/1",
+  "generated_at": "2026-09-12T14:27:51Z",
+  "params": {
+    "start_issue": "2026-07-27",
+    "end_issue": "2026-09-06",
+    "leads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "split_date": "2026-08-03",
+    "stations": [
+      "KATL",
+      "KAUS",
+      "KBOS",
+      "KMDW",
+      "KDFW",
+      "KDEN",
+      "KHOU",
+      "KLAS",
+      "KLAX",
+      "KMIA",
+      "KMSP",
+      "KNYC",
+      "KPHL",
+      "KPHX",
+      "KSAT",
+      "KSFO",
+      "KSEA",
+      "KDCA"
+    ],
+    "source": "noaa-gefs-pds 00z 31 members"
+  },
+  "coverage": {
+    "n_member_rows": 326544,
+    "n_groups": 10584,
+    "stations_found": [
+      "KATL",
+      "KAUS",
+      "KBOS",
+      "KDCA",
+      "KDEN",
+      "KDFW",
+      "KHOU",
+      "KLAS",
+      "KLAX",
+      "KMDW",
+      "KMIA",
+      "KMSP",
+      "KNYC",
+      "KPHL",
+      "KPHX",
+      "KSAT",
+      "KSEA",
+      "KSFO"
+    ],
+    "stations_missing": [],
+    "target_dates_holdout": [
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09",
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16",
+      "2026-08-17",
+      "2026-08-18",
+      "2026-08-19",
+      "2026-08-20",
+      "2026-08-21",
+      "2026-08-22",
+      "2026-08-23",
+      "2026-08-24",
+      "2026-08-25",
+      "2026-08-26",
+      "2026-08-27",
+      "2026-08-28",
+      "2026-08-29",
+      "2026-08-30",
+      "2026-08-31",
+      "2026-09-01",
+      "2026-09-02",
+      "2026-09-03",
+      "2026-09-04",
+      "2026-09-05",
+      "2026-09-06",
+      "2026-09-07"
+    ],
+    "n_members_hist": [
+      28,
+      29,
+      30,
+      31
+    ]
+  },
+  "failures": [
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f030.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 30,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f030.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f024",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 24,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f024"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep05.t00z.pgrb2s.0p25.f168",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep05",
+      "fhr": 168,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep05.t00z.pgrb2s.0p25.f168"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f036.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 36,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f036.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f042.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 42,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f042.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep05.t00z.pgrb2s.0p25.f198",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep05",
+      "fhr": 198,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep05.t00z.pgrb2s.0p25.f198"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep05.t00z.pgrb2s.0p25.f186",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep05",
+      "fhr": 186,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep05.t00z.pgrb2s.0p25.f186"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f084.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 84,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f084.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f102.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 102,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f102.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f054.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 54,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f054.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f072.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 72,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f072.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f060.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 60,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f060.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f114.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 114,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f114.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f066.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 66,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f066.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f078.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 78,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f078.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f120.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 120,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f120.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f096.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 96,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f096.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f108.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 108,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f108.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f090",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 90,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f090"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f132.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 132,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f132.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f144.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 144,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f144.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f156.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 156,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f156.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f048",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 48,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f048"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f174.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 174,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f174.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f162.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 162,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f162.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f138",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 138,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f138"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f180",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 180,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f180"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f048.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 48,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f048.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f198.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 198,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f198.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f204.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 204,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f204.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f024.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 24,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f024.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f030.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 30,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f030.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f042.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 42,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f042.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f060",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 60,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f060"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f054.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 54,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f054.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f066.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 66,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f066.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f072.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 72,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f072.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f036",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 36,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f036"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f096.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 96,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f096.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f090.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 90,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f090.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f150",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 150,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f150"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f102.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 102,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f102.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f084",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 84,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f084"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f144.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 144,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f144.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f120.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 120,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f120.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f108",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 108,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f108"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f114",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 114,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f114"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f138.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 138,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f138.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f156.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 156,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f156.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f162.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 162,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f162.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f126",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 126,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f126"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f150",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 150,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f150"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f168.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 168,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f168.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f180.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 180,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f180.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f174",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 174,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f174"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f192.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 192,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f192.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f186",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 186,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f186"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep08.t00z.pgrb2s.0p25.f072.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep08",
+      "fhr": 72,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep08.t00z.pgrb2s.0p25.f072.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep08.t00z.pgrb2s.0p25.f036.idx",
+      "issued": "2026-08-03T00:00:00+00:00",
+      "member": "gep08",
+      "fhr": 36,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260803/00/atmos/pgrb2sp25/gep08.t00z.pgrb2s.0p25.f036.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f048",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 48,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f048"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f066.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 66,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f066.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f024",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 24,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f024"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f096.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 96,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f096.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f042",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 42,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f042"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f036",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 36,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f036"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f054",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 54,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f054"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f084.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 84,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f084.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f126.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 126,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f126.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f072",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 72,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f072"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f132",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 132,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f132"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f108",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 108,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f108"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f150.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 150,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f150.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f144.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 144,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f144.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f114",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 114,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f114"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f168",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 168,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f168"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f180.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 180,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f180.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f192.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 192,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f192.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f186.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 186,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f186.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f156",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 156,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f156"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f048.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 48,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f048.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f090",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep06",
+      "fhr": 90,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep06.t00z.pgrb2s.0p25.f090"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f036.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 36,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f036.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f024.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 24,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f024.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f066.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 66,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f066.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f030",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 30,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f030"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f096.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 96,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f096.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f054",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 54,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f054"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f072.idx",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 72,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f072.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f060",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 60,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f060"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f090",
+      "issued": "2026-08-16T00:00:00+00:00",
+      "member": "gep07",
+      "fhr": 90,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260816/00/atmos/pgrb2sp25/gep07.t00z.pgrb2s.0p25.f090"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f030.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 30,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f030.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f042.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 42,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f042.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f036.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 36,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f036.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f180",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep15",
+      "fhr": 180,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f180"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f060.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 60,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f060.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f192",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep15",
+      "fhr": 192,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f192"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f054",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 54,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f054"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f186",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep15",
+      "fhr": 186,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f186"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f024",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 24,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f024"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f198",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep15",
+      "fhr": 198,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep15.t00z.pgrb2s.0p25.f198"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f078.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 78,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f078.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f066",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 66,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f066"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f084.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 84,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f084.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f072",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 72,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f072"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f090.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 90,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f090.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f108.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 108,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f108.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f096",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 96,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f096"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f102",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 102,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f102"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f126",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 126,
+      "error": "503 Server Error: Service Unavailable for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f126"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f048",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 48,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f048"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f114",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 114,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f114"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f132.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 132,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f132.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f138.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 138,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f138.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f156.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 156,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f156.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f162.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 162,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f162.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f144.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 144,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f144.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f174.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 174,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f174.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f192.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 192,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f192.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f168",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 168,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f168"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f198.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 198,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f198.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f186",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 186,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f186"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f180",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 180,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f180"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f024.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 24,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f024.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f036.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 36,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f036.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f030",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 30,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f030"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f048.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 48,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f048.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f060.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 60,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f060.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f054.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 54,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f054.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f072.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 72,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f072.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f066.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 66,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f066.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f078.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 78,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f078.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f084.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 84,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f084.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f120",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep16",
+      "fhr": 120,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep16.t00z.pgrb2s.0p25.f120"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f096.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 96,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f096.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f108.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 108,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f108.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f102.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 102,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f102.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f090",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 90,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f090"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f132.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 132,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f132.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f114",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 114,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f114"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f174.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 174,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f174.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f144.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 144,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f144.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f180.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 180,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f180.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f168.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 168,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f168.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f150",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 150,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f150"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f162",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 162,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f162"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f198.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 198,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f198.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f204.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 204,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f204.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f186",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 186,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f186"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f192",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 192,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f192"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f138",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 138,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f138"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f054.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 54,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f054.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f048.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 48,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f048.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f030",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 30,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f030"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f066.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 66,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f066.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f060",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 60,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f060"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f156",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep17",
+      "fhr": 156,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep17.t00z.pgrb2s.0p25.f156"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f108",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 108,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f108"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f120.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 120,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f120.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f102",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 102,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f102"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f096.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 96,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f096.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f084.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 84,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f084.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f126",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 126,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f126"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f150.idx",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 150,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f150.idx"
+    },
+    {
+      "source": "s3",
+      "url": "https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f144",
+      "issued": "2026-08-29T00:00:00+00:00",
+      "member": "gep18",
+      "fhr": 144,
+      "error": "503 Server Error: Slow Down for url: https://noaa-gefs-pds.s3.amazonaws.com/gefs.20260829/00/atmos/pgrb2sp25/gep18.t00z.pgrb2s.0p25.f144"
+    }
+  ],
+  "n_failures": 164,
+  "open_meteo_probe": {
+    "probe_station": "KATL",
+    "n_members": {
+      "ecmwf_ifs025": 51,
+      "ecmwf_aifs025": 51,
+      "gfs025": 31,
+      "google_weathernext2_ensemble": 64
+    },
+    "value_days": {
+      "ecmwf_ifs025": [
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12"
+      ],
+      "ecmwf_aifs025": [
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12"
+      ],
+      "gfs025": [
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12"
+      ],
+      "google_weathernext2_ensemble": [
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12"
+      ]
+    },
+    "failures": {},
+    "comment": "Open-Meteo ne remplit les membres que sur ~3 jours pass\u00e9s. Ce n'est pas le holdout A1/A2."
+  },
+  "nbm_note": "34020 pr\u00e9visions NBM d\u00e9j\u00e0 l\u00e0 (A2).",
+  "n_rows_vs_ensemble": 53928,
+  "n_rows_market": 1276,
+  "market_skips": {
+    "no_members": 248,
+    "no_cli_truth": 56
+  },
+  "vs_ensemble": {
+    "all": {
+      "all": {
+        "n_bins": 53928,
+        "n_dates": 36,
+        "base_rate": 0.15385328586263167,
+        "brier_members": 0.14856796091976182,
+        "n_p_members": 53928,
+        "brier_members_bias": 0.1429687252567298,
+        "n_p_members_bias": 53928,
+        "brier_raw": 0.12499836832852525,
+        "n_p_raw": 53928,
+        "brier_station": 0.11538957039606931,
+        "n_p_station": 53928,
+        "brier_nbm": 0.11973456951228353,
+        "n_p_nbm": 53928,
+        "brier_climo": 0.12780699563780645,
+        "n_p_climo": 53928
+      }
+    },
+    "by_lead": {
+      "1": {
+        "n_bins": 7704,
+        "n_dates": 36,
+        "base_rate": 0.15991692627206647,
+        "brier_members": 0.16287300347432462,
+        "n_p_members": 7704,
+        "brier_members_bias": 0.15568685086403444,
+        "n_p_members_bias": 7704,
+        "brier_raw": 0.1259024458335246,
+        "n_p_raw": 7704,
+        "brier_station": 0.11251478199057113,
+        "n_p_station": 7704,
+        "brier_nbm": 0.11743583777522641,
+        "n_p_nbm": 7704,
+        "brier_climo": 0.13267428683782256,
+        "n_p_climo": 7704
+      },
+      "2": {
+        "n_bins": 7704,
+        "n_dates": 36,
+        "base_rate": 0.15784008307372793,
+        "brier_members": 0.15659695512134675,
+        "n_p_members": 7704,
+        "brier_members_bias": 0.1505485603197408,
+        "n_p_members_bias": 7704,
+        "brier_raw": 0.12615813987856184,
+        "n_p_raw": 7704,
+        "brier_station": 0.11504083898994968,
+        "n_p_station": 7704,
+        "brier_nbm": 0.1198281119703161,
+        "n_p_nbm": 7704,
+        "brier_climo": 0.1312074317779799,
+        "n_p_climo": 7704
+      },
+      "3": {
+        "n_bins": 7704,
+        "n_dates": 36,
+        "base_rate": 0.1536863966770509,
+        "brier_members": 0.15126238312550253,
+        "n_p_members": 7704,
+        "brier_members_bias": 0.14442940465160778,
+        "n_p_members_bias": 7704,
+        "brier_raw": 0.12371510029549673,
+        "n_p_raw": 7704,
+        "brier_station": 0.11432071014250637,
+        "n_p_station": 7704,
+        "brier_nbm": 0.11926672279975778,
+        "n_p_nbm": 7704,
+        "brier_climo": 0.12760845778922852,
+        "n_p_climo": 7704
+      },
+      "4": {
+        "n_bins": 7704,
+        "n_dates": 36,
+        "base_rate": 0.15355659397715474,
+        "brier_members": 0.14770385699774455,
+        "n_p_members": 7704,
+        "brier_members_bias": 0.14093068404872428,
+        "n_p_members_bias": 7704,
+        "brier_raw": 0.12559999495313257,
+        "n_p_raw": 7704,
+        "brier_station": 0.11616570590355035,
+        "n_p_station": 7704,
+        "brier_nbm": 0.12047454915430118,
+        "n_p_nbm": 7704,
+        "brier_climo": 0.12754742140482486,
+        "n_p_climo": 7704
+      },
+      "5": {
+        "n_bins": 7704,
+        "n_dates": 36,
+        "base_rate": 0.15199896157840084,
+        "brier_members": 0.1419033955845901,
+        "n_p_members": 7704,
+        "brier_members_bias": 0.13727684696614387,
+        "n_p_members_bias": 7704,
+        "brier_raw": 0.12380444755830297,
+        "n_p_raw": 7704,
+        "brier_station": 0.1160842113635249,
+        "n_p_station": 7704,
+        "brier_nbm": 0.1207068424378678,
+        "n_p_nbm": 7704,
+        "brier_climo": 0.12637550494865335,
+        "n_p_climo": 7704
+      },
+      "6": {
+        "n_bins": 7704,
+        "n_dates": 36,
+        "base_rate": 0.15096053997923156,
+        "brier_members": 0.1404004533506993,
+        "n_p_members": 7704,
+        "brier_members_bias": 0.1371396748725126,
+        "n_p_members_bias": 7704,
+        "brier_raw": 0.12559898173538772,
+        "n_p_raw": 7704,
+        "brier_station": 0.11654324434486463,
+        "n_p_station": 7704,
+        "brier_nbm": 0.12003495705987581,
+        "n_p_nbm": 7704,
+        "brier_climo": 0.12548298105885305,
+        "n_p_climo": 7704
+      },
+      "7": {
+        "n_bins": 7704,
+        "n_dates": 36,
+        "base_rate": 0.1490134994807892,
+        "brier_members": 0.13923567878412485,
+        "n_p_members": 7704,
+        "brier_members_bias": 0.13476905507434495,
+        "n_p_members_bias": 7704,
+        "brier_raw": 0.12420946804527032,
+        "n_p_raw": 7704,
+        "brier_station": 0.11705750003751819,
+        "n_p_station": 7704,
+        "brier_nbm": 0.12039496538863967,
+        "n_p_nbm": 7704,
+        "brier_climo": 0.12375288564728293,
+        "n_p_climo": 7704
+      }
+    },
+    "by_variable": {
+      "temp_max": {
+        "n_bins": 26964,
+        "n_dates": 36,
+        "base_rate": 0.14801216436730455,
+        "brier_members": 0.1356427366930802,
+        "n_p_members": 26964,
+        "brier_members_bias": 0.13037934719573227,
+        "n_p_members_bias": 26964,
+        "brier_raw": 0.12395310230928601,
+        "n_p_raw": 26964,
+        "brier_station": 0.1119905431845878,
+        "n_p_station": 26964,
+        "brier_nbm": 0.11436764913074408,
+        "n_p_nbm": 26964,
+        "brier_climo": 0.12551640945950912,
+        "n_p_climo": 26964
+      },
+      "temp_min": {
+        "n_bins": 26964,
+        "n_dates": 36,
+        "base_rate": 0.15969440735795876,
+        "brier_members": 0.16149318514644342,
+        "n_p_members": 26964,
+        "brier_members_bias": 0.15555810331772735,
+        "n_p_members_bias": 26964,
+        "brier_raw": 0.1260436343477645,
+        "n_p_raw": 26964,
+        "brier_station": 0.11878859760755084,
+        "n_p_station": 26964,
+        "brier_nbm": 0.125101489893823,
+        "n_p_nbm": 26964,
+        "brier_climo": 0.13009758181610379,
+        "n_p_climo": 26964
+      }
+    },
+    "by_station": {
+      "KATL/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.1455026455026455,
+        "brier_members": 0.11404852885651807,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.12432426820926848,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.11795619587927686,
+        "n_p_raw": 1512,
+        "brier_station": 0.10831738419805279,
+        "n_p_station": 1512,
+        "brier_nbm": 0.1038545816978205,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13174856273527225,
+        "n_p_climo": 1512
+      },
+      "KATL/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.1626984126984127,
+        "brier_members": 0.12693329639627401,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.14381245476484825,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.11681694632468456,
+        "n_p_raw": 1512,
+        "brier_station": 0.11891306728182469,
+        "n_p_station": 1512,
+        "brier_nbm": 0.1220035893408289,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.1288937633406791,
+        "n_p_climo": 1512
+      },
+      "KAUS/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.15343915343915343,
+        "brier_members": 0.11706340917315074,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.11984390093763728,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.11772093029811159,
+        "n_p_raw": 1512,
+        "brier_station": 0.10219735299558474,
+        "n_p_station": 1512,
+        "brier_nbm": 0.11429226245133883,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13169196167420422,
+        "n_p_climo": 1512
+      },
+      "KAUS/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.1593915343915344,
+        "brier_members": 0.18711302146428224,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.1661596766027677,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.15705094202052142,
+        "n_p_raw": 1512,
+        "brier_station": 0.13379220557144225,
+        "n_p_station": 1512,
+        "brier_nbm": 0.13236445530662108,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.12683647003356405,
+        "n_p_climo": 1512
+      },
+      "KBOS/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.12698412698412698,
+        "brier_members": 0.10862825270785363,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.1132794876385741,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.1215888277123311,
+        "n_p_raw": 1512,
+        "brier_station": 0.10590749850512225,
+        "n_p_station": 1512,
+        "brier_nbm": 0.10871523356317345,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.1137763524970344,
+        "n_p_climo": 1512
+      },
+      "KBOS/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.16468253968253968,
+        "brier_members": 0.11670384696097878,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.12171391590667904,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.1330399469679844,
+        "n_p_raw": 1512,
+        "brier_station": 0.11950465781880701,
+        "n_p_station": 1512,
+        "brier_nbm": 0.12270168800062463,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13596373124226366,
+        "n_p_climo": 1512
+      },
+      "KDCA/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.15013227513227514,
+        "brier_members": 0.1283418440021011,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.12759171958683016,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.12787325900207763,
+        "n_p_raw": 1512,
+        "brier_station": 0.1194667478809745,
+        "n_p_station": 1512,
+        "brier_nbm": 0.11678910454893075,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.12586748795647032,
+        "n_p_climo": 1512
+      },
+      "KDCA/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.15873015873015872,
+        "brier_members": 0.1415997345037966,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.14019780991589215,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.12928195407239226,
+        "n_p_raw": 1512,
+        "brier_station": 0.12523769275433433,
+        "n_p_station": 1512,
+        "brier_nbm": 0.1346169339726631,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.1340679408245979,
+        "n_p_climo": 1512
+      },
+      "KDEN/temp_max": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.13129251700680272,
+        "brier_members": 0.11627556158613837,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.11343193418814328,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.11868921251104998,
+        "n_p_raw": 1470,
+        "brier_station": 0.10489825309777052,
+        "n_p_station": 1470,
+        "brier_nbm": 0.10383809959825767,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.11651132580309306,
+        "n_p_climo": 1470
+      },
+      "KDEN/temp_min": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.1435374149659864,
+        "brier_members": 0.1608802174340313,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.12884343372308504,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.14766545280291457,
+        "n_p_raw": 1470,
+        "brier_station": 0.11432240304687818,
+        "n_p_station": 1470,
+        "brier_nbm": 0.1212461176959446,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.11970022553983015,
+        "n_p_climo": 1470
+      },
+      "KDFW/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.16005291005291006,
+        "brier_members": 0.131867898821357,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.1411962973734063,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.11860848193898187,
+        "n_p_raw": 1512,
+        "brier_station": 0.12206912558912304,
+        "n_p_station": 1512,
+        "brier_nbm": 0.13006930252425045,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.1406999270770728,
+        "n_p_climo": 1512
+      },
+      "KDFW/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.16600529100529102,
+        "brier_members": 0.19435920497682702,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.1809959603035408,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.13294025854370278,
+        "n_p_raw": 1512,
+        "brier_station": 0.11837603967812536,
+        "n_p_station": 1512,
+        "brier_nbm": 0.11965555452215608,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.14075865722200018,
+        "n_p_climo": 1512
+      },
+      "KHOU/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.16071428571428573,
+        "brier_members": 0.1485418475139859,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.15739046994153272,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.11905461382267185,
+        "n_p_raw": 1512,
+        "brier_station": 0.12578360393751753,
+        "n_p_station": 1512,
+        "brier_nbm": 0.11362869291042034,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.1273829932685314,
+        "n_p_climo": 1512
+      },
+      "KHOU/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.16666666666666666,
+        "brier_members": 0.21113236195971105,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.209765863894161,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.1049200618431261,
+        "n_p_raw": 1512,
+        "brier_station": 0.10929816667151732,
+        "n_p_station": 1512,
+        "brier_nbm": 0.10684947503306876,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.11666463465939052,
+        "n_p_climo": 1512
+      },
+      "KLAS/temp_max": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.1523809523809524,
+        "brier_members": 0.1814977616798644,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.17368316407361784,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.14278713289783443,
+        "n_p_raw": 1470,
+        "brier_station": 0.10817255203003456,
+        "n_p_station": 1470,
+        "brier_nbm": 0.11580433829734653,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.1371913048191811,
+        "n_p_climo": 1470
+      },
+      "KLAS/temp_min": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.1489795918367347,
+        "brier_members": 0.17827867406772702,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.16100678146034245,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.1296953885544812,
+        "n_p_raw": 1470,
+        "brier_station": 0.11719383248776911,
+        "n_p_station": 1470,
+        "brier_nbm": 0.12344932677623124,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.13944605123644413,
+        "n_p_climo": 1470
+      },
+      "KLAX/temp_max": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.15510204081632653,
+        "brier_members": 0.15512372882659176,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.12455810704674243,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.14165480022479304,
+        "n_p_raw": 1470,
+        "brier_station": 0.11539223890448737,
+        "n_p_station": 1470,
+        "brier_nbm": 0.12408542167518934,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.12775418546213976,
+        "n_p_climo": 1470
+      },
+      "KLAX/temp_min": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.16666666666666666,
+        "brier_members": 0.17476427390036609,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.17311396002637214,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.10857248665442423,
+        "n_p_raw": 1470,
+        "brier_station": 0.09444682359238485,
+        "n_p_station": 1470,
+        "brier_nbm": 0.11121751329500054,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.14858343305725522,
+        "n_p_climo": 1470
+      },
+      "KMDW/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.1541005291005291,
+        "brier_members": 0.1278854675486716,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.12839199165184748,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.12173454064847554,
+        "n_p_raw": 1512,
+        "brier_station": 0.11949693949548702,
+        "n_p_station": 1512,
+        "brier_nbm": 0.12257745474846822,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13102786499108302,
+        "n_p_climo": 1512
+      },
+      "KMDW/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.15476190476190477,
+        "brier_members": 0.1297176246499671,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.1249119391071522,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.11448267326720175,
+        "n_p_raw": 1512,
+        "brier_station": 0.12017472898805268,
+        "n_p_station": 1512,
+        "brier_nbm": 0.11768956544216562,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13188878716307353,
+        "n_p_climo": 1512
+      },
+      "KMIA/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.14153439153439154,
+        "brier_members": 0.1681185029652105,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.08922120743194796,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.1305039931995164,
+        "n_p_raw": 1512,
+        "brier_station": 0.0844664571796192,
+        "n_p_station": 1512,
+        "brier_nbm": 0.090207102210097,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.1007536218409115,
+        "n_p_climo": 1512
+      },
+      "KMIA/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.164021164021164,
+        "brier_members": 0.21350618106698044,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.2075726827187609,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.1392320315682388,
+        "n_p_raw": 1512,
+        "brier_station": 0.1262921272313061,
+        "n_p_station": 1512,
+        "brier_nbm": 0.15366009711658582,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.12806188362970117,
+        "n_p_climo": 1512
+      },
+      "KMSP/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.15079365079365079,
+        "brier_members": 0.13242647049943027,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.13422456163486457,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.12692013080208822,
+        "n_p_raw": 1512,
+        "brier_station": 0.12268795278173703,
+        "n_p_station": 1512,
+        "brier_nbm": 0.12387952994583111,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13015642637941852,
+        "n_p_climo": 1512
+      },
+      "KMSP/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.15145502645502645,
+        "brier_members": 0.13569950437948156,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.13518644362657403,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.12253291444015292,
+        "n_p_raw": 1512,
+        "brier_station": 0.11564547749225892,
+        "n_p_station": 1512,
+        "brier_nbm": 0.12326047166648295,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13189312588954244,
+        "n_p_climo": 1512
+      },
+      "KNYC/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.15873015873015872,
+        "brier_members": 0.1528379263744461,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.15184057470653112,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.1271223605508349,
+        "n_p_raw": 1512,
+        "brier_station": 0.12364517308325547,
+        "n_p_station": 1512,
+        "brier_nbm": 0.12390626527134774,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13215462822646404,
+        "n_p_climo": 1512
+      },
+      "KNYC/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.1626984126984127,
+        "brier_members": 0.16966407712516565,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.16845742344551642,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.13649354819398232,
+        "n_p_raw": 1512,
+        "brier_station": 0.12329124262623051,
+        "n_p_station": 1512,
+        "brier_nbm": 0.1251633804563492,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13188878858782796,
+        "n_p_climo": 1512
+      },
+      "KPHL/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.1455026455026455,
+        "brier_members": 0.11988402076476629,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.12074948302199832,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.12703326882066177,
+        "n_p_raw": 1512,
+        "brier_station": 0.11136680116746277,
+        "n_p_station": 1512,
+        "brier_nbm": 0.11297290556172314,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.12308757350919833,
+        "n_p_climo": 1512
+      },
+      "KPHL/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.1593915343915344,
+        "brier_members": 0.15331619924016346,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.14247759180626604,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.13203114494356005,
+        "n_p_raw": 1512,
+        "brier_station": 0.12248380298506754,
+        "n_p_station": 1512,
+        "brier_nbm": 0.13795004868459726,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.13614231537435184,
+        "n_p_climo": 1512
+      },
+      "KPHX/temp_max": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.12380952380952381,
+        "brier_members": 0.11955942334241443,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.10206899453945054,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.11722957145359064,
+        "n_p_raw": 1470,
+        "brier_station": 0.09145926048536868,
+        "n_p_station": 1470,
+        "brier_nbm": 0.09475775724054503,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.10887174425295502,
+        "n_p_climo": 1470
+      },
+      "KPHX/temp_min": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.14829931972789115,
+        "brier_members": 0.12543296647658492,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.12590168813252794,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.12409405741183811,
+        "n_p_raw": 1470,
+        "brier_station": 0.11947499097812213,
+        "n_p_station": 1470,
+        "brier_nbm": 0.12564378261444883,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.12886293208994398,
+        "n_p_climo": 1470
+      },
+      "KSAT/temp_max": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.16071428571428573,
+        "brier_members": 0.12232040107342824,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.12271189007134513,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.10697755338462872,
+        "n_p_raw": 1512,
+        "brier_station": 0.10978338063783082,
+        "n_p_station": 1512,
+        "brier_nbm": 0.11779425475823045,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.12849363594475824,
+        "n_p_climo": 1512
+      },
+      "KSAT/temp_min": {
+        "n_bins": 1512,
+        "n_dates": 36,
+        "base_rate": 0.16666666666666666,
+        "brier_members": 0.1824140727906379,
+        "n_p_members": 1512,
+        "brier_members_bias": 0.18267588121272624,
+        "n_p_members_bias": 1512,
+        "brier_raw": 0.11160998592050635,
+        "n_p_raw": 1512,
+        "brier_station": 0.11971547120661997,
+        "n_p_station": 1512,
+        "brier_nbm": 0.12541304161614494,
+        "n_p_nbm": 1512,
+        "brier_climo": 0.11961251336699572,
+        "n_p_climo": 1512
+      },
+      "KSEA/temp_max": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.14217687074829932,
+        "brier_members": 0.12292660036792075,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.12763205088612517,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.12264391640153867,
+        "n_p_raw": 1470,
+        "brier_station": 0.11451582768632491,
+        "n_p_station": 1470,
+        "brier_nbm": 0.11671065359774863,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.1232752351337949,
+        "n_p_climo": 1470
+      },
+      "KSEA/temp_min": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.16666666666666666,
+        "brier_members": 0.14831664689793456,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.12015559903464808,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.10712875009270356,
+        "n_p_raw": 1470,
+        "brier_station": 0.11618127845613302,
+        "n_p_station": 1470,
+        "brier_nbm": 0.12207709124622071,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.130238504033548,
+        "n_p_climo": 1470
+      },
+      "KSFO/temp_max": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.15034013605442176,
+        "brier_members": 0.17581442208633868,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.1756534698445466,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.1257525683515927,
+        "n_p_raw": 1470,
+        "brier_station": 0.12588031626006405,
+        "n_p_station": 1470,
+        "brier_nbm": 0.12455544087773998,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.12854642091140075,
+        "n_p_climo": 1470
+      },
+      "KSFO/temp_min": {
+        "n_bins": 1470,
+        "n_dates": 35,
+        "base_rate": 0.16258503401360544,
+        "brier_members": 0.15635283109487352,
+        "n_p_members": 1470,
+        "brier_members_bias": 0.16546159965174168,
+        "n_p_members_bias": 1470,
+        "brier_raw": 0.12068519475354901,
+        "n_p_raw": 1470,
+        "brier_station": 0.12307184781147046,
+        "n_p_station": 1470,
+        "brier_nbm": 0.12629010180461075,
+        "n_p_nbm": 1470,
+        "brier_climo": 0.11220981169769469,
+        "n_p_climo": 1470
+      }
+    }
+  },
+  "market": {
+    "all": {
+      "all": {
+        "n_bins": 1276,
+        "n_dates": 15,
+        "base_rate": 0.195141065830721,
+        "brier_members": 0.18381482579062483,
+        "n_p_members": 1276,
+        "brier_raw": 0.14494503509866144,
+        "n_p_raw": 1204,
+        "brier_nbm": 0.13236829283943854,
+        "n_p_nbm": 1276,
+        "brier_market": 0.11791632053291537,
+        "n_p_market": 1276
+      }
+    },
+    "by_lead": {
+      "1": {
+        "n_bins": 1276,
+        "n_dates": 15,
+        "base_rate": 0.195141065830721,
+        "brier_members": 0.18381482579062483,
+        "n_p_members": 1276,
+        "brier_raw": 0.14494503509866144,
+        "n_p_raw": 1204,
+        "brier_nbm": 0.13236829283943854,
+        "n_p_nbm": 1276,
+        "brier_market": 0.11791632053291537,
+        "n_p_market": 1276
+      }
+    }
+  },
+  "sign_tests": {
+    "members_vs_raw": {
+      "a": "p_members",
+      "b": "p_raw",
+      "dates": 36,
+      "a_wins": 0,
+      "p_one_sided": 1.0
+    },
+    "members_vs_station": {
+      "a": "p_members",
+      "b": "p_station",
+      "dates": 36,
+      "a_wins": 0,
+      "p_one_sided": 1.0
+    },
+    "members_bias_vs_station": {
+      "a": "p_members_bias",
+      "b": "p_station",
+      "dates": 36,
+      "a_wins": 0,
+      "p_one_sided": 1.0
+    },
+    "members_vs_nbm": {
+      "a": "p_members",
+      "b": "p_nbm",
+      "dates": 36,
+      "a_wins": 0,
+      "p_one_sided": 1.0
+    },
+    "members_bias_vs_nbm": {
+      "a": "p_members_bias",
+      "b": "p_nbm",
+      "dates": 36,
+      "a_wins": 0,
+      "p_one_sided": 1.0
+    },
+    "members_vs_market": {
+      "a": "p_members",
+      "b": "p_market",
+      "dates": 15,
+      "a_wins": 0,
+      "p_one_sided": 1.0
+    },
+    "members_vs_raw_market_rows": {
+      "a": "p_members",
+      "b": "p_raw",
+      "dates": 15,
+      "a_wins": 1,
+      "p_one_sided": 0.999969482421875
+    }
+  }
+}

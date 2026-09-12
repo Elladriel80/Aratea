@@ -6,5 +6,6 @@ This package holds the live forecast vendors used as model inputs.
 
 NWS NDFD : `nws_ndfd.py`. NBM station text (NBP/NBS/NBE) : `nbm_text.py`,
 `nbm_client.py`, `nbm_prob.py`. NBM is evaluated offline (piste A2) and
-is not the live champion.
+is not the live champion. GEFS members from NOAA S3 : `gefs_s3.py`
+(piste A3, offline only).
 """

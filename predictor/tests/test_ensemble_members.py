@@ -56,6 +56,7 @@ def test_predictor_probabilities_partition_and_follow_members(monkeypatch):
     monkeypatch.delenv("ARATEA_ENS_STATION_BIAS", raising=False)
     target = date.today() + timedelta(days=1)
     pred = EnsembleMembersPredictor(members_client=_FakeMembers(target, 76.0, 3.0), kernel_f=1.0)
+    pred.p_mode = "fraction"
     p_center = pred.predict(_contract(target, 76, 77))
     p_far = pred.predict(_contract(target, 90, 91))
     assert p_center.method == "ensemble_members"
