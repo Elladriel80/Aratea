@@ -23,6 +23,7 @@ import sys
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from typing import Optional
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -251,7 +252,9 @@ def score_vs_cli(extremes: dict, cli: dict, lead: int) -> list[dict]:
     return rows
 
 
-def score_market(extremes: dict, cli: dict, lead: int) -> tuple[list[dict], dict]:
+def score_market(extremes: dict, cli: dict, lead: int,
+                 start: Optional[date] = None,
+                 end: Optional[date] = None) -> tuple[list[dict], dict]:
     seen: dict[tuple, dict] = {}
     skips: dict[str, int] = defaultdict(int)
     for f in sorted(glob.glob(str(ROOT / "data" / "predictions" / "forward_*.json"))):
@@ -266,6 +269,10 @@ def score_market(extremes: dict, cli: dict, lead: int) -> tuple[list[dict], dict
             ens = (r.get("predictions") or {}).get("ensemble") or {}
             pm = (ens.get("inputs") or {}).get("per_model_value") or {}
             target = date.fromisoformat(r["target_date"])
+            if start is not None and target < start:
+                continue
+            if end is not None and target > end:
+                continue
             snap = datetime.strptime(r["snapshot_at"], "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc)
             led = (target - snap.date()).days
             if led != lead:
@@ -399,8 +406,8 @@ def main() -> int:
 
     j0_cli = score_vs_cli(hist_ext, cli, lead=0)
     j1_cli = score_vs_cli(prev_ext, cli, lead=1)
-    j0_mkt, j0_skips = score_market(hist_ext, cli, lead=0)
-    j1_mkt, j1_skips = score_market(prev_ext, cli, lead=1)
+    j0_mkt, j0_skips = score_market(hist_ext, cli, lead=0, start=start, end=end)
+    j1_mkt, j1_skips = score_market(prev_ext, cli, lead=1, start=start, end=end)
 
     fields_cli = ("p_wn",)
     fields_mkt = ("p_wn", "p_raw", "p_market")

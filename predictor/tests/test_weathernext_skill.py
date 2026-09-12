@@ -1,6 +1,7 @@
 """WeatherNext : sondes, J0 vs J-1, aucun score inventé."""
 from __future__ import annotations
 
+import json
 from datetime import date, datetime, timedelta, timezone
 
 from src.truth.synthetic_bins import Bin, prob_in_bin_members
@@ -106,6 +107,32 @@ def test_verdict_blocked_even_if_wn2_has_a_few_days():
     assert ev.verdict_text({"blocked": False}, j0_dates=3, j1_dates=0) == (
         "pas encore mesurable (bloquée)"
     )
+
+
+def test_score_market_ignores_targets_outside_window(tmp_path, monkeypatch):
+    monkeypatch.setattr(ev, "ROOT", tmp_path)
+    pred = tmp_path / "data" / "predictions"
+    pred.mkdir(parents=True)
+    rec = {
+        "ticker": "KXHIGHTATL-26SEP01-T80",
+        "target_date": "2026-09-01",
+        "variable": "temp_max",
+        "location_key": "ATLANTA",
+        "lower": 80, "upper": 81,
+        "yes_bid": 0.1, "yes_ask": 0.2, "yes_mid": 0.15,
+        "snapshot_at": "20260901T180000Z",
+        "predictions": {"ensemble": {"inputs": {"per_model_value": {"a": 80.0, "b": 81.0}}}},
+    }
+    (pred / "forward_20260901T180000Z.json").write_text(
+        json.dumps({"records": [rec]}), encoding="utf-8"
+    )
+    extremes = {("KATL", "temp_max", date(2026, 9, 1), 0): [80.0] * 12}
+    cli = {("KATL", date(2026, 9, 1)): {"high": 80, "low": 60}}
+    rows, skips = ev.score_market(
+        extremes, cli, lead=0, start=date(2026, 9, 8), end=date(2026, 9, 12)
+    )
+    assert rows == []
+    assert skips == {}
 
 
 def test_gcp_env_status_does_not_leak_secret_values(monkeypatch):
