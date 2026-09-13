@@ -68,21 +68,27 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
         "",
         f"Gate : {MIN_SEASONS_FOR_GATE} saisons et BSS > {BSS_GATE}.",
         "",
-        "## Les trois A/B",
+        "## Les trois A/B (par région, jamais poolé)",
         "",
-        "| A/B | Vérité | N saisons | Brier SEAS5 | Brier climato | BSS | Verdict |",
+        "Headline C = MED seulement. On ne mélange pas MED et India.",
+        "",
+        "| A/B | Région | N | Brier prévision | Brier climato | BSS | Verdict |",
         "|---|---|---:|---:|---:|---:|---|",
     ]
     for key in ("A", "B", "C"):
         block = payload["ab"][key]
         spec = AB_SPECS[key]
-        lines.append(
-            f"| {key} {spec['title']} | {spec['truth_name']} | "
-            f"{block.get('n_seasons_scored')} | "
-            f"{_fmt(block.get('brier_forecast'))} | "
-            f"{_fmt(block.get('brier_climato'))} | "
-            f"{_fmt(block.get('bss'))} | {block.get('verdict')} |"
-        )
+        headline = spec.get("headline_region")
+        for region, label in spec["region_labels"].items():
+            row = (block.get("by_region") or {}).get(region) or {}
+            name = f"{label} (headline)" if headline == region else label
+            lines.append(
+                f"| {key} {spec['truth_name']} | {name} | "
+                f"{row.get('n', 0)} | "
+                f"{_fmt(row.get('brier_forecast'))} | "
+                f"{_fmt(row.get('brier_climato'))} | "
+                f"{_fmt(row.get('bss'))} | {row.get('verdict', 'bloquée')} |"
+            )
     seen_notes: list[str] = []
     for key in ("A", "B", "C"):
         note = payload["ab"][key].get("blocker")
@@ -101,7 +107,7 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
             row = (block.get("by_region") or {}).get(region) or {}
             lines.append(
                 f"- {label} (`{region}`) : n={row.get('n', 0)} "
-                f"BSS {_fmt(row.get('bss'))} → {row.get('verdict', 'bloquée')}"
+                f"BSS {_fmt(row.get('bss'))} : {row.get('verdict', 'bloquée')}"
             )
         lines.append("")
     lines += [

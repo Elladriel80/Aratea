@@ -189,6 +189,28 @@ def test_pairs_n_ten_bss_not_above_gate_does_not_help(tmp_path):
     assert payload["ab"]["A"]["verdict"] == "testée, ça n'aide pas"
 
 
+def test_chirps_headline_is_med_not_pooled(tmp_path):
+    data = tmp_path / "data"
+    fc = data / "forecasts" / "seas5"
+    header = "region,year,season,p_forecast_dry,event"
+    rows = _pairs_rows(12, True, "med") + _pairs_rows(12, False, "india")
+    _write_csv(fc / "pairs_chirps.csv", header, rows)
+    payload = score_all(data_dir=data, forecast_dir=fc, include_shared=False)
+    c = payload["ab"]["C"]
+    assert c["headline_region"] == "med"
+    assert c["pooled"] is False
+    assert c["n_seasons_scored"] == 12
+    assert c["by_region"]["med"]["n"] == 12
+    assert c["by_region"]["india"]["n"] == 12
+    assert c["by_region"]["med"]["verdict"] == "testée, ça aide"
+    assert c["by_region"]["india"]["verdict"] == "testée, ça n'aide pas"
+    assert c["verdict"] == "testée, ça aide"
+    assert c["bss"] == c["by_region"]["med"]["bss"]
+    assert payload["verdicts"][FORECAST_NAME] == "testée, ça aide (CHIRPS MED seulement)"
+    assert payload["verdicts"]["Sécheresse Méditerranée"] == "testée, ça aide"
+    assert payload["verdicts"]["Sécheresse Inde"] == "testée, ça n'aide pas"
+
+
 def test_regional_monthly_plus_usdm_truth_scores(tmp_path):
     data = tmp_path / "data"
     fc = data / "forecasts" / "seas5"

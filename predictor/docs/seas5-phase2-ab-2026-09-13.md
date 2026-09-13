@@ -1,4 +1,4 @@
-# SEAS5 : trois A/B, en attendant les fichiers
+# SEAS5 : trois A/B mesurés
 
 **Date :** 13 septembre 2026
 **Pour :** le propriétaire (pas un document technique)
@@ -10,10 +10,10 @@ Trois tests séparés, chacun contre la climato :
 - B) SEAS5 contre SPEI-6 (Méditerranée, Inde, US)
 - C) SEAS5 contre CHIRPS pluie (Méditerranée, Inde)
 
-Cette note dit seulement ce qui est prêt. Le site public n'a pas
+Cette note dit ce qui a été mesuré. Le site public n'a pas
 été changé. Le modèle Kalshi en ligne n'a pas été changé. Aucun
 pari avec de l'argent réel. Aucun chiffre n'a été inventé. On n'a
-pas appelé CDS. La clé Copernicus reste sur la machine du PM.
+pas rappelé CDS. La clé Copernicus reste sur la machine du PM.
 
 ## Pourquoi on n'appelle pas CDS
 
@@ -114,26 +114,49 @@ erreur vaut 0, le BSS n'existe pas. On l'écrit n/d.
 Les régions ne sont pas mélangées. Midwest et Southwest restent
 deux comptes.
 
-## Ce que dit le run d'aujourd'hui
+## Résultats
 
-Pas de fichier à
-`/workspace/cds-test/seas5-monthly/seas5_tp_monthly.csv`,
-ni de copie sous `data/forecasts/seas5/`. Donc les trois A/B
-sont **bloquées**. Zéro score inventé. N = 0 partout. BSS n/d.
+Mesure faite sur la boîte partagée, avec le CSV du PM. CDS n'a
+pas été rappelé. Aucun chiffre n'a été inventé. Headline C =
+**MED seulement**. On ne mélange pas MED et India.
 
-SEAS5 : bloquée.
-Sécheresse US : bloquée.
-Sécheresse Méditerranée / Inde : cible Tier 1 (pas encore testée).
+| A/B | Région | N | Brier prévision | Brier climato | BSS | Verdict |
+|---|---|---:|---:|---:|---:|---|
+| A USDM | Midwest | 97 | 0.5464 | 0.0306 | -16.8565 | testée, ça n'aide pas |
+| A USDM | Southwest | 97 | 0.5052 | 0.2546 | -0.9844 | testée, ça n'aide pas |
+| B SPEI-6 | MED | 123 | 0.5285 | 0.0 | n/d | bloquée |
+| B SPEI-6 | India | 123 | 0.5122 | 0.0 | n/d | bloquée |
+| B SPEI-6 | US | 0 | n/d | n/d | n/d | bloquée (pas de région forecast us) |
+| C CHIRPS | MED (headline) | 125 | 0.24 | 0.254 | 0.0552 | testée, ça aide |
+| C CHIRPS | India | 125 | 0.272 | 0.254 | -0.0707 | testée, ça n'aide pas |
+
+Notes du PM :
+
+- A : ce n'est pas un bug de clé. La règle publiée dit trop souvent
+  « sécheresse » face à une climato rare (Midwest, base_rate 0,03).
+- B : le seuil SPEI-6 ≤ -1,5 est trop rare après moyenne spatiale.
+  Pas de BSS inventé. Pas de région forecast `us` dans le CSV PM.
+- C : ça aide **MED seulement** (juste au-dessus de 0,05). India :
+  ça n'aide pas. On ne titre pas un C poolé.
+- Champion Kalshi inchangé. Pas de promo en ligne.
+- Un nouvel essai SPEI seulement avec une autre règle déjà
+  publiée, pas un BSS bricolé.
+
+SEAS5 : testée, ça aide (CHIRPS MED seulement).
+Sécheresse US : testée, ça n'aide pas.
+Sécheresse Méditerranée : testée, ça aide (CHIRPS MED).
+Sécheresse Inde : testée, ça n'aide pas (CHIRPS India).
 
 Les vérités US Drought Monitor, SPEI et CHIRPS pluie restent
-celles déjà comptées.
+celles déjà comptées (inventaire).
 
 ## Décision
 
 On ne change pas le modèle Kalshi en ligne.
 
-Pourquoi : ce n'est pas un test Kalshi. C'est le tuyau SEAS5
-Phase 2. Sans fichier du PM, on ne conclut pas.
+Pourquoi : ce n'est pas un test Kalshi. C'est le score SEAS5
+Phase 2. C n'aide que MED. A n'aide pas. B est bloquée. Pas
+de promo.
 
 ## Comment relancer
 

@@ -63,6 +63,8 @@ AB_SPECS: dict[str, dict[str, Any]] = {
             "med": "MED",
             "india": "India",
         },
+        # Headline is MED only. Never pool MED + India for BSS / N / verdict.
+        "headline_region": "med",
     },
 }
 
@@ -127,7 +129,13 @@ def region_verdict(n: int, bss: Optional[float]) -> str:
     return "testée, ça n'aide pas"
 
 
-def ab_verdict(region_blocks: dict[str, dict[str, Any]]) -> str:
+def ab_verdict(
+    region_blocks: dict[str, dict[str, Any]],
+    headline_region: Optional[str] = None,
+) -> str:
+    if headline_region:
+        block = region_blocks.get(headline_region) or {}
+        return region_verdict(int(block.get("n") or 0), block.get("bss"))
     scored = [b for b in region_blocks.values() if b.get("n", 0) > 0 and not b.get("blocker")]
     if not scored:
         return "bloquée"
@@ -293,31 +301,37 @@ def _blocker(message: str, regions: tuple[str, ...]) -> dict[str, Any]:
 
 
 def _finish_ab(spec: dict[str, Any], by_region: dict[str, dict[str, Any]], extra: dict[str, Any]) -> dict[str, Any]:
-    scored_n = sum(int(b.get("n") or 0) for b in by_region.values())
+    headline_key = spec.get("headline_region")
     headline = None
-    for region in spec["regions"]:
-        block = by_region.get(region) or {}
-        if block.get("n"):
-            headline = block
-            break
-    verdict = ab_verdict(by_region)
+    if headline_key:
+        headline = by_region.get(headline_key) or {}
+    else:
+        for region in spec["regions"]:
+            block = by_region.get(region) or {}
+            if block.get("n"):
+                headline = block
+                break
+    headline = headline or {}
+    verdict = ab_verdict(by_region, headline_region=headline_key)
     payload = {
         "id": spec["id"],
         "title": spec["title"],
         "forecast_name": FORECAST_NAME,
         "truth_name": spec["truth_name"],
         "event": spec["event_label"],
-        "blocker": None,
-        "n_seasons_scored": scored_n,
-        "brier_forecast": (headline or {}).get("brier_forecast"),
-        "brier_climato": (headline or {}).get("brier_climato"),
-        "bss": (headline or {}).get("bss"),
-        "gate_n_ge_10": any(b.get("gate_n_ge_10") for b in by_region.values()),
-        "gate_bss_gt_0_05": any(b.get("gate_bss_gt_0_05") for b in by_region.values()),
+        "blocker": headline.get("blocker"),
+        "headline_region": headline_key,
+        "n_seasons_scored": int(headline.get("n") or 0),
+        "brier_forecast": headline.get("brier_forecast"),
+        "brier_climato": headline.get("brier_climato"),
+        "bss": headline.get("bss"),
+        "gate_n_ge_10": bool(headline.get("gate_n_ge_10")),
+        "gate_bss_gt_0_05": bool(headline.get("gate_bss_gt_0_05")),
         "verdict": verdict,
         "by_region": by_region,
         "champion_switched": False,
         "cds_called": False,
+        "pooled": False,
     }
     payload.update(extra)
     return payload
@@ -553,21 +567,28 @@ def score_ab_c(
     )
 
 
-def _target_verdict(primary: str, secondary: str) -> str:
-    vals = {primary, secondary}
-    if "testée, ça aide" in vals:
-        return "testée, ça aide"
-    if "testée, ça n'aide pas" in vals:
-        return "testée, ça n'aide pas"
+def _region_verdict_or_untested(block: dict[str, Any]) -> str:
+    verdict = block.get("verdict")
+    if verdict in {"testée, ça aide", "testée, ça n'aide pas"}:
+        return verdict
+    if int(block.get("n") or 0) > 0:
+        return "bloquée"
     return "cible Tier 1 (pas encore testée)"
 
 
 def catalogue_verdicts(abs_out: dict[str, dict[str, Any]]) -> dict[str, str]:
+    """C headline is MED only. India and MED are never pooled."""
+    c_regions = abs_out["C"].get("by_region") or {}
+    c_med = c_regions.get("med") or {}
+    c_india = c_regions.get("india") or {}
     seas5 = "bloquée"
-    tested = [abs_out[k]["verdict"] for k in ("A", "B", "C")]
-    if any(v == "testée, ça aide" for v in tested):
+    if c_med.get("verdict") == "testée, ça aide":
+        seas5 = "testée, ça aide (CHIRPS MED seulement)"
+    elif abs_out["A"]["verdict"] == "testée, ça aide":
         seas5 = "testée, ça aide"
-    elif any(v == "testée, ça n'aide pas" for v in tested):
+    elif abs_out["A"]["verdict"] == "testée, ça n'aide pas":
+        seas5 = "testée, ça n'aide pas"
+    elif c_india.get("verdict") == "testée, ça n'aide pas":
         seas5 = "testée, ça n'aide pas"
     return {
         FORECAST_NAME: seas5,
@@ -575,12 +596,8 @@ def catalogue_verdicts(abs_out: dict[str, dict[str, Any]]) -> dict[str, str]:
         "SPEI": "testée, ça aide",
         "CHIRPS pluie": "testée, ça aide",
         "Sécheresse US": abs_out["A"]["verdict"],
-        "Sécheresse Méditerranée": _target_verdict(
-            abs_out["B"]["verdict"], abs_out["C"]["verdict"]
-        ),
-        "Sécheresse Inde": _target_verdict(
-            abs_out["B"]["verdict"], abs_out["C"]["verdict"]
-        ),
+        "Sécheresse Méditerranée": _region_verdict_or_untested(c_med),
+        "Sécheresse Inde": _region_verdict_or_untested(c_india),
         "C3S multi-modèle": "pas encore testée",
         "NMME": "bloquée",
         "Open-Meteo Seasonal": "bloquée",
