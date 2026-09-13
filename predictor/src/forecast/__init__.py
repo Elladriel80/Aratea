@@ -9,4 +9,6 @@ NWS NDFD : `nws_ndfd.py`. NBM station text (NBP/NBS/NBE) : `nbm_text.py`,
 is not the live champion. GEFS members from NOAA S3 : `gefs_s3.py`
 (piste A3, offline only). Same-day station observations (C1) live in
 `src/truth/asos.py` ; remaining-day HRRR hourly is `src/weather/hrrr_hourly.py`.
+SEAS5 Phase 2 A/B (`seas5_offline.py`) is offline only: regional CSV
+dropped by the PM, never cdsapi.
 """

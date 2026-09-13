@@ -1,0 +1,189 @@
+{
+  "forecast_name": "SEAS5",
+  "as_of_mode": "offline",
+  "cds_called": false,
+  "cdsapi_imported": false,
+  "champion_switched": false,
+  "real_money": false,
+  "bss_invented": false,
+  "gate": {
+    "bss_gt": 0.05,
+    "min_seasons": 10
+  },
+  "forecast": {
+    "forecast_name": "SEAS5",
+    "directory": "data/forecasts/seas5",
+    "present": false,
+    "csv_path": null,
+    "pairs": {
+      "usdm": null,
+      "spei": null,
+      "chirps": null
+    },
+    "raw_files": [],
+    "reason": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+    "cds_called": false,
+    "cdsapi_imported": false
+  },
+  "ab": {
+    "A": {
+      "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+      "n_seasons_scored": 0,
+      "bss": null,
+      "brier_forecast": null,
+      "brier_climato": null,
+      "gate_n_ge_10": false,
+      "gate_bss_gt_0_05": false,
+      "verdict": "bloqu\u00e9e",
+      "by_region": {
+        "midwest": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloqu\u00e9e",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+          "seasons": []
+        },
+        "southwest": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloqu\u00e9e",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+          "seasons": []
+        }
+      },
+      "id": "A",
+      "title": "SEAS5 vs climato, v\u00e9rit\u00e9 USDM",
+      "forecast_name": "SEAS5",
+      "truth_name": "US Drought Monitor",
+      "event": "moyenne D2+ cat\u00e9gorielle \u2265 30 % (Phase B \u00a73.2, PR 240)",
+      "champion_switched": false,
+      "cds_called": false
+    },
+    "B": {
+      "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+      "n_seasons_scored": 0,
+      "bss": null,
+      "brier_forecast": null,
+      "brier_climato": null,
+      "gate_n_ge_10": false,
+      "gate_bss_gt_0_05": false,
+      "verdict": "bloqu\u00e9e",
+      "by_region": {
+        "med": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloqu\u00e9e",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+          "seasons": []
+        },
+        "india_mh_ka": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloqu\u00e9e",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+          "seasons": []
+        },
+        "us": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloqu\u00e9e",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+          "seasons": []
+        }
+      },
+      "id": "B",
+      "title": "SEAS5 vs climato, v\u00e9rit\u00e9 SPEI-6",
+      "forecast_name": "SEAS5",
+      "truth_name": "SPEI",
+      "event": "SPEI-6 saisonnier moyen \u2264 -1,5 (WMO / Phase B, PR 243)",
+      "champion_switched": false,
+      "cds_called": false
+    },
+    "C": {
+      "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+      "n_seasons_scored": 0,
+      "bss": null,
+      "brier_forecast": null,
+      "brier_climato": null,
+      "gate_n_ge_10": false,
+      "gate_bss_gt_0_05": false,
+      "verdict": "bloqu\u00e9e",
+      "by_region": {
+        "med": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloqu\u00e9e",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+          "seasons": []
+        },
+        "india_mh_ka": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloqu\u00e9e",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV SEAS5 sous data/forecasts/seas5/. Pas d'appel CDS. Pas de score invent\u00e9. Le PM d\u00e9pose regional_monthly.csv (colonnes region,year,init_month,lead_month,tp_mean_mm).",
+          "seasons": []
+        }
+      },
+      "id": "C",
+      "title": "SEAS5 vs climato, v\u00e9rit\u00e9 CHIRPS",
+      "forecast_name": "SEAS5",
+      "truth_name": "CHIRPS pluie",
+      "event": "pluie saisonni\u00e8re sous la moyenne climato leave-one-out du m\u00eame type de saison (pas un seuil de s\u00e9cheresse nomm\u00e9)",
+      "champion_switched": false,
+      "cds_called": false
+    }
+  },
+  "verdicts": {
+    "SEAS5": "bloqu\u00e9e",
+    "US Drought Monitor": "test\u00e9e, \u00e7a aide",
+    "SPEI": "test\u00e9e, \u00e7a aide",
+    "CHIRPS pluie": "test\u00e9e, \u00e7a aide",
+    "S\u00e9cheresse US": "bloqu\u00e9e",
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": "cible Tier 1 (pas encore test\u00e9e)",
+    "S\u00e9cheresse Inde": "cible Tier 1 (pas encore test\u00e9e)",
+    "C3S multi-mod\u00e8le": "pas encore test\u00e9e",
+    "NMME": "bloqu\u00e9e",
+    "Open-Meteo Seasonal": "bloqu\u00e9e"
+  },
+  "as_of": "2026-09-13T09:29:39Z",
+  "paths": {
+    "forecast_dir": "data/forecasts/seas5",
+    "data_dir": "data",
+    "out_dir": "data/truth/seas5_ab"
+  }
+}
