@@ -23,21 +23,38 @@ lui, puis dépose un fichier déjà réduit.
 
 ## Où poser les fichiers
 
-Dossier des prévisions :
+Le script lit **d'abord** le fichier partagé du PM :
 
-`predictor/data/forecasts/seas5/`
+`/workspace/cds-test/seas5-monthly/seas5_tp_monthly.csv`
 
-Fichier attendu : `regional_monthly.csv`
+S'il n'est pas là, copie locale acceptée :
 
-Colonnes exactes, dans cet ordre de lecture :
+`predictor/data/forecasts/seas5/seas5_tp_monthly.csv`
+
+(ou `regional_monthly.csv` dans le même dossier)
+
+Des NetCDF à côté du CSV sont ignorés. On ne les décode pas.
+
+Colonnes exactes :
 
 | Colonne | Sens |
 |---|---|
-| region | `midwest`, `southwest`, `med`, `india_mh_ka`, `us` |
+| region | labels PM : `MED`, `Midwest`, `Southwest`, `India` |
 | year | année de l'init (la date de départ SEAS5) |
 | init_month | mois d'init, 1 à 12 |
 | lead_month | lead C3S, 1 = le mois d'init |
 | tp_mean_mm | pluie moyenne d'ensemble, mm par mois |
+
+## Noms de régions (labels PM)
+
+| Label PM | Slug interne | Zone notée |
+|---|---|---|
+| MED | med | Méditerranée (IPCC MED) |
+| Midwest | midwest | USDA Midwest |
+| Southwest | southwest | USDA Southwest |
+| India | india | Maharashtra + Karnataka |
+
+On accepte aussi Méditerranée, Inde, india_mh_ka. Même chose.
 
 Colonnes en plus, si le PM les a : `tp_anom_mm`, `valid_year`,
 `valid_month`, `ensemble_size`, `source` (si remplie : SEAS5).
@@ -81,7 +98,7 @@ garde les polygones déjà publiés.
 | Méditerranée | 45 | -10 | 30 | 40 |
 | Midwest | 49,5 | -97,5 | 36,0 | -80,5 |
 | Southwest | 42,0 | -124,5 | 31,3 | -103,0 |
-| Inde MH+KA | 22,1 | 72,5 | 11,5 | 81,0 |
+| India (MH+KA) | 22,1 | 72,5 | 11,5 | 81,0 |
 
 ## La règle avant de conclure
 
@@ -99,8 +116,10 @@ deux comptes.
 
 ## Ce que dit le run d'aujourd'hui
 
-Aucun CSV SEAS5 dans le dossier. Donc les trois A/B sont
-**bloquées**. Zéro score inventé. N = 0 partout.
+Pas de fichier à
+`/workspace/cds-test/seas5-monthly/seas5_tp_monthly.csv`,
+ni de copie sous `data/forecasts/seas5/`. Donc les trois A/B
+sont **bloquées**. Zéro score inventé. N = 0 partout. BSS n/d.
 
 SEAS5 : bloquée.
 Sécheresse US : bloquée.

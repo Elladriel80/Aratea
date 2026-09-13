@@ -21,6 +21,11 @@ FORECAST_NAME = "SEAS5"
 SEAS5_DIR = DATA_DIR / "forecasts" / "seas5"
 SEAS5_OUT = DATA_DIR / "truth" / "seas5_ab"
 
+# Authoritative PM drop on the shared box. Agents share this filesystem.
+# Never call CDS to fill it.
+SHARED_FORECAST_DIR = Path("/workspace/cds-test/seas5-monthly")
+SHARED_FORECAST_CSV = SHARED_FORECAST_DIR / "seas5_tp_monthly.csv"
+
 # C3S / CDS area boxes the PM uses to download. Scoring still uses the
 # published polygons from PRs 240 / 243 / 244, not these rectangles.
 # Order is CDS [North, West, South, East].
@@ -40,8 +45,8 @@ DOWNLOAD_ENVELOPES: dict[str, dict[str, Any]] = {
         "cds_area": [42.0, -124.5, 31.3, -103.0],
         "mask": "USDA Climate Hub Southwest (PR 240 / 243)",
     },
-    "india_mh_ka": {
-        "label": "Inde Maharashtra+Karnataka",
+    "india": {
+        "label": "India",
         "cds_area": [22.1, 72.5, 11.5, 81.0],
         "mask": "Maharashtra + Karnataka Natural Earth (PR 243 / 244)",
     },
@@ -51,6 +56,7 @@ FORECAST_REQUIRED = ("region", "year", "init_month", "lead_month", "tp_mean_mm")
 FORECAST_OPTIONAL = ("tp_anom_mm", "valid_year", "valid_month", "ensemble_size", "source")
 
 FORECAST_FILENAMES = (
+    "seas5_tp_monthly.csv",
     "regional_monthly.csv",
     "seas5_regional_monthly.csv",
     "seas5.csv",
@@ -62,6 +68,8 @@ PAIRS_FILENAMES = {
     "chirps": "pairs_chirps.csv",
 }
 
+# PM labels (authoritative): MED / Midwest / Southwest / India.
+# Internal slugs stay lowercase: med / midwest / southwest / india.
 REGION_ALIASES = {
     "midwest": "midwest",
     "us_midwest": "midwest",
@@ -74,26 +82,36 @@ REGION_ALIASES = {
     "méditerranée": "med",
     "mediterranean": "med",
     "ipcc_med": "med",
-    "india_mh_ka": "india_mh_ka",
-    "inde": "india_mh_ka",
-    "india": "india_mh_ka",
-    "mh_ka": "india_mh_ka",
-    "maharashtra_karnataka": "india_mh_ka",
-    "maharashtra+karnataka": "india_mh_ka",
+    "india": "india",
+    "inde": "india",
+    "india_mh_ka": "india",
+    "mh_ka": "india",
+    "maharashtra_karnataka": "india",
+    "maharashtra+karnataka": "india",
     "us": "us",
     "usa": "us",
     "secheresse_us": "us",
     "sécheresse us": "us",
 }
 
+PM_REGION_LABELS = {
+    "MED": "med",
+    "Midwest": "midwest",
+    "Southwest": "southwest",
+    "India": "india",
+}
+
 RAW_SUFFIXES = (".nc", ".nc4", ".grib", ".grb", ".grb2", ".zip")
 
-_BLOCKED_NO_FORECAST = (
-    "Aucun CSV SEAS5 sous data/forecasts/seas5/. "
-    "Pas d'appel CDS. Pas de score inventé. "
-    "Le PM dépose regional_monthly.csv (colonnes "
-    "region,year,init_month,lead_month,tp_mean_mm)."
-)
+def _blocked_no_forecast_message() -> str:
+    return (
+        "Aucun CSV SEAS5. Cherché d'abord "
+        f"{SHARED_FORECAST_CSV}, puis data/forecasts/seas5/. "
+        "Pas d'appel CDS. Pas de score inventé. "
+        "Le PM dépose seas5_tp_monthly.csv "
+        "(colonnes region,year,init_month,lead_month,tp_mean_mm ; "
+        "régions MED / Midwest / Southwest / India)."
+    )
 
 
 def canonical_region(raw: str) -> str:
@@ -160,12 +178,38 @@ def list_raw_forecast_files(directory: Path = SEAS5_DIR) -> list[Path]:
     )
 
 
-def find_forecast_csv(directory: Path = SEAS5_DIR) -> Optional[Path]:
+def _usable_file(path: Path) -> bool:
+    return path.is_file() and path.stat().st_size > 0
+
+
+def candidate_forecast_dirs(
+    directory: Optional[Path] = None,
+    include_shared: bool = True,
+) -> list[Path]:
+    """Shared PM folder first, then an explicit dir, then the repo copy."""
+    out: list[Path] = []
+    if include_shared:
+        out.append(SHARED_FORECAST_DIR)
+    if directory is not None:
+        out.append(Path(directory))
+    out.append(SEAS5_DIR)
+    seen: set[Path] = set()
+    unique: list[Path] = []
+    for path in out:
+        key = path.resolve() if path.exists() else path
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(path)
+    return unique
+
+
+def _find_csv_in_dir(directory: Path) -> Optional[Path]:
     if not directory.is_dir():
         return None
     for name in FORECAST_FILENAMES:
         path = directory / name
-        if path.is_file() and path.stat().st_size > 0:
+        if _usable_file(path):
             return path
     extras = []
     for path in sorted(directory.glob("*.csv")):
@@ -177,13 +221,28 @@ def find_forecast_csv(directory: Path = SEAS5_DIR) -> Optional[Path]:
             continue
         extras.append(path)
     for path in extras:
-        if path.stat().st_size == 0:
+        if not _usable_file(path):
             continue
         with _open_text(path) as handle:
             reader = csv.DictReader(handle)
             have = {((name or "").strip().lower()) for name in (reader.fieldnames or [])}
             if set(FORECAST_REQUIRED) <= have:
                 return path
+    return None
+
+
+def find_forecast_csv(
+    directory: Optional[Path] = None,
+    include_shared: bool = True,
+) -> Optional[Path]:
+    """Prefer the PM shared CSV, then a local seas5 folder copy."""
+    if include_shared and _usable_file(SHARED_FORECAST_CSV):
+        return SHARED_FORECAST_CSV
+    extra = Path(directory) if directory is not None else None
+    for folder in candidate_forecast_dirs(extra, include_shared=include_shared):
+        found = _find_csv_in_dir(folder)
+        if found is not None:
+            return found
     return None
 
 
@@ -197,11 +256,25 @@ def find_pairs_csv(truth: str, directory: Path = SEAS5_DIR) -> Optional[Path]:
     return None
 
 
-def forecast_status(directory: Path = SEAS5_DIR) -> dict[str, Any]:
+def forecast_status(
+    directory: Optional[Path] = None,
+    include_shared: bool = True,
+) -> dict[str, Any]:
     """What is on disk. Never invents a forecast row."""
-    csv_path = find_forecast_csv(directory)
-    pairs = {key: find_pairs_csv(key, directory) for key in PAIRS_FILENAMES}
-    raw = list_raw_forecast_files(directory)
+    extra = Path(directory) if directory is not None else SEAS5_DIR
+    csv_path = find_forecast_csv(extra, include_shared=include_shared)
+    dirs = candidate_forecast_dirs(extra, include_shared=include_shared)
+    pairs: dict[str, Optional[Path]] = {}
+    for key in PAIRS_FILENAMES:
+        found = None
+        for folder in dirs:
+            found = find_pairs_csv(key, folder)
+            if found is not None:
+                break
+        pairs[key] = found
+    raw: list[Path] = []
+    for folder in dirs:
+        raw.extend(list_raw_forecast_files(folder))
     present = csv_path is not None or any(pairs.values())
     reason = None
     if not present:
@@ -214,10 +287,11 @@ def forecast_status(directory: Path = SEAS5_DIR) -> dict[str, Any]:
                 "Pas de score inventé."
             )
         else:
-            reason = _BLOCKED_NO_FORECAST
+            reason = _blocked_no_forecast_message()
     return {
         "forecast_name": FORECAST_NAME,
-        "directory": str(directory),
+        "directory": str(extra),
+        "searched": [str(SHARED_FORECAST_CSV)] + [str(d) for d in dirs],
         "present": present,
         "csv_path": str(csv_path) if csv_path else None,
         "pairs": {k: (str(v) if v else None) for k, v in pairs.items()},
@@ -225,6 +299,7 @@ def forecast_status(directory: Path = SEAS5_DIR) -> dict[str, Any]:
         "reason": reason,
         "cds_called": False,
         "cdsapi_imported": False,
+        "pm_labels": list(PM_REGION_LABELS),
     }
 
 

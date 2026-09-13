@@ -7,8 +7,9 @@ from pathlib import Path
 import pytest
 
 from src.forecast.seas5_offline import (
-    DOWNLOAD_ENVELOPES, FORECAST_NAME, FORECAST_REQUIRED, REGION_ALIASES,
-    canonical_region, collapse_shortest_lead, forecast_status, load_forecast_csv,
+    DOWNLOAD_ENVELOPES, FORECAST_NAME, FORECAST_REQUIRED, PM_REGION_LABELS,
+    REGION_ALIASES, SHARED_FORECAST_CSV, canonical_region,
+    collapse_shortest_lead, find_forecast_csv, forecast_status, load_forecast_csv,
     load_pairs_csv, met_season, valid_year_month,
 )
 from src.score.seas5_ab import (
@@ -35,14 +36,21 @@ def test_download_envelopes_match_pm_boxes():
     assert DOWNLOAD_ENVELOPES["med"]["cds_area"] == [45.0, -10.0, 30.0, 40.0]
     assert DOWNLOAD_ENVELOPES["midwest"]["cds_area"] == [49.5, -97.5, 36.0, -80.5]
     assert DOWNLOAD_ENVELOPES["southwest"]["cds_area"] == [42.0, -124.5, 31.3, -103.0]
-    assert DOWNLOAD_ENVELOPES["india_mh_ka"]["cds_area"] == [22.1, 72.5, 11.5, 81.0]
+    assert DOWNLOAD_ENVELOPES["india"]["cds_area"] == [22.1, 72.5, 11.5, 81.0]
 
 
 def test_region_aliases_and_valid_month():
-    assert canonical_region("Méditerranée") == "med"
+    assert PM_REGION_LABELS == {
+        "MED": "med", "Midwest": "midwest", "Southwest": "southwest", "India": "india",
+    }
+    assert canonical_region("MED") == "med"
     assert canonical_region("Midwest") == "midwest"
-    assert canonical_region("Inde") == "india_mh_ka"
-    assert canonical_region("Maharashtra+Karnataka") == "india_mh_ka"
+    assert canonical_region("Southwest") == "southwest"
+    assert canonical_region("India") == "india"
+    assert canonical_region("Méditerranée") == "med"
+    assert canonical_region("Inde") == "india"
+    assert canonical_region("Maharashtra+Karnataka") == "india"
+    assert SHARED_FORECAST_CSV.name == "seas5_tp_monthly.csv"
     assert valid_year_month(2020, 11, 1) == (2020, 11)
     assert valid_year_month(2020, 11, 3) == (2021, 1)
     assert met_season(2020, 12) == ("DJF", 2021)
@@ -82,12 +90,14 @@ def test_dry_mode_when_forecast_missing(tmp_path):
     data = tmp_path / "data"
     fc = data / "forecasts" / "seas5"
     fc.mkdir(parents=True)
-    payload = score_all(data_dir=data, forecast_dir=fc)
+    payload = score_all(data_dir=data, forecast_dir=fc, include_shared=False)
     assert payload["cds_called"] is False
     assert payload["champion_switched"] is False
     assert payload["bss_invented"] is False
     assert payload["forecast"]["present"] is False
     assert "Pas de score inventé" in payload["forecast"]["reason"]
+    assert "seas5_tp_monthly.csv" in payload["forecast"]["reason"]
+    assert payload["ab"]["A"]["bss"] is None
     for key in ("A", "B", "C"):
         block = payload["ab"][key]
         assert block["verdict"] == "bloquée"
@@ -102,11 +112,13 @@ def test_raw_netcdf_without_csv_is_blocked(tmp_path):
     fc = tmp_path / "seas5"
     fc.mkdir()
     (fc / "seas5_slice.nc").write_bytes(b"not-a-real-netcdf")
-    status = forecast_status(fc)
+    status = forecast_status(fc, include_shared=False)
     assert status["present"] is False
     assert "seas5_slice.nc" in status["reason"]
     assert "Pas d'appel CDS" in status["reason"]
-    payload = score_all(data_dir=tmp_path / "data", forecast_dir=fc)
+    payload = score_all(
+        data_dir=tmp_path / "data", forecast_dir=fc, include_shared=False
+    )
     assert payload["ab"]["A"]["bss"] is None
     assert payload["ab"]["A"]["verdict"] == "bloquée"
 
@@ -116,7 +128,9 @@ def test_header_only_forecast_csv_does_not_invent_scores(tmp_path):
     _write_csv(fc / "regional_monthly.csv", ",".join(FORECAST_REQUIRED), [])
     rows = load_forecast_csv(fc / "regional_monthly.csv")
     assert rows == []
-    payload = score_all(data_dir=tmp_path / "data", forecast_dir=fc)
+    payload = score_all(
+        data_dir=tmp_path / "data", forecast_dir=fc, include_shared=False
+    )
     assert payload["ab"]["A"]["bss"] is None
     assert payload["ab"]["A"]["n_seasons_scored"] == 0
     assert payload["ab"]["A"]["verdict"] == "bloquée"
@@ -139,7 +153,7 @@ def test_pairs_n_below_ten_is_blocked_with_measured_n(tmp_path):
     fc = data / "forecasts" / "seas5"
     header = "region,year,season,p_forecast_dry,event"
     _write_csv(fc / "pairs_usdm.csv", header, _pairs_rows(4, True, "midwest"))
-    payload = score_all(data_dir=data, forecast_dir=fc)
+    payload = score_all(data_dir=data, forecast_dir=fc, include_shared=False)
     mw = payload["ab"]["A"]["by_region"]["midwest"]
     assert mw["n"] == 4
     assert mw["verdict"] == "bloquée"
@@ -152,7 +166,7 @@ def test_pairs_n_ten_bss_above_gate_helps(tmp_path):
     fc = data / "forecasts" / "seas5"
     header = "region,year,season,p_forecast_dry,event"
     _write_csv(fc / "pairs_usdm.csv", header, _pairs_rows(12, True, "midwest"))
-    payload = score_all(data_dir=data, forecast_dir=fc)
+    payload = score_all(data_dir=data, forecast_dir=fc, include_shared=False)
     mw = payload["ab"]["A"]["by_region"]["midwest"]
     assert mw["n"] == 12
     assert mw["bss"] is not None and mw["bss"] > BSS_GATE
@@ -167,7 +181,7 @@ def test_pairs_n_ten_bss_not_above_gate_does_not_help(tmp_path):
     fc = data / "forecasts" / "seas5"
     header = "region,year,season,p_forecast_dry,event"
     _write_csv(fc / "pairs_usdm.csv", header, _pairs_rows(12, False, "southwest"))
-    payload = score_all(data_dir=data, forecast_dir=fc)
+    payload = score_all(data_dir=data, forecast_dir=fc, include_shared=False)
     sw = payload["ab"]["A"]["by_region"]["southwest"]
     assert sw["n"] == 12
     assert sw["bss"] is not None and sw["bss"] <= BSS_GATE
@@ -196,13 +210,33 @@ def test_regional_monthly_plus_usdm_truth_scores(tmp_path):
     )
     rows = load_forecast_csv(fc / "regional_monthly.csv")
     assert len(rows) == 36
-    payload = score_all(data_dir=data, forecast_dir=fc)
+    payload = score_all(data_dir=data, forecast_dir=fc, include_shared=False)
     mw = payload["ab"]["A"]["by_region"]["midwest"]
     assert mw["n"] == 12
     assert mw["verdict"] == "testée, ça aide"
     assert payload["ab"]["B"]["verdict"] == "bloquée"
     assert payload["ab"]["C"]["verdict"] == "bloquée"
     assert payload["ab"]["B"]["bss"] is None
+
+
+def test_shared_pm_csv_is_read_before_repo_copy(tmp_path, monkeypatch):
+    import src.forecast.seas5_offline as off
+
+    shared_dir = tmp_path / "cds-test" / "seas5-monthly"
+    local = tmp_path / "forecasts" / "seas5"
+    header = ",".join(FORECAST_REQUIRED)
+    _write_csv(shared_dir / "seas5_tp_monthly.csv", header, ["MED,2001,6,1,11.5"])
+    _write_csv(local / "regional_monthly.csv", header, ["Midwest,2001,6,1,99.0"])
+    monkeypatch.setattr(off, "SHARED_FORECAST_DIR", shared_dir)
+    monkeypatch.setattr(off, "SHARED_FORECAST_CSV", shared_dir / "seas5_tp_monthly.csv")
+    path = find_forecast_csv(local, include_shared=True)
+    assert path == shared_dir / "seas5_tp_monthly.csv"
+    rows = load_forecast_csv(path)
+    assert rows[0]["region"] == "med"
+    assert rows[0]["tp_mean_mm"] == 11.5
+    fallback = find_forecast_csv(local, include_shared=False)
+    assert fallback == local / "regional_monthly.csv"
+    assert load_forecast_csv(fallback)[0]["region"] == "midwest"
 
 
 def test_eval_script_dry(tmp_path, monkeypatch):

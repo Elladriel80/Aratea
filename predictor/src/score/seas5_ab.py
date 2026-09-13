@@ -43,10 +43,10 @@ AB_SPECS: dict[str, dict[str, Any]] = {
         "title": "SEAS5 vs climato, vérité SPEI-6",
         "truth_name": "SPEI",
         "event_label": "SPEI-6 saisonnier moyen ≤ -1,5 (WMO / Phase B, PR 243)",
-        "regions": ("med", "india_mh_ka", "us"),
+        "regions": ("med", "india", "us"),
         "region_labels": {
-            "med": "Méditerranée",
-            "india_mh_ka": "Inde",
+            "med": "MED",
+            "india": "India",
             "us": "US",
         },
     },
@@ -58,10 +58,10 @@ AB_SPECS: dict[str, dict[str, Any]] = {
             "pluie saisonnière sous la moyenne climato leave-one-out "
             "du même type de saison (pas un seuil de sécheresse nommé)"
         ),
-        "regions": ("med", "india_mh_ka"),
+        "regions": ("med", "india"),
         "region_labels": {
-            "med": "Méditerranée",
-            "india_mh_ka": "Inde",
+            "med": "MED",
+            "india": "India",
         },
     },
 }
@@ -418,8 +418,9 @@ def _forecast_seasons(
     init_month: Optional[int],
     min_lead: int,
     max_lead: int,
+    include_shared: bool = True,
 ) -> tuple[list[dict[str, Any]], Optional[str], Optional[Path]]:
-    path = find_forecast_csv(directory)
+    path = find_forecast_csv(directory, include_shared=include_shared)
     if path is None:
         return [], None, None
     rows = load_forecast_csv(path)
@@ -468,10 +469,12 @@ def _score_from_inputs(
     init_month: Optional[int],
     min_lead: int,
     max_lead: int,
+    include_shared: bool = True,
 ) -> dict[str, Any]:
     pairs = find_pairs_csv(pairs_key, forecast_dir)
     fc_seasons, _, fc_path = _forecast_seasons(
-        forecast_dir, init_month, min_lead, max_lead
+        forecast_dir, init_month, min_lead, max_lead,
+        include_shared=include_shared,
     )
     if pairs is not None and not fc_seasons:
         joined = load_pairs_csv(pairs)
@@ -482,7 +485,7 @@ def _score_from_inputs(
             "input": "pairs",
         })
     if fc_path is None:
-        status = forecast_status(forecast_dir)
+        status = forecast_status(forecast_dir, include_shared=include_shared)
         return _blocked_ab(spec, status["reason"] or "CSV SEAS5 absent.")
     if not fc_seasons:
         return _blocked_ab(
@@ -511,11 +514,12 @@ def score_ab_a(
     init_month: Optional[int] = None,
     min_lead: int = 1,
     max_lead: int = 7,
+    include_shared: bool = True,
 ) -> dict[str, Any]:
     truth, truth_reason = _load_usdm_truth(data_dir)
     return _score_from_inputs(
         AB_SPECS["A"], forecast_dir, "usdm", truth, truth_reason,
-        init_month, min_lead, max_lead,
+        init_month, min_lead, max_lead, include_shared=include_shared,
     )
 
 
@@ -525,11 +529,12 @@ def score_ab_b(
     init_month: Optional[int] = None,
     min_lead: int = 1,
     max_lead: int = 7,
+    include_shared: bool = True,
 ) -> dict[str, Any]:
     truth, truth_reason = _load_spei_truth(data_dir)
     return _score_from_inputs(
         AB_SPECS["B"], forecast_dir, "spei", truth, truth_reason,
-        init_month, min_lead, max_lead,
+        init_month, min_lead, max_lead, include_shared=include_shared,
     )
 
 
@@ -539,11 +544,12 @@ def score_ab_c(
     init_month: Optional[int] = None,
     min_lead: int = 1,
     max_lead: int = 7,
+    include_shared: bool = True,
 ) -> dict[str, Any]:
     truth, truth_reason = _load_chirps_truth(data_dir)
     return _score_from_inputs(
         AB_SPECS["C"], forecast_dir, "chirps", truth, truth_reason,
-        init_month, min_lead, max_lead,
+        init_month, min_lead, max_lead, include_shared=include_shared,
     )
 
 
@@ -587,11 +593,21 @@ def score_all(
     init_month: Optional[int] = None,
     min_lead: int = 1,
     max_lead: int = 7,
+    include_shared: bool = True,
 ) -> dict[str, Any]:
-    status = forecast_status(forecast_dir)
-    a = score_ab_a(data_dir, forecast_dir, init_month, min_lead, max_lead)
-    b = score_ab_b(data_dir, forecast_dir, init_month, min_lead, max_lead)
-    c = score_ab_c(data_dir, forecast_dir, init_month, min_lead, max_lead)
+    status = forecast_status(forecast_dir, include_shared=include_shared)
+    a = score_ab_a(
+        data_dir, forecast_dir, init_month, min_lead, max_lead,
+        include_shared=include_shared,
+    )
+    b = score_ab_b(
+        data_dir, forecast_dir, init_month, min_lead, max_lead,
+        include_shared=include_shared,
+    )
+    c = score_ab_c(
+        data_dir, forecast_dir, init_month, min_lead, max_lead,
+        include_shared=include_shared,
+    )
     abs_out = {"A": a, "B": b, "C": c}
     return {
         "forecast_name": FORECAST_NAME,

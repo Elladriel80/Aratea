@@ -28,7 +28,8 @@ if "cdsapi" in sys.modules:  # pragma: no cover
     raise RuntimeError("cdsapi ne doit pas être importé")
 
 from src.forecast.seas5_offline import (  # noqa: E402
-    DOWNLOAD_ENVELOPES, FORECAST_NAME, FORECAST_REQUIRED, SEAS5_DIR, SEAS5_OUT,
+    DOWNLOAD_ENVELOPES, FORECAST_NAME, FORECAST_REQUIRED, PM_REGION_LABELS,
+    SEAS5_DIR, SEAS5_OUT, SHARED_FORECAST_CSV,
 )
 from src.score.seas5_ab import (  # noqa: E402
     AB_SPECS, BSS_GATE, MIN_SEASONS_FOR_GATE, score_all,
@@ -55,8 +56,10 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
         "",
         "## Entrée",
         "",
-        f"Dossier : `{status.get('directory')}`.",
+        f"CSV PM (prioritaire) : `{SHARED_FORECAST_CSV}`.",
+        f"Dossier local : `{status.get('directory')}`.",
         f"CSV régional : {status.get('csv_path') or 'absent'}.",
+        f"Labels PM : {', '.join(PM_REGION_LABELS)}.",
         f"Fichiers bruts : {status.get('raw_files') or 'aucun'}.",
     ]
     if status.get("reason"):
@@ -176,6 +179,8 @@ def main() -> int:
         fc["directory"] = _rel(Path(fc["directory"])) or fc["directory"]
     if fc.get("csv_path"):
         fc["csv_path"] = _rel(Path(fc["csv_path"])) or fc["csv_path"]
+    if fc.get("searched"):
+        fc["searched"] = [_rel(Path(p)) or str(p) for p in fc["searched"]]
     pairs = fc.get("pairs") or {}
     fc["pairs"] = {
         k: (_rel(Path(v)) if v else None) for k, v in pairs.items()

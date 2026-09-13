@@ -6,10 +6,16 @@ here.
 
 ## Expected files
 
+Search order (no CDS):
+
+1. `/workspace/cds-test/seas5-monthly/seas5_tp_monthly.csv` (PM shared box)
+2. `predictor/data/forecasts/seas5/seas5_tp_monthly.csv` (or `regional_monthly.csv`)
+
 | Path | Role |
 |---|---|
-| `predictor/data/forecasts/seas5/regional_monthly.csv` | preferred forecast input |
-| `predictor/data/forecasts/seas5/seas5_regional_monthly.csv` | same schema, alternate name |
+| `/workspace/cds-test/seas5-monthly/seas5_tp_monthly.csv` | authoritative PM CSV |
+| `predictor/data/forecasts/seas5/seas5_tp_monthly.csv` | local copy, same schema |
+| `predictor/data/forecasts/seas5/regional_monthly.csv` | same schema, alternate name |
 | `predictor/data/forecasts/seas5/pairs_usdm.csv` | optional ready A/B A pairs |
 | `predictor/data/forecasts/seas5/pairs_spei.csv` | optional ready A/B B pairs |
 | `predictor/data/forecasts/seas5/pairs_chirps.csv` | optional ready A/B C pairs |
@@ -28,7 +34,7 @@ region,year,init_month,lead_month,tp_mean_mm
 
 | Column | Type | Meaning |
 |---|---|---|
-| region | text | `midwest` `southwest` `med` `india_mh_ka` `us` |
+| region | text | PM labels: `MED` `Midwest` `Southwest` `India` |
 | year | int | year of the SEAS5 start date (init) |
 | init_month | int | 1-12, month of the start date |
 | lead_month | int | C3S `leadtime_month`; 1 = valid month equals init month |
@@ -41,8 +47,10 @@ Valid month = init month + lead_month - 1, with year rollover.
 If several inits cover the same valid month, the shortest lead is kept.
 A meteorological season is scored only when all 3 months are present.
 
-Aliases accepted for `region`: Midwest, Southwest, MED, Méditerranée,
-Inde, India, Maharashtra+Karnataka, US.
+PM labels (use these): `MED`, `Midwest`, `Southwest`, `India`.
+
+Internal slugs: `med`, `midwest`, `southwest`, `india`.
+Also accepted: Méditerranée, Inde, india_mh_ka, US (SPEI combined).
 
 ## Truth series (already counted in PRs 240 / 243 / 244)
 
@@ -76,10 +84,10 @@ CDS area `[North, West, South, East]`. Scoring still uses the published
 polygons from PRs 240 / 243 / 244.
 
 ```
-med          [45, -10, 30, 40]
-midwest      [49.5, -97.5, 36.0, -80.5]
-southwest    [42.0, -124.5, 31.3, -103.0]
-india_mh_ka  [22.1, 72.5, 11.5, 81.0]
+MED / med     [45, -10, 30, 40]
+Midwest       [49.5, -97.5, 36.0, -80.5]
+Southwest     [42.0, -124.5, 31.3, -103.0]
+India         [22.1, 72.5, 11.5, 81.0]
 ```
 
 ## Run
