@@ -107,3 +107,11 @@ EN : Owner hypothesis measured: long official-station history vs market tightnes
 FR (mutuelle, 2026-09-12) : le même fichier sert à compter chaleur (≥ 100 °F), gel (≤ 32 °F), pluie annuelle et le saut d'une année à l'autre. Note `docs/a1-climato-siecle-mutuelle-2026-09-12.md`, comptes `data/truth/century/mutual_tails.md`. Pas de produit, pas de prix. NYC 157 ans, Midway 28, Denver 30. Une année folle (saut typique ~1 °F, gros saut 2 à 3,6 °F) pèse plus qu'une décennie de pente. Champion toujours inchangé.
 
 EN (mutual): same century files scored for heat / frost / dry-year tails and year-to-year swing. No product invented. Champion still untouched.
+
+---
+
+## HRRR du matin même (2026-09-12) / Same-day 12Z HRRR
+
+FR : Piste C2, J0 seulement. Run 12 h UTC du jour (Open-Meteo Single Runs, `gfs_hrrr`), heures encore dans le jour LST après 12 h. Pas la veille. Pas le thermomètre. Note `docs/c2-hrrr-matin-meme-2026-09-12.md`, comptes `data/truth/hrrr_morning/`. 18 villes, 133 jours avec des heures (11 juin vide, pas inventé). Marché : 4 985 contrats, 60 jours. Brier HRRR 0,1418, correction ville 0,1316, prix 0,0573. 0 jour sur 60 contre le prix. 18 jours sur 60 contre la correction ville. Champion inchangé.
+
+EN : C2 same-day 12Z HRRR remaining-day max/min, scored vs CLI and kalshi_mid. Loses to the market 0/60 days and to the city-corrected mix 18/60. Champion untouched.
