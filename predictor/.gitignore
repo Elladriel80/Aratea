@@ -5,6 +5,14 @@ __pycache__/
 data/markets/*.json
 data/forecasts/*.json
 data/forecasts/nws_ndfd/*.json
+# SEAS5 raw slices stay on the PM box. Only the regional CSV is scored.
+data/forecasts/seas5/*.nc
+data/forecasts/seas5/*.nc4
+data/forecasts/seas5/*.grib
+data/forecasts/seas5/*.grb
+data/forecasts/seas5/*.grb2
+data/forecasts/seas5/*.zip
+
 data/ledger/*.csv
 # But DO track the paper-trading ledger — it's the source of truth for
 # the dashboard's paper_bets_summary and for daily_auto.py's open-runs
