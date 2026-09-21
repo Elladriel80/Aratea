@@ -1,46 +1,48 @@
 {
   "schema": "cli_join_summary/1",
   "ledger": {
-    "n": 1080,
-    "n_joined": 1080,
-    "n_not_joined": 0,
+    "n": 1196,
+    "n_joined": 1168,
+    "n_not_joined": 28,
     "by_station_joined": {
-      "KBOS": 50,
-      "KDCA": 83,
-      "KDEN": 62,
-      "KLAX": 84,
-      "KMDW": 108,
-      "KMIA": 85,
-      "KNYC": 401,
-      "KPHX": 50,
-      "KSEA": 28,
-      "KSFO": 129
+      "KBOS": 62,
+      "KDCA": 100,
+      "KDEN": 70,
+      "KLAX": 90,
+      "KMDW": 112,
+      "KMIA": 89,
+      "KNYC": 409,
+      "KPHX": 58,
+      "KSEA": 34,
+      "KSFO": 144
     },
-    "not_joined_reasons": {}
+    "not_joined_reasons": {
+      "pas_de_jour_cli": 28
+    }
   },
   "forecasts": {
-    "n": 34902,
-    "n_joined": 29897,
+    "n": 36162,
+    "n_joined": 31157,
     "n_not_joined": 5005,
     "by_station_joined": {
-      "KATL": 1666,
-      "KAUS": 1666,
-      "KBOS": 1666,
-      "KDCA": 1666,
-      "KDEN": 1652,
-      "KDFW": 1666,
-      "KHOU": 1666,
-      "KLAS": 1652,
-      "KLAX": 1652,
-      "KMDW": 1666,
-      "KMIA": 1659,
-      "KMSP": 1666,
-      "KNYC": 1666,
-      "KPHL": 1666,
-      "KPHX": 1652,
-      "KSAT": 1666,
-      "KSEA": 1652,
-      "KSFO": 1652
+      "KATL": 1736,
+      "KAUS": 1736,
+      "KBOS": 1736,
+      "KDCA": 1736,
+      "KDEN": 1722,
+      "KDFW": 1736,
+      "KHOU": 1736,
+      "KLAS": 1722,
+      "KLAX": 1722,
+      "KMDW": 1736,
+      "KMIA": 1729,
+      "KMSP": 1736,
+      "KNYC": 1736,
+      "KPHL": 1736,
+      "KPHX": 1722,
+      "KSAT": 1736,
+      "KSEA": 1722,
+      "KSFO": 1722
     },
     "not_joined_reasons": {
       "ancienne_station": 4998,
@@ -69,184 +71,184 @@
   },
   "forecast_vs_cli": {
     "KATL:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -2.11,
-      "mae_f": 2.75
+      "n": 868,
+      "bias_forecast_minus_cli_f": -2.04,
+      "mae_f": 2.71
     },
     "KATL:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -0.7,
-      "mae_f": 1.79
+      "n": 868,
+      "bias_forecast_minus_cli_f": -0.66,
+      "mae_f": 1.75
     },
     "KAUS:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -1.57,
-      "mae_f": 2.2
+      "n": 868,
+      "bias_forecast_minus_cli_f": -1.68,
+      "mae_f": 2.28
     },
     "KAUS:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": 1.91,
-      "mae_f": 2.67
+      "n": 868,
+      "bias_forecast_minus_cli_f": 1.92,
+      "mae_f": 2.65
     },
     "KBOS:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -2.91,
-      "mae_f": 4.22
+      "n": 868,
+      "bias_forecast_minus_cli_f": -2.84,
+      "mae_f": 4.17
     },
     "KBOS:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -1.21,
+      "n": 868,
+      "bias_forecast_minus_cli_f": -1.2,
       "mae_f": 2.15
     },
     "KDCA:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -1.2,
-      "mae_f": 2.78
+      "n": 868,
+      "bias_forecast_minus_cli_f": -1.13,
+      "mae_f": 2.72
     },
     "KDCA:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -0.15,
+      "n": 868,
+      "bias_forecast_minus_cli_f": -0.17,
       "mae_f": 1.86
     },
     "KDEN:temp_max": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": -1.54,
-      "mae_f": 3.23
+      "n": 861,
+      "bias_forecast_minus_cli_f": -1.51,
+      "mae_f": 3.17
     },
     "KDEN:temp_min": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": 3.88,
-      "mae_f": 4.18
+      "n": 861,
+      "bias_forecast_minus_cli_f": 3.94,
+      "mae_f": 4.23
     },
     "KDFW:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -1.21,
-      "mae_f": 2.47
+      "n": 868,
+      "bias_forecast_minus_cli_f": -1.26,
+      "mae_f": 2.48
     },
     "KDFW:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": 1.51,
+      "n": 868,
+      "bias_forecast_minus_cli_f": 1.53,
       "mae_f": 2.32
     },
     "KHOU:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -1.08,
-      "mae_f": 2.19
+      "n": 868,
+      "bias_forecast_minus_cli_f": -1.14,
+      "mae_f": 2.21
     },
     "KHOU:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": 0.29,
+      "n": 868,
+      "bias_forecast_minus_cli_f": 0.22,
       "mae_f": 1.41
     },
     "KLAS:temp_max": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": -1.64,
-      "mae_f": 2.43
+      "n": 861,
+      "bias_forecast_minus_cli_f": -1.71,
+      "mae_f": 2.47
     },
     "KLAS:temp_min": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": -1.45,
-      "mae_f": 2.77
+      "n": 861,
+      "bias_forecast_minus_cli_f": -1.43,
+      "mae_f": 2.75
     },
     "KLAX:temp_max": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": 4.15,
-      "mae_f": 4.27
+      "n": 861,
+      "bias_forecast_minus_cli_f": 3.88,
+      "mae_f": 4.23
     },
     "KLAX:temp_min": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": 0.7,
-      "mae_f": 1.22
+      "n": 861,
+      "bias_forecast_minus_cli_f": 0.6,
+      "mae_f": 1.25
     },
     "KMDW:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -0.14,
-      "mae_f": 2.35
+      "n": 868,
+      "bias_forecast_minus_cli_f": -0.1,
+      "mae_f": 2.36
     },
     "KMDW:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": 0.45,
-      "mae_f": 2.22
+      "n": 868,
+      "bias_forecast_minus_cli_f": 0.42,
+      "mae_f": 2.18
     },
     "KMIA:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -3.02,
-      "mae_f": 3.09
+      "n": 868,
+      "bias_forecast_minus_cli_f": -3.01,
+      "mae_f": 3.08
     },
     "KMIA:temp_min": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": 1.63,
-      "mae_f": 2.13
+      "n": 861,
+      "bias_forecast_minus_cli_f": 1.68,
+      "mae_f": 2.17
     },
     "KMSP:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -0.79,
-      "mae_f": 2.92
-    },
-    "KMSP:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -0.34,
-      "mae_f": 2.04
-    },
-    "KNYC:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": 1.04,
-      "mae_f": 2.72
-    },
-    "KNYC:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": 0.73,
-      "mae_f": 2.24
-    },
-    "KPHL:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -1.91,
-      "mae_f": 3.11
-    },
-    "KPHL:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -0.78,
-      "mae_f": 1.96
-    },
-    "KPHX:temp_max": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": -2.51,
-      "mae_f": 2.99
-    },
-    "KPHX:temp_min": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": -0.06,
-      "mae_f": 2.16
-    },
-    "KSAT:temp_max": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": -0.72,
-      "mae_f": 1.83
-    },
-    "KSAT:temp_min": {
-      "n": 833,
-      "bias_forecast_minus_cli_f": 0.16,
-      "mae_f": 1.77
-    },
-    "KSEA:temp_max": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": -1.65,
-      "mae_f": 3.17
-    },
-    "KSEA:temp_min": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": -1.02,
-      "mae_f": 1.61
-    },
-    "KSFO:temp_max": {
-      "n": 826,
-      "bias_forecast_minus_cli_f": 0.27,
+      "n": 868,
+      "bias_forecast_minus_cli_f": -0.77,
       "mae_f": 2.86
     },
-    "KSFO:temp_min": {
-      "n": 826,
+    "KMSP:temp_min": {
+      "n": 868,
+      "bias_forecast_minus_cli_f": -0.26,
+      "mae_f": 2.05
+    },
+    "KNYC:temp_max": {
+      "n": 868,
+      "bias_forecast_minus_cli_f": 1.07,
+      "mae_f": 2.69
+    },
+    "KNYC:temp_min": {
+      "n": 868,
+      "bias_forecast_minus_cli_f": 0.73,
+      "mae_f": 2.23
+    },
+    "KPHL:temp_max": {
+      "n": 868,
+      "bias_forecast_minus_cli_f": -1.88,
+      "mae_f": 3.05
+    },
+    "KPHL:temp_min": {
+      "n": 868,
+      "bias_forecast_minus_cli_f": -0.82,
+      "mae_f": 1.97
+    },
+    "KPHX:temp_max": {
+      "n": 861,
+      "bias_forecast_minus_cli_f": -2.53,
+      "mae_f": 3.0
+    },
+    "KPHX:temp_min": {
+      "n": 861,
       "bias_forecast_minus_cli_f": -0.11,
-      "mae_f": 1.27
+      "mae_f": 2.15
+    },
+    "KSAT:temp_max": {
+      "n": 868,
+      "bias_forecast_minus_cli_f": -0.8,
+      "mae_f": 1.87
+    },
+    "KSAT:temp_min": {
+      "n": 868,
+      "bias_forecast_minus_cli_f": 0.14,
+      "mae_f": 1.72
+    },
+    "KSEA:temp_max": {
+      "n": 861,
+      "bias_forecast_minus_cli_f": -1.65,
+      "mae_f": 3.14
+    },
+    "KSEA:temp_min": {
+      "n": 861,
+      "bias_forecast_minus_cli_f": -1.01,
+      "mae_f": 1.6
+    },
+    "KSFO:temp_max": {
+      "n": 861,
+      "bias_forecast_minus_cli_f": 0.06,
+      "mae_f": 2.96
+    },
+    "KSFO:temp_min": {
+      "n": 861,
+      "bias_forecast_minus_cli_f": -0.11,
+      "mae_f": 1.31
     }
   }
 }
