@@ -15,10 +15,11 @@ Workflow:
      scripts/backtest.py and the live daily_auto bin selection).
   2. For each market and each lead N in --days-ahead, simulate a capture
      at as_of = target_date - N days, 18:00 UTC:
-       - yes_mid from the Kalshi candlesticks endpoint (last hourly candle
-         at-or-before the capture; mid = (yes_bid.close+yes_ask.close)/2/100).
-         Rows without a two-sided quote are dropped — the benchmark is
-         kalshi_mid, a row without it is useless.
+       - yes_mid from the Kalshi candlesticks endpoint. Default policy
+         last_24h: last hourly candle with a two-sided quote in the 24 h
+         before the 18:00 UTC capture (live path, then /historical).
+         exact_hour (flag) requires the 18:00 bar itself. Rows without a
+         two-sided quote are dropped — the benchmark is kalshi_mid.
        - the three REAL production predictors (climatology, forecast_blend,
          ensemble — same factories as scripts/forward_predict.py) run
          unmodified, with exactly two script-side adaptations:
@@ -56,7 +57,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import statistics
 import sys
 import time
@@ -75,6 +75,17 @@ try:
 except Exception:
     pass
 
+from src.kalshi.candles import (  # noqa: E402
+    CAPTURE_HOUR_UTC,
+    CANDLE_POLICIES,
+    LAST_24H_S,
+    POLICY_LAST_24H,
+    candle_mid,
+    candle_ts,
+    fetch_candles,
+    pick_candle,
+    pick_quoted_candle,
+)
 from src.kalshi.client import KalshiClient  # noqa: E402
 from src.learning.features import FEATURE_SETS, extract  # noqa: E402
 from src.predictors.climatology import ClimatologyPredictor  # noqa: E402
@@ -94,10 +105,8 @@ from src.weather.open_meteo import (  # noqa: E402
 PREVIOUS_RUNS_BASE = "https://previous-runs-api.open-meteo.com/v1/forecast"
 BACKFILL_CACHE_DIR = ROOT / "data" / "backfill_cache"
 DEFAULT_OUT = ROOT / "data" / "backfill" / "backfill_dataset.json"
-CAPTURE_HOUR_UTC = 18           # simulated capture time, as_of @ 18:00 UTC
-CANDLE_LOOKBACK_S = 72 * 3600   # search window before the capture cutoff
+CANDLE_LOOKBACK_S = LAST_24H_S  # same window as policy last_24h (A/B share it)
 PREV_RUNS_SLEEP = 0.2           # polite pacing on cache miss (on top of 429 handling)
-CANDLE_SLEEP = 0.12
 MIN_HOURS_FOR_TEMP_EXTREME = 18  # refuse a daily max/min from a partial day
 
 # Features with no historical coverage — adding them drops almost all rows.
@@ -113,9 +122,6 @@ FOLD_AWARE_FEATURES = {
     "days_ahead_x_series_bias_fa",
     "forecast_revision",
 }
-
-_SAFE_RE = re.compile(r"[^A-Za-z0-9._-]")
-
 
 # ------------------------------------------------------------ feature spec
 
@@ -163,91 +169,6 @@ def aggregate_hourly(times: list, values: list | None, target_iso: str,
     if how == "sum":
         return sum(vals)
     raise ValueError(f"unknown aggregation {how!r}")
-
-
-def candle_ts(c: dict):
-    """End-of-period unix timestamp of a candlestick, defensively."""
-    for k in ("end_period_ts", "end_ts", "ts", "period_ts"):
-        v = c.get(k)
-        if isinstance(v, (int, float)):
-            return int(v)
-    return None
-
-
-def pick_candle(candles, cutoff_ts: int):
-    """Last candle whose end-period ts is at-or-before the capture cutoff."""
-    best, best_ts = None, None
-    for c in candles or []:
-        if not isinstance(c, dict):
-            continue
-        ts = candle_ts(c)
-        if ts is None or ts > cutoff_ts:
-            continue
-        if best_ts is None or ts > best_ts:
-            best, best_ts = c, ts
-    return best
-
-
-def _ohlc_close_dollars(d: dict):
-    """Close value of an OHLC dict, in DOLLARS, across observed schemas:
-    - "close_dollars": "0.0500"  (string dollars — schema observed live
-      on the candlesticks endpoint, 2026-06-12 smoke run)
-    - "close": 5                 (numeric cents — documented schema)
-    """
-    v = d.get("close_dollars")
-    if v is not None:
-        try:
-            return float(v)
-        except (TypeError, ValueError):
-            return None
-    v = d.get("close")
-    if v is None:
-        return None
-    try:
-        return float(v) / 100.0
-    except (TypeError, ValueError):
-        return None
-
-
-def candle_mid(c: dict):
-    """(mid, bid, ask) in dollars from a candle's yes_bid/yes_ask close.
-    None unless the quote is two-sided (both closes present, ask > 0,
-    ask >= bid)."""
-    yb, ya = c.get("yes_bid"), c.get("yes_ask")
-    if not isinstance(yb, dict) or not isinstance(ya, dict):
-        return None
-    b = _ohlc_close_dollars(yb)
-    a = _ohlc_close_dollars(ya)
-    if b is None or a is None:
-        return None
-    if a <= 0 or a < b:
-        return None
-    return ((b + a) / 2.0, b, a)
-
-
-# ------------------------------------------------- Kalshi candlesticks (cached)
-
-def fetch_candles(client: KalshiClient, series_ticker: str,
-                  market_ticker: str, cutoff_ts: int) -> dict:
-    """Candlesticks via the client's _get (inherits its rate-limit/429
-    handling). Cached on disk; only real responses are cached."""
-    BACKFILL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    key = _SAFE_RE.sub("_", f"{market_ticker}__{cutoff_ts}")
-    path = BACKFILL_CACHE_DIR / f"kalshi_candles__{key}.json"
-    if path.exists():
-        try:
-            return json.loads(path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            pass
-    time.sleep(CANDLE_SLEEP)
-    data = client._get(
-        f"/series/{series_ticker}/markets/{market_ticker}/candlesticks",
-        params={"start_ts": cutoff_ts - CANDLE_LOOKBACK_S,
-                "end_ts": cutoff_ts, "period_interval": 60},
-    )
-    if isinstance(data, dict) and "candlesticks" in data:
-        path.write_text(json.dumps(data), encoding="utf-8")
-    return data
 
 
 # --------------------------------------------- Previous Runs weather wrapper
@@ -567,6 +488,11 @@ def main() -> int:
     ap.add_argument("--validate-against-live", action="store_true",
                     help="compare an existing --out dataset against live "
                          "forward captures (no backfill run)")
+    ap.add_argument("--candle-policy", choices=list(CANDLE_POLICIES),
+                    default=POLICY_LAST_24H,
+                    help="exact_hour = bougie pile à 18:00 UTC (A). "
+                         "last_24h = dernière bougie cotée dans les 24 h "
+                         "avant 18:00 (B, défaut). Même fenêtre de fetch.")
     args = ap.parse_args()
 
     out_path = Path(args.out)
@@ -596,7 +522,7 @@ def main() -> int:
 
     print(f">> series: {len(series_list)}  leads: {leads}  "
           f"range: {start}..{end}  features: {args.features} "
-          f"({len(spec_features)})")
+          f"({len(spec_features)})  candle_policy: {args.candle_policy}")
     BACKFILL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
     archive = OpenMeteoClient()  # shares the live data/forecasts cache
@@ -691,7 +617,8 @@ def main() -> int:
                     cutoff_ts = int(cutoff.timestamp())
                     try:
                         data = fetch_candles(client, series, market.ticker,
-                                             cutoff_ts)
+                                             cutoff_ts, BACKFILL_CACHE_DIR,
+                                             lookback_s=CANDLE_LOOKBACK_S)
                     except Exception as e:
                         skips["candle_fetch_error"] += 1
                         if args.debug:
@@ -704,9 +631,14 @@ def main() -> int:
                         print(f"   [debug] first raw candle: "
                               f"{json.dumps(candles[0])[:400]}")
                         first_candle_logged = True
-                    c = pick_candle(candles, cutoff_ts)
-                    if c is None:
+                    raw = pick_candle(candles, cutoff_ts, args.candle_policy)
+                    if raw is None:
                         skips["no_candle_at_capture"] += 1
+                        continue
+                    c = pick_quoted_candle(candles, cutoff_ts,
+                                           args.candle_policy)
+                    if c is None:
+                        skips["no_two_sided_quote"] += 1
                         continue
                     quote = candle_mid(c)
                     if quote is None:
@@ -749,6 +681,8 @@ def main() -> int:
                         "days_ahead": n,
                         "series_ticker": rec["series_ticker"],
                         "source": "backfill_previous_runs",
+                        "candle_policy": args.candle_policy,
+                        "candle_end_ts": candle_ts(c),
                     })
         per_series_rows[series] = len(X) - rows_before
         print(f">> [{si}/{len(series_list)}] {series:<13} "
@@ -774,13 +708,16 @@ def main() -> int:
         "schema": "backfill_dataset_summary/1",
         "generated_at": datetime.now(timezone.utc).strftime(
             "%Y-%m-%dT%H:%M:%SZ"),
-        "params": {"series": series_list, "start_date": args.start_date,
+            "params": {"series": series_list, "start_date": args.start_date,
                    "end_date": args.end_date, "days_ahead": leads,
                    "features": args.features,
                    "feature_names": [n for n, _ in spec_features],
-                   "smoke": args.smoke},
+                   "smoke": args.smoke,
+                   "candle_policy": args.candle_policy},
         "assumptions": {
             "capture_time_utc": f"{CAPTURE_HOUR_UTC:02d}:00",
+            "candle_policy": args.candle_policy,
+            "candle_lookback_s": CANDLE_LOOKBACK_S,
             "deterministic_forecast_proxy":
                 "mean across ensemble models' previous-run values "
                 "(best-of-models forecast is not archived)",
