@@ -1,0 +1,551 @@
+{
+  "catalogue_truth": "CHIRPS pluie",
+  "targets": [
+    "S\u00e9cheresse M\u00e9diterran\u00e9e",
+    "S\u00e9cheresse Inde"
+  ],
+  "as_of": "2026-09-12T20:04:24Z",
+  "champion_switched": false,
+  "real_money": false,
+  "forecast_scored": false,
+  "seas5_started": false,
+  "c3s_started": false,
+  "bss_invented": false,
+  "thresholds_invented": false,
+  "sources": {
+    "chirps_home": "https://www.chc.ucsb.edu/data/chirps",
+    "ucsb_root": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/",
+    "ucsb_tifs": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs/",
+    "ucsb_netcdf": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/",
+    "ucsb_byyear": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/byYear/",
+    "ucsb_monthly_nc": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/chirps-v2.0.monthly.nc",
+    "ucsb_ewx": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly_EWX/",
+    "readme": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/README-CHIRPS.txt",
+    "faq": "https://wiki.chc.ucsb.edu/CHIRPS_FAQ",
+    "iri": "https://iridl.ldeo.columbia.edu/SOURCES/.UCSB/.CHIRPS/.v2p0/.monthly/.global/.precipitation/",
+    "gee_stac_pentad": "https://storage.googleapis.com/earthengine-stac/catalog/UCSB-CHG/UCSB-CHG_CHIRPS_PENTAD.json",
+    "gee_html_pentad": "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHG_CHIRPS_PENTAD",
+    "ipcc_med": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv",
+    "natural_earth_admin1": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
+    "funk_2015": "https://doi.org/10.1038/sdata.2015.66",
+    "usgs_ds832": "https://doi.org/10.3133/ds832",
+    "chirps_v3_announcement": "https://www.chc.ucsb.edu/data/chirps3"
+  },
+  "published_product": {
+    "name": "CHIRPS v2.0 global monthly",
+    "resolution_deg": 0.05,
+    "grid_nx": 7200,
+    "grid_ny": 2000,
+    "lat_min": -50.0,
+    "lat_max": 50.0,
+    "units": "mm/month",
+    "fill_value": -9999.0,
+    "drought_thresholds_in_file_docs": []
+  },
+  "access": {
+    "probes": [
+      {
+        "url": "https://www.chc.ucsb.edu/data/chirps",
+        "host": "www.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 21104,
+        "elapsed_s": 0.137,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://www.chc.ucsb.edu/data/chirps"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/README-CHIRPS.txt",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/plain",
+        "n_bytes": 9639,
+        "elapsed_s": 0.136,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/README-CHIRPS.txt"
+      },
+      {
+        "url": "https://wiki.chc.ucsb.edu/CHIRPS_FAQ",
+        "host": "wiki.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 8192,
+        "elapsed_s": 0.303,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://wiki.chc.ucsb.edu/CHIRPS_FAQ"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 7005,
+        "elapsed_s": 0.069,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs/",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 8192,
+        "elapsed_s": 0.135,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs/"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 1602,
+        "elapsed_s": 0.111,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/byYear/",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 8192,
+        "elapsed_s": 0.112,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/byYear/"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/chirps-v2.0.monthly.nc",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "application/octet-stream",
+        "n_bytes": 7740912923,
+        "elapsed_s": 0.238,
+        "note": "NetCDF / HDF (en-t\u00eate, fichier non enti\u00e8rement lu ici)",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/chirps-v2.0.monthly.nc"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly_EWX/",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 1849,
+        "elapsed_s": 0.11,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly_EWX/"
+      },
+      {
+        "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/prelim/global_monthly/tifs/",
+        "host": "data.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 8192,
+        "elapsed_s": 0.117,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/prelim/global_monthly/tifs/"
+      },
+      {
+        "url": "https://iridl.ldeo.columbia.edu/SOURCES/.UCSB/.CHIRPS/.v2p0/.monthly/.global/.precipitation/",
+        "host": "iridl.ldeo.columbia.edu",
+        "ok": false,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 4080,
+        "elapsed_s": 0.519,
+        "note": "page IRI (pas les pixels)",
+        "final_url": "https://iridl.ldeo.columbia.edu/auth/login?redirect=%2FSOURCES%2F.UCSB%2F.CHIRPS%2F.v2p0%2F.monthly%2F.global%2F.precipitation%2F"
+      },
+      {
+        "url": "https://storage.googleapis.com/earthengine-stac/catalog/UCSB-CHG/UCSB-CHG_CHIRPS_PENTAD.json",
+        "host": "storage.googleapis.com",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/plain",
+        "n_bytes": 5131,
+        "elapsed_s": 0.234,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://storage.googleapis.com/earthengine-stac/catalog/UCSB-CHG/UCSB-CHG_CHIRPS_PENTAD.json"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv",
+        "host": "raw.githubusercontent.com",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/plain",
+        "n_bytes": 6429,
+        "elapsed_s": 0.144,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
+        "host": "raw.githubusercontent.com",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/plain",
+        "n_bytes": 2325694,
+        "elapsed_s": 0.368,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson"
+      },
+      {
+        "url": "https://www.chc.ucsb.edu/data/chirps3",
+        "host": "www.chc.ucsb.edu",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 33971,
+        "elapsed_s": 0.064,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://www.chc.ucsb.edu/data/chirps3"
+      }
+    ],
+    "download_notes": [
+      "S\u00e9cheresse M\u00e9diterran\u00e9e : grille 306 lat \u00d7 1005 lon, 299700 cases du d\u00e9coupage, fichier data/truth/chirps_cache/iri_med_1981.nc",
+      "S\u00e9cheresse Inde : grille 213 lat \u00d7 170 lon, 16983 cases du d\u00e9coupage, fichier data/truth/chirps_cache/iri_inde_1981.nc",
+      "UCSB 2026 S\u00e9cheresse M\u00e9diterran\u00e9e : 8 mois, dernier 2026-08, mois absents d'IRI ['2026-08']",
+      "UCSB 2026 S\u00e9cheresse Inde : 8 mois, dernier 2026-08, mois absents d'IRI ['2026-08']"
+    ]
+  },
+  "gee_catalog": {
+    "id": "UCSB-CHG/CHIRPS/PENTAD",
+    "title": "CHIRPS Precipitation Pentad: Climate Hazards Center InfraRed Precipitation With Station Data (Version 2.0 Final)",
+    "version": "2.0",
+    "license": "proprietary",
+    "temporal_interval": [
+      [
+        "1981-01-01T00:00:00Z",
+        "2026-07-26T00:00:00Z"
+      ]
+    ],
+    "spatial_bbox": [
+      [
+        -180,
+        -50,
+        180,
+        50
+      ]
+    ],
+    "cadence": {
+      "description": "Each asset spans a pentad. Each of first 5 pentads in a month\nhave 5 days. The last pentad contains all the days from the 26th to the\nend of the month.\n",
+      "interval": 1,
+      "name": "pentad",
+      "type": "cadence",
+      "unit": "custom_time_unit"
+    },
+    "gsd_m": [
+      5566
+    ],
+    "precip_min": 0,
+    "precip_max": 1072.43,
+    "precip_range_is_estimated": true,
+    "terms": "This datasets are in the public domain. To the extent possible under law,\n[Pete Peterson](https://chc.ucsb.edu/people/pete-peterson)\nhas waived all copyright and related or neighboring rights to\nClimate Hazards Center Infrared Precipitation with Stations (CHIRPS).\n",
+    "citation": "Funk, Chris, Pete Peterson, Martin Landsfeld, Diego Pedreros, James\nVerdin, Shraddhanand Shukla, Gregory Husak, James Rowland, Laura Harrison,\nAndrew Hoell & Joel Michaelsen. \"The climate hazards infrared precipitation\nwith stations-a new environmental record for monitoring extremes\".\nScientific Data 2, 150066. [doi:10.1038/sdata.2015.66](https://doi.org/10.1038/sdata.2015.66)\n2015.\n",
+    "source": "https://storage.googleapis.com/earthengine-stac/catalog/UCSB-CHG/UCSB-CHG_CHIRPS_PENTAD.json",
+    "pixels_included": false
+  },
+  "ucsb_tif_index": {
+    "source": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs/",
+    "n_files": 548,
+    "first_month": "1981-01",
+    "last_month": "2026-08",
+    "missing_months_in_span": [],
+    "n_missing_months_in_span": 0,
+    "years": [
+      1981,
+      1982,
+      1983,
+      1984,
+      1985,
+      1986,
+      1987,
+      1988,
+      1989,
+      1990,
+      1991,
+      1992,
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "product": "final monthly GeoTIFF (chirps-v2.0.YYYY.MM.tif.gz)",
+    "n_months_listed": 548
+  },
+  "ucsb_year_index": {
+    "source": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/byYear/",
+    "n_files": 46,
+    "first_year": 1981,
+    "last_year": 2026,
+    "years": [
+      1981,
+      1982,
+      1983,
+      1984,
+      1985,
+      1986,
+      1987,
+      1988,
+      1989,
+      1990,
+      1991,
+      1992,
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "missing_years_in_span": [],
+    "n_missing_years_in_span": 0,
+    "product": "yearly monthly NetCDF (chirps-v2.0.YYYY.monthly.nc)"
+  },
+  "prelim_tif_index": {
+    "source": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/prelim/global_monthly/tifs/",
+    "n_files": 140,
+    "first_month": "2015-01",
+    "last_month": "2026-08",
+    "product": "preliminary monthly GeoTIFF (not the counted final series)"
+  },
+  "region_cuts": {
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": {
+      "cut": "IPCC AR6 WGI MED (Iturbide 2020)",
+      "catalogue_target": "S\u00e9cheresse M\u00e9diterran\u00e9e",
+      "vertices": [
+        [
+          -10.0,
+          30.0
+        ],
+        [
+          -10.0,
+          45.0
+        ],
+        [
+          40.0,
+          45.0
+        ],
+        [
+          40.0,
+          30.0
+        ]
+      ],
+      "vertices_from_live_csv": true,
+      "source": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv",
+      "surface": "Land-Ocean (libell\u00e9 publi\u00e9)",
+      "n_rings": 1,
+      "inde_missing": null
+    },
+    "S\u00e9cheresse Inde": {
+      "cut": "Maharashtra + Karnataka (catalogue Phase 2, comme SPEI PR 243)",
+      "catalogue_target": "S\u00e9cheresse Inde",
+      "source_polygons": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
+      "n_rings": 2,
+      "inde_missing": []
+    }
+  },
+  "ucsb_2026_check": {
+    "path": "data/truth/chirps_cache/ucsb_2026.monthly.nc",
+    "n_bytes": 114544358,
+    "regions": {
+      "S\u00e9cheresse M\u00e9diterran\u00e9e": {
+        "region": "S\u00e9cheresse M\u00e9diterran\u00e9e",
+        "n_cells_in_published_cut": 300000,
+        "n_cells_usable_any_month": 176612,
+        "n_cells_never_valid": 123388,
+        "n_times": 8,
+        "first_month": "2026-01",
+        "last_month": "2026-08",
+        "first_month_with_a_value": "2026-01",
+        "last_month_with_a_value": "2026-08",
+        "n_months_with_any_valid": 8,
+        "n_months_without_any_valid": 0,
+        "n_months_all_cells_valid": 0,
+        "n_calendar_years_in_opened_files": 1,
+        "n_calendar_years_with_a_value": 1,
+        "missing_years_in_span": [],
+        "n_missing_years_in_span": 0,
+        "n_finite_cell_months": 1412896,
+        "n_zero_rain_cell_months": 150,
+        "usable_measured": true,
+        "units": "mm/month",
+        "fill_value": -9999.0,
+        "thresholds": {
+          "drought_classes_in_monthly_file_docs": [],
+          "note": "Le fichier mensuel CHIRPS est en mm/mois. Aucun seuil de s\u00e9cheresse n'est publi\u00e9 dans le README, la FAQ, ou l'en-t\u00eate. Les dossiers EWX anomaly/zscore existent \u00e0 part ; on ne les a pas transform\u00e9s en classes."
+        },
+        "months_not_in_iri": [
+          "2026-08"
+        ]
+      },
+      "S\u00e9cheresse Inde": {
+        "region": "S\u00e9cheresse Inde",
+        "n_cells_in_published_cut": 16978,
+        "n_cells_usable_any_month": 16978,
+        "n_cells_never_valid": 0,
+        "n_times": 8,
+        "first_month": "2026-01",
+        "last_month": "2026-08",
+        "first_month_with_a_value": "2026-01",
+        "last_month_with_a_value": "2026-08",
+        "n_months_with_any_valid": 8,
+        "n_months_without_any_valid": 0,
+        "n_months_all_cells_valid": 8,
+        "n_calendar_years_in_opened_files": 1,
+        "n_calendar_years_with_a_value": 1,
+        "missing_years_in_span": [],
+        "n_missing_years_in_span": 0,
+        "n_finite_cell_months": 135824,
+        "n_zero_rain_cell_months": 0,
+        "usable_measured": true,
+        "units": "mm/month",
+        "fill_value": -9999.0,
+        "thresholds": {
+          "drought_classes_in_monthly_file_docs": [],
+          "note": "Le fichier mensuel CHIRPS est en mm/mois. Aucun seuil de s\u00e9cheresse n'est publi\u00e9 dans le README, la FAQ, ou l'en-t\u00eate. Les dossiers EWX anomaly/zscore existent \u00e0 part ; on ne les a pas transform\u00e9s en classes."
+        },
+        "months_not_in_iri": [
+          "2026-08"
+        ]
+      }
+    }
+  },
+  "regions": {
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": {
+      "region": "S\u00e9cheresse M\u00e9diterran\u00e9e",
+      "n_cells_in_published_cut": 299700,
+      "n_cells_usable_any_month": 176612,
+      "n_cells_never_valid": 123088,
+      "n_times": 547,
+      "first_month": "1981-01",
+      "last_month": "2026-07",
+      "first_month_with_a_value": "1981-01",
+      "last_month_with_a_value": "2026-07",
+      "n_months_with_any_valid": 547,
+      "n_months_without_any_valid": 0,
+      "n_months_all_cells_valid": 0,
+      "n_calendar_years_in_opened_files": 46,
+      "n_calendar_years_with_a_value": 46,
+      "missing_years_in_span": [],
+      "n_missing_years_in_span": 0,
+      "n_finite_cell_months": 96606764,
+      "n_zero_rain_cell_months": 6753,
+      "usable_measured": true,
+      "units": "mm/month",
+      "fill_value": -9999.0,
+      "thresholds": {
+        "drought_classes_in_monthly_file_docs": [],
+        "note": "Le fichier mensuel CHIRPS est en mm/mois. Aucun seuil de s\u00e9cheresse n'est publi\u00e9 dans le README, la FAQ, ou l'en-t\u00eate. Les dossiers EWX anomaly/zscore existent \u00e0 part ; on ne les a pas transform\u00e9s en classes."
+      }
+    },
+    "S\u00e9cheresse Inde": {
+      "region": "S\u00e9cheresse Inde",
+      "n_cells_in_published_cut": 16983,
+      "n_cells_usable_any_month": 16983,
+      "n_cells_never_valid": 0,
+      "n_times": 547,
+      "first_month": "1981-01",
+      "last_month": "2026-07",
+      "first_month_with_a_value": "1981-01",
+      "last_month_with_a_value": "2026-07",
+      "n_months_with_any_valid": 547,
+      "n_months_without_any_valid": 0,
+      "n_months_all_cells_valid": 547,
+      "n_calendar_years_in_opened_files": 46,
+      "n_calendar_years_with_a_value": 46,
+      "missing_years_in_span": [],
+      "n_missing_years_in_span": 0,
+      "n_finite_cell_months": 9289701,
+      "n_zero_rain_cell_months": 0,
+      "usable_measured": true,
+      "units": "mm/month",
+      "fill_value": -9999.0,
+      "thresholds": {
+        "drought_classes_in_monthly_file_docs": [],
+        "note": "Le fichier mensuel CHIRPS est en mm/mois. Aucun seuil de s\u00e9cheresse n'est publi\u00e9 dans le README, la FAQ, ou l'en-t\u00eate. Les dossiers EWX anomaly/zscore existent \u00e0 part ; on ne les a pas transform\u00e9s en classes."
+      }
+    }
+  },
+  "verdicts": {
+    "CHIRPS pluie": "test\u00e9e, \u00e7a aide",
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": "cible Tier 1 (pas encore test\u00e9e)",
+    "S\u00e9cheresse Inde": "cible Tier 1 (pas encore test\u00e9e)",
+    "S\u00e9cheresse US": "bloqu\u00e9e",
+    "SPEI": "test\u00e9e, \u00e7a aide",
+    "US Drought Monitor": "test\u00e9e, \u00e7a aide",
+    "SEAS5": "pas encore test\u00e9e",
+    "C3S multi-mod\u00e8le": "pas encore test\u00e9e",
+    "NMME": "bloqu\u00e9e",
+    "Open-Meteo Seasonal": "bloqu\u00e9e",
+    "HURDAT2 / IBTrACS": "test\u00e9e, \u00e7a aide"
+  },
+  "next_forecast_step": "Quand la v\u00e9rit\u00e9 CHIRPS pluie est compt\u00e9e : une pr\u00e9vision saisonni\u00e8re dat\u00e9e de pluie (NMME d\u00e9coup\u00e9, ou un compte qui ouvre SEAS5 / C3S), compar\u00e9e aux mois CHIRPS d\u00e9j\u00e0 compt\u00e9s. Pas de BSS invent\u00e9 si N < 10 saisons. Pas avant."
+}
