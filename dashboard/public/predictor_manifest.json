@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-30T22:15:45Z",
+  "generated_at": "2026-10-01T23:00:06Z",
   "schema_version": 3,
   "features": [
     {
@@ -606,68 +606,6 @@
     }
   ],
   "live_runs": [
-    {
-      "run_id": "756",
-      "schema_version": 2,
-      "ts_utc": "2026-09-18T21:03:03Z",
-      "event_ticker": "KXLOWTDEN-26SEP19",
-      "event_title": "Lowest temperature in Denver on Sep 19, 2026?",
-      "target_market_ticker": "KXLOWTDEN-26SEP19-B54.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.36,
-      "position": {
-        "side": "NO",
-        "n_contracts": 80,
-        "entry_price": 0.64,
-        "size_usd": 51.46,
-        "entry_price_yes_cents": 36.0,
-        "entry_price_no_cents": 64.0
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.2622621058659717,
-          "brier": 0.5443,
-          "won": false,
-          "pnl_usd": -51.2,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.38644377491534365,
-          "brier": 0.3765,
-          "won": false,
-          "pnl_usd": -51.2,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.36,
-          "brier": 0.4096,
-          "won": false,
-          "pnl_usd": -51.2,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "yes",
-        "observed_range_f": [
-          54.0,
-          55.0
-        ],
-        "winning_bin_ticker": "KXLOWTDEN-26SEP19-B54.5",
-        "ts_utc": "2026-09-20T20:54:20Z",
-        "champion_pnl_usd": -51.2,
-        "champion_won": false
-      }
-    },
     {
       "run_id": "757",
       "schema_version": 2,
@@ -6751,18 +6689,77 @@
         "champion_pnl_usd": null,
         "champion_won": null
       }
+    },
+    {
+      "run_id": "856",
+      "schema_version": 2,
+      "ts_utc": "2026-10-01T22:54:35Z",
+      "event_ticker": "KXLOWTNYC-26OCT02",
+      "event_title": "Lowest temperature in New York City on Oct 2, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26OCT02-B61.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.025,
+      "position": {
+        "side": "YES",
+        "n_contracts": 283,
+        "entry_price": 0.025,
+        "size_usd": 7.09,
+        "entry_price_yes_cents": 2.5,
+        "entry_price_no_cents": 97.5
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.1625543368527218,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.03262864755125325,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.025,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
     }
   ],
-  "live_runs_total": 854,
+  "live_runs_total": 855,
   "backtest_runs": [],
   "backtest_runs_total": 0,
   "paper_bets_summary": {
-    "n_open": 15,
+    "n_open": 16,
     "n_resolved": 839,
     "pnl_usd_cumulative": 2433.21,
     "wins": 366,
     "losses": 473,
-    "phase_1_counter": "854/50",
+    "phase_1_counter": "855/50",
     "control_group": {
       "n_resolved": 198,
       "wins": 81,
