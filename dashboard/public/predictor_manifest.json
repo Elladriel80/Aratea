@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T22:11:38Z",
+  "generated_at": "2026-10-03T21:06:52Z",
   "schema_version": 3,
   "features": [
     {
@@ -606,68 +606,6 @@
     }
   ],
   "live_runs": [
-    {
-      "run_id": "772",
-      "schema_version": 2,
-      "ts_utc": "2026-09-20T21:01:03Z",
-      "event_ticker": "KXLOWTMIA-26SEP21",
-      "event_title": "Lowest temperature in Miami on Sep 21, 2026?",
-      "target_market_ticker": "KXLOWTMIA-26SEP21-B72.5",
-      "champion_name": "vendor_ensemble",
-      "kalshi_mid_at_entry": 0.23500000000000001,
-      "position": {
-        "side": "NO",
-        "n_contracts": 71,
-        "entry_price": 0.765,
-        "size_usd": 54.94,
-        "entry_price_yes_cents": 23.5,
-        "entry_price_no_cents": 76.5
-      },
-      "models": [
-        {
-          "name": "vendor_ensemble",
-          "role": "champion",
-          "method": "ensemble",
-          "p_yes": 0.0989341509961864,
-          "brier": 0.0098,
-          "won": true,
-          "pnl_usd": 16.69,
-          "pnl_type": "actual"
-        },
-        {
-          "name": "learned_v2",
-          "role": "challenger",
-          "method": "learned_v2",
-          "p_yes": 0.054444805069049876,
-          "brier": 0.003,
-          "won": true,
-          "pnl_usd": 16.69,
-          "pnl_type": "theoretical"
-        },
-        {
-          "name": "kalshi_mid_baseline",
-          "role": "baseline",
-          "method": "kalshi_mid",
-          "p_yes": 0.23500000000000001,
-          "brier": 0.0552,
-          "won": true,
-          "pnl_usd": 16.69,
-          "pnl_type": "theoretical"
-        }
-      ],
-      "resolution": {
-        "status": "resolved",
-        "outcome": "no",
-        "observed_range_f": [
-          76.0,
-          77.0
-        ],
-        "winning_bin_ticker": "KXLOWTMIA-26SEP21-B76.5",
-        "ts_utc": "2026-09-22T21:24:52Z",
-        "champion_pnl_usd": 16.69,
-        "champion_won": true
-      }
-    },
     {
       "run_id": "773",
       "schema_version": 2,
@@ -5828,40 +5766,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.1625543368527218,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0264,
+          "won": false,
+          "pnl_usd": -7.08,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.03262864755125325,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0011,
+          "won": false,
+          "pnl_usd": -7.08,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.025,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0006,
+          "won": false,
+          "pnl_usd": -7.08,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          67.0,
+          68.0
+        ],
+        "winning_bin_ticker": "KXLOWTNYC-26OCT02-B67.5",
+        "ts_utc": "2026-10-03T21:06:47Z",
+        "champion_pnl_usd": -7.08,
+        "champion_won": false
       }
     },
     {
@@ -6748,22 +6689,81 @@
         "champion_pnl_usd": null,
         "champion_won": null
       }
+    },
+    {
+      "run_id": "872",
+      "schema_version": 2,
+      "ts_utc": "2026-10-03T21:06:48Z",
+      "event_ticker": "KXLOWTNYC-26OCT04",
+      "event_title": "Lowest temperature in New York City on Oct 4, 2026?",
+      "target_market_ticker": "KXLOWTNYC-26OCT04-B54.5",
+      "champion_name": "vendor_ensemble",
+      "kalshi_mid_at_entry": 0.05,
+      "position": {
+        "side": "YES",
+        "n_contracts": 99,
+        "entry_price": 0.05,
+        "size_usd": 4.97,
+        "entry_price_yes_cents": 5.0,
+        "entry_price_no_cents": 95.0
+      },
+      "models": [
+        {
+          "name": "vendor_ensemble",
+          "role": "champion",
+          "method": "ensemble",
+          "p_yes": 0.25580307922131634,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "learned_v2",
+          "role": "challenger",
+          "method": "learned_v2",
+          "p_yes": 0.37767920067431654,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        },
+        {
+          "name": "kalshi_mid_baseline",
+          "role": "baseline",
+          "method": "kalshi_mid",
+          "p_yes": 0.05,
+          "brier": null,
+          "won": null,
+          "pnl_usd": null,
+          "pnl_type": null
+        }
+      ],
+      "resolution": {
+        "status": "open",
+        "outcome": null,
+        "observed_range_f": null,
+        "winning_bin_ticker": null,
+        "ts_utc": null,
+        "champion_pnl_usd": null,
+        "champion_won": null
+      }
     }
   ],
-  "live_runs_total": 870,
+  "live_runs_total": 871,
   "backtest_runs": [],
   "backtest_runs_total": 0,
   "paper_bets_summary": {
     "n_open": 16,
-    "n_resolved": 854,
-    "pnl_usd_cumulative": 1997.84,
+    "n_resolved": 855,
+    "pnl_usd_cumulative": 1990.76,
     "wins": 370,
-    "losses": 484,
-    "phase_1_counter": "870/50",
+    "losses": 485,
+    "phase_1_counter": "871/50",
     "control_group": {
-      "n_resolved": 209,
+      "n_resolved": 210,
       "wins": 83,
-      "losses": 126
+      "losses": 127
     }
   },
   "backtest_summary": {
@@ -6776,12 +6776,12 @@
   },
   "hybrid_sample": {
     "alpha_backtest": 0.3,
-    "n_live": 854,
+    "n_live": 855,
     "n_backtest_strict": 268,
     "n_backtest_naive_excluded": 0,
-    "n_effective": 934.4,
+    "n_effective": 935.4,
     "phase_1_target": 50,
-    "phase_1_progress_live_only": "854/50",
+    "phase_1_progress_live_only": "855/50",
     "convention_ref": "predictor/runs/CONVENTION.md sec.6.bis",
     "note": "N_effective is for SECONDARY decisions only (feature-set selection, reliability plots, complementary promotion check). The Phase 1 go/no-go gate (CONVENTION.md sec.6) uses n_live exclusively and ignores n_backtest_strict."
   },
