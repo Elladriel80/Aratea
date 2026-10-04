@@ -1,0 +1,661 @@
+{
+  "forecast_name": "C3S multi-modèle",
+  "as_of_mode": "offline",
+  "cds_called": false,
+  "cdsapi_imported": false,
+  "champion_switched": false,
+  "real_money": false,
+  "bss_invented": false,
+  "pooled": false,
+  "filled_from_seas5": false,
+  "weighting": "equal_centre",
+  "headline_ab": "C",
+  "headline_region": "med",
+  "shared_csv": "/workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv",
+  "gate": {
+    "bss_gt": 0.05,
+    "min_seasons": 10
+  },
+  "forecast": {
+    "forecast_name": "C3S multi-modèle",
+    "directory": "data/forecasts/c3s",
+    "searched": [
+      "/workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv",
+      "data/forecasts/c3s/c3s_tp_monthly.csv"
+    ],
+    "present": false,
+    "csv_path": null,
+    "raw_files": [],
+    "reason": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+    "cds_called": false,
+    "cdsapi_imported": false,
+    "filled_from_seas5": false,
+    "weighting": "equal_centre",
+    "hindcast_years_expected": [
+      1993,
+      2016
+    ],
+    "expected_centres": [
+      {
+        "origin": "meteo_france",
+        "system": 8,
+        "label": "Météo-France système 8"
+      },
+      {
+        "origin": "dwd",
+        "system": 21,
+        "label": "DWD système 21"
+      },
+      {
+        "origin": "cmcc",
+        "system": 35,
+        "label": "CMCC système 35"
+      },
+      {
+        "origin": "ncep",
+        "system": 2,
+        "label": "NCEP système 2"
+      },
+      {
+        "origin": "ecmwf",
+        "system": 51,
+        "label": "ECMWF système 51 (SEAS5)"
+      }
+    ],
+    "inventory": {
+      "weighting": "equal_centre",
+      "filled_from_seas5": false,
+      "expected_centres": [
+        {
+          "origin": "meteo_france",
+          "system": 8,
+          "label": "Météo-France système 8",
+          "n_rows": 0,
+          "present": false,
+          "hole": true
+        },
+        {
+          "origin": "dwd",
+          "system": 21,
+          "label": "DWD système 21",
+          "n_rows": 0,
+          "present": false,
+          "hole": true
+        },
+        {
+          "origin": "cmcc",
+          "system": 35,
+          "label": "CMCC système 35",
+          "n_rows": 0,
+          "present": false,
+          "hole": true
+        },
+        {
+          "origin": "ncep",
+          "system": 2,
+          "label": "NCEP système 2",
+          "n_rows": 0,
+          "present": false,
+          "hole": true
+        },
+        {
+          "origin": "ecmwf",
+          "system": 51,
+          "label": "ECMWF système 51 (SEAS5)",
+          "n_rows": 0,
+          "present": false,
+          "hole": true
+        }
+      ],
+      "missing_centres": [
+        {
+          "origin": "meteo_france",
+          "system": 8,
+          "label": "Météo-France système 8"
+        },
+        {
+          "origin": "dwd",
+          "system": 21,
+          "label": "DWD système 21"
+        },
+        {
+          "origin": "cmcc",
+          "system": 35,
+          "label": "CMCC système 35"
+        },
+        {
+          "origin": "ncep",
+          "system": 2,
+          "label": "NCEP système 2"
+        },
+        {
+          "origin": "ecmwf",
+          "system": 51,
+          "label": "ECMWF système 51 (SEAS5)"
+        }
+      ],
+      "unexpected_centres": [],
+      "n_rows": 0,
+      "n_cells": 0,
+      "n_cells_with_hole": 0,
+      "cells_missing_by_centre": {
+        "meteo_france:8": 0,
+        "dwd:21": 0,
+        "cmcc:35": 0,
+        "ncep:2": 0,
+        "ecmwf:51": 0
+      },
+      "years_present": [],
+      "hindcast_years_expected": [
+        1993,
+        2016
+      ],
+      "missing_years_in_window": [
+        1993,
+        1994,
+        1995,
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016
+      ],
+      "years_outside_window": []
+    }
+  },
+  "published_seas5_baseline": {
+    "label": "SEAS5",
+    "centre": {
+      "origin": "ecmwf",
+      "system": 51
+    },
+    "source": "PR 246",
+    "commit": "aa8d61f",
+    "computed": false,
+    "pooled": false,
+    "headline_region": "med",
+    "note": "Mesure déjà publiée. Ce bloc n'est pas recalculé ici. Il ne comble pas un trou. Le BSS SPEI n'existe pas (Brier climato = 0 au seuil ≤ -1,5 après moyenne spatiale).",
+    "A": {
+      "midwest": {
+        "n": 97,
+        "brier_forecast": 0.5464,
+        "brier_climato": 0.0306,
+        "bss": -16.8565,
+        "verdict": "testée, ça n'aide pas"
+      },
+      "southwest": {
+        "n": 97,
+        "brier_forecast": 0.5052,
+        "brier_climato": 0.2546,
+        "bss": -0.9844,
+        "verdict": "testée, ça n'aide pas"
+      }
+    },
+    "B": {
+      "med": {
+        "n": 123,
+        "brier_forecast": 0.5285,
+        "brier_climato": 0.0,
+        "bss": null,
+        "verdict": "bloquée"
+      },
+      "india": {
+        "n": 123,
+        "brier_forecast": 0.5122,
+        "brier_climato": 0.0,
+        "bss": null,
+        "verdict": "bloquée"
+      },
+      "us": {
+        "n": 0,
+        "brier_forecast": null,
+        "brier_climato": null,
+        "bss": null,
+        "verdict": "bloquée"
+      }
+    },
+    "C": {
+      "med": {
+        "n": 125,
+        "brier_forecast": 0.24,
+        "brier_climato": 0.254,
+        "bss": 0.0552,
+        "verdict": "testée, ça aide",
+        "headline": true
+      },
+      "india": {
+        "n": 125,
+        "brier_forecast": 0.272,
+        "brier_climato": 0.254,
+        "bss": -0.0707,
+        "verdict": "testée, ça n'aide pas",
+        "headline": false
+      }
+    }
+  },
+  "ab": {
+    "A": {
+      "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+      "n_seasons_scored": 0,
+      "bss": null,
+      "brier_forecast": null,
+      "brier_climato": null,
+      "gate_n_ge_10": false,
+      "gate_bss_gt_0_05": false,
+      "verdict": "bloquée",
+      "by_region": {
+        "midwest": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloquée",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+          "headline": false
+        },
+        "southwest": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloquée",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+          "headline": false
+        }
+      },
+      "id": "A",
+      "title": "C3S multi-modèle vs climato, vérité USDM",
+      "forecast_name": "C3S multi-modèle",
+      "truth_name": "US Drought Monitor",
+      "event": "moyenne D2+ catégorielle ≥ 30 % (Phase B §3.2, PR 240)",
+      "champion_switched": false,
+      "cds_called": false,
+      "headline_region": null,
+      "pooled": false
+    },
+    "B": {
+      "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+      "n_seasons_scored": 0,
+      "bss": null,
+      "brier_forecast": null,
+      "brier_climato": null,
+      "gate_n_ge_10": false,
+      "gate_bss_gt_0_05": false,
+      "verdict": "bloquée",
+      "by_region": {
+        "med": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloquée",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+          "headline": false
+        },
+        "india": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloquée",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+          "headline": false
+        },
+        "us": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloquée",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+          "headline": false
+        }
+      },
+      "id": "B",
+      "title": "C3S multi-modèle vs climato, vérité SPEI-6",
+      "forecast_name": "C3S multi-modèle",
+      "truth_name": "SPEI",
+      "event": "SPEI-6 saisonnier moyen ≤ -1,5 (WMO / Phase B, PR 243)",
+      "champion_switched": false,
+      "cds_called": false,
+      "headline_region": null,
+      "pooled": false
+    },
+    "C": {
+      "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+      "n_seasons_scored": 0,
+      "bss": null,
+      "brier_forecast": null,
+      "brier_climato": null,
+      "gate_n_ge_10": false,
+      "gate_bss_gt_0_05": false,
+      "verdict": "bloquée",
+      "by_region": {
+        "med": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloquée",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+          "headline": true
+        },
+        "india": {
+          "n": 0,
+          "base_rate": null,
+          "brier_forecast": null,
+          "brier_climato": null,
+          "bss": null,
+          "verdict": "bloquée",
+          "gate_n_ge_10": false,
+          "gate_bss_gt_0_05": false,
+          "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India).",
+          "headline": false
+        }
+      },
+      "id": "C",
+      "title": "C3S multi-modèle vs climato, vérité CHIRPS",
+      "forecast_name": "C3S multi-modèle",
+      "truth_name": "CHIRPS pluie",
+      "event": "pluie saisonnière sous la moyenne climato leave-one-out du même type de saison (pas un seuil de sécheresse nommé)",
+      "champion_switched": false,
+      "cds_called": false,
+      "headline_region": "med",
+      "pooled": false
+    }
+  },
+  "ecmwf51": {
+    "forecast_name": "ECMWF-51",
+    "role": "baseline SEAS5 recalculée seulement si les lignes sont dans le CSV C3S",
+    "filled_from_seas5_csv": false,
+    "ab": {
+      "A": {
+        "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+        "n_seasons_scored": 0,
+        "bss": null,
+        "brier_forecast": null,
+        "brier_climato": null,
+        "gate_n_ge_10": false,
+        "gate_bss_gt_0_05": false,
+        "verdict": "bloquée",
+        "by_region": {
+          "midwest": {
+            "n": 0,
+            "base_rate": null,
+            "brier_forecast": null,
+            "brier_climato": null,
+            "bss": null,
+            "verdict": "bloquée",
+            "gate_n_ge_10": false,
+            "gate_bss_gt_0_05": false,
+            "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+            "headline": false
+          },
+          "southwest": {
+            "n": 0,
+            "base_rate": null,
+            "brier_forecast": null,
+            "brier_climato": null,
+            "bss": null,
+            "verdict": "bloquée",
+            "gate_n_ge_10": false,
+            "gate_bss_gt_0_05": false,
+            "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+            "headline": false
+          }
+        },
+        "id": "A",
+        "title": "C3S multi-modèle vs climato, vérité USDM",
+        "forecast_name": "C3S multi-modèle",
+        "truth_name": "US Drought Monitor",
+        "event": "moyenne D2+ catégorielle ≥ 30 % (Phase B §3.2, PR 240)",
+        "champion_switched": false,
+        "cds_called": false,
+        "headline_region": null,
+        "pooled": false
+      },
+      "B": {
+        "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+        "n_seasons_scored": 0,
+        "bss": null,
+        "brier_forecast": null,
+        "brier_climato": null,
+        "gate_n_ge_10": false,
+        "gate_bss_gt_0_05": false,
+        "verdict": "bloquée",
+        "by_region": {
+          "med": {
+            "n": 0,
+            "base_rate": null,
+            "brier_forecast": null,
+            "brier_climato": null,
+            "bss": null,
+            "verdict": "bloquée",
+            "gate_n_ge_10": false,
+            "gate_bss_gt_0_05": false,
+            "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+            "headline": false
+          },
+          "india": {
+            "n": 0,
+            "base_rate": null,
+            "brier_forecast": null,
+            "brier_climato": null,
+            "bss": null,
+            "verdict": "bloquée",
+            "gate_n_ge_10": false,
+            "gate_bss_gt_0_05": false,
+            "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+            "headline": false
+          },
+          "us": {
+            "n": 0,
+            "base_rate": null,
+            "brier_forecast": null,
+            "brier_climato": null,
+            "bss": null,
+            "verdict": "bloquée",
+            "gate_n_ge_10": false,
+            "gate_bss_gt_0_05": false,
+            "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+            "headline": false
+          }
+        },
+        "id": "B",
+        "title": "C3S multi-modèle vs climato, vérité SPEI-6",
+        "forecast_name": "C3S multi-modèle",
+        "truth_name": "SPEI",
+        "event": "SPEI-6 saisonnier moyen ≤ -1,5 (WMO / Phase B, PR 243)",
+        "champion_switched": false,
+        "cds_called": false,
+        "headline_region": null,
+        "pooled": false
+      },
+      "C": {
+        "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+        "n_seasons_scored": 0,
+        "bss": null,
+        "brier_forecast": null,
+        "brier_climato": null,
+        "gate_n_ge_10": false,
+        "gate_bss_gt_0_05": false,
+        "verdict": "bloquée",
+        "by_region": {
+          "med": {
+            "n": 0,
+            "base_rate": null,
+            "brier_forecast": null,
+            "brier_climato": null,
+            "bss": null,
+            "verdict": "bloquée",
+            "gate_n_ge_10": false,
+            "gate_bss_gt_0_05": false,
+            "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+            "headline": true
+          },
+          "india": {
+            "n": 0,
+            "base_rate": null,
+            "brier_forecast": null,
+            "brier_climato": null,
+            "bss": null,
+            "verdict": "bloquée",
+            "gate_n_ge_10": false,
+            "gate_bss_gt_0_05": false,
+            "blocker": "Aucun CSV C3S. Mesure bloquée. Cherché : /workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv, puis /workspace/predictor/data/forecasts/c3s/c3s_tp_monthly.csv. Pas d'appel CDS. Pas de score inventé. Le PM dépose c3s_tp_monthly.csv (colonnes origin,system,region,year,init_month,lead_month,tp_mean_mm,n_members,n_cells ; régions MED, Midwest, Southwest, India). ECMWF-51 non scoré.",
+            "headline": false
+          }
+        },
+        "id": "C",
+        "title": "C3S multi-modèle vs climato, vérité CHIRPS",
+        "forecast_name": "C3S multi-modèle",
+        "truth_name": "CHIRPS pluie",
+        "event": "pluie saisonnière sous la moyenne climato leave-one-out du même type de saison (pas un seuil de sécheresse nommé)",
+        "champion_switched": false,
+        "cds_called": false,
+        "headline_region": "med",
+        "pooled": false
+      }
+    },
+    "verdict": "bloquée"
+  },
+  "comparison": {
+    "ab": "C",
+    "region": "med",
+    "truth_name": "CHIRPS pluie",
+    "pooled": false,
+    "headline_only": true,
+    "uses_published_baseline": false,
+    "multi_n": 0,
+    "multi_bss": null,
+    "multi_verdict": "bloquée",
+    "ecmwf51_n": 0,
+    "ecmwf51_bss": null,
+    "ecmwf51_verdict": "bloquée",
+    "mix_beats_ecmwf51": null,
+    "by_ab": {
+      "A": {
+        "midwest": {
+          "multi_n": 0,
+          "multi_bss": null,
+          "multi_verdict": "bloquée",
+          "ecmwf51_n": 0,
+          "ecmwf51_bss": null,
+          "ecmwf51_verdict": "bloquée",
+          "mix_beats_ecmwf51": null
+        },
+        "southwest": {
+          "multi_n": 0,
+          "multi_bss": null,
+          "multi_verdict": "bloquée",
+          "ecmwf51_n": 0,
+          "ecmwf51_bss": null,
+          "ecmwf51_verdict": "bloquée",
+          "mix_beats_ecmwf51": null
+        }
+      },
+      "B": {
+        "med": {
+          "multi_n": 0,
+          "multi_bss": null,
+          "multi_verdict": "bloquée",
+          "ecmwf51_n": 0,
+          "ecmwf51_bss": null,
+          "ecmwf51_verdict": "bloquée",
+          "mix_beats_ecmwf51": null
+        },
+        "india": {
+          "multi_n": 0,
+          "multi_bss": null,
+          "multi_verdict": "bloquée",
+          "ecmwf51_n": 0,
+          "ecmwf51_bss": null,
+          "ecmwf51_verdict": "bloquée",
+          "mix_beats_ecmwf51": null
+        },
+        "us": {
+          "multi_n": 0,
+          "multi_bss": null,
+          "multi_verdict": "bloquée",
+          "ecmwf51_n": 0,
+          "ecmwf51_bss": null,
+          "ecmwf51_verdict": "bloquée",
+          "mix_beats_ecmwf51": null
+        }
+      },
+      "C": {
+        "med": {
+          "multi_n": 0,
+          "multi_bss": null,
+          "multi_verdict": "bloquée",
+          "ecmwf51_n": 0,
+          "ecmwf51_bss": null,
+          "ecmwf51_verdict": "bloquée",
+          "mix_beats_ecmwf51": null
+        },
+        "india": {
+          "multi_n": 0,
+          "multi_bss": null,
+          "multi_verdict": "bloquée",
+          "ecmwf51_n": 0,
+          "ecmwf51_bss": null,
+          "ecmwf51_verdict": "bloquée",
+          "mix_beats_ecmwf51": null
+        }
+      }
+    }
+  },
+  "verdicts": {
+    "C3S multi-modèle": "bloquée",
+    "ECMWF-51": "bloquée",
+    "SEAS5": "testée, ça aide (CHIRPS MED seulement)",
+    "US Drought Monitor": "testée, ça aide",
+    "SPEI": "testée, ça aide",
+    "CHIRPS pluie": "testée, ça aide",
+    "Sécheresse US": "bloquée",
+    "Sécheresse Méditerranée": "cible Tier 1 (pas encore testée)",
+    "Sécheresse Inde": "cible Tier 1 (pas encore testée)",
+    "NMME": "bloquée",
+    "Open-Meteo Seasonal": "bloquée"
+  },
+  "as_of": "2026-10-04T13:20:44Z",
+  "paths": {
+    "forecast_dir": "data/forecasts/c3s",
+    "data_dir": "data",
+    "out_dir": "data/truth/c3s_ab"
+  }
+}
