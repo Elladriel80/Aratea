@@ -1,48 +1,50 @@
 {
   "schema": "cli_join_summary/1",
   "ledger": {
-    "n": 1280,
-    "n_joined": 1275,
-    "n_not_joined": 5,
+    "n": 1390,
+    "n_joined": 1351,
+    "n_not_joined": 39,
     "by_station_joined": {
-      "KBOS": 81,
-      "KDCA": 113,
-      "KDEN": 74,
-      "KLAX": 98,
-      "KMDW": 121,
-      "KMIA": 97,
-      "KNYC": 417,
-      "KPHX": 69,
-      "KSEA": 43,
-      "KSFO": 162
+      "KBOS": 91,
+      "KDCA": 119,
+      "KDEN": 76,
+      "KLAX": 104,
+      "KMDW": 123,
+      "KMIA": 103,
+      "KNYC": 425,
+      "KPHX": 77,
+      "KSEA": 53,
+      "KSFO": 180
     },
     "not_joined_reasons": {
-      "cli_sans_valeur": 5
+      "cli_sans_valeur": 5,
+      "pas_de_jour_cli": 30,
+      "serie_inconnue": 4
     }
   },
   "forecasts": {
-    "n": 37926,
-    "n_joined": 32921,
+    "n": 39690,
+    "n_joined": 34685,
     "n_not_joined": 5005,
     "by_station_joined": {
-      "KATL": 1834,
-      "KAUS": 1834,
-      "KBOS": 1834,
-      "KDCA": 1834,
-      "KDEN": 1820,
-      "KDFW": 1834,
-      "KHOU": 1834,
-      "KLAS": 1820,
-      "KLAX": 1820,
-      "KMDW": 1834,
-      "KMIA": 1827,
-      "KMSP": 1834,
-      "KNYC": 1834,
-      "KPHL": 1834,
-      "KPHX": 1820,
-      "KSAT": 1834,
-      "KSEA": 1820,
-      "KSFO": 1820
+      "KATL": 1932,
+      "KAUS": 1932,
+      "KBOS": 1932,
+      "KDCA": 1932,
+      "KDEN": 1918,
+      "KDFW": 1932,
+      "KHOU": 1932,
+      "KLAS": 1918,
+      "KLAX": 1918,
+      "KMDW": 1932,
+      "KMIA": 1925,
+      "KMSP": 1932,
+      "KNYC": 1932,
+      "KPHL": 1932,
+      "KPHX": 1918,
+      "KSAT": 1932,
+      "KSEA": 1918,
+      "KSFO": 1918
     },
     "not_joined_reasons": {
       "ancienne_station": 4998,
@@ -71,184 +73,184 @@
   },
   "forecast_vs_cli": {
     "KATL:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -1.96,
-      "mae_f": 2.63
+      "n": 966,
+      "bias_forecast_minus_cli_f": -1.87,
+      "mae_f": 2.6
     },
     "KATL:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -0.65,
-      "mae_f": 1.72
+      "n": 966,
+      "bias_forecast_minus_cli_f": -0.59,
+      "mae_f": 1.71
     },
     "KAUS:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -1.76,
-      "mae_f": 2.33
+      "n": 966,
+      "bias_forecast_minus_cli_f": -1.83,
+      "mae_f": 2.38
     },
     "KAUS:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": 1.96,
-      "mae_f": 2.65
+      "n": 966,
+      "bias_forecast_minus_cli_f": 2.07,
+      "mae_f": 2.72
     },
     "KBOS:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -2.69,
-      "mae_f": 4.13
+      "n": 966,
+      "bias_forecast_minus_cli_f": -2.63,
+      "mae_f": 4.03
     },
     "KBOS:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -1.09,
-      "mae_f": 2.13
+      "n": 966,
+      "bias_forecast_minus_cli_f": -0.92,
+      "mae_f": 2.15
     },
     "KDCA:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -1.04,
-      "mae_f": 2.7
+      "n": 966,
+      "bias_forecast_minus_cli_f": -0.94,
+      "mae_f": 2.71
     },
     "KDCA:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -0.17,
-      "mae_f": 1.89
+      "n": 966,
+      "bias_forecast_minus_cli_f": -0.13,
+      "mae_f": 1.92
     },
     "KDEN:temp_max": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -1.54,
+      "n": 959,
+      "bias_forecast_minus_cli_f": -1.56,
       "mae_f": 3.23
     },
     "KDEN:temp_min": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": 3.88,
-      "mae_f": 4.24
+      "n": 959,
+      "bias_forecast_minus_cli_f": 3.86,
+      "mae_f": 4.21
     },
     "KDFW:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -1.27,
-      "mae_f": 2.45
+      "n": 966,
+      "bias_forecast_minus_cli_f": -1.37,
+      "mae_f": 2.5
     },
     "KDFW:temp_min": {
-      "n": 917,
+      "n": 966,
       "bias_forecast_minus_cli_f": 1.55,
-      "mae_f": 2.29
+      "mae_f": 2.3
     },
     "KHOU:temp_max": {
-      "n": 917,
+      "n": 966,
       "bias_forecast_minus_cli_f": -1.19,
-      "mae_f": 2.23
+      "mae_f": 2.2
     },
     "KHOU:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": 0.19,
-      "mae_f": 1.38
+      "n": 966,
+      "bias_forecast_minus_cli_f": 0.17,
+      "mae_f": 1.36
     },
     "KLAS:temp_max": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -1.73,
-      "mae_f": 2.48
+      "n": 959,
+      "bias_forecast_minus_cli_f": -1.69,
+      "mae_f": 2.42
     },
     "KLAS:temp_min": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -1.44,
-      "mae_f": 2.72
+      "n": 959,
+      "bias_forecast_minus_cli_f": -1.24,
+      "mae_f": 2.71
     },
     "KLAX:temp_max": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": 3.7,
-      "mae_f": 4.1
+      "n": 959,
+      "bias_forecast_minus_cli_f": 3.62,
+      "mae_f": 4.02
     },
     "KLAX:temp_min": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": 0.52,
-      "mae_f": 1.25
+      "n": 959,
+      "bias_forecast_minus_cli_f": 0.46,
+      "mae_f": 1.23
     },
     "KMDW:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -0.06,
+      "n": 966,
+      "bias_forecast_minus_cli_f": -0.02,
       "mae_f": 2.47
     },
     "KMDW:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": 0.46,
-      "mae_f": 2.25
+      "n": 966,
+      "bias_forecast_minus_cli_f": 0.45,
+      "mae_f": 2.23
     },
     "KMIA:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -3.02,
-      "mae_f": 3.11
+      "n": 966,
+      "bias_forecast_minus_cli_f": -2.98,
+      "mae_f": 3.09
     },
     "KMIA:temp_min": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": 1.71,
-      "mae_f": 2.17
+      "n": 959,
+      "bias_forecast_minus_cli_f": 1.68,
+      "mae_f": 2.13
     },
     "KMSP:temp_max": {
-      "n": 917,
+      "n": 966,
       "bias_forecast_minus_cli_f": -0.7,
-      "mae_f": 2.92
+      "mae_f": 2.91
     },
     "KMSP:temp_min": {
-      "n": 917,
+      "n": 966,
       "bias_forecast_minus_cli_f": -0.25,
-      "mae_f": 2.01
+      "mae_f": 1.99
     },
     "KNYC:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": 1.14,
-      "mae_f": 2.69
+      "n": 966,
+      "bias_forecast_minus_cli_f": 1.09,
+      "mae_f": 2.67
     },
     "KNYC:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": 0.7,
-      "mae_f": 2.25
+      "n": 966,
+      "bias_forecast_minus_cli_f": 0.65,
+      "mae_f": 2.21
     },
     "KPHL:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -1.8,
-      "mae_f": 3.0
+      "n": 966,
+      "bias_forecast_minus_cli_f": -1.79,
+      "mae_f": 2.99
     },
     "KPHL:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -0.78,
-      "mae_f": 1.97
+      "n": 966,
+      "bias_forecast_minus_cli_f": -0.76,
+      "mae_f": 1.95
     },
     "KPHX:temp_max": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -2.58,
-      "mae_f": 3.1
+      "n": 959,
+      "bias_forecast_minus_cli_f": -2.53,
+      "mae_f": 3.17
     },
     "KPHX:temp_min": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -0.04,
-      "mae_f": 2.18
+      "n": 959,
+      "bias_forecast_minus_cli_f": 0.03,
+      "mae_f": 2.19
     },
     "KSAT:temp_max": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": -0.86,
-      "mae_f": 1.97
+      "n": 966,
+      "bias_forecast_minus_cli_f": -0.92,
+      "mae_f": 1.98
     },
     "KSAT:temp_min": {
-      "n": 917,
-      "bias_forecast_minus_cli_f": 0.12,
-      "mae_f": 1.68
+      "n": 966,
+      "bias_forecast_minus_cli_f": 0.15,
+      "mae_f": 1.66
     },
     "KSEA:temp_max": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -1.52,
-      "mae_f": 3.11
+      "n": 959,
+      "bias_forecast_minus_cli_f": -1.42,
+      "mae_f": 3.09
     },
     "KSEA:temp_min": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -1.0,
-      "mae_f": 1.58
+      "n": 959,
+      "bias_forecast_minus_cli_f": -0.98,
+      "mae_f": 1.57
     },
     "KSFO:temp_max": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": 0.03,
-      "mae_f": 2.93
+      "n": 959,
+      "bias_forecast_minus_cli_f": 0.1,
+      "mae_f": 2.89
     },
     "KSFO:temp_min": {
-      "n": 910,
-      "bias_forecast_minus_cli_f": -0.11,
-      "mae_f": 1.29
+      "n": 959,
+      "bias_forecast_minus_cli_f": -0.07,
+      "mae_f": 1.28
     }
   }
 }

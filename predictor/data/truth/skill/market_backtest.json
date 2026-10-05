@@ -1,41 +1,41 @@
 {
   "schema": "station_bias_market_backtest/1",
-  "generated_at": "2026-09-28T12:43:21Z",
+  "generated_at": "2026-10-05T13:23:47Z",
   "params": {
     "min_date": null,
     "leads": null
   },
-  "n_rows": 12625,
+  "n_rows": 14021,
   "skips": {
     "no_bias_yet": 152,
-    "no_cli_truth": 112
+    "no_cli_truth": 132
   },
   "overall": {
     "all": {
-      "n_bins": 12625,
-      "n_dates": 82,
-      "base_rate": 0.19485148514851486,
-      "brier_raw": 0.14653840600806756,
-      "brier_station": 0.13562529190580594,
-      "brier_market": 0.08930991683168317
+      "n_bins": 14021,
+      "n_dates": 89,
+      "base_rate": 0.19513586762713073,
+      "brier_raw": 0.14664675778963818,
+      "brier_station": 0.135979422088876,
+      "brier_market": 0.08834535696455317
     }
   },
   "by_lead": {
     "0": {
-      "n_bins": 6461,
-      "n_dates": 77,
-      "base_rate": 0.19532580095960378,
-      "brier_raw": 0.14546016032220013,
-      "brier_station": 0.1336104231469788,
-      "brier_market": 0.054356403807460145
+      "n_bins": 7173,
+      "n_dates": 84,
+      "base_rate": 0.19559459082671127,
+      "brier_raw": 0.14541419322998922,
+      "brier_station": 0.13369012064578462,
+      "brier_market": 0.05211259584553186
     },
     "1": {
-      "n_bins": 6164,
-      "n_dates": 76,
-      "base_rate": 0.1943543153796236,
-      "brier_raw": 0.14766860480371802,
-      "brier_station": 0.13773724308211713,
-      "brier_market": 0.12594759490590524
+      "n_bins": 6848,
+      "n_dates": 83,
+      "base_rate": 0.1946553738317757,
+      "brier_raw": 0.1479378187689551,
+      "brier_station": 0.13837737174589915,
+      "brier_market": 0.12629769275700936
     }
   },
   "by_month": {
@@ -64,295 +64,303 @@
       "brier_market": 0.08805587649402391
     },
     "2026-09": {
-      "n_bins": 3212,
-      "n_dates": 20,
-      "base_rate": 0.21046077210460773,
-      "brier_raw": 0.16127712603011823,
-      "brier_station": 0.1446264269705864,
-      "brier_market": 0.08532107721046078
+      "n_bins": 3808,
+      "n_dates": 23,
+      "base_rate": 0.20798319327731093,
+      "brier_raw": 0.15950044863861876,
+      "brier_station": 0.14440977261648927,
+      "brier_market": 0.08477504595588235
+    },
+    "2026-10": {
+      "n_bins": 800,
+      "n_dates": 4,
+      "base_rate": 0.2,
+      "brier_raw": 0.1459140443869298,
+      "brier_station": 0.1361572951290788,
+      "brier_market": 0.07797559375
     }
   },
   "by_station": {
     "KATL/temp_max": {
-      "n_bins": 612,
-      "n_dates": 82,
-      "base_rate": 0.22712418300653595,
-      "brier_raw": 0.17625426154874643,
-      "brier_station": 0.17018661051703565,
-      "brier_market": 0.11979648692810457
+      "n_bins": 668,
+      "n_dates": 89,
+      "base_rate": 0.22604790419161677,
+      "brier_raw": 0.17588059251030994,
+      "brier_station": 0.16964656458917476,
+      "brier_market": 0.11663218562874253
     },
     "KATL/temp_min": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.20860927152317882,
-      "brier_raw": 0.14874476911814866,
-      "brier_station": 0.1280909271315606,
-      "brier_market": 0.08173182947019868
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.20909090909090908,
+      "brier_raw": 0.14775500596337338,
+      "brier_station": 0.12938131234133052,
+      "brier_market": 0.08174337121212122
     },
     "KAUS/temp_min": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.2367549668874172,
-      "brier_raw": 0.19119772540226487,
-      "brier_station": 0.17238046592723177,
-      "brier_market": 0.07997918046357616
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.2287878787878788,
+      "brier_raw": 0.18422606507610997,
+      "brier_station": 0.16730165120711402,
+      "brier_market": 0.07714962121212121
     },
     "KBOS/temp_max": {
-      "n_bins": 612,
-      "n_dates": 82,
-      "base_rate": 0.184640522875817,
-      "brier_raw": 0.1679802711423896,
-      "brier_station": 0.1413180691965223,
-      "brier_market": 0.07836993464052287
+      "n_bins": 668,
+      "n_dates": 89,
+      "base_rate": 0.18113772455089822,
+      "brier_raw": 0.16585869433691225,
+      "brier_station": 0.13926200106965547,
+      "brier_market": 0.07505314371257485
     },
     "KBOS/temp_min": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.08609271523178808,
-      "brier_raw": 0.07030026925923849,
-      "brier_station": 0.07063613286546339,
-      "brier_market": 0.04740753311258278
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.1,
+      "brier_raw": 0.0729193243395383,
+      "brier_station": 0.07670283954591144,
+      "brier_market": 0.051644053030303026
     },
     "KDCA/temp_min": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.1605960264900662,
-      "brier_raw": 0.09716217393687543,
-      "brier_station": 0.09897683227809934,
-      "brier_market": 0.06949147350993377
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.1621212121212121,
+      "brier_raw": 0.09810259010829553,
+      "brier_station": 0.10074415129414638,
+      "brier_market": 0.06803446969696969
     },
     "KDEN/temp_min": {
-      "n_bins": 396,
-      "n_dates": 74,
-      "base_rate": 0.1994949494949495,
-      "brier_raw": 0.1899875432672256,
-      "brier_station": 0.14602929055662808,
-      "brier_market": 0.06524457070707071
+      "n_bins": 448,
+      "n_dates": 81,
+      "base_rate": 0.20089285714285715,
+      "brier_raw": 0.18799079187595827,
+      "brier_station": 0.1472749076213304,
+      "brier_market": 0.0721328125
     },
     "KDFW/temp_max": {
-      "n_bins": 612,
-      "n_dates": 82,
-      "base_rate": 0.21241830065359477,
-      "brier_raw": 0.16256084299611342,
-      "brier_station": 0.17025644330514011,
-      "brier_market": 0.11010441176470588
+      "n_bins": 668,
+      "n_dates": 89,
+      "base_rate": 0.2125748502994012,
+      "brier_raw": 0.16211255752937306,
+      "brier_station": 0.1669649781004824,
+      "brier_market": 0.1069818113772455
     },
     "KDFW/temp_min": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.21357615894039736,
-      "brier_raw": 0.12543860250667038,
-      "brier_station": 0.13230621275317664,
-      "brier_market": 0.06816067880794702
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.20454545454545456,
+      "brier_raw": 0.12358541726405213,
+      "brier_station": 0.12992028769186836,
+      "brier_market": 0.06865337121212121
     },
     "KHOU/temp_max": {
-      "n_bins": 605,
-      "n_dates": 82,
-      "base_rate": 0.21322314049586777,
-      "brier_raw": 0.1482259841081806,
-      "brier_station": 0.16466741041589594,
-      "brier_market": 0.09860376033057852
+      "n_bins": 661,
+      "n_dates": 89,
+      "base_rate": 0.21331316187594554,
+      "brier_raw": 0.15209189341912024,
+      "brier_station": 0.1620690775863709,
+      "brier_market": 0.09613343419062027
     },
     "KHOU/temp_min": {
-      "n_bins": 264,
-      "n_dates": 51,
-      "base_rate": 0.23863636363636365,
-      "brier_raw": 0.14484671887374423,
-      "brier_station": 0.14798960224449134,
-      "brier_market": 0.0874501893939394
+      "n_bins": 312,
+      "n_dates": 58,
+      "base_rate": 0.2403846153846154,
+      "brier_raw": 0.14529819041381617,
+      "brier_station": 0.1469128287757744,
+      "brier_market": 0.08787347756410256
     },
     "KLAS/temp_max": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.2367549668874172,
-      "brier_raw": 0.21981613750136803,
-      "brier_station": 0.12571845978931268,
-      "brier_market": 0.09958050496688742
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.23484848484848486,
+      "brier_raw": 0.2158278183188656,
+      "brier_station": 0.12535158160762153,
+      "brier_market": 0.09709772727272728
     },
     "KLAS/temp_min": {
-      "n_bins": 256,
-      "n_dates": 50,
-      "base_rate": 0.0546875,
-      "brier_raw": 0.05764845999927626,
-      "brier_station": 0.04611452597277871,
-      "brier_market": 0.02174267578125
+      "n_bins": 304,
+      "n_dates": 57,
+      "base_rate": 0.07894736842105263,
+      "brier_raw": 0.07472380688220381,
+      "brier_station": 0.06942105242372625,
+      "brier_market": 0.03202623355263158
     },
     "KLAX/temp_min": {
-      "n_bins": 260,
-      "n_dates": 50,
-      "base_rate": 0.1423076923076923,
-      "brier_raw": 0.0766686258726347,
-      "brier_station": 0.07621239924695428,
-      "brier_market": 0.036014423076923076
+      "n_bins": 308,
+      "n_dates": 57,
+      "base_rate": 0.15584415584415584,
+      "brier_raw": 0.08852710710003228,
+      "brier_station": 0.08787271463617573,
+      "brier_market": 0.04187207792207793
     },
     "KMDW/temp_min": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.1804635761589404,
-      "brier_raw": 0.12198747627634113,
-      "brier_station": 0.12785443372787716,
-      "brier_market": 0.08273841059602649
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.18333333333333332,
+      "brier_raw": 0.12485370127813493,
+      "brier_station": 0.12910357727102262,
+      "brier_market": 0.08295170454545454
     },
     "KMIA/temp_min": {
-      "n_bins": 248,
-      "n_dates": 49,
-      "base_rate": 0.2056451612903226,
-      "brier_raw": 0.14477778741447705,
-      "brier_station": 0.13674951519663556,
-      "brier_market": 0.0902796370967742
+      "n_bins": 296,
+      "n_dates": 56,
+      "base_rate": 0.20270270270270271,
+      "brier_raw": 0.14458330164055877,
+      "brier_station": 0.13600209860759996,
+      "brier_market": 0.09159248310810811
     },
     "KMSP/temp_max": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.20033112582781457,
-      "brier_raw": 0.15079151164524873,
-      "brier_station": 0.14985159703105003,
-      "brier_market": 0.11559772350993379
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.20454545454545456,
+      "brier_raw": 0.15494144133715007,
+      "brier_station": 0.15257856038091905,
+      "brier_market": 0.11252170454545454
     },
     "KMSP/temp_min": {
-      "n_bins": 248,
-      "n_dates": 49,
-      "base_rate": 0.14919354838709678,
-      "brier_raw": 0.10722409637399612,
-      "brier_station": 0.10442859565673107,
-      "brier_market": 0.05757631048387096
+      "n_bins": 288,
+      "n_dates": 56,
+      "base_rate": 0.14930555555555555,
+      "brier_raw": 0.10782308652111168,
+      "brier_station": 0.10679545169880421,
+      "brier_market": 0.05834809027777778
     },
     "KNYC/temp_min": {
-      "n_bins": 240,
-      "n_dates": 49,
-      "base_rate": 0.225,
-      "brier_raw": 0.16390071961442884,
-      "brier_station": 0.15008567779729975,
-      "brier_market": 0.10841572916666667
+      "n_bins": 280,
+      "n_dates": 56,
+      "base_rate": 0.22857142857142856,
+      "brier_raw": 0.1607102103872812,
+      "brier_station": 0.15191093859977847,
+      "brier_market": 0.10121330357142858
     },
     "KPHL/temp_min": {
-      "n_bins": 224,
-      "n_dates": 47,
-      "base_rate": 0.10714285714285714,
-      "brier_raw": 0.06866778930329051,
-      "brier_station": 0.06443457137779962,
-      "brier_market": 0.052701450892857146
+      "n_bins": 260,
+      "n_dates": 53,
+      "base_rate": 0.11153846153846154,
+      "brier_raw": 0.0734614871486578,
+      "brier_station": 0.06833005371057858,
+      "brier_market": 0.057418846153846154
     },
     "KPHX/temp_max": {
-      "n_bins": 596,
-      "n_dates": 81,
-      "base_rate": 0.22651006711409397,
-      "brier_raw": 0.2031783515609045,
-      "brier_station": 0.15151999480092776,
-      "brier_market": 0.1261628355704698
+      "n_bins": 652,
+      "n_dates": 88,
+      "base_rate": 0.2254601226993865,
+      "brier_raw": 0.20387756769047347,
+      "brier_station": 0.15111082977095672,
+      "brier_market": 0.11948964723926381
     },
     "KPHX/temp_min": {
-      "n_bins": 200,
-      "n_dates": 43,
-      "base_rate": 0.11,
-      "brier_raw": 0.08769072139022806,
-      "brier_station": 0.08346775854470424,
-      "brier_market": 0.065372375
+      "n_bins": 236,
+      "n_dates": 49,
+      "base_rate": 0.1059322033898305,
+      "brier_raw": 0.08304897257686908,
+      "brier_station": 0.08046767613465934,
+      "brier_market": 0.05925540254237288
     },
     "KSAT/temp_max": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.22350993377483444,
-      "brier_raw": 0.16781626680827968,
-      "brier_station": 0.17408459252422495,
-      "brier_market": 0.11728861754966888
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.2196969696969697,
+      "brier_raw": 0.1644636189149539,
+      "brier_station": 0.1721107677121952,
+      "brier_market": 0.11486579545454545
     },
     "KSAT/temp_min": {
-      "n_bins": 204,
-      "n_dates": 44,
-      "base_rate": 0.20098039215686275,
-      "brier_raw": 0.10945883771789024,
-      "brier_station": 0.1342487164733743,
-      "brier_market": 0.05068235294117647
+      "n_bins": 240,
+      "n_dates": 50,
+      "base_rate": 0.19166666666666668,
+      "brier_raw": 0.10976103990838146,
+      "brier_station": 0.12978347834210743,
+      "brier_market": 0.049443125000000004
     },
     "KSEA/temp_max": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.2119205298013245,
-      "brier_raw": 0.16554918104138325,
-      "brier_station": 0.15425562233893084,
-      "brier_market": 0.13184110099337748
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.21515151515151515,
+      "brier_raw": 0.16748238854084038,
+      "brier_station": 0.15569152060899566,
+      "brier_market": 0.13181246212121212
     },
     "KSEA/temp_min": {
-      "n_bins": 204,
-      "n_dates": 44,
-      "base_rate": 0.22058823529411764,
-      "brier_raw": 0.11996723978040287,
-      "brier_station": 0.11779911946352356,
-      "brier_market": 0.07856151960784313
+      "n_bins": 240,
+      "n_dates": 50,
+      "base_rate": 0.22083333333333333,
+      "brier_raw": 0.12304573167341903,
+      "brier_station": 0.12313150632656798,
+      "brier_market": 0.08596260416666666
     },
     "KSFO/temp_max": {
-      "n_bins": 604,
-      "n_dates": 82,
-      "base_rate": 0.19701986754966888,
-      "brier_raw": 0.1583531696666194,
-      "brier_station": 0.15074866276296053,
-      "brier_market": 0.12383663079470199
+      "n_bins": 660,
+      "n_dates": 89,
+      "base_rate": 0.19545454545454546,
+      "brier_raw": 0.15786788798536577,
+      "brier_station": 0.15057679447805583,
+      "brier_market": 0.12257159090909091
     },
     "KSFO/temp_min": {
-      "n_bins": 200,
-      "n_dates": 44,
-      "base_rate": 0.225,
-      "brier_raw": 0.11316425401783489,
-      "brier_station": 0.11862519344021258,
-      "brier_market": 0.05788912500000001
+      "n_bins": 232,
+      "n_dates": 50,
+      "base_rate": 0.22844827586206898,
+      "brier_raw": 0.1258902641811517,
+      "brier_station": 0.12498752704563683,
+      "brier_market": 0.06779471982758621
     }
   },
   "sign_tests": {
     "station_vs_raw": {
       "a": "p_station",
       "b": "p_raw",
-      "dates": 82,
-      "a_wins": 66,
-      "p_one_sided": 1.1259897956967082e-08
+      "dates": 89,
+      "a_wins": 72,
+      "p_one_sided": 1.5863695095217972e-09
     },
     "raw_vs_market": {
       "a": "p_raw",
       "b": "p_mkt",
-      "dates": 82,
+      "dates": 89,
       "a_wins": 1,
       "p_one_sided": 1.0
     },
     "station_vs_market": {
       "a": "p_station",
       "b": "p_mkt",
-      "dates": 82,
+      "dates": 89,
       "a_wins": 1,
       "p_one_sided": 1.0
     },
     "members_vs_station": {
       "a": "p_members",
       "b": "p_station",
-      "dates": 19,
-      "a_wins": 5,
-      "p_one_sided": 0.9903945922851562
+      "dates": 26,
+      "a_wins": 9,
+      "p_one_sided": 0.9622406512498856
     },
     "members_vs_market": {
       "a": "p_members",
       "b": "p_mkt",
-      "dates": 19,
+      "dates": 26,
       "a_wins": 0,
       "p_one_sided": 1.0
     }
   },
   "ensemble_members_by_lead": {
     "0": {
-      "n_bins": 1564,
-      "n_dates": 19,
-      "base_rate": 0.21163682864450128,
-      "brier_raw": 0.16056211338320073,
-      "brier_station": 0.14441919277425957,
-      "brier_market": 0.04577359335038363,
-      "brier_members": 0.15578863906660995
+      "n_bins": 2276,
+      "n_dates": 26,
+      "base_rate": 0.20738137082601055,
+      "brier_raw": 0.15569290752561668,
+      "brier_station": 0.14128906368125008,
+      "brier_market": 0.041387005711775046,
+      "brier_members": 0.15128499028882014
     },
     "1": {
-      "n_bins": 1424,
-      "n_dates": 18,
-      "base_rate": 0.21137640449438203,
-      "brier_raw": 0.1628762127153319,
-      "brier_station": 0.14658387832558523,
-      "brier_market": 0.12978049508426967,
-      "brier_members": 0.1562315524604792
+      "n_bins": 2108,
+      "n_dates": 25,
+      "base_rate": 0.20683111954459202,
+      "brier_raw": 0.15881623805802622,
+      "brier_station": 0.14579284539534196,
+      "brier_market": 0.12967412239089185,
+      "brier_members": 0.15225551859328476
     }
   }
 }
