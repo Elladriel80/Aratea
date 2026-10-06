@@ -1,0 +1,749 @@
+{
+  "schema": "weathernext_skill/1",
+  "generated_at": "2026-09-12T18:07:27Z",
+  "lever_name": "WeatherNext 3",
+  "verdict": "pas encore mesurable (bloqu\u00e9e)",
+  "champion_changed": false,
+  "params": {
+    "start": "2026-09-08",
+    "end": "2026-09-12",
+    "stations": [
+      "KATL",
+      "KAUS",
+      "KBOS",
+      "KMDW",
+      "KDFW",
+      "KDEN",
+      "KHOU",
+      "KLAS",
+      "KLAX",
+      "KMIA",
+      "KMSP",
+      "KNYC",
+      "KPHL",
+      "KPHX",
+      "KSAT",
+      "KSFO",
+      "KSEA",
+      "KDCA"
+    ],
+    "wn2_model": "google_weathernext2_ensemble",
+    "min_members": 10
+  },
+  "weather_next_3": {
+    "blocked": true,
+    "reasons": [
+      "Open-Meteo refuse tous les noms WeatherNext 3 essay\u00e9s (google_weathernext3_ensemble, google_weathernext_3, google_weathernext3, weathernext3, weathernext_3, google_weathernext).",
+      "Les seaux GCS weathernext3_spatial, weathernext3_statistics_spatial et weathernext r\u00e9pondent ['401', '403'] sans compte Google autoris\u00e9.",
+      "Pas de GOOGLE_APPLICATION_CREDENTIALS : BigQuery weathernext_3_0_0_0p05deg et Earth Engine sont inaccessibles ici."
+    ],
+    "gcp_env": {
+      "GOOGLE_APPLICATION_CREDENTIALS_set": false,
+      "CLOUDSDK_CONFIG_set": false,
+      "gcloud_config_dir_exists": false
+    },
+    "open_meteo_statuses": [
+      {
+        "model": "google_weathernext3_ensemble",
+        "status": 400,
+        "body": "{\"error\":true,\"reason\":\"Data corrupted at path ''. Cannot initialize MultiDomains from invalid String value google_weathernext3_ensemble.\"}"
+      },
+      {
+        "model": "google_weathernext_3",
+        "status": 400,
+        "body": "{\"reason\":\"Data corrupted at path ''. Cannot initialize MultiDomains from invalid String value google_weathernext_3.\",\"error\":true}"
+      },
+      {
+        "model": "google_weathernext3",
+        "status": 400,
+        "body": "{\"error\":true,\"reason\":\"Data corrupted at path ''. Cannot initialize MultiDomains from invalid String value google_weathernext3.\"}"
+      },
+      {
+        "model": "weathernext3",
+        "status": 400,
+        "body": "{\"error\":true,\"reason\":\"Data corrupted at path ''. Cannot initialize MultiDomains from invalid String value weathernext3.\"}"
+      },
+      {
+        "model": "weathernext_3",
+        "status": 400,
+        "body": "{\"reason\":\"Data corrupted at path ''. Cannot initialize MultiDomains from invalid String value weathernext_3.\",\"error\":true}"
+      },
+      {
+        "model": "google_weathernext",
+        "status": 400,
+        "body": "{\"error\":true,\"reason\":\"Data corrupted at path ''. Cannot initialize MultiDomains from invalid String value google_weathernext.\"}"
+      }
+    ],
+    "gcs_statuses": [
+      {
+        "url": "https://storage.googleapis.com/storage/v1/b/weathernext3_spatial",
+        "status": 401,
+        "body": "{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"Anonymous caller does not have storage.buckets.get access to the Google Cloud Storage bucket. Permission 'storage.buckets.get' denie",
+        "error": null
+      },
+      {
+        "url": "https://storage.googleapis.com/storage/v1/b/weathernext3_statistics_spatial",
+        "status": 401,
+        "body": "{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"Anonymous caller does not have storage.buckets.get access to the Google Cloud Storage bucket. Permission 'storage.buckets.get' denie",
+        "error": null
+      },
+      {
+        "url": "https://storage.googleapis.com/storage/v1/b/weathernext",
+        "status": 401,
+        "body": "{\n  \"error\": {\n    \"code\": 401,\n    \"message\": \"Anonymous caller does not have storage.buckets.get access to the Google Cloud Storage bucket. Permission 'storage.buckets.get' denie",
+        "error": null
+      },
+      {
+        "url": "https://storage.googleapis.com/weathernext3_spatial/",
+        "status": 403,
+        "body": "<?xml version='1.0' encoding='UTF-8'?><Error><Code>AccessDenied</Code><Message>Access denied.</Message><Details>Anonymous caller does not have storage.objects.list access to the Go",
+        "error": null
+      },
+      {
+        "url": "https://storage.googleapis.com/weathernext/weathernext_2_0_0/zarr/",
+        "status": 403,
+        "body": "<?xml version='1.0' encoding='UTF-8'?><Error><Code>AccessDenied</Code><Message>Access denied.</Message><Details>Anonymous caller does not have storage.objects.get access to the Goo",
+        "error": null
+      }
+    ],
+    "minimal_next_fetch": {
+      "step_1": "Remplir le formulaire Google WeatherNext avec l'e-mail du compte GCP.",
+      "form": "https://developers.google.com/weathernext/guides/access-forecast",
+      "step_2": "Attendre l'ajout \u00e0 la liste (Google indique 5 \u00e0 7 jours ouvr\u00e9s).",
+      "step_3": "Lire la table BigQuery weathernext_3_0_0_0p05deg (ou le zarr GCS weathernext3_spatial) aux 18 stations, inits 00z/12z, membres ou percentiles, sur au moins 30 jours distincts, J0 et J-1 s\u00e9par\u00e9s.",
+      "step_4": "Relancer ce script avec les credentials. Ne pas inventer de scores avant."
+    }
+  },
+  "weather_next_2": {
+    "label": "WeatherNext 2",
+    "model": "google_weathernext2_ensemble",
+    "probe": {
+      "label": "WeatherNext 2",
+      "model": "google_weathernext2_ensemble",
+      "ensemble_live": {
+        "status": 200,
+        "error": null,
+        "fill": {
+          "n_member_keys": 64,
+          "n_times": 216,
+          "n_cells": 13824,
+          "n_filled_cells": 7680,
+          "filled_days": [
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11",
+            "2026-09-12",
+            "2026-09-13"
+          ],
+          "first_filled": "2026-09-09",
+          "last_filled": "2026-09-13",
+          "n_filled_days": 5,
+          "sample": {
+            "key": "temperature_2m",
+            "time": "2026-09-09T00:00",
+            "value": 76.8
+          },
+          "days": {
+            "2026-09-05": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-06": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-07": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-08": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-09": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            },
+            "2026-09-10": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            },
+            "2026-09-11": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            },
+            "2026-09-12": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            },
+            "2026-09-13": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            }
+          }
+        },
+        "body": "{\"latitude\":33.75,\"longitude\":-84.5,\"generationtime_ms\":0.6221532821655273,\"utc_offset_seconds\":0,\"timezone\":\"GMT\",\"timezone_abbreviation\":\"GMT\",\"elevation\":302.0,\"hourly_units\":{\"time\":\"iso8601\",\"tem"
+      },
+      "historical_holdout_aug": {
+        "status": 200,
+        "fill": {
+          "n_member_keys": 64,
+          "n_times": 96,
+          "n_cells": 6144,
+          "n_filled_cells": 0,
+          "filled_days": [],
+          "first_filled": null,
+          "last_filled": null,
+          "n_filled_days": 0,
+          "sample": null,
+          "days": {
+            "2026-08-03": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-08-04": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-08-05": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-08-06": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            }
+          }
+        },
+        "body": ""
+      },
+      "historical_recent": {
+        "status": 200,
+        "fill": {
+          "n_member_keys": 64,
+          "n_times": 120,
+          "n_cells": 7680,
+          "n_filled_cells": 6144,
+          "filled_days": [
+            "2026-09-09",
+            "2026-09-10",
+            "2026-09-11",
+            "2026-09-12"
+          ],
+          "first_filled": "2026-09-09",
+          "last_filled": "2026-09-12",
+          "n_filled_days": 4,
+          "sample": {
+            "key": "temperature_2m",
+            "time": "2026-09-09T00:00",
+            "value": 76.5
+          },
+          "days": {
+            "2026-09-08": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-09": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            },
+            "2026-09-10": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            },
+            "2026-09-11": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            },
+            "2026-09-12": {
+              "hours_on_axis": 24,
+              "hours_any_member": 24,
+              "members_with_any": 64,
+              "n_filled_cells": 1536,
+              "n_cells": 1536
+            }
+          }
+        },
+        "body": ""
+      },
+      "previous_day1_recent": {
+        "status": 200,
+        "fill": {
+          "n_member_keys": 64,
+          "n_times": 120,
+          "n_cells": 7680,
+          "n_filled_cells": 0,
+          "filled_days": [],
+          "first_filled": null,
+          "last_filled": null,
+          "n_filled_days": 0,
+          "sample": null,
+          "days": {
+            "2026-09-08": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-09": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-10": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-11": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            },
+            "2026-09-12": {
+              "hours_on_axis": 24,
+              "hours_any_member": 0,
+              "members_with_any": 0,
+              "n_filled_cells": 0,
+              "n_cells": 1536
+            }
+          }
+        },
+        "body": ""
+      },
+      "single_runs": [
+        {
+          "status": 400,
+          "error": null,
+          "body": "{\"error\":true,\"reason\":\"The requested model run is not available. Model: google_weathernext2_ensemble, run: 2026-08-03T00:00Z\"}",
+          "run": "2026-08-03T00:00"
+        },
+        {
+          "status": 400,
+          "error": null,
+          "body": "{\"reason\":\"The requested model run is not available. Model: google_weathernext2_ensemble, run: 2026-09-01T00:00Z\",\"error\":true}",
+          "run": "2026-09-01T00:00"
+        },
+        {
+          "status": 400,
+          "error": null,
+          "body": "{\"error\":true,\"reason\":\"The requested model run is not available. Model: google_weathernext2_ensemble, run: 2026-09-11T00:00Z\"}",
+          "run": "2026-09-11T00:00"
+        },
+        {
+          "status": 400,
+          "error": null,
+          "body": "{\"reason\":\"The requested model run is not available. Model: google_weathernext2_ensemble, run: 2026-09-12T00:00Z\",\"error\":true}",
+          "run": "2026-09-12T00:00"
+        }
+      ]
+    },
+    "hist_coverage": {
+      "KATL": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KAUS": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KBOS": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KMDW": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KDFW": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KDEN": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 3,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ]
+      },
+      "KHOU": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KLAS": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 3,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ]
+      },
+      "KLAX": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 3,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ]
+      },
+      "KMIA": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KMSP": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KNYC": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KPHL": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KPHX": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 3,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ]
+      },
+      "KSAT": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      },
+      "KSFO": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 3,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ]
+      },
+      "KSEA": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 3,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11"
+        ]
+      },
+      "KDCA": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 4,
+        "days": [
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12"
+        ]
+      }
+    },
+    "prev_coverage": {
+      "KATL": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KAUS": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KBOS": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KMDW": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KDFW": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KDEN": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KHOU": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KLAS": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KLAX": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KMIA": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KMSP": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KNYC": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KPHL": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KPHX": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KSAT": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KSFO": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KSEA": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      },
+      "KDCA": {
+        "n_member_series": 64,
+        "n_days_with_extreme": 0,
+        "days": []
+      }
+    },
+    "open_meteo_failures": {}
+  },
+  "n_rows_j0_cli": 672,
+  "n_rows_j1_cli": 0,
+  "n_rows_j0_market": 200,
+  "n_rows_j1_market": 0,
+  "j0_cli_dates": [
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-12"
+  ],
+  "j1_cli_dates": [],
+  "j0_market_dates": [
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11"
+  ],
+  "j1_market_dates": [],
+  "market_skips_j0": {
+    "no_wn_members": 112
+  },
+  "market_skips_j1": {
+    "no_wn_members": 248,
+    "no_cli_truth": 56
+  },
+  "j0_cli": {
+    "J0": {
+      "n_bins": 672,
+      "n_dates": 4,
+      "base_rate": 0.13839285714285715,
+      "brier_wn": 0.14001900809151785,
+      "n_p_wn": 672
+    }
+  },
+  "j1_cli": {},
+  "j0_by_variable": {
+    "temp_max": {
+      "n_bins": 336,
+      "n_dates": 4,
+      "base_rate": 0.11607142857142858,
+      "brier_wn": 0.1417447044735863,
+      "n_p_wn": 336
+    },
+    "temp_min": {
+      "n_bins": 336,
+      "n_dates": 4,
+      "base_rate": 0.16071428571428573,
+      "brier_wn": 0.13829331170944942,
+      "n_p_wn": 336
+    }
+  },
+  "j0_market": {
+    "J0": {
+      "n_bins": 200,
+      "n_dates": 3,
+      "base_rate": 0.23,
+      "brier_wn": 0.211328125,
+      "n_p_wn": 200,
+      "brier_raw": 0.17700981490544604,
+      "n_p_raw": 200,
+      "brier_market": 0.074239875,
+      "n_p_market": 200
+    }
+  },
+  "j1_market": {},
+  "sign_tests": {
+    "wn2_j0_vs_market": {
+      "a": "p_wn",
+      "b": "p_market",
+      "dates": 3,
+      "a_wins": 0,
+      "p_one_sided": 1.0
+    },
+    "wn2_j0_vs_champion": {
+      "a": "p_wn",
+      "b": "p_raw",
+      "dates": 3,
+      "a_wins": 1,
+      "p_one_sided": 0.875
+    }
+  }
+}
