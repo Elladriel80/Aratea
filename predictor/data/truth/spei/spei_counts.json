@@ -1,0 +1,476 @@
+{
+  "catalogue_truth": "SPEI",
+  "targets": [
+    "S\u00e9cheresse M\u00e9diterran\u00e9e",
+    "S\u00e9cheresse Inde",
+    "S\u00e9cheresse US"
+  ],
+  "as_of": "2026-09-12T19:38:30Z",
+  "champion_switched": false,
+  "real_money": false,
+  "forecast_scored": false,
+  "seas5_started": false,
+  "c3s_started": false,
+  "bss_invented": false,
+  "timescale_months": 6,
+  "sources": {
+    "csic_page": "https://spei.csic.es/database.html",
+    "digital_csic_v29": "https://digital.csic.es/handle/10261/332007",
+    "digital_csic_v210": "https://digital.csic.es/handle/10261/364137",
+    "gee_stac": "https://storage.googleapis.com/earthengine-stac/catalog/CSIC/CSIC_SPEI_2_11.json",
+    "gee_html": "https://developers.google.com/earth-engine/datasets/catalog/CSIC_SPEI_2_11",
+    "ipcc_med": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv",
+    "natural_earth_admin1": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
+    "vicente_2010": "https://doi.org/10.1175/2009JCLI2909.1",
+    "wmo_spi": "https://library.wmo.int/idurl/4/39629"
+  },
+  "published_classes": {
+    "wmo_spi": [
+      {
+        "name": "extremely_dry",
+        "lo": null,
+        "hi": -2.0
+      },
+      {
+        "name": "severely_dry",
+        "lo": -2.0,
+        "hi": -1.5
+      },
+      {
+        "name": "moderately_dry",
+        "lo": -1.5,
+        "hi": -1.0
+      },
+      {
+        "name": "near_normal",
+        "lo": -1.0,
+        "hi": 1.0
+      },
+      {
+        "name": "moderately_wet",
+        "lo": 1.0,
+        "hi": 1.5
+      },
+      {
+        "name": "severely_wet",
+        "lo": 1.5,
+        "hi": 2.0
+      },
+      {
+        "name": "extremely_wet",
+        "lo": 2.0,
+        "hi": null
+      }
+    ],
+    "phase_b_spei6_le": -1.5
+  },
+  "access": {
+    "probes": [
+      {
+        "url": "https://spei.csic.es/database.html",
+        "host": "spei.csic.es",
+        "ok": false,
+        "http_status": null,
+        "content_type": null,
+        "n_bytes": null,
+        "elapsed_s": 20.413,
+        "note": "timeout 20s, 0 octet"
+      },
+      {
+        "url": "https://spei.csic.es/spei_database_2_9/",
+        "host": "spei.csic.es",
+        "ok": false,
+        "http_status": null,
+        "content_type": null,
+        "n_bytes": null,
+        "elapsed_s": 20.354,
+        "note": "timeout 20s, 0 octet"
+      },
+      {
+        "url": "https://spei.csic.es/spei_database_2_9/spei06.nc",
+        "host": "spei.csic.es",
+        "ok": false,
+        "http_status": null,
+        "content_type": null,
+        "n_bytes": null,
+        "elapsed_s": 20.363,
+        "note": "timeout 20s, 0 octet"
+      },
+      {
+        "url": "https://spei.csic.es/spei_database_2_10/",
+        "host": "spei.csic.es",
+        "ok": false,
+        "http_status": null,
+        "content_type": null,
+        "n_bytes": null,
+        "elapsed_s": 20.361,
+        "note": "timeout 20s, 0 octet"
+      },
+      {
+        "url": "https://digital.csic.es/handle/10261/332007",
+        "host": "digital.csic.es",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 84200,
+        "elapsed_s": 2.606,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://digital.csic.es/handle/10261/332007"
+      },
+      {
+        "url": "https://digital.csic.es/handle/10261/364137",
+        "host": "digital.csic.es",
+        "ok": false,
+        "http_status": null,
+        "content_type": null,
+        "n_bytes": null,
+        "elapsed_s": 0.669,
+        "note": "erreur r\u00e9seau : ConnectionError"
+      },
+      {
+        "url": "https://doi.org/10.20350/digitalCSIC/15470",
+        "host": "doi.org",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 84200,
+        "elapsed_s": 2.789,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://digital.csic.es/handle/10261/332007"
+      },
+      {
+        "url": "https://storage.googleapis.com/earthengine-stac/catalog/CSIC/CSIC_SPEI_2_11.json",
+        "host": "storage.googleapis.com",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/plain",
+        "n_bytes": 24756,
+        "elapsed_s": 0.093,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://storage.googleapis.com/earthengine-stac/catalog/CSIC/CSIC_SPEI_2_11.json"
+      },
+      {
+        "url": "https://developers.google.com/earth-engine/datasets/catalog/CSIC_SPEI_2_11",
+        "host": "developers.google.com",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/html",
+        "n_bytes": 8192,
+        "elapsed_s": 0.435,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://developers.google.com/earth-engine/datasets/catalog/CSIC_SPEI_2_11"
+      },
+      {
+        "url": "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/imageCollections/CSIC/SPEI/2_11",
+        "host": "earthengine.googleapis.com",
+        "ok": false,
+        "http_status": 404,
+        "content_type": "text/html",
+        "n_bytes": 1623,
+        "elapsed_s": 0.114,
+        "note": "HTTP 404",
+        "final_url": "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/imageCollections/CSIC/SPEI/2_11"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv",
+        "host": "raw.githubusercontent.com",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/plain",
+        "n_bytes": 6429,
+        "elapsed_s": 0.201,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
+        "host": "raw.githubusercontent.com",
+        "ok": true,
+        "http_status": 200,
+        "content_type": "text/plain",
+        "n_bytes": 2325694,
+        "elapsed_s": 0.047,
+        "note": "r\u00e9ponse lue",
+        "final_url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson"
+      }
+    ],
+    "spei06_local": "data/truth/spei_cache/spei06.nc",
+    "pixel_error": null,
+    "download_notes": [
+      "https://digital.csic.es/handle/10261/364137 : ConnectionError",
+      "https://doi.org/10.20350/digitalCSIC/15470 : ConnectionError"
+    ]
+  },
+  "gee_catalog": {
+    "id": "CSIC/SPEI/2_11",
+    "title": "SPEIbase: Standardised Precipitation-Evapotranspiration Index database, Version 2.11",
+    "version": "2.11",
+    "deprecated": null,
+    "license": "CC-BY-4.0",
+    "temporal_interval": [
+      [
+        "1901-01-01T00:00:00Z",
+        "2025-01-01T00:00:00Z"
+      ]
+    ],
+    "spatial_bbox": [
+      [
+        -180,
+        -90,
+        180,
+        90
+      ]
+    ],
+    "cadence": {
+      "interval": 1,
+      "type": "cadence",
+      "unit": "month"
+    },
+    "gsd_m": [
+      55660
+    ],
+    "spei06_min": -2.33,
+    "spei06_max": 2.33,
+    "spei06_range_is_estimated": false,
+    "n_bands": 48,
+    "citation": "Product: Beguer&iacute;a, Santiago; Vicente Serrano, Sergio M.;\nReig-Gracia, Fergus; Latorre Garc&eacute;s, Borja; 2024;\nSPEIbase v.2.10 [Dataset]; DIGITAL.CSIC; Version 2.10.\n[doi:10.20350/digitalCSIC/16497](https://doi.org/10.20350/digitalCSIC/16497)\n",
+    "doi": "10.20350/digitalCSIC/16497",
+    "source": "https://storage.googleapis.com/earthengine-stac/catalog/CSIC/CSIC_SPEI_2_11.json",
+    "pixels_included": false
+  },
+  "spei_file": {
+    "path": "data/truth/spei_cache/spei06.nc",
+    "filename": "spei06.nc",
+    "n_bytes": 379643921,
+    "shape": [
+      1476,
+      360,
+      720
+    ],
+    "n_lat": 360,
+    "n_lon": 720,
+    "n_times": 1476,
+    "first_month": "1901-01-16",
+    "last_month": "2023-12-16",
+    "time_gaps": [],
+    "fill_value": 1.0000000150474662e+30,
+    "title": "Global 6-months SPEI, z-values, 0.5 degree",
+    "version": "2.10.0",
+    "summary": "Global dataset of the Standardized Precipitation-Evapotranspiration Index (SPEI) at the 6-months time scale. Using CRU TS 4.08 precipitation and potential evapotranspiration data",
+    "date_created": "Wed Jul 10 09:40:38 2024",
+    "institution": "Consejo Superior de Investigaciones Cient\u00edficas, CSIC",
+    "source": "http://sac.csic.es/spei",
+    "attrs": {
+      "conventions": "CF-1.11",
+      "title": "Global 6-months SPEI, z-values, 0.5 degree",
+      "version": "2.10.0",
+      "id": "./outputNcdf/spei06.nc",
+      "summary": "Global dataset of the Standardized Precipitation-Evapotranspiration Index (SPEI) at the 6-months time scale. Using CRU TS 4.08 precipitation and potential evapotranspiration data",
+      "keywords": "drought, climatology, SPEI, Standardized Precipitation-Evapotranspiration Index",
+      "institution": "Consejo Superior de Investigaciones Cient\u00edficas, CSIC",
+      "source": "http://sac.csic.es/spei",
+      "creators": "Santiago Beguer\u00eda <santiago.begueria@csic.es> and Sergio Vicente-Serrano <svicen@ipe.csic.es>",
+      "software": "Created in R using the SPEI package (https://cran.r-project.org/web/packages/SPEI/;https://github.com/sbegueria/SPEI)",
+      "call": "spei.nc(sca=i, inPre=./inputData/cru_ts4.08.1901.2023.pre.dat.nc, outFile=paste)",
+      "date": "Wed Jul 10 09:40:38 2024",
+      "reference": "Beguer\u00eda S., Vicente-Serrano S., Reig F., Latorre B. (2014) Standardized precipitation evapotranspiration index (SPEI) revisited: Parameter fitting, evapotranspiration models, tools, datasets and drought monitoring. International Journal of Climatology 34, 3001-3023.",
+      "reference2": "Vicente-Serrano S.M., Beguer\u00eda S., L\u00f3pez-Moreno J.I. (2010) A Multiscalar Drought Index Sensitive to Global Warming: The Standardized Precipitation Evapotranspiration Index. Journal of Climate 23, 1696\u20131718.",
+      "reference3": "Beguer\u00eda S., Vicente-Serrano S., Angulo-Mart\u00ednez M. (2010) A multi-scalar global drought data set: the SPEIbase. Bulletin of the American Meteorological Society 91(10), 1351\u20131356."
+    }
+  },
+  "region_cuts": {
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": {
+      "cut": "IPCC AR6 WGI MED (Iturbide 2020)",
+      "catalogue_target": "S\u00e9cheresse M\u00e9diterran\u00e9e",
+      "vertices": [
+        [
+          -10.0,
+          30.0
+        ],
+        [
+          -10.0,
+          45.0
+        ],
+        [
+          40.0,
+          45.0
+        ],
+        [
+          40.0,
+          30.0
+        ]
+      ],
+      "vertices_from_live_csv": true,
+      "source": "https://raw.githubusercontent.com/IPCC-WG1/Atlas/main/reference-regions/IPCC-WGI-reference-regions-v4_coordinates.csv",
+      "surface": "Land-Ocean (libell\u00e9 publi\u00e9)",
+      "n_rings": 1,
+      "midwest_missing": null,
+      "southwest_missing": null,
+      "inde_missing": null
+    },
+    "S\u00e9cheresse US": {
+      "cut": "USDA Climate Hub Midwest + Southwest (listes PR 240)",
+      "catalogue_target": "S\u00e9cheresse US",
+      "source_hubs": {
+        "midwest": "https://www.climatehubs.usda.gov/hubs/midwest",
+        "southwest": "https://www.climatehubs.usda.gov/hubs/southwest/about"
+      },
+      "source_polygons": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
+      "n_rings": 19,
+      "midwest_missing": [],
+      "southwest_missing": [],
+      "inde_missing": null
+    },
+    "S\u00e9cheresse Inde": {
+      "cut": "Maharashtra + Karnataka (catalogue Phase 2)",
+      "catalogue_target": "S\u00e9cheresse Inde",
+      "source_polygons": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
+      "n_rings": 2,
+      "midwest_missing": null,
+      "southwest_missing": null,
+      "inde_missing": []
+    }
+  },
+  "regions": {
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": {
+      "region": "S\u00e9cheresse M\u00e9diterran\u00e9e",
+      "n_cells_in_published_cut": 3000,
+      "n_cells_usable_any_month": 1969,
+      "n_cells_never_valid": 1031,
+      "n_times": 1476,
+      "first_month": "1901-01-16",
+      "last_month": "2023-12-16",
+      "first_month_with_a_value": "1901-06",
+      "last_month_with_a_value": "2023-12",
+      "n_months_with_any_valid": 1471,
+      "n_months_without_any_valid": 5,
+      "n_months_all_cells_valid": 0,
+      "n_calendar_years_in_file": 123,
+      "n_calendar_years_with_a_value": 123,
+      "missing_years_in_span": [],
+      "n_missing_years_in_span": 0,
+      "n_finite_cell_months": 2896399,
+      "n_cell_months_spei_le_minus_1_5": 202374,
+      "n_cell_months_outside_gee_pm_2_33": 27227,
+      "wmo_class_cell_months": {
+        "extremely_dry": 45982,
+        "severely_dry": 156392,
+        "moderately_dry": 300451,
+        "near_normal": 1907535,
+        "moderately_wet": 291305,
+        "severely_wet": 141812,
+        "extremely_wet": 52922
+      },
+      "usable_measured": true,
+      "timescale_months": 6,
+      "thresholds": {
+        "phase_b_spi6_le": -1.5,
+        "phase_b_source": "PHASE_B_SCAFFOLDING.md \u00a73.1 (count only)",
+        "wmo_spi_source": "https://library.wmo.int/idurl/4/39629",
+        "csic_gee_range": [
+          -2.33,
+          2.33
+        ],
+        "csic_gee_source": "https://storage.googleapis.com/earthengine-stac/catalog/CSIC/CSIC_SPEI_2_11.json"
+      }
+    },
+    "S\u00e9cheresse US": {
+      "region": "S\u00e9cheresse US",
+      "n_cells_in_published_cut": 1204,
+      "n_cells_usable_any_month": 1204,
+      "n_cells_never_valid": 0,
+      "n_times": 1476,
+      "first_month": "1901-01-16",
+      "last_month": "2023-12-16",
+      "first_month_with_a_value": "1901-06",
+      "last_month_with_a_value": "2023-12",
+      "n_months_with_any_valid": 1471,
+      "n_months_without_any_valid": 5,
+      "n_months_all_cells_valid": 1471,
+      "n_calendar_years_in_file": 123,
+      "n_calendar_years_with_a_value": 123,
+      "missing_years_in_span": [],
+      "n_missing_years_in_span": 0,
+      "n_finite_cell_months": 1771084,
+      "n_cell_months_spei_le_minus_1_5": 116285,
+      "n_cell_months_outside_gee_pm_2_33": 13591,
+      "wmo_class_cell_months": {
+        "extremely_dry": 25958,
+        "severely_dry": 90327,
+        "moderately_dry": 190577,
+        "near_normal": 1154523,
+        "moderately_wet": 188085,
+        "severely_wet": 93126,
+        "extremely_wet": 28488
+      },
+      "usable_measured": true,
+      "timescale_months": 6,
+      "thresholds": {
+        "phase_b_spi6_le": -1.5,
+        "phase_b_source": "PHASE_B_SCAFFOLDING.md \u00a73.1 (count only)",
+        "wmo_spi_source": "https://library.wmo.int/idurl/4/39629",
+        "csic_gee_range": [
+          -2.33,
+          2.33
+        ],
+        "csic_gee_source": "https://storage.googleapis.com/earthengine-stac/catalog/CSIC/CSIC_SPEI_2_11.json"
+      }
+    },
+    "S\u00e9cheresse Inde": {
+      "region": "S\u00e9cheresse Inde",
+      "n_cells_in_published_cut": 170,
+      "n_cells_usable_any_month": 170,
+      "n_cells_never_valid": 0,
+      "n_times": 1476,
+      "first_month": "1901-01-16",
+      "last_month": "2023-12-16",
+      "first_month_with_a_value": "1901-06",
+      "last_month_with_a_value": "2023-12",
+      "n_months_with_any_valid": 1471,
+      "n_months_without_any_valid": 5,
+      "n_months_all_cells_valid": 1471,
+      "n_calendar_years_in_file": 123,
+      "n_calendar_years_with_a_value": 123,
+      "missing_years_in_span": [],
+      "n_missing_years_in_span": 0,
+      "n_finite_cell_months": 250070,
+      "n_cell_months_spei_le_minus_1_5": 16207,
+      "n_cell_months_outside_gee_pm_2_33": 1949,
+      "wmo_class_cell_months": {
+        "extremely_dry": 3415,
+        "severely_dry": 12792,
+        "moderately_dry": 26944,
+        "near_normal": 162881,
+        "moderately_wet": 25856,
+        "severely_wet": 13968,
+        "extremely_wet": 4214
+      },
+      "usable_measured": true,
+      "timescale_months": 6,
+      "thresholds": {
+        "phase_b_spi6_le": -1.5,
+        "phase_b_source": "PHASE_B_SCAFFOLDING.md \u00a73.1 (count only)",
+        "wmo_spi_source": "https://library.wmo.int/idurl/4/39629",
+        "csic_gee_range": [
+          -2.33,
+          2.33
+        ],
+        "csic_gee_source": "https://storage.googleapis.com/earthengine-stac/catalog/CSIC/CSIC_SPEI_2_11.json"
+      }
+    }
+  },
+  "verdicts": {
+    "SPEI": "test\u00e9e, \u00e7a aide",
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": "cible Tier 1 (pas encore test\u00e9e)",
+    "S\u00e9cheresse Inde": "cible Tier 1 (pas encore test\u00e9e)",
+    "S\u00e9cheresse US": "bloqu\u00e9e",
+    "US Drought Monitor": "test\u00e9e, \u00e7a aide",
+    "CHIRPS pluie": "pas encore test\u00e9e",
+    "SEAS5": "pas encore test\u00e9e",
+    "C3S multi-mod\u00e8le": "pas encore test\u00e9e",
+    "NMME": "bloqu\u00e9e",
+    "Open-Meteo Seasonal": "bloqu\u00e9e",
+    "HURDAT2 / IBTrACS": "test\u00e9e, \u00e7a aide"
+  },
+  "next_forecast_step": "Quand la v\u00e9rit\u00e9 SPEI est compt\u00e9e : une pr\u00e9vision saisonni\u00e8re dat\u00e9e (NMME d\u00e9coup\u00e9, ou un compte qui ouvre SEAS5 / C3S), compar\u00e9e \u00e0 SPEI-6, sans inventer de BSS si N < 10 saisons."
+}
