@@ -107,3 +107,7 @@ EN : Owner hypothesis measured: long official-station history vs market tightnes
 FR (mutuelle, 2026-09-12) : le même fichier sert à compter chaleur (≥ 100 °F), gel (≤ 32 °F), pluie annuelle et le saut d'une année à l'autre. Note `docs/a1-climato-siecle-mutuelle-2026-09-12.md`, comptes `data/truth/century/mutual_tails.md`. Pas de produit, pas de prix. NYC 157 ans, Midway 28, Denver 30. Une année folle (saut typique ~1 °F, gros saut 2 à 3,6 °F) pèse plus qu'une décennie de pente. Champion toujours inchangé.
 
 EN (mutual): same century files scored for heat / frost / dry-year tails and year-to-year swing. No product invented. Champion still untouched.
+
+FR (Second marché, 2026-09-12) : écart Kalshi / Polymarket sur les max, cases identiques seulement. Note `docs/b4-second-marche-2026-09-12.md`, comptes `data/truth/second_marche/`. 58 jours la veille, 649 contrats. Polymarket 0,1422 contre Kalshi 0,1397 (27 jours sur 58). Moyenne 0,1393, perd 31 jours. Champion inchangé.
+
+EN (Second marché): Kalshi vs Polymarket on exact 2 °F high-temp bins. 58 day-before dates, 649 contracts. Polymarket Brier 0.1422 vs Kalshi 0.1397 (27/58). Average 0.1393, loses 31 days. Champion untouched.

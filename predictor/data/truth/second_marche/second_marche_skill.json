@@ -1,0 +1,555 @@
+{
+  "variable": "Second marché",
+  "inventory": {
+    "n_forward_files": 70,
+    "n_records": 16158,
+    "n_high_records": 7770,
+    "n_high_two_sided": 7710,
+    "high_cities": {
+      "AUSTIN": 54,
+      "CHICAGO": 54,
+      "DENVER": 54,
+      "MIAMI": 54,
+      "PHILADELPHIA": 54,
+      "ATLANTA": 750,
+      "BOSTON": 750,
+      "DALLAS": 750,
+      "HOUSTON": 750,
+      "LASVEGAS": 750,
+      "MINNEAPOLIS": 750,
+      "PHOENIX": 750,
+      "SANANTONIO": 750,
+      "SEATTLE": 750,
+      "SANFRANCISCO": 750
+    },
+    "n_high_dates": 70,
+    "high_date_min": "2026-05-08",
+    "high_date_max": "2026-09-12",
+    "high_series": {
+      "KXHIGHAUS": 54,
+      "KXHIGHCHI": 54,
+      "KXHIGHDEN": 54,
+      "KXHIGHMIA": 54,
+      "KXHIGHPHIL": 54,
+      "KXHIGHTATL": 750,
+      "KXHIGHTBOS": 750,
+      "KXHIGHTDAL": 750,
+      "KXHIGHTHOU": 750,
+      "KXHIGHTLV": 750,
+      "KXHIGHTMIN": 750,
+      "KXHIGHTPHX": 750,
+      "KXHIGHTSATX": 750,
+      "KXHIGHTSEA": 750,
+      "KXHIGHTSFO": 750
+    },
+    "n_polymarket_tracked_json": 1,
+    "cli_path": "/workspace/predictor/data/truth/cli_daily.json",
+    "cli_present": true
+  },
+  "discovery": {
+    "n_events": 153,
+    "n_cities_sept12": 48,
+    "cities_sept12": [
+      "Amsterdam",
+      "Ankara",
+      "Atlanta",
+      "Austin",
+      "Beijing",
+      "Buenos Aires",
+      "Busan",
+      "Cape Town",
+      "Chengdu",
+      "Chicago",
+      "Chongqing",
+      "Dallas",
+      "Denver",
+      "Guangzhou",
+      "Helsinki",
+      "Hong Kong",
+      "Houston",
+      "Istanbul",
+      "Jeddah",
+      "Jinan",
+      "Karachi",
+      "Kuala Lumpur",
+      "London",
+      "Los Angeles",
+      "Lucknow",
+      "Madrid",
+      "Manila",
+      "Mexico City",
+      "Miami",
+      "Milan",
+      "Moscow",
+      "Munich",
+      "NYC",
+      "Panama City",
+      "Paris",
+      "Qingdao",
+      "San Francisco",
+      "Sao Paulo",
+      "Seattle",
+      "Shanghai",
+      "Shenzhen",
+      "Singapore",
+      "Taipei",
+      "Tel Aviv",
+      "Toronto",
+      "Warsaw",
+      "Wuhan",
+      "Zhengzhou"
+    ],
+    "source": "https://gamma-api.polymarket.com/events?tag_id=104596&closed=false"
+  },
+  "n_pm_events": 2785,
+  "n_kalshi_mapped": 3732,
+  "skips": {
+    "no_exact_bin": 2341,
+    "no_pm_event": 60,
+    "no_cli": 8
+  },
+  "gap_weight": 0.05674571074192737,
+  "n_train_for_weight": 993,
+  "n_test_after_split": 330,
+  "primary": {
+    "n_bins": 649,
+    "n_city_days": 159,
+    "n_dates": 58,
+    "n_cities": 6,
+    "mean_abs_gap": 0.0615231124807396,
+    "brier_kalshi": 0.13968948382126348,
+    "brier_pm": 0.14224247265023113,
+    "brier_avg": 0.13931484774653313,
+    "brier_stack": 0.1394808437549085,
+    "avg_vs_kalshi": {
+      "dates": 58,
+      "wins": 27,
+      "losses": 31,
+      "ties": 0,
+      "n_decisive": 58,
+      "p_one_sided": 0.7440788457809155
+    },
+    "pm_vs_kalshi": {
+      "dates": 58,
+      "wins": 27,
+      "losses": 31,
+      "ties": 0,
+      "n_decisive": 58,
+      "p_one_sided": 0.7440788457809155
+    },
+    "stack_vs_kalshi": {
+      "dates": 58,
+      "wins": 30,
+      "losses": 28,
+      "ties": 0,
+      "n_decisive": 58,
+      "p_one_sided": 0.44784160694479513
+    },
+    "cities": [
+      "ATLANTA",
+      "DALLAS",
+      "HOUSTON",
+      "MIAMI",
+      "SANFRANCISCO",
+      "SEATTLE"
+    ]
+  },
+  "same_station": {
+    "n_bins": 520,
+    "n_city_days": 128,
+    "n_dates": 57,
+    "n_cities": 5,
+    "mean_abs_gap": 0.061009615384615384,
+    "brier_kalshi": 0.1436714423076923,
+    "brier_pm": 0.14333568846153846,
+    "brier_avg": 0.14192796538461538,
+    "brier_stack": 0.14331504975469161,
+    "avg_vs_kalshi": {
+      "dates": 57,
+      "wins": 28,
+      "losses": 29,
+      "ties": 0,
+      "n_decisive": 57,
+      "p_one_sided": 0.6043167861104097
+    },
+    "pm_vs_kalshi": {
+      "dates": 57,
+      "wins": 27,
+      "losses": 30,
+      "ties": 0,
+      "n_decisive": 57,
+      "p_one_sided": 0.7016791198134587
+    },
+    "stack_vs_kalshi": {
+      "dates": 57,
+      "wins": 29,
+      "losses": 28,
+      "ties": 0,
+      "n_decisive": 57,
+      "p_one_sided": 0.5
+    },
+    "cities": [
+      "ATLANTA",
+      "HOUSTON",
+      "MIAMI",
+      "SANFRANCISCO",
+      "SEATTLE"
+    ]
+  },
+  "slices": {
+    "tous_leads": {
+      "n_bins": 1323,
+      "n_city_days": 184,
+      "n_dates": 66,
+      "n_cities": 8,
+      "mean_abs_gap": 0.08629289493575207,
+      "brier_kalshi": 0.1159255291005291,
+      "brier_pm": 0.1367941955782313,
+      "brier_avg": 0.12110350259826153,
+      "brier_stack": 0.11598433643917318,
+      "avg_vs_kalshi": {
+        "dates": 66,
+        "wins": 22,
+        "losses": 44,
+        "ties": 0,
+        "n_decisive": 66,
+        "p_one_sided": 0.9978637974841742
+      },
+      "pm_vs_kalshi": {
+        "dates": 66,
+        "wins": 16,
+        "losses": 50,
+        "ties": 0,
+        "n_decisive": 66,
+        "p_one_sided": 0.9999949519363245
+      },
+      "stack_vs_kalshi": {
+        "dates": 66,
+        "wins": 28,
+        "losses": 38,
+        "ties": 0,
+        "n_decisive": 66,
+        "p_one_sided": 0.9123571027784824
+      },
+      "cities": [
+        "ATLANTA",
+        "AUSTIN",
+        "DALLAS",
+        "DENVER",
+        "HOUSTON",
+        "MIAMI",
+        "SANFRANCISCO",
+        "SEATTLE"
+      ]
+    },
+    "lead_0": {
+      "n_bins": 674,
+      "n_city_days": 167,
+      "n_dates": 61,
+      "n_cities": 8,
+      "mean_abs_gap": 0.11014391691394658,
+      "brier_kalshi": 0.09304302670623145,
+      "brier_pm": 0.1315480059347181,
+      "brier_avg": 0.10356765244807122,
+      "brier_stack": 0.09335936129390282,
+      "avg_vs_kalshi": {
+        "dates": 61,
+        "wins": 13,
+        "losses": 48,
+        "ties": 0,
+        "n_decisive": 61,
+        "p_one_sided": 0.9999990150607909
+      },
+      "pm_vs_kalshi": {
+        "dates": 61,
+        "wins": 13,
+        "losses": 48,
+        "ties": 0,
+        "n_decisive": 61,
+        "p_one_sided": 0.9999990150607909
+      },
+      "stack_vs_kalshi": {
+        "dates": 61,
+        "wins": 21,
+        "losses": 40,
+        "ties": 0,
+        "n_decisive": 61,
+        "p_one_sided": 0.9950732759023704
+      },
+      "cities": [
+        "ATLANTA",
+        "AUSTIN",
+        "DALLAS",
+        "DENVER",
+        "HOUSTON",
+        "MIAMI",
+        "SANFRANCISCO",
+        "SEATTLE"
+      ]
+    },
+    "lead_1": {
+      "n_bins": 649,
+      "n_city_days": 159,
+      "n_dates": 58,
+      "n_cities": 6,
+      "mean_abs_gap": 0.0615231124807396,
+      "brier_kalshi": 0.13968948382126348,
+      "brier_pm": 0.14224247265023113,
+      "brier_avg": 0.13931484774653313,
+      "brier_stack": 0.1394808437549085,
+      "avg_vs_kalshi": {
+        "dates": 58,
+        "wins": 27,
+        "losses": 31,
+        "ties": 0,
+        "n_decisive": 58,
+        "p_one_sided": 0.7440788457809155
+      },
+      "pm_vs_kalshi": {
+        "dates": 58,
+        "wins": 27,
+        "losses": 31,
+        "ties": 0,
+        "n_decisive": 58,
+        "p_one_sided": 0.7440788457809155
+      },
+      "stack_vs_kalshi": {
+        "dates": 58,
+        "wins": 30,
+        "losses": 28,
+        "ties": 0,
+        "n_decisive": 58,
+        "p_one_sided": 0.44784160694479513
+      },
+      "cities": [
+        "ATLANTA",
+        "DALLAS",
+        "HOUSTON",
+        "MIAMI",
+        "SANFRANCISCO",
+        "SEATTLE"
+      ]
+    },
+    "lead_1_meme_station": {
+      "n_bins": 520,
+      "n_city_days": 128,
+      "n_dates": 57,
+      "n_cities": 5,
+      "mean_abs_gap": 0.061009615384615384,
+      "brier_kalshi": 0.1436714423076923,
+      "brier_pm": 0.14333568846153846,
+      "brier_avg": 0.14192796538461538,
+      "brier_stack": 0.14331504975469161,
+      "avg_vs_kalshi": {
+        "dates": 57,
+        "wins": 28,
+        "losses": 29,
+        "ties": 0,
+        "n_decisive": 57,
+        "p_one_sided": 0.6043167861104097
+      },
+      "pm_vs_kalshi": {
+        "dates": 57,
+        "wins": 27,
+        "losses": 30,
+        "ties": 0,
+        "n_decisive": 57,
+        "p_one_sided": 0.7016791198134587
+      },
+      "stack_vs_kalshi": {
+        "dates": 57,
+        "wins": 29,
+        "losses": 28,
+        "ties": 0,
+        "n_decisive": 57,
+        "p_one_sided": 0.5
+      },
+      "cities": [
+        "ATLANTA",
+        "HOUSTON",
+        "MIAMI",
+        "SANFRANCISCO",
+        "SEATTLE"
+      ]
+    },
+    "lead_1_avant_3_aout": {
+      "n_bins": 482,
+      "n_city_days": 118,
+      "n_dates": 46,
+      "n_cities": 6,
+      "mean_abs_gap": 0.05975726141078838,
+      "brier_kalshi": 0.14556270746887967,
+      "brier_pm": 0.14949638278008298,
+      "brier_avg": 0.14599754227178424,
+      "brier_stack": 0.1454579209678593,
+      "avg_vs_kalshi": {
+        "dates": 46,
+        "wins": 20,
+        "losses": 26,
+        "ties": 0,
+        "n_decisive": 46,
+        "p_one_sided": 0.8490021934051697
+      },
+      "pm_vs_kalshi": {
+        "dates": 46,
+        "wins": 20,
+        "losses": 26,
+        "ties": 0,
+        "n_decisive": 46,
+        "p_one_sided": 0.8490021934051697
+      },
+      "stack_vs_kalshi": {
+        "dates": 46,
+        "wins": 22,
+        "losses": 24,
+        "ties": 0,
+        "n_decisive": 46,
+        "p_one_sided": 0.6706309614881718
+      },
+      "cities": [
+        "ATLANTA",
+        "DALLAS",
+        "HOUSTON",
+        "MIAMI",
+        "SANFRANCISCO",
+        "SEATTLE"
+      ]
+    },
+    "lead_1_depuis_3_aout": {
+      "n_bins": 167,
+      "n_city_days": 41,
+      "n_dates": 12,
+      "n_cities": 5,
+      "mean_abs_gap": 0.06661976047904192,
+      "brier_kalshi": 0.12273802395209582,
+      "brier_pm": 0.1213060374251497,
+      "brier_avg": 0.12002707073353293,
+      "brier_stack": 0.12222963886483491,
+      "avg_vs_kalshi": {
+        "dates": 12,
+        "wins": 7,
+        "losses": 5,
+        "ties": 0,
+        "n_decisive": 12,
+        "p_one_sided": 0.38720703125
+      },
+      "pm_vs_kalshi": {
+        "dates": 12,
+        "wins": 7,
+        "losses": 5,
+        "ties": 0,
+        "n_decisive": 12,
+        "p_one_sided": 0.38720703125
+      },
+      "stack_vs_kalshi": {
+        "dates": 12,
+        "wins": 8,
+        "losses": 4,
+        "ties": 0,
+        "n_decisive": 12,
+        "p_one_sided": 0.19384765625
+      },
+      "cities": [
+        "ATLANTA",
+        "DALLAS",
+        "HOUSTON",
+        "SANFRANCISCO",
+        "SEATTLE"
+      ]
+    }
+  },
+  "verdict": "testee_ca_n_aide_pas",
+  "min_market_days": 30,
+  "sources": {
+    "kalshi_captures": "predictor/data/predictions/forward_*.json",
+    "cli": "predictor/data/truth/cli_daily.json",
+    "polymarket_events": "https://gamma-api.polymarket.com",
+    "polymarket_prices": "https://clob.polymarket.com/prices-history"
+  },
+  "city_maps": [
+    {
+      "slug": "atlanta",
+      "kalshi_key": "ATLANTA",
+      "kalshi_icao": "KATL",
+      "pm_icao_note": "KATL",
+      "same_station_note": true
+    },
+    {
+      "slug": "austin",
+      "kalshi_key": "AUSTIN",
+      "kalshi_icao": "KAUS",
+      "pm_icao_note": "KAUS",
+      "same_station_note": true
+    },
+    {
+      "slug": "chicago",
+      "kalshi_key": "CHICAGO",
+      "kalshi_icao": "KMDW",
+      "pm_icao_note": "KORD",
+      "same_station_note": false
+    },
+    {
+      "slug": "dallas",
+      "kalshi_key": "DALLAS",
+      "kalshi_icao": "KDFW",
+      "pm_icao_note": "KDAL",
+      "same_station_note": false
+    },
+    {
+      "slug": "denver",
+      "kalshi_key": "DENVER",
+      "kalshi_icao": "KDEN",
+      "pm_icao_note": "KBKF",
+      "same_station_note": false
+    },
+    {
+      "slug": "houston",
+      "kalshi_key": "HOUSTON",
+      "kalshi_icao": "KHOU",
+      "pm_icao_note": "KHOU",
+      "same_station_note": true
+    },
+    {
+      "slug": "los-angeles",
+      "kalshi_key": "LOSANGELES",
+      "kalshi_icao": "KLAX",
+      "pm_icao_note": "KLAX",
+      "same_station_note": true
+    },
+    {
+      "slug": "miami",
+      "kalshi_key": "MIAMI",
+      "kalshi_icao": "KMIA",
+      "pm_icao_note": "KMIA",
+      "same_station_note": true
+    },
+    {
+      "slug": "nyc",
+      "kalshi_key": "NYC",
+      "kalshi_icao": "KNYC",
+      "pm_icao_note": "KLGA",
+      "same_station_note": false
+    },
+    {
+      "slug": "san-francisco",
+      "kalshi_key": "SANFRANCISCO",
+      "kalshi_icao": "KSFO",
+      "pm_icao_note": "KSFO",
+      "same_station_note": true
+    },
+    {
+      "slug": "seattle",
+      "kalshi_key": "SEATTLE",
+      "kalshi_icao": "KSEA",
+      "pm_icao_note": "KSEA",
+      "same_station_note": true
+    }
+  ],
+  "kalshi_high_without_pm": [
+    "BOSTON",
+    "LASVEGAS",
+    "MINNEAPOLIS",
+    "PHOENIX",
+    "SANANTONIO"
+  ]
+}
