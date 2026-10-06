@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-04T21:17:24Z",
+  "generated_at": "2026-10-06T00:10:50Z",
   "schema_version": 3,
   "features": [
     {
@@ -5084,40 +5084,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.32261590387466127,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.4588,
+          "won": false,
+          "pnl_usd": -59.67,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.4610620721928946,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.2905,
+          "won": false,
+          "pnl_usd": -59.67,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.49,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.2601,
+          "won": false,
+          "pnl_usd": -59.67,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          53.0,
+          54.0
+        ],
+        "winning_bin_ticker": "KXLOWTSEA-26OCT03-B53.5",
+        "ts_utc": "2026-10-06T00:09:58Z",
+        "champion_pnl_usd": -59.67,
+        "champion_won": false
       }
     },
     {
@@ -5816,40 +5819,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.25580307922131634,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0654,
+          "won": false,
+          "pnl_usd": -4.95,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.37767920067431654,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.1426,
+          "won": false,
+          "pnl_usd": -4.95,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.05,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0025,
+          "won": false,
+          "pnl_usd": -4.95,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          56.0,
+          57.0
+        ],
+        "winning_bin_ticker": "KXLOWTNYC-26OCT04-B56.5",
+        "ts_utc": "2026-10-06T00:09:59Z",
+        "champion_pnl_usd": -4.95,
+        "champion_won": false
       }
     },
     {
@@ -6742,16 +6748,16 @@
   "backtest_runs": [],
   "backtest_runs_total": 0,
   "paper_bets_summary": {
-    "n_open": 17,
-    "n_resolved": 869,
-    "pnl_usd_cumulative": 2333.88,
+    "n_open": 15,
+    "n_resolved": 871,
+    "pnl_usd_cumulative": 2269.26,
     "wins": 375,
-    "losses": 494,
+    "losses": 496,
     "phase_1_counter": "886/50",
     "control_group": {
-      "n_resolved": 219,
+      "n_resolved": 221,
       "wins": 87,
-      "losses": 132
+      "losses": 134
     }
   },
   "backtest_summary": {
@@ -6764,12 +6770,12 @@
   },
   "hybrid_sample": {
     "alpha_backtest": 0.3,
-    "n_live": 869,
+    "n_live": 871,
     "n_backtest_strict": 268,
     "n_backtest_naive_excluded": 0,
-    "n_effective": 949.4,
+    "n_effective": 951.4,
     "phase_1_target": 50,
-    "phase_1_progress_live_only": "869/50",
+    "phase_1_progress_live_only": "871/50",
     "convention_ref": "predictor/runs/CONVENTION.md sec.6.bis",
     "note": "N_effective is for SECONDARY decisions only (feature-set selection, reliability plots, complementary promotion check). The Phase 1 go/no-go gate (CONVENTION.md sec.6) uses n_live exclusively and ignores n_backtest_strict."
   },
