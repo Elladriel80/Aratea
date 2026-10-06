@@ -107,3 +107,11 @@ EN : Owner hypothesis measured: long official-station history vs market tightnes
 FR (mutuelle, 2026-09-12) : le même fichier sert à compter chaleur (≥ 100 °F), gel (≤ 32 °F), pluie annuelle et le saut d'une année à l'autre. Note `docs/a1-climato-siecle-mutuelle-2026-09-12.md`, comptes `data/truth/century/mutual_tails.md`. Pas de produit, pas de prix. NYC 157 ans, Midway 28, Denver 30. Une année folle (saut typique ~1 °F, gros saut 2 à 3,6 °F) pèse plus qu'une décennie de pente. Champion toujours inchangé.
 
 EN (mutual): same century files scored for heat / frost / dry-year tails and year-to-year swing. No product invented. Champion still untouched.
+
+---
+
+## Une seule courbe (2026-09-12) / Single predictive curve (A5)
+
+FR : Le champion coupe déjà une gaussienne (moyenne + correction ville). Il mélange ensuite chaque case avec une fréquence du passé et ne renormalise pas. Mesure `scripts/eval_single_curve_skill.py`, note `docs/a5-une-seule-courbe-2026-09-12.md`, comptes `data/truth/curve/`. Hors marché, H1 = champion = 0,1154 (36 jours). H2 (mélange des vendeurs) 0,1194, 4/36. Marché 67 jours, 9973 contrats : mid 0,0907, H1 0,1335, champion 0,1336, H2 0,1383. H1 vs mid : 2/67. La veille, H1 remet la somme à 1,0000 (le champion fait 1,0505) mais ne bat pas le prix (12/61). Champion inchangé.
+
+EN : The live champion is already a single Gaussian cut into bins, then a per-bin climatology blend with no renormalisation. Dropping the blend (H1) or using a vendor mixture (H2) does not beat kalshi_mid. Champion untouched.
