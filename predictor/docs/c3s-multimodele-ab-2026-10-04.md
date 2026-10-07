@@ -1,6 +1,6 @@
 # C3S multi-modèle : trois A/B hors ligne
 
-**Date :** 4 octobre 2026
+**Date :** 7 octobre 2026
 **Pour :** le propriétaire (pas un document technique)
 
 Mesure Phase 2. Nom stable : **C3S multi-modèle**.
@@ -21,8 +21,13 @@ ECMWF système 51 (SEAS5) est aussi noté seul, pour voir si le
 mélange le bat. Un centre qui manque est un trou. On ne le remplit
 pas.
 
-Cette note dit où on en est. Le CSV du PM n'est pas sur cette
-machine. La mesure est **bloquée**. Aucun BSS C3S n'a été écrit.
+Cette note dit où on en est au 7 octobre 2026. La mesure a été
+faite sur la box partagée (checkout
+`/workspace/aratea-c3s-score`, commit 973a4ab). Le CSV n'existe
+que là. Les chiffres ci-dessous sont recopiés. Ils ne sont pas
+recalculés dans ce dépôt. `computed: true` pour ce run. Le bloc
+SEAS5 de la PR 246 reste à part, `computed: false`.
+
 Le site public n'a pas changé. Le modèle Kalshi en ligne n'a pas
 changé. Aucun pari avec de l'argent réel. On n'a pas appelé CDS.
 La clé Copernicus reste sur la machine du PM.
@@ -85,6 +90,7 @@ l'autre ne changent pas la moyenne.
 ## Les vérités, inchangées
 
 Ce sont celles des PR 240, 243 et 244, déjà utilisées pour SEAS5.
+Les vérités USDM, SPEI-6 et CHIRPS ont été réutilisées depuis le tree SEAS5 local, et elles sont absentes du tree de la PR 260.
 
 | A/B | Fichier | Événement |
 |---|---|---|
@@ -128,33 +134,57 @@ On n'en invente pas un.
 SEAS5 aide **MED seulement**. L'Inde CHIRPS n'aide pas. USDM n'aide
 pas. On ne pool pas MED et India.
 
-## Résultat de ce passage
+## Résultat mesuré (box partagée)
 
-Le 4 octobre 2026, le CSV C3S n'est pas sur la machine. Les trois
-A/B sont bloqués. N = 0. BSS = n/d. Les cinq centres sont des
-trous, parce que le fichier n'est pas là.
+Fichier :
+`/workspace/cds-test/c3s-monthly/c3s_tp_monthly.csv`.
+34560 lignes. 5 centres × 6912. 0 trous.
+Tests sur la box : 33 réussis, 2 ignorés.
+CDS non appelé. Le champion n'a pas changé.
 
-On ne dit pas que le mélange bat SEAS5. On ne dit pas qu'il perd.
-La comparaison CHIRPS MED est bloquée, elle aussi.
+Headline = CHIRPS MED seulement. India reste à part. Pas de C poolé.
 
-| A/B | Région | N | BSS | Verdict |
-|---|---|---:|---:|---|
-| A, B, C | toutes | 0 | n/d | bloquée |
-| ECMWF-51 seul | toutes | 0 | n/d | bloquée (trou) |
-| Mélange contre ECMWF-51, CHIRPS MED | MED | 0 | n/d | comparaison bloquée |
+### Mélange C3S (égale pondération)
 
-C3S multi-modèle : bloquée.
-Sécheresse US : bloquée.
-La baseline SEAS5 du catalogue reste celle de la PR 246
-(CHIRPS MED seulement). Ce n'est pas un recalcul.
+| A/B | Région | N | Brier prévision | Brier climato | BSS | Verdict |
+|---|---|---:|---:|---:|---:|---|
+| A USDM | Midwest | 69 | 0.4348 | 0.0428 | -9.1537 | testée, ça n'aide pas |
+| A USDM | Southwest | 69 | 0.5507 | 0.2561 | -1.1508 | testée, ça n'aide pas |
+| B SPEI-6 | MED | 97 | 0.5155 | 0.0 | n/d | bloquée |
+| B SPEI-6 | India | 97 | 0.5155 | 0.0 | n/d | bloquée |
+| B SPEI-6 | US | 0 | n/d | n/d | n/d | bloquée |
+| C CHIRPS | MED (headline) | 97 | 0.268 | 0.253 | -0.0593 | testée, ça n'aide pas |
+| C CHIRPS | India | 97 | 0.3196 | 0.2507 | -0.275 | testée, ça n'aide pas |
+
+### ECMWF-51 seul
+
+| A/B | Région | N | Brier prévision | Brier climato | BSS | Verdict |
+|---|---|---:|---:|---:|---:|---|
+| A USDM | Midwest | 69 | 0.5507 | 0.0428 | -11.8614 | testée, ça n'aide pas |
+| A USDM | Southwest | 69 | 0.5072 | 0.2561 | -0.981 | testée, ça n'aide pas |
+| B SPEI-6 | MED | 97 | 0.5052 | 0.0 | n/d | bloquée |
+| B SPEI-6 | India | 97 | 0.5155 | 0.0 | n/d | bloquée |
+| B SPEI-6 | US | 0 | n/d | n/d | n/d | bloquée |
+| C CHIRPS | MED (headline) | 97 | 0.2371 | 0.253 | 0.0629 | testée, ça aide |
+| C CHIRPS | India | 97 | 0.299 | 0.2507 | -0.1928 | testée, ça n'aide pas |
+
+Comparaison headline, CHIRPS MED : BSS mélange -0.0593, BSS
+ECMWF-51 0.0629. Le mélange ne bat pas ECMWF-51.
+
+SPEI-6 reste bloquée. Le Brier climato vaut 0. Il n'y a pas de
+BSS SPEI. USDM n'aide pas. India CHIRPS n'aide pas.
+
+C3S multi-modèle : testée, ça n'aide pas.
+ECMWF-51 seul, sur ce CSV : testée, ça aide (CHIRPS MED seulement).
+La baseline SEAS5 du catalogue reste celle de la PR 246. Ce n'est
+pas ce recalcul.
 
 ## Décision
 
 On ne change pas le modèle Kalshi en ligne.
 
-Pourquoi : il n'y a pas encore de score C3S. La seule mesure
-saisonnière publiée est SEAS5, et elle n'a pas été promue. Pas de
-promo tant que le CSV n'a pas été noté avec la règle ci-dessus.
+Pourquoi : le mélange n'aide pas, et il ne bat pas ECMWF-51 sur
+la seule headline (CHIRPS MED). Pas de promo.
 
 ## Comment relancer
 
@@ -164,7 +194,8 @@ Dans le dossier `predictor`, après le dépôt du CSV :
 python scripts/eval_c3s_ab.py
 ```
 
-Sans fichier, le même ordre tourne en mode bloqué. Les comptes
-sont dans `data/truth/c3s_ab/`.
+Sans fichier, le même ordre tourne en mode bloqué et réécrit
+`data/truth/c3s_ab/`. Le tableau de cette note est celui de la
+box. Il ne faut pas le remplacer par un passage sans CSV.
 
 Pas de changement du texte du site. Pas de trading réel.
