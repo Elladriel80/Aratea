@@ -370,6 +370,42 @@ contract PolicyRegistryTest is Test {
         registry.subscribe(LOC_SFO, targetDate, 0, THRESHOLD_F, 4000);
     }
 
+    function test_subscribe_revertsThresholdAboveInt16Max() public {
+        // 32 768 would wrap to -32 768 in settlePolicy() and always trigger the payout.
+        vm.prank(alice);
+        vm.expectRevert(abi.encodeWithSelector(PolicyRegistry.TriggerThresholdTooHigh.selector, 32_768, 32_767));
+        registry.subscribe(LOC_SFO, targetDate, 1000e6, 32_768, 4000);
+
+        vm.prank(alice);
+        vm.expectRevert(abi.encodeWithSelector(PolicyRegistry.TriggerThresholdTooHigh.selector, 65_535, 32_767));
+        registry.subscribe(LOC_SFO, targetDate, 1000e6, type(uint16).max, 4000);
+    }
+
+    function test_settlePolicy_maxThresholdDoesNotTriggerOnNormalTemp() public {
+        vm.prank(alice);
+        bytes32 pid = registry.subscribe(LOC_SFO, targetDate, 1000e6, 32_767, 4000);
+
+        vm.warp(targetDate);
+        oracleMock.setResult(LOC_SFO, targetDate, 950);
+
+        vm.prank(keeper);
+        registry.settlePolicy(pid);
+        assertEq(uint8(registry.stateOf(pid)), uint8(IPolicyRegistry.PolicyState.Expired));
+    }
+
+    function testFuzz_subscribe_thresholdBound(
+        uint16 threshold
+    ) public {
+        vm.prank(alice);
+        if (threshold > 32_767) {
+            vm.expectRevert(abi.encodeWithSelector(PolicyRegistry.TriggerThresholdTooHigh.selector, threshold, 32_767));
+            registry.subscribe(LOC_SFO, targetDate, 1000e6, threshold, 4000);
+        } else {
+            bytes32 pid = registry.subscribe(LOC_SFO, targetDate, 1000e6, threshold, 4000);
+            assertEq(registry.getPolicy(pid).triggerThresholdF, threshold);
+        }
+    }
+
     // ── settlePolicy — CLAIMED ─────────────────────────────────────
 
     function test_settlePolicy_claimedWhenTempAboveThreshold() public {
