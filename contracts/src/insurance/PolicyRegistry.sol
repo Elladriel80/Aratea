@@ -48,6 +48,9 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
     uint8 private constant MIN_DAYS_AHEAD = 1;
     /// @dev Maximum subscription horizon (1 year).
     uint64 private constant MAX_SUBSCRIPTION_HORIZON = 365 days;
+    /// @dev Highest threshold that converts to int16 without wrapping (3276.7 °F × 10).
+    ///      settlePolicy() compares against the oracle's int16 reading.
+    uint16 private constant MAX_TRIGGER_THRESHOLD_F = uint16(type(int16).max);
 
     /*//////////////////////////////////////////////////////////////
                                 STORAGE
@@ -68,6 +71,7 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
 
     error ZeroAddress();
     error HorizonTooFar(uint64 targetDate, uint64 maxDate);
+    error TriggerThresholdTooHigh(uint16 triggerThresholdF, uint16 maxThresholdF);
 
     /*//////////////////////////////////////////////////////////////
                              CONSTRUCTOR
@@ -133,6 +137,11 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
     ) external nonReentrant returns (bytes32 policyId) {
         if (!_supportedLocations[locationKey]) revert UnsupportedLocation(locationKey);
         if (sumAssured == 0) revert ZeroSumAssured();
+        // Above int16 max, int16(triggerThresholdF) in settlePolicy() wraps negative
+        // and any observed temperature would trigger the payout.
+        if (triggerThresholdF > MAX_TRIGGER_THRESHOLD_F) {
+            revert TriggerThresholdTooHigh(triggerThresholdF, MAX_TRIGGER_THRESHOLD_F);
+        }
         uint64 now_ = uint64(block.timestamp);
         if (targetDate <= now_) revert TargetDateInPast(targetDate, now_);
         uint64 maxDate = now_ + MAX_SUBSCRIPTION_HORIZON;
@@ -205,7 +214,8 @@ contract PolicyRegistry is AccessControl, ReentrancyGuard, IPolicyRegistry {
         (int16 observedTempF, bool settled) = oracle.getResult(p.locationKey, p.targetDate);
         if (!settled) revert SettlementWindowNotOpen(policyId);
 
-        // Trigger condition: observed temperature (°F × 10) ≥ threshold (°F × 10)
+        // Trigger condition: observed temperature (°F × 10) ≥ threshold (°F × 10).
+        // The int16 cast cannot wrap: subscribe() caps the threshold at int16 max.
         if (observedTempF >= int16(p.triggerThresholdF)) {
             p.state = PolicyState.Claimed;
             pool.payout(policyId, p.subscriber, p.sumAssured);

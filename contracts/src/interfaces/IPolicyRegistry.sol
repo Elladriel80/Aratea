@@ -108,6 +108,7 @@ interface IPolicyRegistry {
     /// @param  targetDate          Settlement day as UNIX timestamp (midnight UTC).
     /// @param  sumAssured          Maximum payout in USDC (6 decimals).
     /// @param  triggerThresholdF   Temperature threshold in °F × 10 (e.g. 900 = 90.0 °F).
+    ///                             Must be ≤ 32 767 (int16 max) — reverts above.
     /// @param  pBps                Predictor probability at subscription time (0–10 000 bps).
     ///                             Must be supplied by the frontend; verified off-chain for now.
     /// @return policyId            Unique identifier for the new policy.
