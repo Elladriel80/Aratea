@@ -1,137 +1,143 @@
-# Moteur de valuation Aratea — fact-only, BTC
+<!-- Version française : value_engine.fr.md -->
 
-*Date : 2026-05-08 — version 0.2, monorepo*
+# Aratea valuation engine — fact-only, BTC
 
-> Ce document est la version canonique du moteur de valuation, hébergée dans le repo public Aratea. Voir aussi `rounds/RUBRIC.fr.md` pour les règles opérationnelles précises et `rounds/agent/PROMPT.fr.md` pour le prompt système.
+*Date: 2026-05-08 — version 0.2, monorepo*
+
+> This document is the canonical version of the valuation engine, hosted in the public Aratea repository. See also `rounds/RUBRIC.md` for the precise operational rules and `rounds/agent/PROMPT.md` for the system prompt.
 
 ## 1. Mission
 
-Estimer en **BTC** la valeur de chaque apport observable au projet, sans aucune déclaration de l'apporteur. Sortie : un montant en BTC qui sert de numérateur au mint (`tokens = valeur_BTC / NAV`).
+Estimate, in **BTC**, the value of every observable contribution to the project, without any declaration from the contributor. Output: a BTC amount that serves as the numerator of the mint (`tokens = BTC_value / NAV`).
 
-Contraintes inviolables :
-- **Fact-only.** Source unique d'information : Git (PRs mergés, diffs, commits, reviews, descriptions). Aucun rapport d'heures, aucune submission texte, aucune affirmation non-vérifiable.
-- **Push KO = 0.** Travail rejeté, non-mergé, abandonné → valeur nulle.
-- **BTC.** Tous les calculs en BTC ou sats. Pas d'EUR/USD dans les paramètres (uniquement en référence pour recalibration trimestrielle).
-- **Open-source du rubric et du prompt.** Versionnés, modifiables par PR + ratification.
+Inviolable constraints:
+
+- **Fact-only.** Single source of information: Git (merged PRs, diffs, commits, reviews, descriptions). No timesheets, no text submissions, no unverifiable claims.
+- **Push KO = 0.** Rejected, unmerged or abandoned work → zero value.
+- **BTC.** All calculations in BTC or sats. No EUR/USD in the parameters (only as a reference for quarterly recalibration).
+- **Open-source rubric and prompt.** Versioned, modifiable by PR + ratification.
 
 ## 2. Architecture
 
-Trois couches mensuelles :
+Three monthly layers:
 
-### Couche A — Collecte (jour 1)
+### Layer A — Collection (day 1)
 
-GitHub Action automatisée. Pour chaque wallet enregistré dans `rounds/WALLETS.md`, agrège **uniquement** :
+Automated GitHub Action. For every wallet registered in `rounds/WALLETS.md`, it aggregates **only**:
 
-- PRs mergés du mois M-1 (titre, body, diff stats, fichiers touchés, reviewers, labels, commit messages, issues fermées par le PR)
-- Reviews données sur PRs d'autres
-- Commits signés directement sur `main` (rares)
+- PRs merged in month M-1 (title, body, diff stats, files touched, reviewers, labels, commit messages, issues closed by the PR)
+- Reviews given on other people's PRs
+- Commits signed directly on `main` (rare)
 
-Ce qui n'est PAS collecté :
-- Issues ouvertes mais sans PR mergé associé
-- Discussions Discord, forum, DM
-- Time tracking déclaré
-- Auto-rapports de quelque nature que ce soit
+What is NOT collected:
 
-Sortie : `rounds/archives/YYYY-MM/raw.json`.
+- Issues opened with no associated merged PR
+- Discord, forum or DM discussions
+- Declared time tracking
+- Self-reports of any kind
 
-### Couche B — Valuation IA (jours 1-2)
+Output: `rounds/archives/YYYY-MM/raw.json`.
 
-L'agent reçoit `raw.json` + `RUBRIC.md` + `HOURLY_RATES.md` + état projet (`docs/architecture.md` + `docs/state.md` du round si présent).
+### Layer B — AI valuation (days 1-2)
 
-Pour chaque artefact observable, il calcule :
+The agent receives `raw.json` + `RUBRIC.md` + `HOURLY_RATES.md` + project state (`docs/architecture.md` + the round's `docs/state.md` if present).
+
+For each observable artefact, it computes:
 
 ```
-valeur_BTC = heures_estimées × taux_BTC_par_heure × ajust_qualité × ajust_impact
+BTC_value = estimated_hours × BTC_rate_per_hour × quality_adj × impact_adj
 ```
 
-- **heures_estimées** : temps qu'un pro mettrait pour produire le même output, déduit du diff et du contexte. Pas demandé à l'apporteur.
-- **taux_BTC_par_heure** : selon profil requis par la nature de l'output, table publique versionnée (`rounds/HOURLY_RATES.md`).
-- **ajust_qualité** ∈ [0,5 ; 1,3]. Lu sur les artefacts : tests présents, CI verte, reviewers, propreté du code.
-- **ajust_impact** ∈ [0,8 ; 1,5]. Lu sur le rôle du module touché et l'avancement du roadmap.
+- **estimated_hours**: the time a professional would take to produce the same output, inferred from the diff and the context. Never asked of the contributor.
+- **BTC_rate_per_hour**: according to the profile required by the nature of the output, from a public versioned table (`rounds/HOURLY_RATES.md`).
+- **quality_adj** ∈ [0.5 ; 1.3]. Read off the artefacts: tests present, CI green, reviewers, code cleanliness.
+- **impact_adj** ∈ [0.8 ; 1.5]. Read off the role of the module touched and roadmap progress.
 
-Le profil est une **variable** (taux marché → BTC, recalibrée trimestriellement). Le **livrable** détermine la valeur (un junior qui produit du senior touche le rate senior pour ce livrable, et inversement).
+The profile is a **variable** (market rate → BTC, recalibrated quarterly). The **deliverable** determines the value (a junior who produces senior-grade work is paid the senior rate for that deliverable, and vice versa).
 
-Sortie : `rounds/archives/YYYY-MM/valuation_report.md` (PR ouverte sur le repo aratea).
+Output: `rounds/archives/YYYY-MM/valuation_report.md` (PR opened on the aratea repository).
 
-### Couche C — Challenge & ratification (jours 1-7)
+### Layer C — Challenge & ratification (days 1-7)
 
-Fenêtre de **7 jours**. Un commentaire structuré (label `challenge`, signé par wallet du registry) peut contester un point précis de la valuation.
+A **7-day** window. A structured comment (label `challenge`, signed by a wallet in the registry) can contest a specific point of the valuation.
 
-À J+7 :
-- **Aucun challenge formel** → la PR est mergée par GitHub Action. Mint multisig exécuté.
-- **Au moins un challenge formel** → la décision passe au panel **Top X holders, 1 voix chacun**. X = 5 en phase 1. Majorité simple. Délai panel : 72 h. Le panel valide la valuation telle quelle ou demande une révision spécifique avec instruction écrite. Après révision, nouvelle PR, nouvelle fenêtre 72 h restreinte.
+At D+7:
 
-## 3. Le profil comme variable de marché
+- **No formal challenge** → the PR is merged by GitHub Action. Multisig mint executed.
+- **At least one formal challenge** → the decision goes to the **Top X holders panel, 1 vote each**. X = 5 in phase 1. Simple majority. Panel deadline: 72 h. The panel either approves the valuation as it stands or requests a specific revision with written instructions. After revision, a new PR opens a restricted 72 h window.
 
-Les taux du `HOURLY_RATES.md` sont des **variables** liées au marché freelance, exprimées en BTC à un instant donné. Recalibration trimestrielle :
+## 3. The profile as a market variable
 
-- Source : moyennes TJM Paris (Malt, Comet, Crème de la Crème) par profil.
-- Conversion EUR/BTC au spot moyen du trimestre.
-- Si dérive > 25 % vs valeurs courantes → vote token-weighted (51 %) pour ajuster.
+The rates in `HOURLY_RATES.md` are **variables** tied to the freelance market, expressed in BTC at a point in time. Quarterly recalibration:
 
-Le rubric ne *choisit* pas le profil par individu. Il choisit le profil **selon l'output produit** : un PR d'optimisation de pipeline ML → profil ML/data, peu importe qui l'a écrit. Un PR de doc → profil tech writer.
+- Source: average Paris day rates (Malt, Comet, Crème de la Crème) per profile.
+- EUR/BTC conversion at the quarter's average spot.
+- If drift exceeds 25 % against current values → token-weighted vote (51 %) to adjust.
 
-## 4. Le rubric — résumé
+The rubric does not *pick* a profile per individual. It picks the profile **according to the output produced**: an ML pipeline optimisation PR → ML/data profile, regardless of who wrote it. A docs PR → tech writer profile.
 
-Détail dans `rounds/RUBRIC.md`. Synthèse :
+## 4. The rubric — summary
 
-1. **Heures estimées** : déduites du diff (LoC ajustées par complexité, fichiers touchés, refactor vs greenfield, présence de tests).
-2. **Profil** : déterminé par la nature du module et de l'output.
-3. **Qualité** ∈ [0,5 ; 1,3] : tests, doc, CI, reviewers approving, dette technique.
-4. **Impact** ∈ [0,8 ; 1,5] : core vs périphérique, débloque-t-il une étape, métrique mesurable améliorée.
+Full detail in `rounds/RUBRIC.md`. In brief:
 
-Bornes dures, pas de bonus exceptionnel.
+1. **Estimated hours**: inferred from the diff (LoC adjusted for complexity, files touched, refactor vs greenfield, presence of tests).
+2. **Profile**: determined by the nature of the module and the output.
+3. **Quality** ∈ [0.5 ; 1.3]: tests, docs, CI, approving reviewers, technical debt.
+4. **Impact** ∈ [0.8 ; 1.5]: core vs peripheral, does it unblock a milestone, is a measurable metric improved.
 
-## 5. Cas du cash
+Hard bounds, no exceptional bonus.
 
-Hors rubric côté valuation (1 sat = 1 sat, pas d'estimation), mais **soumis à ratification comme tout apport**.
+## 5. The cash case
 
-- Apport BTC : envoyé à l'adresse multisig `subscription-pending` du round courant. Si accepté à J+7, mint à NAV. Si refusé par JS (phase 1) ou panel (phase 2+) avec motivation écrite, fonds renvoyés.
-- Apport USDC ou EURC : converti au spot du jour de subscription en sats, même mécanique pending + ratification.
+Outside the rubric on the valuation side (1 sat = 1 sat, no estimation), but **subject to ratification like any other contribution**.
 
-Le cash apparaît dans le rapport mensuel **sans valuation** (montant brut + adresse expéditeur), pour visibilité du ratificateur. Refus possible pour raison stratégique, réputationnelle, conflit d'intérêts ou compliance.
+- BTC contribution: sent to the current round's `subscription-pending` multisig address. If accepted at D+7, minted at NAV. If refused by JS (phase 1) or the panel (phase 2+) with written justification, the funds are returned.
+- USDC or EURC contribution: converted into sats at the spot rate of the subscription day, same pending + ratification mechanism.
 
-## 6. Genesis — valuation rétroactive
+Cash appears in the monthly report **without a valuation** (gross amount + sender address), for the ratifier's visibility. Refusal is possible on strategic, reputational, conflict-of-interest or compliance grounds.
 
-L'agent passe sur **tout l'historique Git du repo** (commits, PRs, code livré avant l'ouverture du projet). Découpage par phases logiques documentées.
+## 6. Genesis — retroactive valuation
 
-Pour le round genesis :
-- Fenêtre de challenge **étendue à 30 jours** (vs 7 standards).
-- Notification explicite aux premiers prospects investisseurs **avant qu'ils n'investissent**.
-- Pas de bonus "founder".
+The agent runs over **the repository's entire Git history** (commits, PRs, code delivered before the project was opened). Split into documented logical phases.
 
-Voir le dry-run dans `rounds/archives/2026-05-genesis/` pour la première itération.
+For the genesis round:
 
-## 7. Garde-fous opérationnels
+- Challenge window **extended to 30 days** (vs the standard 7).
+- Explicit notification to the first prospective investors **before they invest**.
+- No "founder" bonus.
 
-Le token Aratea n'a pas vocation à être tradé sur marché secondaire — il représente une quote-part de la NAV et un droit de gouvernance. Les caps d'émission visent traditionnellement à protéger un prix de marché ; cette logique ne s'applique pas ici. Les garde-fous ci-dessous portent sur la qualité du processus (validation, fraude, audit) et non sur la vélocité d'émission. Aucun plafond mensuel global ni plafond par apporteur n'est imposé.
+See the dry run in `rounds/archives/2026-05-genesis/` for the first iteration.
 
-- **Vote token-weighted automatique** pour grosses valuations : tout apporteur valorisé > 0,01 BTC dans un round passe en vote pondéré des holders, même sans contestation.
-- **Cooldown nouveaux entrants** : première contribution mergée > 30 jours avant éligibilité au mint.
-- **Slashing** : claw-back sur 6 mois en cas de fraude établie par vote 67 %.
-- **Audit annuel** : rubric, grille, valuations passées revus en assemblée holder.
+## 7. Operational guardrails
 
-## 8. Évolution du système
+The Aratea token is not intended to be traded on a secondary market — it represents a pro-rata share of the NAV and a governance right. Issuance caps traditionally exist to protect a market price; that logic does not apply here. The guardrails below concern process quality (validation, fraud, audit), not issuance velocity. No global monthly cap and no per-contributor cap is imposed.
 
-- **Phase 1 (≤ 20 contributeurs)** : panel 5 holders. Ratification par GitHub Action si non contesté, sinon panel.
-- **Phase 2 (20-50)** : panel 7 holders. Ajout possible d'un module peer-feedback automatisé (signaux croisés review-de-PR, encore fact-based).
-- **Phase 3 (DAO live, > 50)** : panel 11 holders. Vote token-weighted sur paramètres. Rounds rétroactifs trimestriels.
+- **Automatic token-weighted vote** for large valuations: any contributor valued above 0.01 BTC in a round goes to a weighted holder vote, even with no contest.
+- **Newcomer cooldown**: first merged contribution must be more than 30 days old before mint eligibility.
+- **Slashing**: 6-month clawback where fraud is established by a 67 % vote.
+- **Annual audit**: rubric, rate table and past valuations reviewed at the holder assembly.
 
-## 9. Risques honnêtes
+## 8. Evolution of the system
 
-1. **Coordination invisible non rétribuée.** Mitigation : encourager les digests publics signés. Si ce n'est pas Git, ce n'est pas valorisé.
-2. **Gaming sur le diff.** Le rubric pénalise dette technique et ajustements impact "modestes/faibles". Le panel reste l'autorité ultime.
-3. **Volatilité BTC.** Compensation : recalibration trimestrielle.
-4. **Panel Top X polarisé.** Mitigation : transparence du vote, revue annuelle.
-5. **Sous-estimation IA pour certaines catégories.** Audit annuel comparatif aux taux freelance réels.
+- **Phase 1 (≤ 20 contributors)**: 5-holder panel. Ratification by GitHub Action if uncontested, panel otherwise.
+- **Phase 2 (20-50)**: 7-holder panel. Possible addition of an automated peer-feedback module (cross-signals from PR reviews, still fact-based).
+- **Phase 3 (DAO live, > 50)**: 11-holder panel. Token-weighted vote on parameters. Quarterly retroactive rounds.
 
-## 10. Implémentation actuelle
+## 9. Honest risks
 
-Phase 1 MVP en GitHub Actions + multisig Safe. Pas de smart contract custom encore. Voir `rounds/scripts/` pour le squelette de la GitHub Action de collecte, `rounds/agent/PROMPT.md` pour le prompt système, et `contracts/README.md` pour la roadmap des contracts à venir.
+1. **Invisible, unrewarded coordination.** Mitigation: encourage signed public digests. If it is not in Git, it is not valued.
+2. **Gaming the diff.** The rubric penalises technical debt and "modest/low" impact adjustments. The panel remains the ultimate authority.
+3. **BTC volatility.** Offset by quarterly recalibration.
+4. **A polarised Top X panel.** Mitigation: vote transparency, annual review.
+5. **AI under-estimation for certain categories.** Annual audit against real freelance rates.
 
-## 11. Voir aussi
+## 10. Current implementation
 
-- Architecture générale du projet → [`architecture.md`](architecture.md)
-- Modèle de tokens (§7.7 Garde-fous) → [`token_model.md`](token_model.md)
-- **Projet de statuts FR** (art. 4 bis transparence + art. 32 moteur de valuation + art. 31 slashing) → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
+Phase 1 MVP on GitHub Actions + a Safe multisig. No custom smart contract yet. See `rounds/scripts/` for the skeleton of the collection GitHub Action, `rounds/agent/PROMPT.md` for the system prompt, and `contracts/README.md` for the roadmap of the contracts to come.
+
+## 11. See also
+
+- Overall project architecture → [`architecture.md`](architecture.md)
+- Token model (§7.7 Guardrails) → [`token_model.md`](token_model.md)
+- **Draft articles of association, FR** (art. 4 bis transparency + art. 32 valuation engine + art. 31 slashing) → [`../../statuts-aratea-v0-projet-2026-05-16.md`](../../statuts-aratea-v0-projet-2026-05-16.md)
 - **Draft Articles of Association EN** → [`../../statuts-aratea-v0-projet-2026-05-16-EN.md`](../../statuts-aratea-v0-projet-2026-05-16-EN.md)

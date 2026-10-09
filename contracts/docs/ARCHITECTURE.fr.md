@@ -77,5 +77,5 @@ Deux primitives :
 - Détail du cycle de vie d'un round → [`ROUND-LIFECYCLE.fr.md`](ROUND-LIFECYCLE.fr.md)
 - Threat model → [`SECURITY.fr.md`](SECURITY.fr.md)
 - Flux de déploiement → [`DEPLOYMENT.fr.md`](DEPLOYMENT.fr.md)
-- Modèle économique du token → [`/docs/token_model.md`](../../docs/token_model.md)
-- Architecture niveau projet → [`/docs/architecture.md`](../../docs/architecture.md)
+- Modèle économique du token → [`/docs/token_model.fr.md`](../../docs/token_model.fr.md)
+- Architecture niveau projet → [`/docs/architecture.fr.md`](../../docs/architecture.fr.md)

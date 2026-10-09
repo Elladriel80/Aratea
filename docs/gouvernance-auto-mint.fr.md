@@ -1,7 +1,9 @@
+<!-- English version: gouvernance-auto-mint.md -->
+
 # Spec — mint automatique + contestation par vote token-weighted (Phase 2)
 
 *v0.5 — 2026-06-19. Statut : **implémenté** (contrats + tests), **testnet Arbitrum Sepolia uniquement, pré-audit**. Voir §8 pour l'implémentation réelle.*
-*Décisions actées 2026-06-17 : vote **token-weighted** (1 token = 1 voix) ; **aucun plafond par wallet**. Remplace le panel ET le cap 25 % du `token_model.md` (§6, §9).*
+*Décisions actées 2026-06-17 : vote **token-weighted** (1 token = 1 voix) ; **aucun plafond par wallet**. Remplace le panel ET le cap 25 % du `token_model.fr.md` (§6, §9).*
 *Correctif 2026-06-19 : une alternative est désormais soumise au **même quorum que l'original** (et non plus à la majorité simple) ; la file d'alternatives est **plafonnée** (`MAX_ALTERNATIVES`).*
 
 > ⚠️ **Audit requis avant mainnet.** Du code qui mint de la valeur, piloté par un vote on-chain, est la catégorie la plus risquée. Aucun déploiement mainnet sans audit communautaire.
@@ -48,7 +50,7 @@ remplacée par le keeper + la fenêtre de contestation.
 
 ---
 
-## 3. Réconciliation avec `token_model.md`
+## 3. Réconciliation avec `token_model.fr.md`
 
 | Sujet | Doc avant | Décidé | 
 |---|---|---|

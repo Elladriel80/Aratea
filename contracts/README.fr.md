@@ -2,11 +2,11 @@
 
 # contracts
 
-Smart contracts Solidity du protocole Aratea. **Phase 1 en cours** — construction de la couche de règlement on-chain pour la mécanique de mint valeur-travail décrite dans [`/docs/token_model.md`](../docs/token_model.md).
+Smart contracts Solidity du protocole Aratea. **Phase 1 en cours** — construction de la couche de règlement on-chain pour la mécanique de mint valeur-travail décrite dans [`/docs/token_model.fr.md`](../docs/token_model.fr.md).
 
 ## Statut
 
-Phase 1 — *active*. Jalons M0 à M5. Voir [`/docs/architecture.md`](../docs/architecture.md) pour le phasage projet global.
+Phase 1 — *active*. Jalons M0 à M5. Voir [`/docs/architecture.fr.md`](../docs/architecture.fr.md) pour le phasage projet global.
 
 ## Périmètre Phase 1
 
