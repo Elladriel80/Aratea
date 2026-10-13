@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-11T22:02:10Z",
+  "generated_at": "2026-10-13T00:41:25Z",
   "schema_version": 3,
   "features": [
     {
@@ -5819,40 +5819,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.16899155438052726,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.6906,
+          "won": true,
+          "pnl_usd": 963.6,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.03207313659464688,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.9369,
+          "won": true,
+          "pnl_usd": 963.6,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.045000000000000005,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.912,
+          "won": true,
+          "pnl_usd": 963.6,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          53.0,
+          54.0
+        ],
+        "winning_bin_ticker": "KXLOWTNYC-26OCT11-B53.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": 963.6,
+        "champion_won": true
       }
     },
     {
@@ -5878,40 +5881,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.15932770465207302,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0254,
+          "won": false,
+          "pnl_usd": -45.39,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.037864852997358395,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0014,
+          "won": false,
+          "pnl_usd": -45.39,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.085,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0072,
+          "won": false,
+          "pnl_usd": -45.39,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          53.0,
+          54.0
+        ],
+        "winning_bin_ticker": "KXLOWTNYC-26OCT11-B53.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": -45.39,
+        "champion_won": false
       }
     },
     {
@@ -5937,40 +5943,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.36345761434563406,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.4052,
+          "won": false,
+          "pnl_usd": -45.14,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.1602879285798619,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.7051,
+          "won": false,
+          "pnl_usd": -45.14,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.6950000000000001,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.093,
+          "won": false,
+          "pnl_usd": -45.14,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          51.0,
+          52.0
+        ],
+        "winning_bin_ticker": "KXLOWTSFO-26OCT11-B51.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": -45.14,
+        "champion_won": false
       }
     },
     {
@@ -5996,40 +6005,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.09418465396287515,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0089,
+          "won": true,
+          "pnl_usd": 9.9,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.016315495626747493,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0003,
+          "won": true,
+          "pnl_usd": 9.9,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.18,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0324,
+          "won": true,
+          "pnl_usd": 9.9,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          51.0,
+          52.0
+        ],
+        "winning_bin_ticker": "KXLOWTSFO-26OCT11-B51.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": 9.9,
+        "champion_won": true
       }
     },
     {
@@ -6055,40 +6067,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.0969695772039848,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0094,
+          "won": false,
+          "pnl_usd": -33.68,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.020932565747755306,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0004,
+          "won": false,
+          "pnl_usd": -33.68,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.04,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0016,
+          "won": false,
+          "pnl_usd": -33.68,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          62.0,
+          63.0
+        ],
+        "winning_bin_ticker": "KXLOWTDC-26OCT11-B62.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": -33.68,
+        "champion_won": false
       }
     },
     {
@@ -6114,40 +6129,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.060170762639633356,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0036,
+          "won": true,
+          "pnl_usd": 7.28,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.1049745002059715,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.011,
+          "won": true,
+          "pnl_usd": 7.28,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.14,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0196,
+          "won": true,
+          "pnl_usd": 7.28,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          47.0,
+          48.0
+        ],
+        "winning_bin_ticker": "KXLOWTBOS-26OCT11-B47.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": 7.28,
+        "champion_won": true
       }
     },
     {
@@ -6173,40 +6191,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.3070389838502274,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0943,
+          "won": true,
+          "pnl_usd": 57.68,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.10229122645121308,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0105,
+          "won": true,
+          "pnl_usd": 57.68,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.56,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.3136,
+          "won": true,
+          "pnl_usd": 57.68,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          76.0,
+          77.0
+        ],
+        "winning_bin_ticker": "KXLOWTMIA-26OCT11-B76.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": 57.68,
+        "champion_won": true
       }
     },
     {
@@ -6232,40 +6253,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.36164017030971635,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.1308,
+          "won": false,
+          "pnl_usd": -45.38,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.1503248070589807,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0226,
+          "won": false,
+          "pnl_usd": -45.38,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.165,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0272,
+          "won": false,
+          "pnl_usd": -45.38,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          76.0,
+          77.0
+        ],
+        "winning_bin_ticker": "KXLOWTMIA-26OCT11-B76.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": -45.38,
+        "champion_won": false
       }
     },
     {
@@ -6291,40 +6315,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.22913490078431145,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.5942,
+          "won": true,
+          "pnl_usd": 780.57,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.05403778448089167,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.8948,
+          "won": true,
+          "pnl_usd": 780.57,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.055,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.893,
+          "won": true,
+          "pnl_usd": 780.57,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          76.0,
+          77.0
+        ],
+        "winning_bin_ticker": "KXLOWTMIA-26OCT11-B76.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": 780.57,
+        "champion_won": true
       }
     },
     {
@@ -6350,40 +6377,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.16567763216645384,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0274,
+          "won": true,
+          "pnl_usd": 16.16,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.23987712579725964,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0575,
+          "won": true,
+          "pnl_usd": 16.16,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.265,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0702,
+          "won": true,
+          "pnl_usd": 16.16,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          72.0,
+          73.0
+        ],
+        "winning_bin_ticker": "KXLOWTPHX-26OCT11-B72.5",
+        "ts_utc": "2026-10-13T00:40:34Z",
+        "champion_pnl_usd": 16.16,
+        "champion_won": true
       }
     },
     {
@@ -6409,40 +6439,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.22900682658965688,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.5944,
+          "won": false,
+          "pnl_usd": -44.88,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.05875791944609279,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.8859,
+          "won": false,
+          "pnl_usd": -44.88,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.32,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.4624,
+          "won": false,
+          "pnl_usd": -44.88,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "yes",
+        "observed_range_f": [
+          56.0,
+          57.0
+        ],
+        "winning_bin_ticker": "KXLOWTDEN-26OCT11-B56.5",
+        "ts_utc": "2026-10-13T00:40:35Z",
+        "champion_pnl_usd": -44.88,
+        "champion_won": false
       }
     },
     {
@@ -6468,40 +6501,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.19248526051529444,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0371,
+          "won": true,
+          "pnl_usd": 47.9,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.22333317072557876,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0499,
+          "won": true,
+          "pnl_usd": 47.9,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.515,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.2652,
+          "won": true,
+          "pnl_usd": 47.9,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          65.0,
+          66.0
+        ],
+        "winning_bin_ticker": "KXHIGHTSFO-26OCT11-B65.5",
+        "ts_utc": "2026-10-13T00:40:35Z",
+        "champion_pnl_usd": 47.9,
+        "champion_won": true
       }
     },
     {
@@ -6527,40 +6563,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.1907121896032789,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0364,
+          "won": false,
+          "pnl_usd": -45.44,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.2951029357223874,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0871,
+          "won": false,
+          "pnl_usd": -45.44,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.065,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0042,
+          "won": false,
+          "pnl_usd": -45.44,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          65.0,
+          66.0
+        ],
+        "winning_bin_ticker": "KXHIGHTSFO-26OCT11-B65.5",
+        "ts_utc": "2026-10-13T00:40:35Z",
+        "champion_pnl_usd": -45.44,
+        "champion_won": false
       }
     },
     {
@@ -6586,40 +6625,43 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.11118206097112994,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0124,
+          "won": true,
+          "pnl_usd": 9.62,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.14517679270831113,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0211,
+          "won": true,
+          "pnl_usd": 9.62,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.175,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0306,
+          "won": true,
+          "pnl_usd": 9.62,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
-        "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "status": "resolved",
+        "outcome": "no",
+        "observed_range_f": [
+          65.0,
+          66.0
+        ],
+        "winning_bin_ticker": "KXHIGHTSFO-26OCT11-B65.5",
+        "ts_utc": "2026-10-13T00:40:35Z",
+        "champion_pnl_usd": 9.62,
+        "champion_won": true
       }
     },
     {
@@ -6645,40 +6687,40 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.20256762062727926,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.041,
+          "won": false,
+          "pnl_usd": -45.43,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.07015386540147583,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0049,
+          "won": false,
+          "pnl_usd": -45.43,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.025,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0006,
+          "won": false,
+          "pnl_usd": -45.43,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
+        "status": "resolved",
+        "outcome": "no",
         "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "winning_bin_ticker": "KXHIGHTDC-26OCT11-T68",
+        "ts_utc": "2026-10-13T00:40:35Z",
+        "champion_pnl_usd": -45.43,
+        "champion_won": false
       }
     },
     {
@@ -6704,40 +6746,40 @@
           "role": "champion",
           "method": "ensemble",
           "p_yes": 0.24448734458841348,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0598,
+          "won": true,
+          "pnl_usd": 5.87,
+          "pnl_type": "actual"
         },
         {
           "name": "learned_v2",
           "role": "challenger",
           "method": "learned_v2",
           "p_yes": 0.09596523643927111,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.0092,
+          "won": true,
+          "pnl_usd": 5.87,
+          "pnl_type": "theoretical"
         },
         {
           "name": "kalshi_mid_baseline",
           "role": "baseline",
           "method": "kalshi_mid",
           "p_yes": 0.345,
-          "brier": null,
-          "won": null,
-          "pnl_usd": null,
-          "pnl_type": null
+          "brier": 0.119,
+          "won": true,
+          "pnl_usd": 5.87,
+          "pnl_type": "theoretical"
         }
       ],
       "resolution": {
-        "status": "open",
-        "outcome": null,
+        "status": "resolved",
+        "outcome": "no",
         "observed_range_f": null,
-        "winning_bin_ticker": null,
-        "ts_utc": null,
-        "champion_pnl_usd": null,
-        "champion_won": null
+        "winning_bin_ticker": "KXHIGHTDC-26OCT11-T68",
+        "ts_utc": "2026-10-13T00:40:35Z",
+        "champion_pnl_usd": 5.87,
+        "champion_won": true
       }
     }
   ],
@@ -6745,16 +6787,16 @@
   "backtest_runs": [],
   "backtest_runs_total": 0,
   "paper_bets_summary": {
-    "n_open": 16,
-    "n_resolved": 917,
-    "pnl_usd_cumulative": 1271.95,
-    "wins": 389,
-    "losses": 528,
+    "n_open": 0,
+    "n_resolved": 933,
+    "pnl_usd_cumulative": 2865.19,
+    "wins": 398,
+    "losses": 535,
     "phase_1_counter": "933/50",
     "control_group": {
-      "n_resolved": 260,
-      "wins": 100,
-      "losses": 160
+      "n_resolved": 273,
+      "wins": 103,
+      "losses": 170
     }
   },
   "backtest_summary": {
@@ -6767,12 +6809,12 @@
   },
   "hybrid_sample": {
     "alpha_backtest": 0.3,
-    "n_live": 917,
+    "n_live": 933,
     "n_backtest_strict": 268,
     "n_backtest_naive_excluded": 0,
-    "n_effective": 997.4,
+    "n_effective": 1013.4,
     "phase_1_target": 50,
-    "phase_1_progress_live_only": "917/50",
+    "phase_1_progress_live_only": "933/50",
     "convention_ref": "predictor/runs/CONVENTION.md sec.6.bis",
     "note": "N_effective is for SECONDARY decisions only (feature-set selection, reliability plots, complementary promotion check). The Phase 1 go/no-go gate (CONVENTION.md sec.6) uses n_live exclusively and ignores n_backtest_strict."
   },
