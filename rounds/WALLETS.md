@@ -34,6 +34,7 @@ vérifiée est ouverte et un ratificateur la merge.)*
 | GitHub handle | Ethereum address | Registration date | Notes |
 |---|---|---|---|
 | <to fill> | 0x... | 2026-MM-DD | Founder, retroactive valuation pending |
+| @Juste130 | 0x8d4f7cc817598278326AB17990e9cD8b70714Df5 | 2026-10-15 | sig: `0xb22f831f0e21795fb81d5c9d1fc481856a8e02172ebf48ee367e470827b07b044dbcdb8dedd9141b449a679543ffd9b5f5ce2124a9304f5e490e8c90fd40324c1c` |
 
 ## Address change / Changement d'adresse
 
