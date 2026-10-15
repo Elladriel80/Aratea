@@ -1,0 +1,32 @@
+{
+  "forecast_name": "NMME",
+  "any_ok": true,
+  "hindcast_usable": false,
+  "probes": [
+    {
+      "url": "https://iridl.ldeo.columbia.edu/SOURCES/.Models/.NMME/dataset_description.html",
+      "http_status": 200,
+      "bytes_sampled": 2048,
+      "content_type": "text/html; charset=utf-8",
+      "hindcast_series": false,
+      "ok": true
+    },
+    {
+      "url": "https://iridl.ldeo.columbia.edu/SOURCES/.Models/.NMME/.NCEP-CFSv2/.HINDCAST/.MONTHLY/.prec/data.tsv",
+      "http_status": 200,
+      "bytes_sampled": 2048,
+      "content_type": "text/tab-separated-values",
+      "hindcast_series": true,
+      "ok": true
+    },
+    {
+      "url": "https://www.cpc.ncep.noaa.gov/products/NMME/data.html",
+      "http_status": 200,
+      "bytes_sampled": 2048,
+      "content_type": "text/html; charset=utf-8",
+      "hindcast_series": false,
+      "ok": true
+    }
+  ],
+  "blocker": "IRI r\u00e9pond (grille mondiale ou moyenne sans axe de temps). On n'a pas une s\u00e9rie Midwest / Southwest dat\u00e9e \u00e0 apparier au US Drought Monitor. Pas de score NMME invent\u00e9."
+}

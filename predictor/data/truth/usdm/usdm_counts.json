@@ -1,0 +1,2120 @@
+{
+  "catalogue_target": "S\u00e9cheresse US",
+  "truth_name": "US Drought Monitor",
+  "forecast_name_used": "Open-Meteo Seasonal",
+  "as_of": "2026-09-12T18:46:25Z",
+  "archive_start": "2000-01-04",
+  "end_date": "2026-09-12",
+  "champion_switched": false,
+  "real_money": false,
+  "classes_published": [
+    "None",
+    "D0 Abnormally Dry",
+    "D1 Moderate Drought",
+    "D2 Severe Drought",
+    "D3 Extreme Drought",
+    "D4 Exceptional Drought"
+  ],
+  "region_source": {
+    "Midwest": "USDM ClimateHubStatistics aoi=3 (name=Midwest); \u00e9tats USDA Midwest Hub",
+    "Southwest": "USDM ClimateHubStatistics aoi=10 (name=Southwest); \u00e9tats USDA Southwest Hub (continent)",
+    "combined": "somme des aires cat\u00e9gorielles des deux hubs, m\u00eame mapDate"
+  },
+  "coverage": {
+    "CONUS_cat": {
+      "series": "CONUS",
+      "published_name": "CONUS",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 50.009583632447956,
+          "max_value": 91.16
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 18.265778894472362,
+          "max_value": 43.78
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 13.720847092605887,
+          "max_value": 30.21
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 1391,
+          "share_of_weeks": 0.9985642498205313,
+          "mean_value": 10.344120603015076,
+          "max_value": 28.71
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 1339,
+          "share_of_weeks": 0.9612347451543432,
+          "mean_value": 5.843560660445083,
+          "max_value": 19.93
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 1087,
+          "share_of_weeks": 0.7803302225412778,
+          "mean_value": 1.815829145728643,
+          "max_value": 11.96
+        }
+      },
+      "d2_plus": {
+        "mean": 18.003510409188802,
+        "max": 46.02,
+        "weeks_gt_0": 1391,
+        "weeks_ge_30": 266,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "CONUS_cum": {
+      "series": "CONUS",
+      "published_name": "CONUS",
+      "unit": "percent",
+      "statistic_format": 1,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 50.009583632447956,
+          "max_value": 91.16
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 49.990416367552044,
+          "max_value": 87.78
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 31.72452261306533,
+          "max_value": 65.45
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 1391,
+          "share_of_weeks": 0.9985642498205313,
+          "mean_value": 18.003682699210337,
+          "max_value": 46.01
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 1339,
+          "share_of_weeks": 0.9612347451543432,
+          "mean_value": 7.659547738693467,
+          "max_value": 26.8
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 1087,
+          "share_of_weeks": 0.7803302225412778,
+          "mean_value": 1.815829145728643,
+          "max_value": 11.96
+        }
+      },
+      "d2_plus": {
+        "mean": 27.47905958363245,
+        "max": 75.49,
+        "weeks_gt_0": 1391,
+        "weeks_ge_30": 524,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "Midwest_cat": {
+      "series": "Midwest",
+      "published_name": "Midwest",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 67.39182340272792,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1359,
+          "share_of_weeks": 0.9755922469490309,
+          "mean_value": 17.339440057430007,
+          "max_value": 57.56
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1206,
+          "share_of_weeks": 0.8657573582196698,
+          "mean_value": 10.05519023689878,
+          "max_value": 47.47
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 935,
+          "share_of_weeks": 0.6712132089016511,
+          "mean_value": 3.9753338119167267,
+          "max_value": 37.34
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 505,
+          "share_of_weeks": 0.36252692031586503,
+          "mean_value": 1.1891313711414213,
+          "max_value": 34.54
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 115,
+          "share_of_weeks": 0.08255563531945441,
+          "mean_value": 0.04909547738693468,
+          "max_value": 7.72
+        }
+      },
+      "d2_plus": {
+        "mean": 5.213560660445083,
+        "max": 57.449999999999996,
+        "weeks_gt_0": 935,
+        "weeks_ge_30": 31,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "Southwest_cat": {
+      "series": "Southwest",
+      "published_name": "Southwest",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1389,
+          "share_of_weeks": 0.9971284996410624,
+          "mean_value": 29.867013639626705,
+          "max_value": 91.93
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 18.398470926058867,
+          "max_value": 84.6
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 18.636503948312996,
+          "max_value": 58.95
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 1350,
+          "share_of_weeks": 0.9691313711414213,
+          "mean_value": 18.135750179468772,
+          "max_value": 55.51
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 1194,
+          "share_of_weeks": 0.8571428571428571,
+          "mean_value": 11.174127781765973,
+          "max_value": 48.09
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 779,
+          "share_of_weeks": 0.5592246949030869,
+          "mean_value": 3.788040201005025,
+          "max_value": 43.92
+        }
+      },
+      "d2_plus": {
+        "mean": 33.09791816223977,
+        "max": 95.01,
+        "weeks_gt_0": 1350,
+        "weeks_ge_30": 659,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "Midwest_plus_Southwest_cat": {
+      "series": "Midwest_plus_Southwest",
+      "published_name": "Midwest_plus_Southwest",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 46.19122148410587,
+          "max_value": 94.02442195069811
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 17.937856552132025,
+          "max_value": 64.83273459900829
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1393,
+          "share_of_weeks": 1.0,
+          "mean_value": 14.903447728720861,
+          "max_value": 38.89830221265913
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 1390,
+          "share_of_weeks": 0.9978463747307968,
+          "mean_value": 11.975657190872537,
+          "max_value": 43.59488167737402
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 1261,
+          "share_of_weeks": 0.905240488155061,
+          "mean_value": 6.830360801009704,
+          "max_value": 27.60599476896549
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 825,
+          "share_of_weeks": 0.5922469490308686,
+          "mean_value": 2.1614562431590043,
+          "max_value": 24.811350109785884
+        }
+      },
+      "d2_plus": {
+        "mean": 20.967474235041244,
+        "max": 62.2759385842722,
+        "weeks_gt_0": 1390,
+        "weeks_ge_30": 421,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_IL_cat": {
+      "series": "IL",
+      "published_name": "IL",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1361,
+          "share_of_weeks": 0.9770279971284996,
+          "mean_value": 72.16198851399857,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 995,
+          "share_of_weeks": 0.7142857142857143,
+          "mean_value": 15.063194544149317,
+          "max_value": 91.82
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 725,
+          "share_of_weeks": 0.5204594400574301,
+          "mean_value": 8.534974874371859,
+          "max_value": 88.07
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 379,
+          "share_of_weeks": 0.27207465900933236,
+          "mean_value": 3.160258435032304,
+          "max_value": 86.79
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 110,
+          "share_of_weeks": 0.07896625987078248,
+          "mean_value": 1.0434242641780331,
+          "max_value": 72.8
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 8,
+          "share_of_weeks": 0.00574300071787509,
+          "mean_value": 0.03586503948312993,
+          "max_value": 8.39
+        }
+      },
+      "d2_plus": {
+        "mean": 4.239547738693467,
+        "max": 95.07000000000001,
+        "weeks_gt_0": 379,
+        "weeks_ge_30": 79,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_IN_cat": {
+      "series": "IN",
+      "published_name": "IN",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1361,
+          "share_of_weeks": 0.9770279971284996,
+          "mean_value": 75.9464824120603,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 813,
+          "share_of_weeks": 0.583632447954056,
+          "mean_value": 14.473991385498923,
+          "max_value": 89.6
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 506,
+          "share_of_weeks": 0.36324479540559945,
+          "mean_value": 6.689820531227566,
+          "max_value": 92.5
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 195,
+          "share_of_weeks": 0.1399856424982053,
+          "mean_value": 2.3279540559942573,
+          "max_value": 54.67
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 52,
+          "share_of_weeks": 0.03732950466618808,
+          "mean_value": 0.48475233309404164,
+          "max_value": 53.13
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 8,
+          "share_of_weeks": 0.00574300071787509,
+          "mean_value": 0.07682699210337401,
+          "max_value": 25.0
+        }
+      },
+      "d2_plus": {
+        "mean": 2.8895333811916726,
+        "max": 89.75,
+        "weeks_gt_0": 195,
+        "weeks_ge_30": 48,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_IA_cat": {
+      "series": "IA",
+      "published_name": "IA",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1308,
+          "share_of_weeks": 0.9389806173725772,
+          "mean_value": 61.13753768844221,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1058,
+          "share_of_weeks": 0.7595118449389806,
+          "mean_value": 16.926633165829145,
+          "max_value": 95.58
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 815,
+          "share_of_weeks": 0.5850681981335247,
+          "mean_value": 12.198356066044509,
+          "max_value": 76.34
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 528,
+          "share_of_weeks": 0.37903804737975594,
+          "mean_value": 7.209949748743718,
+          "max_value": 94.11
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 276,
+          "share_of_weeks": 0.1981335247666906,
+          "mean_value": 2.4747092605886576,
+          "max_value": 72.79
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 71,
+          "share_of_weeks": 0.050969131371141424,
+          "mean_value": 0.05283560660445082,
+          "max_value": 4.96
+        }
+      },
+      "d2_plus": {
+        "mean": 9.737494615936827,
+        "max": 100.01,
+        "weeks_gt_0": 528,
+        "weeks_ge_30": 167,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_MI_cat": {
+      "series": "MI",
+      "published_name": "MI",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1380,
+          "share_of_weeks": 0.990667623833453,
+          "mean_value": 72.15175879396985,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1067,
+          "share_of_weeks": 0.7659727207465901,
+          "mean_value": 18.102842785355346,
+          "max_value": 99.52
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 773,
+          "share_of_weeks": 0.5549174443646806,
+          "mean_value": 7.604127781765972,
+          "max_value": 76.8
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 374,
+          "share_of_weeks": 0.2684852835606604,
+          "mean_value": 2.0408183776022972,
+          "max_value": 53.58
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 27,
+          "share_of_weeks": 0.019382627422828428,
+          "mean_value": 0.10053122756640344,
+          "max_value": 17.06
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 0,
+          "share_of_weeks": 0.0,
+          "mean_value": 0.0,
+          "max_value": 0.0
+        }
+      },
+      "d2_plus": {
+        "mean": 2.141349605168701,
+        "max": 53.58,
+        "weeks_gt_0": 374,
+        "weeks_ge_30": 17,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_MN_cat": {
+      "series": "MN",
+      "published_name": "MN",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1317,
+          "share_of_weeks": 0.9454414931801867,
+          "mean_value": 57.474623115577884,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1180,
+          "share_of_weeks": 0.8470926058865758,
+          "mean_value": 21.535017946877243,
+          "max_value": 94.49
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 920,
+          "share_of_weeks": 0.6604450825556353,
+          "mean_value": 13.6556783919598,
+          "max_value": 92.32
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 539,
+          "share_of_weeks": 0.3869346733668342,
+          "mean_value": 5.184651830581479,
+          "max_value": 58.48
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 190,
+          "share_of_weeks": 0.1363962670495334,
+          "mean_value": 2.1157071069633884,
+          "max_value": 49.58
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 9,
+          "share_of_weeks": 0.006460875807609476,
+          "mean_value": 0.034134960516870066,
+          "max_value": 8.07
+        }
+      },
+      "d2_plus": {
+        "mean": 7.334493898061738,
+        "max": 88.28999999999999,
+        "weeks_gt_0": 539,
+        "weeks_ge_30": 120,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_MO_cat": {
+      "series": "MO",
+      "published_name": "MO",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1349,
+          "share_of_weeks": 0.968413496051687,
+          "mean_value": 64.74922469490309,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1126,
+          "share_of_weeks": 0.8083273510409189,
+          "mean_value": 17.91470208183776,
+          "max_value": 91.89
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 883,
+          "share_of_weeks": 0.633883704235463,
+          "mean_value": 11.058750897343863,
+          "max_value": 71.48
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 530,
+          "share_of_weeks": 0.38047379755922467,
+          "mean_value": 4.680308686288586,
+          "max_value": 75.73
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 262,
+          "share_of_weeks": 0.18808327351040918,
+          "mean_value": 1.4739554917444364,
+          "max_value": 84.39
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 31,
+          "share_of_weeks": 0.022254127781765973,
+          "mean_value": 0.12288585786073224,
+          "max_value": 35.72
+        }
+      },
+      "d2_plus": {
+        "mean": 6.277150035893754,
+        "max": 100.0,
+        "weeks_gt_0": 530,
+        "weeks_ge_30": 82,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_OH_cat": {
+      "series": "OH",
+      "published_name": "OH",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1375,
+          "share_of_weeks": 0.9870782483847811,
+          "mean_value": 81.65118449389807,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 822,
+          "share_of_weeks": 0.5900933237616655,
+          "mean_value": 12.04424264178033,
+          "max_value": 93.55
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 418,
+          "share_of_weeks": 0.30007178750897345,
+          "mean_value": 4.897932519741564,
+          "max_value": 85.37
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 184,
+          "share_of_weeks": 0.13208901651112706,
+          "mean_value": 0.9908327351040919,
+          "max_value": 48.82
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 58,
+          "share_of_weeks": 0.0416367552045944,
+          "mean_value": 0.3459583632447954,
+          "max_value": 23.14
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 13,
+          "share_of_weeks": 0.00933237616654702,
+          "mean_value": 0.0698851399856425,
+          "max_value": 12.6
+        }
+      },
+      "d2_plus": {
+        "mean": 1.4066762383345297,
+        "max": 64.3,
+        "weeks_gt_0": 184,
+        "weeks_ge_30": 16,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_WI_cat": {
+      "series": "WI",
+      "published_name": "WI",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1363,
+          "share_of_weeks": 0.9784637473079684,
+          "mean_value": 66.11988513998564,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1025,
+          "share_of_weeks": 0.7358219669777458,
+          "mean_value": 17.97326633165829,
+          "max_value": 99.59
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 721,
+          "share_of_weeks": 0.5175879396984925,
+          "mean_value": 11.280452261306532,
+          "max_value": 89.12
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 446,
+          "share_of_weeks": 0.32017229002153624,
+          "mean_value": 4.119224694903087,
+          "max_value": 47.93
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 134,
+          "share_of_weeks": 0.09619526202440776,
+          "mean_value": 0.5003804737975592,
+          "max_value": 21.96
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 7,
+          "share_of_weeks": 0.005025125628140704,
+          "mean_value": 0.007035175879396985,
+          "max_value": 3.29
+        }
+      },
+      "d2_plus": {
+        "mean": 4.626640344580043,
+        "max": 63.440000000000005,
+        "weeks_gt_0": 446,
+        "weeks_ge_30": 50,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_AZ_cat": {
+      "series": "AZ",
+      "published_name": "AZ",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 839,
+          "share_of_weeks": 0.6022972002871501,
+          "mean_value": 21.05366834170854,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1173,
+          "share_of_weeks": 0.842067480258435,
+          "mean_value": 20.808607322325916,
+          "max_value": 100.0
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1287,
+          "share_of_weeks": 0.923905240488155,
+          "mean_value": 23.496640344580044,
+          "max_value": 96.04
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 1108,
+          "share_of_weeks": 0.7954055994256999,
+          "mean_value": 20.212498205312276,
+          "max_value": 82.74
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 715,
+          "share_of_weeks": 0.5132806891600862,
+          "mean_value": 11.63678391959799,
+          "max_value": 84.35
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 275,
+          "share_of_weeks": 0.1974156496769562,
+          "mean_value": 2.7914716439339555,
+          "max_value": 76.81
+        }
+      },
+      "d2_plus": {
+        "mean": 34.64075376884422,
+        "max": 100.01000000000002,
+        "weeks_gt_0": 1110,
+        "weeks_ge_30": 653,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_CA_cat": {
+      "series": "CA",
+      "published_name": "CA",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1159,
+          "share_of_weeks": 0.8320172290021536,
+          "mean_value": 40.041442928930365,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1292,
+          "share_of_weeks": 0.927494615936827,
+          "mean_value": 16.086554199569274,
+          "max_value": 87.47
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1163,
+          "share_of_weeks": 0.8348887293610912,
+          "mean_value": 15.01381191672649,
+          "max_value": 72.31
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 990,
+          "share_of_weeks": 0.7106963388370423,
+          "mean_value": 14.940459440057431,
+          "max_value": 93.96
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 610,
+          "share_of_weeks": 0.4379038047379756,
+          "mean_value": 8.689152907394114,
+          "max_value": 67.94
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 271,
+          "share_of_weeks": 0.19454414931801867,
+          "mean_value": 5.228377602297201,
+          "max_value": 58.41
+        }
+      },
+      "d2_plus": {
+        "mean": 28.857989949748745,
+        "max": 100.0,
+        "weeks_gt_0": 990,
+        "weeks_ge_30": 476,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_NV_cat": {
+      "series": "NV",
+      "published_name": "NV",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 867,
+          "share_of_weeks": 0.6223977027997128,
+          "mean_value": 27.94456568557071,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1116,
+          "share_of_weeks": 0.801148600143575,
+          "mean_value": 17.016633165829145,
+          "max_value": 98.12
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1151,
+          "share_of_weeks": 0.8262742282842785,
+          "mean_value": 18.88097631012204,
+          "max_value": 83.83
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 979,
+          "share_of_weeks": 0.7027997128499641,
+          "mean_value": 20.798255563531946,
+          "max_value": 90.35
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 679,
+          "share_of_weeks": 0.48743718592964824,
+          "mean_value": 12.562770997846373,
+          "max_value": 68.84
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 314,
+          "share_of_weeks": 0.22541277817659727,
+          "mean_value": 2.7971500358937544,
+          "max_value": 40.63
+        }
+      },
+      "d2_plus": {
+        "mean": 36.158176597272075,
+        "max": 100.01,
+        "weeks_gt_0": 979,
+        "weeks_ge_30": 621,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_NM_cat": {
+      "series": "NM",
+      "published_name": "NM",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 1087,
+          "share_of_weeks": 0.7803302225412778,
+          "mean_value": 26.05245513280689,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1273,
+          "share_of_weeks": 0.9138549892318737,
+          "mean_value": 19.783173007896625,
+          "max_value": 98.34
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1303,
+          "share_of_weeks": 0.9353912419239052,
+          "mean_value": 18.425269203158653,
+          "max_value": 89.56
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 1050,
+          "share_of_weeks": 0.7537688442211056,
+          "mean_value": 19.175606604450824,
+          "max_value": 79.39
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 801,
+          "share_of_weeks": 0.5750179468772434,
+          "mean_value": 12.11086145010768,
+          "max_value": 72.84
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 445,
+          "share_of_weeks": 0.3194544149318019,
+          "mean_value": 4.452742282842785,
+          "max_value": 54.27
+        }
+      },
+      "d2_plus": {
+        "mean": 35.739210337401296,
+        "max": 100.0,
+        "weeks_gt_0": 1050,
+        "weeks_ge_30": 651,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    },
+    "state_UT_cat": {
+      "series": "UT",
+      "published_name": "UT",
+      "unit": "percent",
+      "statistic_format": 2,
+      "n_weeks": 1393,
+      "first_map": "2000-01-04",
+      "last_map": "2026-09-08",
+      "expected_weeks": 1393,
+      "missing_weeks": 0,
+      "missing_map_dates": [],
+      "n_calendar_years_with_a_map": 27,
+      "n_calendar_years_52_plus_weeks": 26,
+      "n_seasons_with_a_map": 108,
+      "n_seasons_12_plus_weeks": 106,
+      "complete_seasons_by_type": {
+        "DJF": 26,
+        "MAM": 27,
+        "JJA": 27,
+        "SON": 26
+      },
+      "classes": {
+        "none": {
+          "label": "None",
+          "weeks_with_area": 849,
+          "share_of_weeks": 0.6094759511844939,
+          "mean_value": 29.83824838478105,
+          "max_value": 100.0
+        },
+        "d0": {
+          "label": "D0 Abnormally Dry",
+          "weeks_with_area": 1062,
+          "share_of_weeks": 0.7623833452979182,
+          "mean_value": 18.649935391241925,
+          "max_value": 99.67
+        },
+        "d1": {
+          "label": "D1 Moderate Drought",
+          "weeks_with_area": 1162,
+          "share_of_weeks": 0.8341708542713567,
+          "mean_value": 18.750897343862167,
+          "max_value": 98.63
+        },
+        "d2": {
+          "label": "D2 Severe Drought",
+          "weeks_with_area": 894,
+          "share_of_weeks": 0.6417803302225413,
+          "mean_value": 17.01442928930366,
+          "max_value": 98.45
+        },
+        "d3": {
+          "label": "D3 Extreme Drought",
+          "weeks_with_area": 552,
+          "share_of_weeks": 0.3962670495333812,
+          "mean_value": 12.694192390524048,
+          "max_value": 100.0
+        },
+        "d4": {
+          "label": "D4 Exceptional Drought",
+          "weeks_with_area": 309,
+          "share_of_weeks": 0.22182340272792533,
+          "mean_value": 3.052304379038047,
+          "max_value": 69.99
+        }
+      },
+      "d2_plus": {
+        "mean": 32.760926058865756,
+        "max": 100.01,
+        "weeks_gt_0": 925,
+        "weeks_ge_30": 541,
+        "threshold_30_source": "PHASE_B_SCAFFOLDING.md \u00a73.2 (count only)"
+      }
+    }
+  },
+  "season_climato": {
+    "CONUS_cat": {
+      "d2_plus_gt_0": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 26,
+            "frequency": 1.0
+          },
+          "MAM": {
+            "n": 27,
+            "events": 27,
+            "frequency": 1.0
+          },
+          "JJA": {
+            "n": 27,
+            "events": 27,
+            "frequency": 1.0
+          },
+          "SON": {
+            "n": 26,
+            "events": 26,
+            "frequency": 1.0
+          }
+        }
+      },
+      "d2_plus_ge_30": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 5,
+            "frequency": 0.19230769230769232
+          },
+          "MAM": {
+            "n": 27,
+            "events": 4,
+            "frequency": 0.14814814814814814
+          },
+          "JJA": {
+            "n": 27,
+            "events": 6,
+            "frequency": 0.2222222222222222
+          },
+          "SON": {
+            "n": 26,
+            "events": 5,
+            "frequency": 0.19230769230769232
+          }
+        }
+      }
+    },
+    "Midwest_cat": {
+      "d2_plus_gt_0": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 20,
+            "frequency": 0.7692307692307693
+          },
+          "MAM": {
+            "n": 27,
+            "events": 20,
+            "frequency": 0.7407407407407407
+          },
+          "JJA": {
+            "n": 27,
+            "events": 23,
+            "frequency": 0.8518518518518519
+          },
+          "SON": {
+            "n": 26,
+            "events": 23,
+            "frequency": 0.8846153846153846
+          }
+        }
+      },
+      "d2_plus_ge_30": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 1,
+            "frequency": 0.038461538461538464
+          },
+          "MAM": {
+            "n": 27,
+            "events": 0,
+            "frequency": 0.0
+          },
+          "JJA": {
+            "n": 27,
+            "events": 1,
+            "frequency": 0.037037037037037035
+          },
+          "SON": {
+            "n": 26,
+            "events": 1,
+            "frequency": 0.038461538461538464
+          }
+        }
+      }
+    },
+    "Southwest_cat": {
+      "d2_plus_gt_0": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 26,
+            "frequency": 1.0
+          },
+          "MAM": {
+            "n": 27,
+            "events": 27,
+            "frequency": 1.0
+          },
+          "JJA": {
+            "n": 27,
+            "events": 26,
+            "frequency": 0.9629629629629629
+          },
+          "SON": {
+            "n": 26,
+            "events": 25,
+            "frequency": 0.9615384615384616
+          }
+        }
+      },
+      "d2_plus_ge_30": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 10,
+            "frequency": 0.38461538461538464
+          },
+          "MAM": {
+            "n": 27,
+            "events": 14,
+            "frequency": 0.5185185185185185
+          },
+          "JJA": {
+            "n": 27,
+            "events": 14,
+            "frequency": 0.5185185185185185
+          },
+          "SON": {
+            "n": 26,
+            "events": 13,
+            "frequency": 0.5
+          }
+        }
+      }
+    },
+    "Midwest_plus_Southwest_cat": {
+      "d2_plus_gt_0": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 26,
+            "frequency": 1.0
+          },
+          "MAM": {
+            "n": 27,
+            "events": 27,
+            "frequency": 1.0
+          },
+          "JJA": {
+            "n": 27,
+            "events": 27,
+            "frequency": 1.0
+          },
+          "SON": {
+            "n": 26,
+            "events": 26,
+            "frequency": 1.0
+          }
+        }
+      },
+      "d2_plus_ge_30": {
+        "n_complete_seasons": 106,
+        "by_type": {
+          "DJF": {
+            "n": 26,
+            "events": 6,
+            "frequency": 0.23076923076923078
+          },
+          "MAM": {
+            "n": 27,
+            "events": 7,
+            "frequency": 0.25925925925925924
+          },
+          "JJA": {
+            "n": 27,
+            "events": 10,
+            "frequency": 0.37037037037037035
+          },
+          "SON": {
+            "n": 26,
+            "events": 10,
+            "frequency": 0.38461538461538464
+          }
+        }
+      }
+    }
+  },
+  "open_meteo_seasonal": {
+    "forecast_name": "Open-Meteo Seasonal",
+    "historical_start_date_probe": {
+      "error": true,
+      "reason": "Parameter 'start_date' is out of allowed range from 2025-09-01 to 2027-04-16",
+      "n_months": 0
+    },
+    "blocker": "Open-Meteo Seasonal refuse start_date avant 2025-09-01 (Parameter 'start_date' is out of allowed range from 2025-09-01 to 2027-04-16). Pas de hindcast depuis 2000. Fen\u00eatre servie : 2025-09-01 \u00e0 2027-04-16.",
+    "by_hub": {
+      "Midwest": {
+        "point": {
+          "lat": 41.6,
+          "lon": -93.6,
+          "label": "Des Moines IA"
+        },
+        "error": null,
+        "n_months_returned": 12,
+        "months": [
+          {
+            "month": "2025-09-01",
+            "precipitation_mean": 77.1,
+            "precipitation_anomaly": -9.6
+          },
+          {
+            "month": "2025-10-01",
+            "precipitation_mean": 58.4,
+            "precipitation_anomaly": -18.5
+          },
+          {
+            "month": "2025-11-01",
+            "precipitation_mean": 42.7,
+            "precipitation_anomaly": -16.5
+          },
+          {
+            "month": "2025-12-01",
+            "precipitation_mean": 32.6,
+            "precipitation_anomaly": -10.5
+          },
+          {
+            "month": "2026-01-01",
+            "precipitation_mean": 28.6,
+            "precipitation_anomaly": -8.6
+          },
+          {
+            "month": "2026-02-01",
+            "precipitation_mean": 40.0,
+            "precipitation_anomaly": -1.9
+          },
+          {
+            "month": "2026-03-01",
+            "precipitation_mean": 88.8,
+            "precipitation_anomaly": 17.3
+          },
+          {
+            "month": "2026-04-01",
+            "precipitation_mean": 145.2,
+            "precipitation_anomaly": 44.4
+          },
+          {
+            "month": "2026-05-01",
+            "precipitation_mean": 107.3,
+            "precipitation_anomaly": -32.5
+          },
+          {
+            "month": "2026-06-01",
+            "precipitation_mean": 138.0,
+            "precipitation_anomaly": 4.5
+          },
+          {
+            "month": "2026-07-01",
+            "precipitation_mean": 83.8,
+            "precipitation_anomaly": -12.3
+          },
+          {
+            "month": "2026-08-01",
+            "precipitation_mean": 76.4,
+            "precipitation_anomaly": -10.4
+          }
+        ],
+        "n_scored": 12,
+        "scored": [
+          {
+            "hub": "Midwest",
+            "month": "2025-09-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 6.712000000000001,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -9.6,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2025-10-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 13.225,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -18.5,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2025-11-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 12.1775,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -16.5,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2025-12-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 8.437999999999999,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -10.5,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-01-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 9.922500000000001,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -8.6,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-02-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 12.4275,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -1.9,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-03-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 7.544,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": 17.3,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-04-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 1.815,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": 44.4,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-05-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 1.6575000000000002,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -32.5,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-06-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 2.426,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": 4.5,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-07-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 3.855,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -12.3,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Midwest",
+            "month": "2026-08-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 11.2875,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -10.4,
+            "p_forecast_dry": 1.0
+          }
+        ],
+        "skill_months": {
+          "n": 12,
+          "base_rate": 0.0,
+          "brier_forecast": 0.75,
+          "brier_climato": 0.0,
+          "bss": null
+        }
+      },
+      "Southwest": {
+        "point": {
+          "lat": 33.45,
+          "lon": -112.07,
+          "label": "Phoenix AZ"
+        },
+        "error": null,
+        "n_months_returned": 12,
+        "months": [
+          {
+            "month": "2025-09-01",
+            "precipitation_mean": 35.3,
+            "precipitation_anomaly": 6.4
+          },
+          {
+            "month": "2025-10-01",
+            "precipitation_mean": 11.3,
+            "precipitation_anomaly": -7.4
+          },
+          {
+            "month": "2025-11-01",
+            "precipitation_mean": 16.4,
+            "precipitation_anomaly": -6.8
+          },
+          {
+            "month": "2025-12-01",
+            "precipitation_mean": 24.7,
+            "precipitation_anomaly": -15.5
+          },
+          {
+            "month": "2026-01-01",
+            "precipitation_mean": 45.7,
+            "precipitation_anomaly": 7.7
+          },
+          {
+            "month": "2026-02-01",
+            "precipitation_mean": 33.1,
+            "precipitation_anomaly": 2.3
+          },
+          {
+            "month": "2026-03-01",
+            "precipitation_mean": 9.9,
+            "precipitation_anomaly": -14.7
+          },
+          {
+            "month": "2026-04-01",
+            "precipitation_mean": 5.8,
+            "precipitation_anomaly": -4.8
+          },
+          {
+            "month": "2026-05-01",
+            "precipitation_mean": 1.8,
+            "precipitation_anomaly": 0.3
+          },
+          {
+            "month": "2026-06-01",
+            "precipitation_mean": 2.4,
+            "precipitation_anomaly": 0.2
+          },
+          {
+            "month": "2026-07-01",
+            "precipitation_mean": 14.1,
+            "precipitation_anomaly": -7.5
+          },
+          {
+            "month": "2026-08-01",
+            "precipitation_mean": 28.5,
+            "precipitation_anomaly": -13.4
+          }
+        ],
+        "n_scored": 12,
+        "scored": [
+          {
+            "hub": "Southwest",
+            "month": "2025-09-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 52.676,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": 6.4,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2025-10-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 40.905,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": -7.4,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2025-11-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 33.457499999999996,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": -6.8,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2025-12-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 25.494,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -15.5,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-01-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 18.5375,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": 7.7,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-02-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 15.225,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": 2.3,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-03-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 20.088,
+            "event_d2_plus_ge_30": false,
+            "precipitation_anomaly": -14.7,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-04-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 36.2875,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": -4.8,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-05-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 48.0275,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": 0.3,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-06-01",
+            "n_weeks": 5,
+            "d2_plus_mean": 50.96,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": 0.2,
+            "p_forecast_dry": 0.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-07-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 49.442499999999995,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": -7.5,
+            "p_forecast_dry": 1.0
+          },
+          {
+            "hub": "Southwest",
+            "month": "2026-08-01",
+            "n_weeks": 4,
+            "d2_plus_mean": 46.1275,
+            "event_d2_plus_ge_30": true,
+            "precipitation_anomaly": -13.4,
+            "p_forecast_dry": 1.0
+          }
+        ],
+        "skill_months": {
+          "n": 12,
+          "base_rate": 0.6667,
+          "brier_forecast": 0.4167,
+          "brier_climato": 0.2645,
+          "bss": -0.5755
+        }
+      }
+    },
+    "skill": {
+      "forecast_name": "Open-Meteo Seasonal",
+      "rule": "p=1 si precipitation_anomaly < 0, sinon 0 (moyenne d'ensemble SEAS5)",
+      "event": "moyenne D2+ cat\u00e9gorielle \u2265 30.0 %",
+      "n_complete_months": 24,
+      "n_month_hub_rows": 24,
+      "n_distinct_months": 12,
+      "n_distinct_seasons": 4,
+      "by_hub_months": {
+        "Midwest": {
+          "n": 12,
+          "base_rate": 0.0,
+          "brier_forecast": 0.75,
+          "brier_climato": 0.0,
+          "bss": null
+        },
+        "Southwest": {
+          "n": 12,
+          "base_rate": 0.6667,
+          "brier_forecast": 0.4167,
+          "brier_climato": 0.2645,
+          "bss": -0.5755
+        }
+      },
+      "seasons": [
+        {
+          "hub": "Midwest",
+          "season": "SON",
+          "year": 2025,
+          "n_months": 3,
+          "d2_plus_mean": 10.704833333333333,
+          "event_d2_plus_ge_30": false,
+          "precipitation_anomaly": -14.866666666666667,
+          "p_forecast_dry": 1.0
+        },
+        {
+          "hub": "Midwest",
+          "season": "DJF",
+          "year": 2026,
+          "n_months": 3,
+          "d2_plus_mean": 10.262666666666666,
+          "event_d2_plus_ge_30": false,
+          "precipitation_anomaly": -7.0,
+          "p_forecast_dry": 1.0
+        },
+        {
+          "hub": "Midwest",
+          "season": "JJA",
+          "year": 2026,
+          "n_months": 3,
+          "d2_plus_mean": 5.856166666666667,
+          "event_d2_plus_ge_30": false,
+          "precipitation_anomaly": -6.066666666666667,
+          "p_forecast_dry": 1.0
+        },
+        {
+          "hub": "Midwest",
+          "season": "MAM",
+          "year": 2026,
+          "n_months": 3,
+          "d2_plus_mean": 3.672166666666667,
+          "event_d2_plus_ge_30": false,
+          "precipitation_anomaly": 9.733333333333333,
+          "p_forecast_dry": 0.0
+        },
+        {
+          "hub": "Southwest",
+          "season": "SON",
+          "year": 2025,
+          "n_months": 3,
+          "d2_plus_mean": 42.34616666666667,
+          "event_d2_plus_ge_30": true,
+          "precipitation_anomaly": -2.6,
+          "p_forecast_dry": 1.0
+        },
+        {
+          "hub": "Southwest",
+          "season": "DJF",
+          "year": 2026,
+          "n_months": 3,
+          "d2_plus_mean": 19.752166666666668,
+          "event_d2_plus_ge_30": false,
+          "precipitation_anomaly": -1.8333333333333333,
+          "p_forecast_dry": 1.0
+        },
+        {
+          "hub": "Southwest",
+          "season": "JJA",
+          "year": 2026,
+          "n_months": 3,
+          "d2_plus_mean": 48.843333333333334,
+          "event_d2_plus_ge_30": true,
+          "precipitation_anomaly": -6.8999999999999995,
+          "p_forecast_dry": 1.0
+        },
+        {
+          "hub": "Southwest",
+          "season": "MAM",
+          "year": 2026,
+          "n_months": 3,
+          "d2_plus_mean": 34.801,
+          "event_d2_plus_ge_30": true,
+          "precipitation_anomaly": -6.3999999999999995,
+          "p_forecast_dry": 1.0
+        }
+      ],
+      "skill_seasons_by_hub": {
+        "Midwest": {
+          "n": 4,
+          "base_rate": 0.0,
+          "brier_forecast": 0.75,
+          "brier_climato": 0.0,
+          "bss": null
+        },
+        "Southwest": {
+          "n": 4,
+          "base_rate": 0.75,
+          "brier_forecast": 0.25,
+          "brier_climato": 0.3333,
+          "bss": 0.25
+        }
+      },
+      "gate_bss_gt_0_05": false,
+      "gate_n_ge_10": false,
+      "n_seasons_for_gate": 4,
+      "brier_forecast": 0.25,
+      "brier_climato": 0.3333,
+      "bss": 0.25,
+      "n_months": 12
+    }
+  },
+  "nmme": {
+    "forecast_name": "NMME",
+    "any_ok": true,
+    "hindcast_usable": false,
+    "probes": [
+      {
+        "url": "https://iridl.ldeo.columbia.edu/SOURCES/.Models/.NMME/dataset_description.html",
+        "http_status": 200,
+        "bytes_sampled": 2048,
+        "content_type": "text/html; charset=utf-8",
+        "hindcast_series": false,
+        "ok": true
+      },
+      {
+        "url": "https://iridl.ldeo.columbia.edu/SOURCES/.Models/.NMME/.NCEP-CFSv2/.HINDCAST/.MONTHLY/.prec/data.tsv",
+        "http_status": 200,
+        "bytes_sampled": 2048,
+        "content_type": "text/tab-separated-values",
+        "hindcast_series": true,
+        "ok": true
+      },
+      {
+        "url": "https://www.cpc.ncep.noaa.gov/products/NMME/data.html",
+        "http_status": 200,
+        "bytes_sampled": 2048,
+        "content_type": "text/html; charset=utf-8",
+        "hindcast_series": false,
+        "ok": true
+      }
+    ],
+    "blocker": "IRI r\u00e9pond (grille mondiale ou moyenne sans axe de temps). On n'a pas une s\u00e9rie Midwest / Southwest dat\u00e9e \u00e0 apparier au US Drought Monitor. Pas de score NMME invent\u00e9."
+  },
+  "verdicts": {
+    "S\u00e9cheresse US": "bloqu\u00e9e",
+    "US Drought Monitor": "test\u00e9e, \u00e7a aide",
+    "Open-Meteo Seasonal": "bloqu\u00e9e",
+    "NMME": "bloqu\u00e9e",
+    "SEAS5": "pas encore test\u00e9e",
+    "C3S multi-mod\u00e8le": "pas encore test\u00e9e",
+    "SPEI": "pas encore test\u00e9e",
+    "CHIRPS pluie": "pas encore test\u00e9e",
+    "S\u00e9cheresse M\u00e9diterran\u00e9e": "cible Tier 1 (pas encore test\u00e9e)",
+    "S\u00e9cheresse Inde": "cible Tier 1 (pas encore test\u00e9e)",
+    "Ouragan formation": "cible Tier 1 (pas encore test\u00e9e)",
+    "Ouragan intensit\u00e9": "cible Tier 1 (pas encore test\u00e9e)",
+    "Ouragan landfall": "cible Tier 1 (pas encore test\u00e9e)"
+  },
+  "gate": {
+    "bss_gt": 0.05,
+    "min_seasons": 10,
+    "passed": false
+  }
+}
