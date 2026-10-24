@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "run_id": "1025",
+  "type": "live",
+  "ts_utc": "2026-10-24T21:01:03Z",
+  "event": {
+    "ticker": "KXHIGHTDC-26OCT25",
+    "title": "Highest temperature in Washington DC on Oct 25, 2026?",
+    "target_market_ticker": "KXHIGHTDC-26OCT25-B66.5",
+    "resolution_source": "NWS official daily climate report (per Kalshi rules)"
+  },
+  "champion_at_time_of_run": "vendor_ensemble",
+  "models": [
+    {
+      "name": "vendor_ensemble",
+      "role": "champion",
+      "method": "ensemble",
+      "p_yes": 0.3620561858154691,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "ensemble",
+        "p_ensemble": 0.3620561858154691,
+        "p_climato": 0.5,
+        "p_forecast": 0.3436891803466611,
+        "blend_weight_forecast": 0.8824969025845955,
+        "days_ahead": 1,
+        "mu": 66.44246987951807,
+        "sigma_inter_models": 1.4042346669983587,
+        "sigma_total": 2.246391802115301,
+        "n_models_active": 4,
+        "per_model_value": {
+          "ecmwf_ifs025": 64.4,
+          "ecmwf_aifs025_single": 65.7,
+          "gfs_global": 67.6,
+          "jma_gsm": 64.0
+        }
+      }
+    },
+    {
+      "name": "learned_v2",
+      "role": "challenger",
+      "method": "learned_v2",
+      "p_yes": 0.18614613960745094,
+      "feature_set": "v2",
+      "trained_at": "20260512T134515Z",
+      "inputs_summary": {
+        "method": "learned_v2",
+        "trained_at": "20260512T134515Z",
+        "feature_set": "v2",
+        "run_json_path": "/home/runner/work/Aratea/Aratea/predictor/runs_learning/20260512T134515Z/run.json"
+      }
+    },
+    {
+      "name": "kalshi_mid_baseline",
+      "role": "baseline",
+      "method": "kalshi_mid",
+      "p_yes": 0.615,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "kalshi_mid",
+        "yes_mid_at_snapshot": 0.615
+      }
+    }
+  ],
+  "markets": [
+    {
+      "platform": "kalshi",
+      "ticker": "KXHIGHTDC-26OCT25-B66.5",
+      "url": "https://kalshi.com/markets/KXHIGHTDC",
+      "snapshot_pre": {
+        "yes_bid": 0.61,
+        "yes_ask": 0.62,
+        "yes_mid": 0.615,
+        "spread_cents": 1.0,
+        "ts_utc": "2026-10-24T21:01:03Z"
+      },
+      "edge_bps_by_model": {
+        "vendor_ensemble": -2529,
+        "learned_v2": -4289,
+        "kalshi_mid_baseline": 0
+      },
+      "champion_position": {
+        "model": "vendor_ensemble",
+        "method": "ensemble",
+        "side": "NO",
+        "size_usd": 97.05,
+        "entry_price_yes_cents": 61.5,
+        "entry_price_no_cents": 38.5,
+        "entry_price": 0.385,
+        "n_contracts": 252,
+        "cost_usd": 97.02,
+        "opened_at_utc": "2026-10-24T21:01:03Z",
+        "paper": true,
+        "ledger_bet_id": "20261024T210048Z100623"
+      },
+      "challenger_shadow_positions": [
+        {
+          "model": "learned_v2",
+          "method": "learned_v2",
+          "side": "NO",
+          "size_usd": 97.05,
+          "entry_price_yes_cents": 61.5,
+          "entry_price_no_cents": 38.5,
+          "entry_price": 0.385,
+          "n_contracts": 252,
+          "cost_usd": 97.02,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        },
+        {
+          "model": "kalshi_mid_baseline",
+          "method": "kalshi_mid",
+          "side": "NO",
+          "size_usd": 97.05,
+          "entry_price_yes_cents": 61.5,
+          "entry_price_no_cents": 38.5,
+          "entry_price": 0.385,
+          "n_contracts": 252,
+          "cost_usd": 97.02,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        }
+      ],
+      "resolution": {
+        "outcome": null,
+        "observed_value_f": null,
+        "ts_utc": null,
+        "pnl_usd": null
+      }
+    }
+  ],
+  "scoring": null,
+  "notes": "Auto-captured by daily_auto.py on 2026-10-24T21:01:03Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.253, side=NO, Kelly capped size=$97.05 (bankroll=$4852.53, portfolio_heat_after_register=21.6%)."
+}
