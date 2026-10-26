@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "run_id": "1039",
+  "type": "live",
+  "ts_utc": "2026-10-26T23:00:16Z",
+  "event": {
+    "ticker": "KXLOWTDEN-26OCT27",
+    "title": "Lowest temperature in Denver on Oct 27, 2026?",
+    "target_market_ticker": "KXLOWTDEN-26OCT27-B37.5",
+    "resolution_source": "NWS official daily climate report (per Kalshi rules)"
+  },
+  "champion_at_time_of_run": "vendor_ensemble",
+  "models": [
+    {
+      "name": "vendor_ensemble",
+      "role": "champion",
+      "method": "ensemble",
+      "p_yes": 0.2348318675904922,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "ensemble",
+        "p_ensemble": 0.2348318675904922,
+        "p_climato": 0.08132530120481928,
+        "p_forecast": 0.25527102944034463,
+        "blend_weight_forecast": 0.8824969025845955,
+        "days_ahead": 1,
+        "mu": 36.2289156626506,
+        "sigma_inter_models": 0.9759610647971575,
+        "sigma_total": 2.7644404048420643,
+        "n_models_active": 4,
+        "per_model_value": {
+          "ecmwf_ifs025": 39.7,
+          "ecmwf_aifs025_single": 39.8,
+          "gfs_global": 38.8,
+          "jma_gsm": 41.5
+        }
+      }
+    },
+    {
+      "name": "learned_v2",
+      "role": "challenger",
+      "method": "learned_v2",
+      "p_yes": 0.10458025133723288,
+      "feature_set": "v2",
+      "trained_at": "20260512T134515Z",
+      "inputs_summary": {
+        "method": "learned_v2",
+        "trained_at": "20260512T134515Z",
+        "feature_set": "v2",
+        "run_json_path": "/home/runner/work/Aratea/Aratea/predictor/runs_learning/20260512T134515Z/run.json"
+      }
+    },
+    {
+      "name": "kalshi_mid_baseline",
+      "role": "baseline",
+      "method": "kalshi_mid",
+      "p_yes": 0.375,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "kalshi_mid",
+        "yes_mid_at_snapshot": 0.375
+      }
+    }
+  ],
+  "markets": [
+    {
+      "platform": "kalshi",
+      "ticker": "KXLOWTDEN-26OCT27-B37.5",
+      "url": "https://kalshi.com/markets/KXLOWTDEN",
+      "snapshot_pre": {
+        "yes_bid": 0.34,
+        "yes_ask": 0.41,
+        "yes_mid": 0.375,
+        "spread_cents": 7.0,
+        "ts_utc": "2026-10-26T23:00:16Z"
+      },
+      "edge_bps_by_model": {
+        "vendor_ensemble": -1402,
+        "learned_v2": -2704,
+        "kalshi_mid_baseline": 0
+      },
+      "champion_position": {
+        "model": "vendor_ensemble",
+        "method": "ensemble",
+        "side": "NO",
+        "size_usd": 103.68,
+        "entry_price_yes_cents": 37.5,
+        "entry_price_no_cents": 62.5,
+        "entry_price": 0.625,
+        "n_contracts": 165,
+        "cost_usd": 103.12,
+        "opened_at_utc": "2026-10-26T23:00:16Z",
+        "paper": true,
+        "ledger_bet_id": "20261026T230008Z675023"
+      },
+      "challenger_shadow_positions": [
+        {
+          "model": "learned_v2",
+          "method": "learned_v2",
+          "side": "NO",
+          "size_usd": 103.68,
+          "entry_price_yes_cents": 37.5,
+          "entry_price_no_cents": 62.5,
+          "entry_price": 0.625,
+          "n_contracts": 165,
+          "cost_usd": 103.12,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        },
+        {
+          "model": "kalshi_mid_baseline",
+          "method": "kalshi_mid",
+          "side": "NO",
+          "size_usd": 103.68,
+          "entry_price_yes_cents": 37.5,
+          "entry_price_no_cents": 62.5,
+          "entry_price": 0.625,
+          "n_contracts": 165,
+          "cost_usd": 103.12,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        }
+      ],
+      "resolution": {
+        "outcome": null,
+        "observed_value_f": null,
+        "ts_utc": null,
+        "pnl_usd": null
+      }
+    }
+  ],
+  "scoring": null,
+  "notes": "Auto-captured by daily_auto.py on 2026-10-26T23:00:16Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.140, side=NO, Kelly capped size=$103.68 (bankroll=$5184.09, portfolio_heat_after_register=18.0%)."
+}
