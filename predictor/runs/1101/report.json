@@ -1,0 +1,122 @@
+{
+  "schema_version": 2,
+  "run_id": "1101",
+  "type": "live",
+  "ts_utc": "2026-11-05T00:02:32Z",
+  "event": {
+    "ticker": "KXLOWTBOS-26NOV05",
+    "title": "Lowest temperature in Boston on Nov 5, 2026?",
+    "target_market_ticker": "KXLOWTBOS-26NOV05-B58.5",
+    "resolution_source": "NWS official daily climate report (per Kalshi rules)"
+  },
+  "champion_at_time_of_run": "vendor_ensemble",
+  "models": [
+    {
+      "name": "vendor_ensemble",
+      "role": "champion",
+      "method": "ensemble",
+      "p_yes": 0.02108433734939759,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "ensemble",
+        "p_ensemble": 0.02108433734939759
+      }
+    },
+    {
+      "name": "learned_v2",
+      "role": "challenger",
+      "method": "learned_v2",
+      "p_yes": 0.0071090047393364926,
+      "feature_set": "v2",
+      "trained_at": "20260512T134515Z",
+      "inputs_summary": {
+        "method": "learned_v2[fallback_climato]",
+        "trained_at": "20260512T134515Z",
+        "feature_set": "v2",
+        "run_json_path": "/home/runner/work/Aratea/Aratea/predictor/runs_learning/20260512T134515Z/run.json"
+      }
+    },
+    {
+      "name": "kalshi_mid_baseline",
+      "role": "baseline",
+      "method": "kalshi_mid",
+      "p_yes": 0.43,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "kalshi_mid",
+        "yes_mid_at_snapshot": 0.43
+      }
+    }
+  ],
+  "markets": [
+    {
+      "platform": "kalshi",
+      "ticker": "KXLOWTBOS-26NOV05-B58.5",
+      "url": "https://kalshi.com/markets/KXLOWTBOS",
+      "snapshot_pre": {
+        "yes_bid": 0.39,
+        "yes_ask": 0.47,
+        "yes_mid": 0.43,
+        "spread_cents": 8.0,
+        "ts_utc": "2026-11-05T00:02:32Z"
+      },
+      "edge_bps_by_model": {
+        "vendor_ensemble": -4089,
+        "learned_v2": -4229,
+        "kalshi_mid_baseline": 0
+      },
+      "champion_position": {
+        "model": "vendor_ensemble",
+        "method": "ensemble",
+        "side": "NO",
+        "size_usd": 129.18,
+        "entry_price_yes_cents": 43.0,
+        "entry_price_no_cents": 57.0,
+        "entry_price": 0.5700000000000001,
+        "n_contracts": 226,
+        "cost_usd": 128.82,
+        "opened_at_utc": "2026-11-05T00:02:32Z",
+        "paper": true,
+        "ledger_bet_id": "20261105T000232Z668176"
+      },
+      "challenger_shadow_positions": [
+        {
+          "model": "learned_v2",
+          "method": "learned_v2",
+          "side": "NO",
+          "size_usd": 129.18,
+          "entry_price_yes_cents": 43.0,
+          "entry_price_no_cents": 57.0,
+          "entry_price": 0.5700000000000001,
+          "n_contracts": 226,
+          "cost_usd": 128.82,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        },
+        {
+          "model": "kalshi_mid_baseline",
+          "method": "kalshi_mid",
+          "side": "NO",
+          "size_usd": 129.18,
+          "entry_price_yes_cents": 43.0,
+          "entry_price_no_cents": 57.0,
+          "entry_price": 0.5700000000000001,
+          "n_contracts": 226,
+          "cost_usd": 128.82,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        }
+      ],
+      "resolution": {
+        "outcome": null,
+        "observed_value_f": null,
+        "ts_utc": null,
+        "pnl_usd": null
+      }
+    }
+  ],
+  "scoring": null,
+  "notes": "Auto-captured by daily_auto.py on 2026-11-05T00:02:32Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.409, side=NO, Kelly capped size=$129.18 (bankroll=$6458.88, portfolio_heat_after_register=14.0%)."
+}
