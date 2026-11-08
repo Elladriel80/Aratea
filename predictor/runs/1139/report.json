@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "run_id": "1139",
+  "type": "live",
+  "ts_utc": "2026-11-08T22:18:38Z",
+  "event": {
+    "ticker": "KXHIGHTSFO-26NOV09",
+    "title": "Highest temperature in San Francisco on Nov 9, 2026?",
+    "target_market_ticker": "KXHIGHTSFO-26NOV09-B70.5",
+    "resolution_source": "NWS official daily climate report (per Kalshi rules)"
+  },
+  "champion_at_time_of_run": "vendor_ensemble",
+  "models": [
+    {
+      "name": "vendor_ensemble",
+      "role": "champion",
+      "method": "ensemble",
+      "p_yes": 0.15451127094668343,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "ensemble",
+        "p_ensemble": 0.15451127094668343,
+        "p_climato": 0.0572289156626506,
+        "p_forecast": 0.16746426606344977,
+        "blend_weight_forecast": 0.8824969025845955,
+        "days_ahead": 1,
+        "mu": 67.67439759036144,
+        "sigma_inter_models": 3.806573262134857,
+        "sigma_total": 3.258304903154692,
+        "n_models_active": 4,
+        "per_model_value": {
+          "ecmwf_ifs025": 70.2,
+          "ecmwf_aifs025_single": 69.4,
+          "gfs_global": 71.2,
+          "jma_gsm": 61.6
+        }
+      }
+    },
+    {
+      "name": "learned_v2",
+      "role": "challenger",
+      "method": "learned_v2",
+      "p_yes": 0.2420938955517559,
+      "feature_set": "v2",
+      "trained_at": "20260512T134515Z",
+      "inputs_summary": {
+        "method": "learned_v2",
+        "trained_at": "20260512T134515Z",
+        "feature_set": "v2",
+        "run_json_path": "/home/runner/work/Aratea/Aratea/predictor/runs_learning/20260512T134515Z/run.json"
+      }
+    },
+    {
+      "name": "kalshi_mid_baseline",
+      "role": "baseline",
+      "method": "kalshi_mid",
+      "p_yes": 0.505,
+      "feature_set": null,
+      "trained_at": null,
+      "inputs_summary": {
+        "method": "kalshi_mid",
+        "yes_mid_at_snapshot": 0.505
+      }
+    }
+  ],
+  "markets": [
+    {
+      "platform": "kalshi",
+      "ticker": "KXHIGHTSFO-26NOV09-B70.5",
+      "url": "https://kalshi.com/markets/KXHIGHTSFO",
+      "snapshot_pre": {
+        "yes_bid": 0.5,
+        "yes_ask": 0.51,
+        "yes_mid": 0.505,
+        "spread_cents": 1.0,
+        "ts_utc": "2026-11-08T22:18:38Z"
+      },
+      "edge_bps_by_model": {
+        "vendor_ensemble": -3505,
+        "learned_v2": -2629,
+        "kalshi_mid_baseline": 0
+      },
+      "champion_position": {
+        "model": "vendor_ensemble",
+        "method": "ensemble",
+        "side": "NO",
+        "size_usd": 109.1,
+        "entry_price_yes_cents": 50.5,
+        "entry_price_no_cents": 49.5,
+        "entry_price": 0.495,
+        "n_contracts": 220,
+        "cost_usd": 108.9,
+        "opened_at_utc": "2026-11-08T22:18:38Z",
+        "paper": true,
+        "ledger_bet_id": "20261108T221838Z426633"
+      },
+      "challenger_shadow_positions": [
+        {
+          "model": "learned_v2",
+          "method": "learned_v2",
+          "side": "NO",
+          "size_usd": 109.1,
+          "entry_price_yes_cents": 50.5,
+          "entry_price_no_cents": 49.5,
+          "entry_price": 0.495,
+          "n_contracts": 220,
+          "cost_usd": 108.9,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        },
+        {
+          "model": "kalshi_mid_baseline",
+          "method": "kalshi_mid",
+          "side": "NO",
+          "size_usd": 109.1,
+          "entry_price_yes_cents": 50.5,
+          "entry_price_no_cents": 49.5,
+          "entry_price": 0.495,
+          "n_contracts": 220,
+          "cost_usd": 108.9,
+          "shadow": true,
+          "note": "Auto-captured by daily_auto.py. Same side/size as champion for Brier comparability."
+        }
+      ],
+      "resolution": {
+        "outcome": null,
+        "observed_value_f": null,
+        "ts_utc": null,
+        "pnl_usd": null
+      }
+    }
+  ],
+  "scoring": null,
+  "notes": "Auto-captured by daily_auto.py on 2026-11-08T22:18:38Z. Selection rule: top-3 median bin(s) per event with |edge_vs_mid|>=0.05, spread<=0.08. Champion vendor_ensemble edge=-0.350, side=NO, Kelly capped size=$109.10 (bankroll=$5455.00, portfolio_heat_after_register=28.0%)."
+}
