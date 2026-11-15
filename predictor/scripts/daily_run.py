@@ -38,7 +38,7 @@ def run_step(name: str, cmd: list[str], timeout_min: int) -> bool:
         result = subprocess.run(
             cmd, cwd=str(ROOT), check=False,
             # Budgets par step (voir main()) : la somme des timeouts DOIT
-            # rester < timeout-minutes du job CI (50 min) moins setup et
+            # rester < timeout-minutes du job CI (90 min) moins setup et
             # daily_auto, sinon le job est tue AVANT que le step echoue
             # proprement et daily_auto + manifest + push ne tournent jamais
             # (site fige du 8 au 11 juin 2026, runs 34-35 cancelled a 25 min).
