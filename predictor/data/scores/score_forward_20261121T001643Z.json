@@ -1,0 +1,73 @@
+{
+  "generated_at": "20261121T001643Z",
+  "n_capture_files": 136,
+  "n_unique_markets": 18222,
+  "n_resolved": 8634,
+  "summary": {
+    "climatology": {
+      "n": 8634,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.6714153347231874,
+      "brier_score": 0.19882337931772842,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": -0.43152833108764455,
+      "log_loss": 0.6420165843935922,
+      "top1": {
+        "n_events": 1439,
+        "top1_correct": 130,
+        "top1_accuracy": 0.09034051424600417
+      }
+    },
+    "forecast_blend": {
+      "n": 8634,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.8139911975909196,
+      "brier_score": 0.16095831701719057,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": -0.15889988252377196,
+      "log_loss": 0.5220148539233379,
+      "top1": {
+        "n_events": 1439,
+        "top1_correct": 197,
+        "top1_accuracy": 0.1369006254343294
+      }
+    },
+    "ensemble": {
+      "n": 8634,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.8201297197127635,
+      "brier_score": 0.12937568960723317,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": 0.06849503482792119,
+      "log_loss": 0.41083970465595887,
+      "top1": {
+        "n_events": 1439,
+        "top1_correct": 481,
+        "top1_accuracy": 0.33425990271021544
+      }
+    },
+    "ensemble_members": {
+      "n": 8634,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.826963168867269,
+      "brier_score": 0.13002967847847166,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": 0.06378631495500409,
+      "log_loss": 0.47872793042128803,
+      "top1": {
+        "n_events": 1439,
+        "top1_correct": 465,
+        "top1_accuracy": 0.3231410701876303
+      }
+    },
+    "kalshi_mid": {
+      "n": 8634,
+      "base_rate": 0.16666666666666666,
+      "accuracy_at_0.5": 0.87167014130183,
+      "brier_score": 0.08736737607134584,
+      "brier_baseline_constant": 0.1388888888888889,
+      "brier_skill_score": 0.37095489228630996,
+      "log_loss": 0.27615458817509114
+    }
+  }
+}
