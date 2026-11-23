@@ -1,6 +1,6 @@
 {
   "schema": "station_skill_run/1",
-  "generated_at": "2026-11-16T14:35:29Z",
+  "generated_at": "2026-11-23T17:09:17Z",
   "params": {
     "stations": [
       "KATL",
@@ -42,9 +42,9 @@
       "gfs_global",
       "jma_gsm"
     ],
-    "start": "2026-07-19",
-    "end": "2026-11-14",
-    "split": "2026-10-10"
+    "start": "2026-07-26",
+    "end": "2026-11-21",
+    "split": "2026-10-17"
   },
   "n_points_train": 20916,
   "n_points_holdout": 8988,
@@ -53,376 +53,376 @@
     "all": {
       "n_bins": 53928,
       "n_dates": 36,
-      "base_rate": 0.14574988874054295,
-      "brier_raw": 0.1274872691285554,
-      "brier_station": 0.11592809880467243,
-      "brier_climo": 0.12845509188173854
+      "base_rate": 0.14391410769915441,
+      "brier_raw": 0.12891849159634222,
+      "brier_station": 0.11443309156109042,
+      "brier_climo": 0.126462243514334
     }
   },
   "by_lead": {
     "1": {
       "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.15809968847352024,
-      "brier_raw": 0.1335514504738791,
-      "brier_station": 0.11611418099366216,
-      "brier_climo": 0.13911343651911381
+      "base_rate": 0.15628245067497404,
+      "brier_raw": 0.1365938356278953,
+      "brier_station": 0.11609806478823745,
+      "brier_climo": 0.13718622352885734
     },
     "2": {
       "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.1564122533748702,
-      "brier_raw": 0.13319790826631514,
-      "brier_station": 0.11765105100021571,
-      "brier_climo": 0.1376106511923595
+      "base_rate": 0.1536863966770509,
+      "brier_raw": 0.13531665999393613,
+      "brier_station": 0.11645405521573506,
+      "brier_climo": 0.1348882900463672
     },
     "3": {
       "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.15433541017653168,
-      "brier_raw": 0.13297887822102009,
-      "brier_station": 0.11903141870008695,
-      "brier_climo": 0.13573679496435842
+      "base_rate": 0.152128764278297,
+      "brier_raw": 0.13501946661107872,
+      "brier_station": 0.11738125976532605,
+      "brier_climo": 0.1334890029062527
     },
     "4": {
       "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.15070093457943926,
-      "brier_raw": 0.13201035785562876,
-      "brier_station": 0.11978949896571234,
-      "brier_climo": 0.13269950797923966
+      "base_rate": 0.14758566978193147,
+      "brier_raw": 0.13270042702144605,
+      "brier_station": 0.11716126478021258,
+      "brier_climo": 0.129587996431371
     },
     "5": {
       "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.14148494288681204,
-      "brier_raw": 0.1250491578462241,
-      "brier_station": 0.11663274427546322,
-      "brier_climo": 0.12482738105406223
+      "base_rate": 0.1384994807892004,
+      "brier_raw": 0.12480062111457593,
+      "brier_station": 0.11368917678871729,
+      "brier_climo": 0.12187286987364968
     },
     "6": {
       "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.1333073727933541,
-      "brier_raw": 0.12036514783826363,
-      "brier_station": 0.11360360428135323,
-      "brier_climo": 0.11782716494163191
+      "base_rate": 0.13239875389408098,
+      "brier_raw": 0.12114280421246391,
+      "brier_station": 0.1120135832405133,
+      "brier_climo": 0.1165964533430174
     },
     "7": {
       "n_bins": 7704,
       "n_dates": 36,
-      "base_rate": 0.1259086188992731,
-      "brier_raw": 0.11525798339855702,
-      "brier_station": 0.10867419341621344,
-      "brier_climo": 0.11137070652140427
+      "base_rate": 0.1268172377985462,
+      "brier_raw": 0.1168556265929996,
+      "brier_station": 0.10823423634889127,
+      "brier_climo": 0.11161486847082269
     }
   },
   "by_variable": {
     "temp_max": {
       "n_bins": 26964,
       "n_dates": 36,
-      "base_rate": 0.13725708351876575,
-      "brier_raw": 0.12606098704807514,
-      "brier_station": 0.10832467702540041,
-      "brier_climo": 0.12157606367642523
+      "base_rate": 0.13480937546358107,
+      "brier_raw": 0.12811383392458434,
+      "brier_station": 0.10671289009530094,
+      "brier_climo": 0.11907391297602378
     },
     "temp_min": {
       "n_bins": 26964,
       "n_dates": 36,
-      "base_rate": 0.15424269396232013,
-      "brier_raw": 0.12891355120903567,
-      "brier_station": 0.12353152058394447,
-      "brier_climo": 0.13533412008705184
+      "base_rate": 0.15301883993472779,
+      "brier_raw": 0.12972314926810014,
+      "brier_station": 0.12215329302687991,
+      "brier_climo": 0.13385057405264422
     }
   },
   "by_station": {
     "KATL/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.14814814814814814,
-      "brier_raw": 0.1139065680959214,
-      "brier_station": 0.105212952150674,
-      "brier_climo": 0.1322498476374479
+      "base_rate": 0.14285714285714285,
+      "brier_raw": 0.1219855109077861,
+      "brier_station": 0.10507790390035664,
+      "brier_climo": 0.1258971267896042
     },
     "KATL/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.15873015873015872,
-      "brier_raw": 0.1255948924636331,
-      "brier_station": 0.12878980892479222,
-      "brier_climo": 0.13897204488280873
+      "base_rate": 0.1541005291005291,
+      "brier_raw": 0.12175276259814932,
+      "brier_station": 0.12460888771699917,
+      "brier_climo": 0.1364369709356531
     },
     "KAUS/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.11243386243386243,
-      "brier_raw": 0.11938768819133252,
-      "brier_station": 0.09829611200949831,
-      "brier_climo": 0.10280151400084285
+      "base_rate": 0.125,
+      "brier_raw": 0.12476110178996774,
+      "brier_station": 0.10141169374780407,
+      "brier_climo": 0.1131297602215847
     },
     "KAUS/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.1283068783068783,
-      "brier_raw": 0.13817225419283616,
-      "brier_station": 0.11505166087515109,
-      "brier_climo": 0.11775230977128259
+      "base_rate": 0.1164021164021164,
+      "brier_raw": 0.13563129617994557,
+      "brier_station": 0.10471300874652295,
+      "brier_climo": 0.10627475089299451
     },
     "KBOS/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.12962962962962962,
-      "brier_raw": 0.12337809318771387,
-      "brier_station": 0.10151824889161075,
-      "brier_climo": 0.11590575447045706
+      "base_rate": 0.12896825396825398,
+      "brier_raw": 0.13095745513592894,
+      "brier_station": 0.10142909721510178,
+      "brier_climo": 0.11611069345459027
     },
     "KBOS/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
       "base_rate": 0.14814814814814814,
-      "brier_raw": 0.1252800194649204,
-      "brier_station": 0.11626148010733078,
-      "brier_climo": 0.13046785373605094
+      "brier_raw": 0.12561554795381533,
+      "brier_station": 0.11663551553312176,
+      "brier_climo": 0.1327415694257552
     },
     "KDCA/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.14351851851851852,
-      "brier_raw": 0.13968885788590685,
-      "brier_station": 0.11739283186832246,
-      "brier_climo": 0.12701158092658876
+      "base_rate": 0.13756613756613756,
+      "brier_raw": 0.1416320316139115,
+      "brier_station": 0.11335966995763487,
+      "brier_climo": 0.1220934372510937
     },
     "KDCA/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.1574074074074074,
-      "brier_raw": 0.12301093172059992,
-      "brier_station": 0.11562253723732453,
-      "brier_climo": 0.13799226915714796
+      "base_rate": 0.16137566137566137,
+      "brier_raw": 0.12879288479858303,
+      "brier_station": 0.1168673807937866,
+      "brier_climo": 0.13924906167672915
     },
     "KDEN/temp_max": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.12789115646258503,
-      "brier_raw": 0.11781971030839955,
-      "brier_station": 0.09893274214786185,
-      "brier_climo": 0.11834388764028592
+      "base_rate": 0.12312925170068027,
+      "brier_raw": 0.11551818092606121,
+      "brier_station": 0.09491927775550275,
+      "brier_climo": 0.1134112657468495
     },
     "KDEN/temp_min": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.14761904761904762,
-      "brier_raw": 0.14602514164814642,
-      "brier_station": 0.1184905663957341,
-      "brier_climo": 0.13519745620707535
+      "base_rate": 0.1469387755102041,
+      "brier_raw": 0.14836065563712236,
+      "brier_station": 0.11745148479054149,
+      "brier_climo": 0.13341704949183902
     },
     "KDFW/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.12037037037037036,
-      "brier_raw": 0.13033578741768323,
-      "brier_station": 0.10005920703562299,
-      "brier_climo": 0.110293491285233
+      "base_rate": 0.11177248677248677,
+      "brier_raw": 0.12161092107150234,
+      "brier_station": 0.09142434299397531,
+      "brier_climo": 0.10219573406192435
     },
     "KDFW/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.15873015873015872,
-      "brier_raw": 0.14164755812932867,
-      "brier_station": 0.13318108358843683,
-      "brier_climo": 0.14318502414441947
+      "base_rate": 0.15211640211640212,
+      "brier_raw": 0.14071465929969665,
+      "brier_station": 0.12695386442483608,
+      "brier_climo": 0.1367674609255675
     },
     "KHOU/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.13690476190476192,
-      "brier_raw": 0.1328574191133415,
-      "brier_station": 0.10996055778964373,
-      "brier_climo": 0.12192500944042221
+      "base_rate": 0.1335978835978836,
+      "brier_raw": 0.1296675387515667,
+      "brier_station": 0.10901519436659206,
+      "brier_climo": 0.11942665245302833
     },
     "KHOU/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.15542328042328044,
-      "brier_raw": 0.12767696864139952,
-      "brier_station": 0.12412319500738603,
-      "brier_climo": 0.1386403244620885
+      "base_rate": 0.15873015873015872,
+      "brier_raw": 0.1280760270238414,
+      "brier_station": 0.12555520772306877,
+      "brier_climo": 0.1408906732798795
     },
     "KLAS/temp_max": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.1510204081632653,
-      "brier_raw": 0.1221238201545455,
-      "brier_station": 0.10673709717677489,
-      "brier_climo": 0.13197202306822492
+      "base_rate": 0.154421768707483,
+      "brier_raw": 0.1264273517892354,
+      "brier_station": 0.10798464514274772,
+      "brier_climo": 0.13359824766468018
     },
     "KLAS/temp_min": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.1619047619047619,
-      "brier_raw": 0.13467944918466274,
-      "brier_station": 0.13758159036749987,
-      "brier_climo": 0.13727210642599424
+      "base_rate": 0.16258503401360544,
+      "brier_raw": 0.13545615913780878,
+      "brier_station": 0.13682246056336586,
+      "brier_climo": 0.13805236591464282
     },
     "KLAX/temp_max": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.14761904761904762,
-      "brier_raw": 0.12142910560210116,
-      "brier_station": 0.14087244482970904,
-      "brier_climo": 0.1301277886613929
+      "base_rate": 0.14625850340136054,
+      "brier_raw": 0.12452107908410036,
+      "brier_station": 0.13681734427775555,
+      "brier_climo": 0.12832428765570944
     },
     "KLAX/temp_min": {
       "n_bins": 1470,
       "n_dates": 35,
       "base_rate": 0.1653061224489796,
-      "brier_raw": 0.128508533588179,
-      "brier_station": 0.12317699944489248,
-      "brier_climo": 0.14372224566921063
+      "brier_raw": 0.1295425627808738,
+      "brier_station": 0.12478087458155572,
+      "brier_climo": 0.14205255766475472
     },
     "KMDW/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.1388888888888889,
-      "brier_raw": 0.1290109019952147,
-      "brier_station": 0.1113036124157174,
-      "brier_climo": 0.12692353055845795
+      "base_rate": 0.1302910052910053,
+      "brier_raw": 0.13551000177172445,
+      "brier_station": 0.10646458446852657,
+      "brier_climo": 0.11980838091396961
     },
     "KMDW/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.14947089947089948,
-      "brier_raw": 0.12871968360804226,
-      "brier_station": 0.11938148300023373,
-      "brier_climo": 0.1354371126108961
+      "base_rate": 0.15476190476190477,
+      "brier_raw": 0.12977709551799477,
+      "brier_station": 0.12101322553159716,
+      "brier_climo": 0.13977566289879226
     },
     "KMIA/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.1474867724867725,
-      "brier_raw": 0.13621706887562832,
-      "brier_station": 0.09467558123094316,
-      "brier_climo": 0.11523521327780388
+      "base_rate": 0.14616402116402116,
+      "brier_raw": 0.13866646053581747,
+      "brier_station": 0.09462149185137189,
+      "brier_climo": 0.11213994971481613
     },
     "KMIA/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.16071428571428573,
-      "brier_raw": 0.12332145974111294,
-      "brier_station": 0.1297683390515082,
-      "brier_climo": 0.13123061345660605
+      "base_rate": 0.16137566137566137,
+      "brier_raw": 0.11930765082436083,
+      "brier_station": 0.12230375946973174,
+      "brier_climo": 0.13051653524436205
     },
     "KMSP/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.12037037037037036,
-      "brier_raw": 0.11950739901390592,
-      "brier_station": 0.10466067786485564,
-      "brier_climo": 0.11143741648377602
+      "base_rate": 0.12367724867724868,
+      "brier_raw": 0.12238798722949906,
+      "brier_station": 0.10288841886297084,
+      "brier_climo": 0.11552791275772706
     },
     "KMSP/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.1541005291005291,
-      "brier_raw": 0.13204369362684534,
-      "brier_station": 0.1303167364514681,
-      "brier_climo": 0.14071073035263795
+      "base_rate": 0.15674603174603174,
+      "brier_raw": 0.13307339448527686,
+      "brier_station": 0.12980749709417547,
+      "brier_climo": 0.14389826892477553
     },
     "KNYC/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.15343915343915343,
-      "brier_raw": 0.12110137960515595,
-      "brier_station": 0.12814185889225665,
-      "brier_climo": 0.13487714728949218
+      "base_rate": 0.14417989417989419,
+      "brier_raw": 0.12256944766331035,
+      "brier_station": 0.13026008151063495,
+      "brier_climo": 0.12808170927971513
     },
     "KNYC/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.13293650793650794,
-      "brier_raw": 0.11396144810043514,
-      "brier_station": 0.1198993371573019,
-      "brier_climo": 0.11632664180033342
+      "base_rate": 0.12037037037037036,
+      "brier_raw": 0.11030424042665334,
+      "brier_station": 0.11406025341775615,
+      "brier_climo": 0.10618779177947457
     },
     "KPHL/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.14484126984126985,
-      "brier_raw": 0.13169688472401372,
-      "brier_station": 0.10428562169860565,
-      "brier_climo": 0.1288168071028632
+      "base_rate": 0.13095238095238096,
+      "brier_raw": 0.12184179495414779,
+      "brier_station": 0.09555360694318533,
+      "brier_climo": 0.11649043351257421
     },
     "KPHL/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.15674603174603174,
-      "brier_raw": 0.11982021760100711,
-      "brier_station": 0.11956236065120089,
-      "brier_climo": 0.13772046017740677
+      "base_rate": 0.1626984126984127,
+      "brier_raw": 0.12304768331973424,
+      "brier_station": 0.11851332564178493,
+      "brier_climo": 0.14127174198165451
     },
     "KPHX/temp_max": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.14489795918367346,
-      "brier_raw": 0.13782928068556036,
-      "brier_station": 0.10407279545094264,
-      "brier_climo": 0.12694817377774537
+      "base_rate": 0.13197278911564625,
+      "brier_raw": 0.13906500267788513,
+      "brier_station": 0.09536190899419665,
+      "brier_climo": 0.11463729347539658
     },
     "KPHX/temp_min": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.1619047619047619,
-      "brier_raw": 0.12588868911400686,
-      "brier_station": 0.12047454368037322,
-      "brier_climo": 0.1390625333146699
+      "base_rate": 0.16326530612244897,
+      "brier_raw": 0.12547581187406845,
+      "brier_station": 0.12036645460902572,
+      "brier_climo": 0.13935241237749824
     },
     "KSAT/temp_max": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.1388888888888889,
-      "brier_raw": 0.12470241489307943,
-      "brier_station": 0.10724370757411987,
-      "brier_climo": 0.12470093389923177
+      "base_rate": 0.13955026455026456,
+      "brier_raw": 0.1285656193138762,
+      "brier_station": 0.10905017776388787,
+      "brier_climo": 0.12515767348168522
     },
     "KSAT/temp_min": {
       "n_bins": 1512,
       "n_dates": 36,
-      "base_rate": 0.1527777777777778,
-      "brier_raw": 0.12895071247734263,
-      "brier_station": 0.12878630046747233,
-      "brier_climo": 0.13896573804290635
+      "base_rate": 0.1421957671957672,
+      "brier_raw": 0.1303371171153852,
+      "brier_station": 0.1250734837793771,
+      "brier_climo": 0.1285115630999577
     },
     "KSEA/temp_max": {
       "n_bins": 1470,
       "n_dates": 35,
       "base_rate": 0.13401360544217686,
-      "brier_raw": 0.13347736962401852,
-      "brier_station": 0.10466781515936037,
-      "brier_climo": 0.1151107855148512
+      "brier_raw": 0.14281233549048433,
+      "brier_station": 0.1073083382234506,
+      "brier_climo": 0.11457570330030788
     },
     "KSEA/temp_min": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.16258503401360544,
-      "brier_raw": 0.1286099804235258,
-      "brier_station": 0.12110498058297801,
-      "brier_climo": 0.13787748451985832
+      "base_rate": 0.16394557823129252,
+      "brier_raw": 0.13745231182650297,
+      "brier_station": 0.12927419651979608,
+      "brier_climo": 0.13929932427166788
     },
     "KSFO/temp_max": {
       "n_bins": 1470,
       "n_dates": 35,
-      "base_rate": 0.1306122448979592,
-      "brier_raw": 0.11436919982263029,
-      "brier_station": 0.1123001838387717,
-      "brier_climo": 0.11388065593323682
+      "base_rate": 0.14285714285714285,
+      "brier_raw": 0.11746947954588367,
+      "brier_station": 0.1184556270986234,
+      "brier_climo": 0.12309067159945651
     },
     "KSFO/temp_min": {
       "n_bins": 1470,
       "n_dates": 35,
       "base_rate": 0.16462585034013605,
-      "brier_raw": 0.12906836731493,
-      "brier_station": 0.12204105107670822,
-      "brier_climo": 0.13595573621982668
+      "brier_raw": 0.13316303835952567,
+      "brier_station": 0.12452222515964732,
+      "brier_climo": 0.1352912818063445
     }
   },
   "sign_tests": {
@@ -430,15 +430,15 @@
       "a": "p_station",
       "b": "p_raw",
       "dates": 36,
-      "a_wins": 34,
-      "p_one_sided": 9.70612745732069e-09
+      "a_wins": 35,
+      "p_one_sided": 5.384208634495735e-10
     },
     "raw_vs_climo": {
       "a": "p_raw",
       "b": "p_climo",
       "dates": 36,
-      "a_wins": 21,
-      "p_one_sided": 0.20251612307038158
+      "a_wins": 17,
+      "p_one_sided": 0.691140341485152
     },
     "station_vs_climo": {
       "a": "p_station",
@@ -452,88 +452,88 @@
     "KATL": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -584,88 +584,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -674,88 +674,88 @@
     "KAUS": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -806,88 +806,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -896,88 +896,88 @@
     "KBOS": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1028,88 +1028,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1118,88 +1118,88 @@
     "KMDW": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1250,88 +1250,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1340,88 +1340,88 @@
     "KDFW": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1472,88 +1472,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1562,88 +1562,88 @@
     "KDEN": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1694,88 +1694,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1784,88 +1784,88 @@
     "KHOU": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -1916,88 +1916,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2006,88 +2006,88 @@
     "KLAS": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2138,88 +2138,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2228,88 +2228,88 @@
     "KLAX": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2360,88 +2360,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2450,88 +2450,88 @@
     "KMIA": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2582,88 +2582,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2672,88 +2672,88 @@
     "KMSP": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2804,88 +2804,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -2894,88 +2894,88 @@
     "KNYC": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3026,88 +3026,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3116,88 +3116,88 @@
     "KPHL": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3248,88 +3248,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3338,88 +3338,88 @@
     "KPHX": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3470,88 +3470,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3560,88 +3560,88 @@
     "KSAT": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3692,88 +3692,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3782,88 +3782,88 @@
     "KSFO": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -3914,88 +3914,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -4004,88 +4004,88 @@
     "KSEA": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -4136,88 +4136,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -4226,88 +4226,88 @@
     "KDCA": {
       "ecmwf_ifs025": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "ecmwf_aifs025_single": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
@@ -4358,88 +4358,88 @@
       },
       "gfs_global": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
       },
       "jma_gsm": {
         "1": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "2": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "3": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "4": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "5": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "6": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         },
         "7": {
-          "first_day": "2026-07-19",
-          "last_day": "2026-11-14",
+          "first_day": "2026-07-26",
+          "last_day": "2026-11-21",
           "n_days": 119,
           "n_hours_valid": 2856
         }
