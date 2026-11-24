@@ -287,6 +287,30 @@ def test_eval_script_dry(tmp_path, monkeypatch):
     assert "—" not in report
 
 
+def test_catalogue_records_c3s_chirps_med_robustness(tmp_path):
+    data = tmp_path / "data"
+    fc = data / "forecasts" / "seas5"
+    fc.mkdir(parents=True)
+    payload = score_all(data_dir=data, forecast_dir=fc, include_shared=False)
+    assert payload["verdicts"]["C3S multi-modèle"] == "pas encore testée"
+    assert payload["verdicts"]["C3S CHIRPS MED"] == (
+        "fragile, probablement du bruit ; "
+        "DJF init 1er dec = hypothese a confirmer "
+        "(hors echantillon 2017-2025 + membres ECMWF)"
+    )
+
+
+def test_med_robustness_script_has_no_box_paths_or_secrets():
+    root = Path(__file__).resolve().parents[1]
+    text = (root / "scripts" / "med_robustness.py").read_text(encoding="utf-8")
+    assert "/workspace" not in text
+    assert "CDS_API_KEY" not in text
+    assert "import cdsapi" not in text
+    assert "from cdsapi" not in text
+    assert "cursor/c3s-multimodel-ab-59e8" in text
+    assert "src.score.c3s_ab" in text
+
+
 def test_source_files_never_call_cds():
     root = Path(__file__).resolve().parents[1]
     files = [

@@ -45,6 +45,7 @@ Headline C = MED seulement. On ne mélange pas MED et India.
 - Sécheresse Méditerranée : testée, ça aide
 - Sécheresse Inde : testée, ça n'aide pas
 - C3S multi-modèle : pas encore testée
+- C3S CHIRPS MED : fragile, probablement du bruit ; DJF init 1er dec = hypothese a confirmer (hors echantillon 2017-2025 + membres ECMWF)
 - NMME : bloquée
 - Open-Meteo Seasonal : bloquée
 

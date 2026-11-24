@@ -598,7 +598,16 @@ def catalogue_verdicts(abs_out: dict[str, dict[str, Any]]) -> dict[str, str]:
         "Sécheresse US": abs_out["A"]["verdict"],
         "Sécheresse Méditerranée": _region_verdict_or_untested(c_med),
         "Sécheresse Inde": _region_verdict_or_untested(c_india),
+        # Scoring code for the multi-model A/B stays on PR 260 (not merged).
+        # The 2026-11-24 robustness check of the ECMWF-51 CHIRPS MED edge
+        # (BSS 0.063, N=97) is recorded here so a later regen keeps it.
+        # See predictor/docs/med-robustesse-2026-11-24.md.
         "C3S multi-modèle": "pas encore testée",
+        "C3S CHIRPS MED": (
+            "fragile, probablement du bruit ; "
+            "DJF init 1er dec = hypothese a confirmer "
+            "(hors echantillon 2017-2025 + membres ECMWF)"
+        ),
         "NMME": "bloquée",
         "Open-Meteo Seasonal": "bloquée",
     }
