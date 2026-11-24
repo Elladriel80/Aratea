@@ -170,3 +170,13 @@ Sans fichier, le même ordre tourne en mode bloqué. Les comptes
 sont dans `data/truth/seas5_ab/`.
 
 Pas de changement du texte du site. Pas de trading réel.
+
+## Suite — 24 novembre 2026
+
+La mesure C3S du 7 octobre (ECMWF-51, CHIRPS MED, BSS 0,063, N=97)
+a été re-découpée. La ligne SEAS5 du 13 septembre n'est pas recalculée.
+
+C3S CHIRPS MED : fragile, probablement du bruit ; DJF init 1er dec = hypothese a confirmer (hors echantillon 2017-2025 + membres ECMWF).
+
+Note : `med-robustesse-2026-11-24.md`. Chiffres :
+`data/truth/c3s_ab/MED_ROBUSTNESS.md`. PR 260 non fusionnée.
